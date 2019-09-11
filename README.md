@@ -1,2 +1,2 @@
 # gradle-plugins
-Strongly pointed Gradle Plugins, which short cut configuration, which standardized defaults. 
+Strongly opinated Gradle Plugins, which short cuts configuration, which standardized defaults. 
