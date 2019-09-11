@@ -1,0 +1,54 @@
+
+apply plugin: 'groovy'
+apply plugin: 'java-gradle-plugin'
+apply plugin: 'maven-publish'
+
+group = 'com.apgsga.gradle.plugins'
+version = '0.1'
+
+// Testing
+sourceSets {
+	functionalTest {
+		java.srcDir file('src/functTest/java')
+		resources.srcDir file('src/functTest/resources')
+		groovy.srcDir file('src/functTest/groovy')
+		
+		compileClasspath += sourceSets.main.output + configurations.testRuntime
+		runtimeClasspath += output + compileClasspath
+	}
+}
+
+
+gradlePlugin {
+	testSourceSets sourceSets.functionalTest
+}
+
+repositories {
+	mavenCentral()
+}
+
+dependencies {	 
+    testCompile gradleTestKit()
+	testCompile('org.spockframework:spock-core:1.1-groovy-2.4') {
+		exclude module: 'groovy-all'
+	}
+}
+
+publishing {
+	repositories {
+		mavenLocal()
+	}
+}
+
+
+task functionalTest(type: Test) {
+	description = 'Runs the functional tests.'
+	group = 'verification'
+	testClassesDirs = sourceSets.functionalTest.output.classesDirs
+	classpath = sourceSets.functionalTest.runtimeClasspath
+	mustRunAfter test
+}
+
+check.dependsOn functionalTest
+
+
