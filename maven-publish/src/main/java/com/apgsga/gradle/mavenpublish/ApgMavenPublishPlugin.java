@@ -23,6 +23,8 @@ public class ApgMavenPublishPlugin implements Plugin<Project> {
 		logger.info("Applying Java Plugin");
 		plugins.apply(JavaPlugin.class);
 		logger.info("Download dependencies from maven central");
+		
+		// TODO (CHE, 11.9) Externalize this 
 		project.getRepositories().mavenCentral();
 		logger.info("Applying Maven Publish Plugin");
 		plugins.apply(MavenPublishPlugin.class);
