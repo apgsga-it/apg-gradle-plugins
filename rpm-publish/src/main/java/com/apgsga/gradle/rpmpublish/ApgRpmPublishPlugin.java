@@ -6,27 +6,17 @@ package com.apgsga.gradle.rpmpublish;
 import org.gradle.api.NonNullApi;
 import org.gradle.api.Plugin;
 import org.gradle.api.Project;
-import org.gradle.api.logging.Logger;
 import org.gradle.api.plugins.ExtensionContainer;
-import org.gradle.api.plugins.JavaPlugin;
-import org.gradle.api.plugins.PluginContainer;
-import org.gradle.api.publish.ivy.plugins.IvyPublishPlugin;
+
+import com.apgsga.gradle.rpmpublish.tasks.ApgRpmPublishTask;
 
 @NonNullApi
 public class ApgRpmPublishPlugin implements Plugin<Project> {
 
 	@Override
 	public void apply(final Project project) {
-		final Logger logger = project.getLogger();
 		final ExtensionContainer ext = project.getExtensions();
-		final PluginContainer plugins = project.getPlugins();
-		logger.info("Applying Java Plugin");
-		plugins.apply(JavaPlugin.class);
-		logger.info("Download dependencies from maven central");
-		// TODO (CHE, 11.9) Externalize this
-		project.getRepositories().mavenCentral();
-		logger.info("Applying Ivy Publish Plugin");
-		plugins.apply(IvyPublishPlugin.class);
-		ext.create("apgRpmPublish", ApgRpmPublishDsl.class, project);
+		ext.create("apgRpmPublishConfig", ApgRpmPublishConfig.class, project);
+		project.getTasks().create("apgRpmPublish", ApgRpmPublishTask.class);
 	}
 }
