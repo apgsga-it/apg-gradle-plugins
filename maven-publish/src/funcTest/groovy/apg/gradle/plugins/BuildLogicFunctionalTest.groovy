@@ -35,7 +35,7 @@ class BuildLogicFunctionalTest extends Specification {
             plugins {
                 id 'com.apgsga.mavenpublish' 
             }
-			apgMavenPublish {
+			apgMavenPublishConfig {
 				localRepo {
 				  configure()
                 }
@@ -60,7 +60,7 @@ class BuildLogicFunctionalTest extends Specification {
             plugins {
                 id 'com.apgsga.mavenpublish' 
             }
-			apgMavenPublish {
+			apgMavenPublishConfig {
 		        remoteRepo {
 			   		artefactId = "plugin-test"
 					groupId = "com.apgsga.gradle.plugins.test"
@@ -89,7 +89,8 @@ class BuildLogicFunctionalTest extends Specification {
             plugins {
                 id 'com.apgsga.mavenpublish' 
             }
-			apgMavenPublish {
+			apgMavenPublishConfig {
+
 				localRepo {
 				  configure()
                 }

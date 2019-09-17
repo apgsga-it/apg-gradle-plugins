@@ -28,6 +28,6 @@ public class ApgMavenPublishPlugin implements Plugin<Project> {
 		project.getRepositories().mavenCentral();
 		logger.info("Applying Maven Publish Plugin");
 		plugins.apply(MavenPublishPlugin.class);
-		ext.create("apgMavenPublish", ApgMavenPublishDsl.class, project);
+		ext.create("apgMavenPublishConfig", ApgMavenPublishDsl.class, project);
 	}
 }

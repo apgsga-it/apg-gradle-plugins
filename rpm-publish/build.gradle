@@ -1,6 +1,9 @@
 apply plugin: 'groovy'
 apply plugin: 'java-gradle-plugin'
+apply plugin: 'eclipse'
 apply plugin: 'maven-publish'
+apply from: "${projectDir}/../gradle-common/integration-test.gradle"
+apply from: "${projectDir}/../gradle-common/functional-test.gradle"
 
 group = 'com.apgsga.gradle'
 version = '0.1'
@@ -8,23 +11,6 @@ version = '0.1'
 description 'Provides a strongly opinated configuration and application for publishing rpm'
 
 
-
-// Testing
-sourceSets {
-	functionalTest {
-		java.srcDir file('src/funcTest/java')
-		resources.srcDir file('src/funcTest/resources')
-		groovy.srcDir file('src/funcTest/groovy')
-		
-		compileClasspath += sourceSets.main.output + configurations.testRuntime
-		runtimeClasspath += output + compileClasspath
-	}
-}
-
-
-gradlePlugin {
-	testSourceSets sourceSets.functionalTest
-}
 
 repositories {
 	mavenCentral()
@@ -36,7 +22,11 @@ dependencies {
 	testCompile('org.spockframework:spock-core:1.1-groovy-2.4') {
 		exclude module: 'groovy-all'
 	}
-	implementation 'org.jfrog.artifactory.client:artifactory-java-client-services:+'
+    testCompile group: 'org.jasypt', name: 'jasypt', version: '1.9.3'
+	
+	compile 'org.jfrog.artifactory.client:artifactory-java-client-services:+'
+	compile group: 'commons-io', name: 'commons-io', version: '2.6'
+
 }
 
 publishing {
@@ -44,17 +34,6 @@ publishing {
 		mavenLocal()
 	}
 }
-
-
-task functionalTest(type: Test) {
-	description = 'Runs the functional tests.'
-	group = 'verification'
-	testClassesDirs = sourceSets.functionalTest.output.classesDirs
-	classpath = sourceSets.functionalTest.runtimeClasspath
-	mustRunAfter test
-}
-
-check.dependsOn functionalTest
 
 
 

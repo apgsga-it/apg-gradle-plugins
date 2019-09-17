@@ -10,9 +10,11 @@ public class TestArtifactoryJavaClientUpload {
 
 	public static void main(String[] args) {
 		// Connection
-		Artifactory artifactory = ArtifactoryClientBuilder.create()
+		ArtifactoryClientBuilder builder = ArtifactoryClientBuilder.create();
+		Artifactory artifactory = builder
 				.setUrl("https://artifactory4t4apgsga.jfrog.io/artifactory4t4apgsga").setUsername("dev")
-				.setPassword("dev1234").build();
+				.setPassword("dev1234")
+				.build();
 		java.io.File file = new java.io.File("src/test/resources/apg-interweb-service-CHEI212-0.8.9-1.noarch.rpm");
 		File deployed = artifactory.repository(DIGIFLEX_SNAPSHOT_REPO).upload(file.getName(), file)
 				.withProperty("color", "blue").withProperty("color", "red").doUpload();
