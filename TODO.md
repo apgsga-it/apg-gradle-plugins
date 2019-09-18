@@ -15,7 +15,7 @@
 - [ ] Apg Xtend Plugin : standardizes  Apg specific Java Requirements
 - [ ] Decide on Github, ev. move to Apg Github or Apg Cvs
 - [ ] Externalize user & password default configuration
-- [o] Better Spock Functional- & Integration Test Setup & Clean-up
+- [ ] * Better Spock Functional- & Integration Test Setup & Clean-up
 - [ ] Get rid of System.out.println logging
 - [ ] Rpm Service Packager Plugin Project, sketch of possible Target Dsl
 - [ ] Apg Dependency Recommender Plugin based on Gradle 5.x Dependency Recommendation Api
@@ -23,6 +23,6 @@
 
 
 
-[o] means in work 
+[ ] * means in work 
 
 [x] means completed
