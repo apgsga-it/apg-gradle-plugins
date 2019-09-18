@@ -20,6 +20,7 @@
 - [ ] Rpm Service Packager Plugin Project, initial sketch of a possible Target Dsl
 - [ ] Apg Dependency Recommender Plugin based on Gradle 5.x Dependency Recommendation Api, which fulfils current Patch Pipeline requirements and also merging of different Version Provider Sources : bom's , patchfile, with precedence ordering
 - [ ] Apg Repository Configuration Plugin 
+- [ ] Verify GenericPublish and Maven Publish Plugin DSL against requirements and use cases 
 
 
 
