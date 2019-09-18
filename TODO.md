@@ -2,9 +2,9 @@
 
 - [x] Sepcific plugin development repo for each support typ / target
 - [x] Sepcific User for the automated Tests
-- [ ] Refactor com.apgsga.gradle.rpmpublish.extension into seperate project, which can be used by different Plugin's
+- [ ] Refactor com.apgsga.gradle.publish.extension into seperate project, which can be used by different Plugin's
 - [ ] Adopt current Publishing Plugin's to work with the common configuration
-- [ ] Verify configuration on the fly pattern with explicit function in Extension. Are there better way's to achieve this
+- [ ] Verify configuration on the fly pattern with explicit function in Extension. Are there better way's to achieve this?
 - [ ] Obfuscate passwords and there usage
 - [x] Make ApgPublishPlugin work generally for artefacts of supported types apart from Maven Artefacts, like tar.gz and rpm. Probably not that much to do.
 - [ ] Test Artefact Typ for example rpm against Metadata of Target repo. 
