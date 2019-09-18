@@ -10,10 +10,11 @@ import java.net.URL;
 import java.nio.file.Path;
 
 import org.apache.commons.io.FileUtils;
-import org.gradle.internal.impldep.com.google.api.client.util.Preconditions;
+
 
 import com.apgsga.gradle.repository.UploadRepository;
 import com.apgsga.gradle.repository.UploadResult;
+import com.google.common.base.Preconditions;
 
 public class FileRepository implements UploadRepository {
 
@@ -43,6 +44,7 @@ public class FileRepository implements UploadRepository {
 
 		return new FileUploadResult(targetFile);
 	}
+
 
 	public String getName() {
 		return repoDir.getName();

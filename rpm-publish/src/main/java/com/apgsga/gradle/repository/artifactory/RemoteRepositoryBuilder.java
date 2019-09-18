@@ -92,12 +92,14 @@ public class RemoteRepositoryBuilder implements UploadRepositoryBuilder {
 		return this;
 	}
 
-	public ArtifactoryClientBuilder setUsername(String username) {
-		return artifactortyBuilder.setUsername(username);
+	public UploadRepositoryBuilder setUsername(String username) {
+		artifactortyBuilder.setUsername(username);
+		return this;
 	}
 
-	public ArtifactoryClientBuilder setPassword(String password) {
-		return artifactortyBuilder.setPassword(password);
+	public UploadRepositoryBuilder setPassword(String password) {
+		artifactortyBuilder.setPassword(password);
+		return this; 
 	}
 
 	public ArtifactoryClientBuilder setConnectionTimeout(Integer connectionTimeout) {

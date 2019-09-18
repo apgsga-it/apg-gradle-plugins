@@ -9,7 +9,15 @@ public interface UploadRepositoryBuilder {
 	UploadRepositoryBuilder setTargetRepo(String targetRepo);
 
 	String getBaseUrl();
-	
+
 	UploadRepositoryBuilder setBaseUrl(String baseUrl);
+
+	UploadRepositoryBuilder setUsername(String username);
+
+	String getUsername();
+
+	UploadRepositoryBuilder setPassword(String password);
+
+	String getPassword();
 
 }

@@ -88,4 +88,13 @@ public class FileUploadResult implements UploadResult {
 		return uploadResultFile.isDirectory();
 	}
 
+	@Override
+	public String toString() {
+		return "FileUploadResult [uploadResultFile=" + uploadResultFile + "]";
+	}
+
+
+	
+	
+
 }

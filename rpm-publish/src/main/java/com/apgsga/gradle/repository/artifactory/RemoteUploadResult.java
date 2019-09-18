@@ -1,6 +1,5 @@
 package com.apgsga.gradle.repository.artifactory;
 
-import java.nio.file.Path;
 import java.util.Date;
 
 import org.jfrog.artifactory.client.model.Checksums;
@@ -9,7 +8,7 @@ import org.jfrog.artifactory.client.model.File;
 import com.apgsga.gradle.repository.UploadResult;
 
 public class RemoteUploadResult implements UploadResult {
-	
+
 	private File file;
 
 	public RemoteUploadResult(File file) {
@@ -91,8 +90,10 @@ public class RemoteUploadResult implements UploadResult {
 	public boolean isFolder() {
 		return file.isFolder();
 	}
-	
-	
-	
+
+	@Override
+	public String toString() {
+		return "RemoteUploadResult [file=" + file.toString() + "]";
+	}
 
 }

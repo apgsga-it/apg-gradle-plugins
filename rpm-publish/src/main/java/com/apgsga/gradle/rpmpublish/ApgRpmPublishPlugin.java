@@ -8,7 +8,8 @@ import org.gradle.api.Plugin;
 import org.gradle.api.Project;
 import org.gradle.api.plugins.ExtensionContainer;
 
-import com.apgsga.gradle.rpmpublish.tasks.ApgRpmPublishTask;
+import com.apgsga.gradle.rpmpublish.extension.ApgPublishConfig;
+import com.apgsga.gradle.rpmpublish.tasks.ApgPublishTask;
 
 @NonNullApi
 public class ApgRpmPublishPlugin implements Plugin<Project> {
@@ -16,7 +17,7 @@ public class ApgRpmPublishPlugin implements Plugin<Project> {
 	@Override
 	public void apply(final Project project) {
 		final ExtensionContainer ext = project.getExtensions();
-		ext.create("apgRpmPublishConfig", ApgRpmPublishConfig.class, project);
-		project.getTasks().create("apgRpmPublish", ApgRpmPublishTask.class);
+		ext.create("apgPublishConfig", ApgPublishConfig.class, project);
+		project.getTasks().create("apgPublish", ApgPublishTask.class);
 	}
 }

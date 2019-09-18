@@ -7,5 +7,6 @@ public interface UploadRepository {
 	boolean exists();
 
 	UploadResult upload(String fileName, File fileToUpload);
+	
 
 }

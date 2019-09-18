@@ -13,7 +13,7 @@ import com.apgsga.gradle.repository.UploadRepository;
 import com.apgsga.gradle.repository.UploadResult;
 
 public class RemoteRepository implements UploadRepository {
-		
+
 	private final RepositoryHandle repositoryHandle;
 
 	public RemoteRepository(RepositoryHandle repositoryHandle) {
@@ -30,14 +30,14 @@ public class RemoteRepository implements UploadRepository {
 	public UploadResult upload(String fileName, File fileToUpload) {
 		UploadableArtifact uploadable = repositoryHandle.upload(fileName, fileToUpload);
 		uploadable.withListener(new UploadListener() {
-			
+
 			double lastprz = 0;
-			
+
 			@Override
 			public void uploadProgress(long actuel, long total) {
 				double prz = (100 * actuel) / total;
-				if ((lastprz + 10.0) < prz ) {
-					System.out.println("Progress: " + prz + "%");
+				if ((lastprz + 10.0) <= prz) {
+					System.out.println(" Upload Progress ->  " + fileName + " : " + prz + "%");
 					lastprz = prz;
 				}
 			}
@@ -68,10 +68,5 @@ public class RemoteRepository implements UploadRepository {
 	public UploadableArtifact upload(String path, InputStream inputStream) {
 		return repositoryHandle.upload(path, inputStream);
 	}
-	
-	
-	
-
-
 
 }

@@ -2,10 +2,10 @@ package com.apgsga.gradle.repository.local;
 
 import java.io.File;
 
-import org.gradle.internal.impldep.com.google.api.client.util.Preconditions;
 
 import com.apgsga.gradle.repository.UploadRepository;
 import com.apgsga.gradle.repository.UploadRepositoryBuilder;
+import com.google.common.base.Preconditions;
 
 public class FileRepositoryBuilder implements UploadRepositoryBuilder {
 	public static UploadRepositoryBuilder create(String baseUrl) {
@@ -56,5 +56,28 @@ public class FileRepositoryBuilder implements UploadRepositoryBuilder {
 		this.baseUrl = baseUrl;
 		return this;
 	}
+	
+	// Null Ops
 
+	@Override
+	public UploadRepositoryBuilder setUsername(String username) {
+		return this;
+	}
+
+	@Override
+	public String getUsername() {
+		return ""; 
+	}
+
+	@Override
+	public UploadRepositoryBuilder setPassword(String password) {
+		return this;
+	}
+
+	@Override
+	public String getPassword() {
+		return ""; 
+	}
+
+	
 }

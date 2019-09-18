@@ -13,9 +13,11 @@ class BuildLogicFunctionalTest extends Specification {
 	
     File testProjectDir
     File buildFile
+	File rpmToPublish
 
     def setup() {
 		testProjectDir = Files.createTempDirectory('gradletestproject').toFile();
+		rpmToPublish = new File("src/funcTest/resources/apg-plugintests-0.8.9-1.noarch.rpm")
 		println "Project Dir : ${testProjectDir.absolutePath}"
         buildFile = new File(testProjectDir,'build.gradle')
     } 
@@ -26,12 +28,21 @@ class BuildLogicFunctionalTest extends Specification {
             plugins {
                 id 'com.apgsga.rpmpublish' 
             }
+			apgPublishConfig {
+				artefactFile = "${rpmToPublish.absolutePath}" 
+				remoteRepo {
+					publish = false
+				}
+				localRepo {
+					publish = true
+				}
+			}
         """
 
         when:
         def result = GradleRunner.create()
             .withProjectDir(testProjectDir)
-            .withArguments('apgRpmPublish','--info', '--stacktrace')
+            .withArguments('apgPublish','--info', '--stacktrace')
             .withPluginClasspath()
             .build()
         then:
