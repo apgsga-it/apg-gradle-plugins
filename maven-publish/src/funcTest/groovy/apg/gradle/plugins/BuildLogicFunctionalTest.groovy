@@ -54,18 +54,18 @@ class BuildLogicFunctionalTest extends Specification {
     }
 	
 	
-	def "publish to maven Remote works"() {
+	def "publish to maven Remote works with Defaults"() {
 		given:
 		buildFile << """
             plugins {
                 id 'com.apgsga.mavenpublish' 
             }
 			apgMavenPublishConfig {
+				artefactId = "plugin-test"
+				groupId = "com.apgsga.gradle.plugins.test"
 		        remoteRepo {
-			   		artefactId = "plugin-test"
-					groupId = "com.apgsga.gradle.plugins.test"
-					remoteRelease = "release-test"
-			    	remoteSnapshot = "snapshots-test"
+					remoteRelease = "release-functionaltest"
+			    	remoteSnapshot = "snapshot-functionaltest"
 					configure()
                 }
 
@@ -83,22 +83,55 @@ class BuildLogicFunctionalTest extends Specification {
 		result.output.contains('')
 	}
 	
-	def "publish to both a maven Local and Remote Repo works"() {
+	def "publish to both a maven Local and Remote Repo works with SNAPSHOT Version"() {
 		given:	
 		buildFile << """
             plugins {
                 id 'com.apgsga.mavenpublish' 
             }
 			apgMavenPublishConfig {
-
+				artefactId = "plugin-test"
+				version = "1.0-SNAPSHOT"
+				groupId = "com.apgsga.gradle.plugins.test"
 				localRepo {
 				  configure()
                 }
 		        remoteRepo {
-			   		artefactId = "plugin-test"
-					groupId = "com.apgsga.gradle.plugins.test"
-					remoteRelease = "release-test"
-			    	remoteSnapshot = "snapshots-test"
+					remoteRelease = "release-functionaltest"
+			    	remoteSnapshot = "snapshot-functionaltest"
+					configure()
+                }
+
+			} 
+        """
+
+		when:
+		def result = GradleRunner.create()
+			.withProjectDir(testProjectDir)
+			.withArguments('clean','build', 'publish','--info', '--stacktrace')
+			.withPluginClasspath()
+			.build()
+		then:
+		println "Result output: ${result.output}"
+		result.output.contains('')
+	}
+	
+	def "publish to both a maven Local and Remote Repo works with Release Version"() {
+		given:
+		buildFile << """
+            plugins {
+                id 'com.apgsga.mavenpublish' 
+            }
+			apgMavenPublishConfig {
+				artefactId = "plugin-test"
+				version = "1.0"
+				groupId = "com.apgsga.gradle.plugins.test"
+				localRepo {
+				  configure()
+                }
+		        remoteRepo {
+					remoteRelease = "release-functionaltest"
+			    	remoteSnapshot = "snapshot-functionaltest"
 					configure()
                 }
 

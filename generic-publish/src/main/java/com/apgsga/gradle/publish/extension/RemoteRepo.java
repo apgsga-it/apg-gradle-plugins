@@ -2,9 +2,9 @@ package com.apgsga.gradle.publish.extension;
 
 public class RemoteRepo extends AbstractRepo {
 
-	private static final String REPO_PW_DEFAULT = "dev1234";
-	private static final String REPO_USER_DEFAULT = "dev";
-	private static final String REPO_DEDFAULT = "yumdigiflexsnaprepo";
+	private static final String REPO_PW_DEFAULT = "gradledev-tests-user";
+	private static final String REPO_USER_DEFAULT = "gradledev-tests-user";
+	private static final String REPO_DEDFAULT = "rpm-functionaltest";
 	private static final String REPO_BASE_URL_DEFAULT = "https://artifactory4t4apgsga.jfrog.io/artifactory4t4apgsga";
 
 	public RemoteRepo() {

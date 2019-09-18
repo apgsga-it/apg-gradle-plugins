@@ -6,9 +6,9 @@ import org.gradle.api.logging.Logger;
 import org.gradle.api.publish.PublishingExtension;
 
 public class RemoteRepo {
-	
-	private static final String REPO_PW_DEFAULT = "dev1234";
-	private static final String REPO_USER_DEFAULT = "dev";
+
+	private static final String REPO_PW_DEFAULT = "gradledev-tests-user";
+	private static final String REPO_USER_DEFAULT = "gradledev-tests-user";
 	private static final String SNAPSHOTS_REPO_SUFFIX_DEFAULT = "snapshots";
 	private static final String RELEASE_REPO_SUFFIX_DEFAULT = "releases";
 	private static final String REPO_BASE_URL_DEFAULT = "https://artifactory4t4apgsga.jfrog.io/artifactory4t4apgsga";
