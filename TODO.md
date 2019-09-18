@@ -17,7 +17,7 @@
 - [ ] Externalize user & password default configuration
 - [ ] * Better Spock Functional- & Integration Test Setup & Clean-up
 - [ ] Get rid of System.out.println logging
-- [ ] Rpm Service Packager Plugin Project, sketch of possible Target Dsl
+- [ ] Rpm Service Packager Plugin Project, initial sketch of a possible Target Dsl
 - [ ] Apg Dependency Recommender Plugin based on Gradle 5.x Dependency Recommendation Api
 - [ ] Apg Repository Configuration Plugin 
 
