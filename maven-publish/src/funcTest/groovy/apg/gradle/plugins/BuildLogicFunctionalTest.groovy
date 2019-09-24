@@ -33,12 +33,10 @@ class BuildLogicFunctionalTest extends Specification {
         given:
         buildFile << """
             plugins {
-                id 'com.apgsga.mavenpublish' 
+                 id 'com.apgsga.maven.publish' 
             }
-			apgMavenPublishConfig {
-				localRepo {
-				  configure()
-                }
+			apgMavenPublish {
+				local()
 			} 
         """
 
@@ -58,16 +56,12 @@ class BuildLogicFunctionalTest extends Specification {
 		given:
 		buildFile << """
             plugins {
-                id 'com.apgsga.mavenpublish' 
+                  id 'com.apgsga.maven.publish' 
             }
-			apgMavenPublishConfig {
+			apgMavenPublish {
 				artefactId = "plugin-test"
 				groupId = "com.apgsga.gradle.plugins.test"
-		        remoteRepo {
-					remoteRelease = "release-functionaltest"
-			    	remoteSnapshot = "snapshot-functionaltest"
-					configure()
-                }
+		        artifactory()
 
 			} 
         """
@@ -87,20 +81,14 @@ class BuildLogicFunctionalTest extends Specification {
 		given:	
 		buildFile << """
             plugins {
-                id 'com.apgsga.mavenpublish' 
+                  id 'com.apgsga.maven.publish'  
             }
-			apgMavenPublishConfig {
+			apgMavenPublish {
 				artefactId = "plugin-test"
 				version = "1.0-SNAPSHOT"
 				groupId = "com.apgsga.gradle.plugins.test"
-				localRepo {
-				  configure()
-                }
-		        remoteRepo {
-					remoteRelease = "release-functionaltest"
-			    	remoteSnapshot = "snapshot-functionaltest"
-					configure()
-                }
+				local()
+		        artifactory()
 
 			} 
         """
@@ -120,20 +108,14 @@ class BuildLogicFunctionalTest extends Specification {
 		given:
 		buildFile << """
             plugins {
-                id 'com.apgsga.mavenpublish' 
+                id 'com.apgsga.maven.publish' 
             }
-			apgMavenPublishConfig {
+			apgMavenPublish {
 				artefactId = "plugin-test"
 				version = "1.0"
 				groupId = "com.apgsga.gradle.plugins.test"
-				localRepo {
-				  configure()
-                }
-		        remoteRepo {
-					remoteRelease = "release-functionaltest"
-			    	remoteSnapshot = "snapshot-functionaltest"
-					configure()
-                }
+				local()
+		        artifactory()
 
 			} 
         """

@@ -34,21 +34,16 @@ class BuildLogicFunctionalTest extends Specification {
             plugins {
                 id 'com.apgsga.publish' 
             }
-			apgPublishConfig {
+			apgGenericPublishConfig {
 				artefactFile = "${rpmToPublish.absolutePath}" 
-				remoteRepo {
-					publish = false
-				}
-				localRepo {
-					publish = true
-				}
+				local()
 			}
         """
 
         when:
         def result = GradleRunner.create()
             .withProjectDir(testProjectDir)
-            .withArguments('apgPublish','--info', '--stacktrace')
+            .withArguments('apgGenericPublish','--info', '--stacktrace')
             .withPluginClasspath()
             .build()
         then:
@@ -63,15 +58,16 @@ class BuildLogicFunctionalTest extends Specification {
             plugins {
                 id 'com.apgsga.publish' 
             }
-			apgPublishConfig {
+			apgGenericPublishConfig {
 				artefactFile = "${rpmToPublish.absolutePath}" 
+				artifactory()
 			}
         """
 
 		when:
 		def result = GradleRunner.create()
 			.withProjectDir(testProjectDir)
-			.withArguments('apgPublish','--info', '--stacktrace')
+			.withArguments('apgGenericPublish','--info', '--stacktrace')
 			.withPluginClasspath()
 			.build()
 		then:
@@ -85,18 +81,17 @@ class BuildLogicFunctionalTest extends Specification {
             plugins {
                 id 'com.apgsga.publish' 
             }
-			apgPublishConfig {
+			apgGenericPublishConfig {
 				artefactFile = "${rpmToPublish.absolutePath}"
-				localRepo {
-					publish = true
-				} 
+				local()
+				artifactory()
 			}
         """
 
 		when:
 		def result = GradleRunner.create()
 			.withProjectDir(testProjectDir)
-			.withArguments('apgPublish','--info', '--stacktrace')
+			.withArguments('apgGenericPublish','--info', '--stacktrace')
 			.withPluginClasspath()
 			.build()
 		then:
@@ -110,18 +105,45 @@ class BuildLogicFunctionalTest extends Specification {
             plugins {
                 id 'com.apgsga.publish' 
             }
-			apgPublishConfig {
+			apgGenericPublishConfig {
 				artefactFile = "${tarToPublish.absolutePath}"
-				localRepo {
-					publish = true
-				} 
+				local()
+				artifactory()
 			}
         """
 
 		when:
 		def result = GradleRunner.create()
 			.withProjectDir(testProjectDir)
-			.withArguments('apgPublish','--info', '--stacktrace')
+			.withArguments('apgGenericPublish','--info', '--stacktrace')
+			.withPluginClasspath()
+			.build()
+		then:
+		println "Result output: ${result.output}"
+		result.output.contains('')
+	}
+	
+	def "publish tarball to local with explicit repo config"() {
+		given:
+		buildFile << """
+            plugins {
+                id 'com.apgsga.publish' 
+            }
+			apgLocalRepo {
+				repoBaseUrl = "build"
+				repoName = "anothertestrepo"
+			}	
+			apgLocalRepo.log()
+			apgGenericPublishConfig {
+				artefactFile = "${tarToPublish.absolutePath}"
+				local()
+			}
+        """
+
+		when:
+		def result = GradleRunner.create()
+			.withProjectDir(testProjectDir)
+			.withArguments('apgGenericPublish','--info', '--stacktrace')
 			.withPluginClasspath()
 			.build()
 		then:

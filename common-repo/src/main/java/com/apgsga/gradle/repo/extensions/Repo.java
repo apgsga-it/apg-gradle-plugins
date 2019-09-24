@@ -1,4 +1,4 @@
-package com.apgsga.gradle.publish.extension;
+package com.apgsga.gradle.repo.extensions;
 
 public interface Repo {
 
@@ -9,6 +9,14 @@ public interface Repo {
 	String getRepoName();
 
 	void setRepoName(String repoName);
+	
+	String getReleaseRepoName();
+
+	void setReleaseRepoName(String repoName);
+	
+	String getSnapshotRepoName();
+
+	void setSnapshotRepoName(String repoName);
 
 	String getUser();
 
@@ -17,19 +25,20 @@ public interface Repo {
 	String getPassword();
 
 	void setPassword(String password);
-
-	Boolean getPublish();
-
-	void setPublish(Boolean publish);
 	
 	String getDefaultRepoBaseUrl();
 	
 	String getDefaultRepoName();
 	
+	String getDefaultReleaseRepoName();
+	
+	String getDefaultSnapshotRepoName();
+	
 	String getDefaultUser(); 
 	
 	String getDefaultPassword(); 
 	
-	Boolean getDefaultPublish(); 
+	void log(); 
+
 
 }

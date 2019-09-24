@@ -13,6 +13,7 @@ description 'Provides a opinated configuration and application for publishing ar
 
 
 repositories {
+	mavenLocal()
 	mavenCentral()
 	jcenter()
 }
@@ -25,6 +26,7 @@ dependencies {
     testCompile group: 'org.jasypt', name: 'jasypt', version: '1.9.3'
 	
 	compile 'org.jfrog.artifactory.client:artifactory-java-client-services:+'
+	compile 'com.apgsga.gradle:common-repo:+'
 	compile group: 'commons-io', name: 'commons-io', version: '2.6'
 	compile group: 'com.google.guava', name: 'guava', version: '20.0'
 
