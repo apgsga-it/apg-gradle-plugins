@@ -1,6 +1,9 @@
 package com.apgsga.gradle.rpm.pkg.extension;
 
 import java.util.Arrays;
+import java.util.List;
+
+import com.google.common.collect.Lists;
 
 public class ApgRpmPackageExtension {
 	
@@ -22,7 +25,7 @@ public class ApgRpmPackageExtension {
 	private static final String MAIN_PRG_DEFAULT = "com.apgsga.it21.ui.webapp.Webapp";
 	private static final String SERVICE_NAME_DEFAULT = "jadas";
 	// TODO (che, 25.9) : probably not the perfect places 
-	private static final String[] SUPPORTED_SERVICE_NAMES = new String[] {"jadas", "digiflex","vkjadas", "interjadas", "interweb"}; 
+	private static final List<String> SUPPORTED_SERVICE_NAMES = Lists.newArrayList("jadas", "digiflex","vkjadas", "interjadas", "interweb"); 
 	
 	
 	private String serviceName =  SERVICE_NAME_DEFAULT; 
@@ -36,7 +39,7 @@ public class ApgRpmPackageExtension {
 	private String ibdsDbDaoLocations = DS_DAOLOCATIONS_DEFAULTS; 
 	private String serverContextPath = SERVER_CONTEXT_PATH_DEFAULT;
 	private String springProfiles =  SPRING_PROFILES_DEFAULT; 
-	private Boolean webEmbedded = WEBEMMEDED_DEFAULT;
+	private Boolean webuiEmbedded = WEBEMMEDED_DEFAULT;
 	private String javaDir = JAVADIR_DEFAULT; 
 	private String javaDist = JAVADIST_DEFAULT; 
 	// TODO (che, 25.9) : retrieve baseUrl from common-repo Plugin 
@@ -102,11 +105,11 @@ public class ApgRpmPackageExtension {
 	public void setSpringProfiles(String springProfiles) {
 		this.springProfiles = springProfiles;
 	}
-	public Boolean getWebEmbedded() {
-		return webEmbedded;
+	public Boolean getWebuiEmbedded() {
+		return webuiEmbedded;
 	}
-	public void setWebEmbedded(Boolean webEmbedded) {
-		this.webEmbedded = webEmbedded;
+	public void setWebuiEmbedded(Boolean webEmbedded) {
+		this.webuiEmbedded = webEmbedded;
 	}
 	public String getInstallTarget() {
 		return installTarget;
@@ -161,6 +164,14 @@ public class ApgRpmPackageExtension {
 		return PortnrConvention.calculate(SUPPORTED_SERVICE_NAMES, getInstallTarget(), getServiceName()); 
 	}
 	
+	public String getEcmTargetSystemInd() {
+		return  getInstallTarget().charAt(2) == 't' ? "t" : "p";
+	}
+	
+	public String getIbdsTargetSystemInd() {
+		return Character.toString(getInstallTarget().charAt(2)).toLowerCase(); 
+	}
+	
 	@Override
 	public String toString() {
 		return "ApgRpmPackageExtension [serviceName=" + serviceName + ", mainProgramName=" + mainProgramName
@@ -168,7 +179,7 @@ public class ApgRpmPackageExtension {
 				+ ", resourceFilters=" + resourceFilters + ", appConfigFilters=" + appConfigFilters
 				+ ", dataAccessStrategie=" + dataAccessStrategie + ", it21DbDaoLocations=" + it21DbDaoLocations
 				+ ", ibdsDbDaoLocations=" + ibdsDbDaoLocations + ", serverContextPath=" + serverContextPath
-				+ ", springProfiles=" + springProfiles + ", webEmbedded=" + webEmbedded + "]";
+				+ ", springProfiles=" + springProfiles + ", webEmbedded=" + webuiEmbedded + "]";
 	} 
 	
 	

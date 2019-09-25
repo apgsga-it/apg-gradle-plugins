@@ -4,7 +4,7 @@ import org.gradle.api.DefaultTask
 import org.gradle.api.tasks.OutputDirectory
 import org.gradle.api.tasks.TaskAction
 
-class RpmCopyScriptsTask extends DefaultTask {
+class RpmScriptsCopyTask extends DefaultTask {
 
 	@OutputDirectory
 	public File getOutputDir() {

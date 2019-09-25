@@ -12,7 +12,7 @@ import static org.gradle.testkit.runner.TaskOutcome.*
 import java.nio.file.Files
 import java.nio.file.Path
 
-class RpmScriptsCopyTaskTests extends Specification {
+class AppResourcesCopyTaskTests extends Specification {
 	
     File testProjectDir
     File buildFile
@@ -42,21 +42,22 @@ class RpmScriptsCopyTaskTests extends Specification {
         when:
         def result = GradleRunner.create()
             .withProjectDir(testProjectDir)
-            .withArguments('copyRpmScripts','--info', '--stacktrace')
+            .withArguments('copyAppResources','--info', '--stacktrace')
             .withPluginClasspath()
             .build()
         then:
 		println "Result output: ${result.output}" 
         result.output.contains('')	
-		new File(testProjectDir,"build/rpm").exists()
-		def dirTarget = new File(testProjectDir,"build/rpm")
+		new File(testProjectDir,"build/app-pkg/app").exists()
+		def dirTarget = new File(testProjectDir,"build/app-pkg/app")
 		def cntFiles = 0
 		def cntFileVisitor = {
 			cntFiles++
 		}
 		dirTarget.traverse type: FILES , visit: cntFileVisitor
-		cntFiles == 4
-		// TODO (che, 25.9) : test expected files and content
+		// TODO (che, 25.9) : haha, test is really terrific
+		cntFiles > 4
+		// TODO (che, 25.9) : test expected files
 	
     }
 	

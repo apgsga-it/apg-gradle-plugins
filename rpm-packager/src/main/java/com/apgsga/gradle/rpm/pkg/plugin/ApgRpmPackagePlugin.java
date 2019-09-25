@@ -6,16 +6,19 @@ import org.gradle.api.logging.Logger;
 import org.gradle.api.plugins.ExtensionContainer;
 import org.gradle.api.plugins.PluginContainer;
 import org.gradle.api.tasks.TaskContainer;
+import org.gradle.api.tasks.TaskProvider;
 
 import com.apgsga.gradle.rpm.pkg.extension.ApgRpmPackageExtension;
 import com.apgsga.gradle.rpm.pkg.tasks.ApgRpmPackageTask;
 import com.apgsga.gradle.rpm.pkg.tasks.AppConfigFileMergerTask;
+import com.apgsga.gradle.rpm.pkg.tasks.AppResourcesCopyTask;
 import com.apgsga.gradle.rpm.pkg.tasks.ResourceFileMergerTask;
-import com.apgsga.gradle.rpm.pkg.tasks.RpmCopyScriptsTask;
+import com.apgsga.gradle.rpm.pkg.tasks.RpmScriptsCopyTask;
 import com.apgsga.gradle.rpm.pkg.tasks.TemplateDirCopyTask;
 
 public class ApgRpmPackagePlugin  implements Plugin<Project> {
 
+	@SuppressWarnings("unused")
 	@Override
 	public void apply(Project project) {
 		final ExtensionContainer ext = project.getExtensions();
@@ -23,10 +26,13 @@ public class ApgRpmPackagePlugin  implements Plugin<Project> {
 		final PluginContainer plugins = project.getPlugins();
 		ext.create("apgRpmPackage", ApgRpmPackageExtension.class);
 		TaskContainer tasks = project.getTasks();
-		tasks.register("templateDirCopy", TemplateDirCopyTask.class);
-		tasks.register("mergeResourcePropertyFiles", ResourceFileMergerTask.class);
-		tasks.register("mergeAppConfigPropertyFiles", AppConfigFileMergerTask.class);
-		tasks.register("copyRpmScripts", RpmCopyScriptsTask.class);
+		TaskProvider<TemplateDirCopyTask> templateDirCopyTask = tasks.register("templateDirCopy", TemplateDirCopyTask.class);
+		TaskProvider<ResourceFileMergerTask> resourceMergeTask = tasks.register("mergeResourcePropertyFiles", ResourceFileMergerTask.class);
+		TaskProvider<AppConfigFileMergerTask> appConfigMergeTask = tasks.register("mergeAppConfigPropertyFiles", AppConfigFileMergerTask.class);
+		TaskProvider<RpmScriptsCopyTask> rpmCopyAndExpandTask = tasks.register("copyRpmScripts", RpmScriptsCopyTask.class);
+		rpmCopyAndExpandTask.configure( task -> task.dependsOn(templateDirCopyTask));
+		TaskProvider<AppResourcesCopyTask> appResourcesCopyAndExpandTask = tasks.register("copyAppResources", AppResourcesCopyTask.class);
+		appResourcesCopyAndExpandTask.configure(task -> task.dependsOn(templateDirCopyTask,resourceMergeTask,appConfigMergeTask));
 		tasks.register("apgRpmPackage", ApgRpmPackageTask.class);
 		
 	}
