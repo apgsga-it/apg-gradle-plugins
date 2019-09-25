@@ -27,9 +27,13 @@
 - [ ] Packaging of rpm-packager template files : zip!? 
 - [x] rpm-packager first shot: 1 : 1 copy tasks of service-rpm-packager -> better merged into one? Resolution: no, actually the granluar Copy Task make it easier to Test the Plugin
 - [x] rpm-packager copy tasks should declare output 
-- [ ] gradle copy tasks get a : is not up-to-date because:  No history is available. ->  Investigate.
-- [ ] How best to configure defined service Names for Portnr Calculation.
 - [ ] rpm-packager : retrieve repoBaseUrl from common-repo plugin
+- [ ] rpm-packager : copy binary dependencies to lib
+- [ ] rpm-packager : ospackage resp buildrpm wrapper 
+- [ ] rpm-packager : test project zum Testen
+- [ ] Build Plugin's in Repo deployen -> eigenes Repository 
+- [ ] gradle copy tasks get a : is not up-to-date because:  No history is available. ->  Investigate.
+- [ ] Discuss and Define How best to configure defined service Names for Portnr Calculation.
 - [ ] gradle tasks : migrate from create to register api
 - [ ] Estabilish Plugin Builds on jenkins.apgsga.ch
 - [ ] Migrate to new then 5.0 
