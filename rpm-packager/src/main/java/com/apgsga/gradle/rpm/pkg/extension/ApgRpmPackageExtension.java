@@ -25,7 +25,7 @@ public class ApgRpmPackageExtension {
 	private static final String MAIN_PRG_DEFAULT = "com.apgsga.it21.ui.webapp.Webapp";
 	private static final String SERVICE_NAME_DEFAULT = "jadas";
 	// TODO (che, 25.9) : probably not the perfect places 
-	private static final List<String> SUPPORTED_SERVICE_NAMES = Lists.newArrayList("jadas", "digiflex","vkjadas", "interjadas", "interweb"); 
+	private static final List<String> SUPPORTED_SERVICE_NAMES_DEFAULT = Lists.newArrayList("jadas", "digiflex","vkjadas", "interjadas", "interweb"); 
 	
 	
 	private String serviceName =  SERVICE_NAME_DEFAULT; 
@@ -44,6 +44,7 @@ public class ApgRpmPackageExtension {
 	private String javaDist = JAVADIST_DEFAULT; 
 	// TODO (che, 25.9) : retrieve baseUrl from common-repo Plugin 
 	private String distRepoUrl = REPO_BASE_URL_DEFAULT + JDK_DIST_REPO_NAME_DEFAULT; 
+	private List<String> supportedServices = SUPPORTED_SERVICE_NAMES_DEFAULT; 
 	
 	public String getServiceName() {
 		return serviceName;
@@ -137,6 +138,12 @@ public class ApgRpmPackageExtension {
 		this.distRepoUrl = distRepoUrl;
 	}
 	
+	public List<String> getSupportedServices() {
+		return supportedServices;
+	}
+	public void setSupportedServices(List<String> supportedServices) {
+		this.supportedServices = supportedServices;
+	}
 	// Logging 
 	public void log() {
 		toString();
@@ -161,7 +168,7 @@ public class ApgRpmPackageExtension {
 	}
 	
 	public String getPortNr() {
-		return PortnrConvention.calculate(SUPPORTED_SERVICE_NAMES, getInstallTarget(), getServiceName()); 
+		return PortnrConvention.calculate(getSupportedServices(), getInstallTarget(), getServiceName()); 
 	}
 	
 	public String getEcmTargetSystemInd() {
