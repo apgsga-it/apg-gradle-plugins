@@ -5,9 +5,14 @@ import org.gradle.api.Project;
 import org.gradle.api.logging.Logger;
 import org.gradle.api.plugins.ExtensionContainer;
 import org.gradle.api.plugins.PluginContainer;
+import org.gradle.api.tasks.TaskContainer;
 
 import com.apgsga.gradle.rpm.pkg.extension.ApgRpmPackageExtension;
-import com.apgsga.gradle.rpm.pkg.task.ApgRpmPackageTask;
+import com.apgsga.gradle.rpm.pkg.tasks.ApgRpmPackageTask;
+import com.apgsga.gradle.rpm.pkg.tasks.AppConfigFileMergerTask;
+import com.apgsga.gradle.rpm.pkg.tasks.ResourceFileMergerTask;
+import com.apgsga.gradle.rpm.pkg.tasks.RpmCopyScriptsTask;
+import com.apgsga.gradle.rpm.pkg.tasks.TemplateDirCopyTask;
 
 public class ApgRpmPackagePlugin  implements Plugin<Project> {
 
@@ -16,8 +21,13 @@ public class ApgRpmPackagePlugin  implements Plugin<Project> {
 		final ExtensionContainer ext = project.getExtensions();
 		final Logger logger = project.getLogger();
 		final PluginContainer plugins = project.getPlugins();
-		ext.create("apgRpmPackage", ApgRpmPackageExtension.class, project);
-		project.getTasks().create("apgRpmPackage", ApgRpmPackageTask.class);
+		ext.create("apgRpmPackage", ApgRpmPackageExtension.class);
+		TaskContainer tasks = project.getTasks();
+		tasks.register("templateDirCopy", TemplateDirCopyTask.class);
+		tasks.register("mergeResourcePropertyFiles", ResourceFileMergerTask.class);
+		tasks.register("mergeAppConfigPropertyFiles", AppConfigFileMergerTask.class);
+		tasks.register("copyRpmScripts", RpmCopyScriptsTask.class);
+		tasks.register("apgRpmPackage", ApgRpmPackageTask.class);
 		
 	}
 

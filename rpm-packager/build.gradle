@@ -10,7 +10,16 @@ version = '0.1'
 
 description 'Provides a opinated configuration and application for publishing artifacts like rpm, tar.gz'
 
-
+sourceSets {
+	main {
+		java {
+			srcDirs = []
+		}
+		groovy {
+			srcDirs = ['src/main/groovy', 'src/main/java']
+		}
+	}
+}
 
 repositories {
 	mavenLocal()
