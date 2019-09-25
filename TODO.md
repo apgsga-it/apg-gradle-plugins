@@ -31,12 +31,13 @@
 - [ ] rpm-packager : copy binary dependencies to lib
 - [ ] rpm-packager : ospackage resp buildrpm wrapper 
 - [ ] rpm-packager : test project zum Testen
+- [ ] rpm-packager : review konfigurations DSL
 - [ ] Build Plugin's in Repo deployen -> eigenes Repository 
 - [ ] gradle copy tasks get a : is not up-to-date because:  No history is available. ->  Investigate.
 - [ ] Discuss and Define How best to configure defined service Names for Portnr Calculation.
-- [ ] gradle tasks : migrate from create to register api
-- [ ] Estabilish Plugin Builds on jenkins.apgsga.ch
-- [ ] Migrate to new then 5.0 
+- [ ] WIP: gradle tasks : migrate from create to register api
+- [x] Estabilish Plugin Builds on jenkins.apgsga.ch
+- [ ] Migrate to newer Gradle Version then 5.0 
 
 
 
