@@ -12,6 +12,7 @@ import com.apgsga.gradle.rpm.pkg.extension.ApgRpmPackageExtension;
 import com.apgsga.gradle.rpm.pkg.tasks.ApgRpmPackageTask;
 import com.apgsga.gradle.rpm.pkg.tasks.AppConfigFileMergerTask;
 import com.apgsga.gradle.rpm.pkg.tasks.AppResourcesCopyTask;
+import com.apgsga.gradle.rpm.pkg.tasks.BinariesCopyTask;
 import com.apgsga.gradle.rpm.pkg.tasks.ResourceFileMergerTask;
 import com.apgsga.gradle.rpm.pkg.tasks.RpmScriptsCopyTask;
 import com.apgsga.gradle.rpm.pkg.tasks.TemplateDirCopyTask;
@@ -33,7 +34,9 @@ public class ApgRpmPackagePlugin  implements Plugin<Project> {
 		rpmCopyAndExpandTask.configure( task -> task.dependsOn(templateDirCopyTask));
 		TaskProvider<AppResourcesCopyTask> appResourcesCopyAndExpandTask = tasks.register("copyAppResources", AppResourcesCopyTask.class);
 		appResourcesCopyAndExpandTask.configure(task -> task.dependsOn(templateDirCopyTask,resourceMergeTask,appConfigMergeTask));
-		tasks.register("apgRpmPackage", ApgRpmPackageTask.class);
+		TaskProvider<BinariesCopyTask> binariesCopyTask = tasks.register("copyAppBinaries", BinariesCopyTask.class);
+		binariesCopyTask.configure(task -> task.dependsOn(appResourcesCopyAndExpandTask));
+		tasks.register("apgRpmPackage", ApgRpmPackageTask.class); 
 		
 	}
 

@@ -19,8 +19,8 @@ public class ApgRpmPackageExtension {
 	private static final String DATAACCESS_STRATEGIE_DEFAULT = "TRX_PER_OP_WITH_STANDING_USRCRED_CONNECTION";
 	private static final String APP_CONFIG_FILTER_DEFAULT = "webui:general";
 	private static final String RESOURCE_FILTER_DEFAULT = "serviceport:it21db-webui:ibdsdb-jadas:ecmservice";
-	private static final String SEC_DEP_DEFAULT = "com.apgsga.it21.ui.mdt:jadas-framework-starter:9.1.0.ADMIN-UIMIG-SNAPSHOT";
-	private static final String FIRST_DEP_DEFAULT = "com.apgsga.it21.ui.mdt:jadas-app-starter:9.1.0.ADMIN-UIMIG-SNAPSHOT";
+	private static final String SEC_DEP_DEFAULT = "com.apgsga.it21.ui.mdt:jadas-framework-starter:9.1.0.DIGIFLEX-SNAPSHOT";
+	private static final String FIRST_DEP_DEFAULT = "com.apgsga.it21.ui.mdt:jadas-app-starter:9.1.0.DIGIFLEX-SNAPSHOT";
 	private static final String TARGET_DEFAULT = "CHEI212";
 	private static final String MAIN_PRG_DEFAULT = "com.apgsga.it21.ui.webapp.Webapp";
 	private static final String SERVICE_NAME_DEFAULT = "jadas";
