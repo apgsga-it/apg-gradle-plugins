@@ -51,3 +51,15 @@ apgLocalRepo {
 }
 ```
 
+## generic-publish
+
+Generic Plugin is a Plugin for uploading tar.gz , rpm etc artefacts to a binary Repository. It supports currently uploading only to a Artifactory Repository and a local Directory. For uploading to Artifactory it uses the https://github.com/jfrog/artifactory-client-java Rest Client. 
+
+```
+apgGenericPublishConfig {
+				artefactFile = "${tarToPublish.absolutePath}"
+				local()
+				artifactory()
+}
+```
+
