@@ -7,7 +7,7 @@ import org.gradle.api.logging.Logger;
 
 public class ApgGenericPublish {
 
-	protected final Project project;
+	private final Project project;
 	private String artefactFile;
 	private boolean publishLocal = false;
 	private boolean publishRemote = false;

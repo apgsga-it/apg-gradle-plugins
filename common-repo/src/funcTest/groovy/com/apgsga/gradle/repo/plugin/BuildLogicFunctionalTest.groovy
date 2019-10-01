@@ -76,6 +76,8 @@ class BuildLogicFunctionalTest extends Specification {
                 id 'com.apgsga.common.repo' 
             }
 			apgArtifactoryRepo {
+		        releaseRepoName = "YYYYY"
+				snapshotRepoName ="BBBBB"
 				repoBaseUrl = "xxxx"
 				repoName = "remoteRepoName"
 				user = "abc"
