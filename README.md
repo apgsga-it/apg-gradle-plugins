@@ -84,3 +84,13 @@ apgGenericPublishConfig {
 ```
 The configuration is applied from the common-repo
 
+So this is possible:
+```
+apgGenericPublishConfig {
+  artefactFile = "${tarToPublish.absolutePath}"
+  local()
+}
+apgLocalRepo.log()
+
+```
+
