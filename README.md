@@ -20,7 +20,7 @@ It is in the responsiblity of the applying Plugins, to use those extensions for 
 The current extension Values can be logged:
 
 ```
-    apgLocalRepo.log()
+apgLocalRepo.log()
 apgArtifactoryRepo.log()
 ```
 
@@ -40,14 +40,14 @@ The Defaults can be overwritten:
     id 'com.apgsga.common.repo' 
  }
 apgArtifactoryRepo {
-				repoBaseUrl = "xxxx"
-				repoName = "remoteRepoName"
-				user = "abc"
-				password = "def"
-			}
+ repoBaseUrl = "xxxx"
+ repoName = "remoteRepoName"
+ user = "abc"
+ password = "def"
+}
 apgLocalRepo {
-		repoBaseUrl = "otherdirectorty"
-		repoName = "testrepo"
+ repoBaseUrl = "otherdirectorty"
+ repoName = "testrepo"
 }
 ```
 
