@@ -94,3 +94,22 @@ apgLocalRepo.log()
 
 ```
 
+## maven-publish
+
+Is a Plugin, which dramatically shortscuts Gradle MavenPublications also Artifactory and to a local Repository:
+
+```
+   plugins {
+     id 'com.apgsga.maven.publish'  
+   }
+			apgMavenPublish {
+				artefactId = "plugin-test"
+				version = "1.0-SNAPSHOT"
+				groupId = "com.apgsga.gradle.plugins.test"
+				local()
+		  artifactory()
+   }
+```
+
+
+
