@@ -102,14 +102,15 @@ Is a Plugin, which dramatically shortscuts Gradle MavenPublications also Artifac
    plugins {
      id 'com.apgsga.maven.publish'  
    }
-			apgMavenPublish {
-				artefactId = "plugin-test"
-				version = "1.0-SNAPSHOT"
-				groupId = "com.apgsga.gradle.plugins.test"
-				local()
-		  artifactory()
+   apgMavenPublish {
+     artefactId = "plugin-test"
+     version = "1.0-SNAPSHOT"
+     groupId = "com.apgsga.gradle.plugins.test"
+     local()
+     artifactory()
    }
 ```
 
+The configuration for the repositories is applied from the common-repo
 
 
