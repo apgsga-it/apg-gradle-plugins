@@ -7,7 +7,9 @@ import org.gradle.api.plugins.ExtensionContainer;
 import org.gradle.api.plugins.PluginContainer;
 import org.gradle.api.tasks.TaskContainer;
 import org.gradle.api.tasks.TaskProvider;
+import org.gradle.api.tasks.bundling.Tar;
 
+import com.apgsga.gradle.rpm.pkg.actions.TarGzipDistAction;
 import com.apgsga.gradle.rpm.pkg.extension.ApgRpmPackageExtension;
 import com.apgsga.gradle.rpm.pkg.tasks.ApgRpmPackageTask;
 import com.apgsga.gradle.rpm.pkg.tasks.AppConfigFileMergerTask;
@@ -36,6 +38,8 @@ public class ApgRpmPackagePlugin  implements Plugin<Project> {
 		appResourcesCopyAndExpandTask.configure(task -> task.dependsOn(templateDirCopyTask,resourceMergeTask,appConfigMergeTask));
 		TaskProvider<BinariesCopyTask> binariesCopyTask = tasks.register("copyAppBinaries", BinariesCopyTask.class);
 		binariesCopyTask.configure(task -> task.dependsOn(appResourcesCopyAndExpandTask));
+		TaskProvider<Tar> tarGzipDistTask = tasks.register("tarGzipAppPkg", Tar.class, new TarGzipDistAction(project));
+		tarGzipDistTask.configure(task -> task.dependsOn(binariesCopyTask));
 		tasks.register("apgRpmPackage", ApgRpmPackageTask.class); 
 		
 	}

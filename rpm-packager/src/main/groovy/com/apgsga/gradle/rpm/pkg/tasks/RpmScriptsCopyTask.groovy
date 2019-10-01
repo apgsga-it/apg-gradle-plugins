@@ -1,8 +1,11 @@
 package com.apgsga.gradle.rpm.pkg.tasks
 
+import org.gradle.api.Action
 import org.gradle.api.DefaultTask
 import org.gradle.api.tasks.OutputDirectory
 import org.gradle.api.tasks.TaskAction
+import org.gradle.ide.xcode.tasks.internal.XcodeSchemeFile.ArchiveAction
+import org.gradle.internal.impldep.org.apache.maven.model.superpom.SuperPomProvider
 
 class RpmScriptsCopyTask extends DefaultTask {
 
@@ -15,7 +18,8 @@ class RpmScriptsCopyTask extends DefaultTask {
 	@TaskAction
 	def taskAction() {
 		def ex = project.extensions.apgRpmPackage
-		project.copy {
+		project.copy() {
+			
 			from "${project.buildDir}/template/rpm"
 			into "${project.buildDir}/rpm"
 			include "**/*.sh"
