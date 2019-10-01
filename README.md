@@ -114,3 +114,4 @@ Is a Plugin, which dramatically shortscuts Gradle MavenPublications also Artifac
 The configuration for the repositories is applied from the common-repo
 
 
+## rpm-publish
