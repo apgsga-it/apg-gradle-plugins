@@ -1,0 +1,36 @@
+buildscript {
+	repositories {
+		mavenLocal()
+		mavenCentral()
+	}
+	dependencies {
+		classpath 'com.apgsga.gradle:rpm-packager:0.3-SNAPSHOT'
+		classpath 'com.apgsga.gradle:generic-publish:0.1'
+	}
+}
+
+apply plugin: 'com.apgsga.rpm.package'
+apply plugin: 'com.apgsga.publish'
+
+// TODO (che, 2.10) support repositories alligned to common-repo
+repositories {
+	mavenLocal()
+}
+
+apgRpmPackage {
+	serviceName ="echoservice"
+	supportedServices = ["echoservice"]
+	dependencies = [
+		"com.apgsga:testapp-service:0.1-SNAPSHOT"
+	]
+	installTarget = "CHEI212"
+	mainProgramName  = "com.apgsga.testapp.TestappApplication"
+	version = "1.0"
+	releaseNr = "1"
+}
+
+apgGenericPublishConfig {
+	// TODO (che, 2.10 ) move this to Task 
+	artefactFile = "${buildDir}/distributions/echoservice-CHEI212-1.0-1.noarch.rpm"
+	local()
+}

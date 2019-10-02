@@ -1,7 +1,4 @@
-apply plugin: 'groovy'
-apply plugin: 'java-gradle-plugin'
-apply plugin: 'eclipse'
-apply plugin: 'maven-publish'
+apply from: "${projectDir}/../gradle-common/common-plugin.gradle"
 apply from: "${projectDir}/../gradle-common/integration-test.gradle"
 apply from: "${projectDir}/../gradle-common/functional-test.gradle"
 
@@ -10,13 +7,6 @@ version = '0.1'
 
 description 'Provides a opinated configuration and application for publishing artifacts like rpm, tar.gz'
 
-
-
-repositories {
-	mavenLocal()
-	mavenCentral()
-	jcenter()
-}
 
 dependencies {
 	testCompile gradleTestKit()
@@ -32,11 +22,6 @@ dependencies {
 
 }
 
-publishing {
-	repositories {
-		mavenLocal()
-	}
-}
 
 
 

@@ -48,4 +48,10 @@ public class ApgGenericPublish {
 		return publishRemote;
 	}
 
+	@Override
+	public String toString() {
+		return "ApgGenericPublish [artefactFile=" + artefactFile + ", publishLocal=" + publishLocal + ", publishRemote="
+				+ publishRemote + "]";
+	}
+
 }

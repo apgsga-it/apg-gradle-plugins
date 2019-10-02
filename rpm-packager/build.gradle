@@ -1,12 +1,10 @@
-apply plugin: 'groovy'
-apply plugin: 'java-gradle-plugin'
-apply plugin: 'eclipse'
-apply plugin: 'maven-publish'
+apply from: "${projectDir}/../gradle-common/common-plugin.gradle"
 apply from: "${projectDir}/../gradle-common/integration-test.gradle"
 apply from: "${projectDir}/../gradle-common/functional-test.gradle"
 
+
 group = 'com.apgsga.gradle'
-version = '0.1'
+version = '0.3-SNAPSHOT'
 
 description 'Provides a opinated configuration and application for publishing artifacts like rpm, tar.gz'
 
@@ -21,11 +19,23 @@ sourceSets {
 	}
 }
 
-repositories {
-	mavenLocal()
-	mavenCentral()
-	jcenter()
-}
+task packagingZip(type: Zip) {
+	from 'src/main/resources/packageing/'
+	include '*'
+	include '*/*' //to include contents of a folder present inside Reports directory
+	archiveName 'packageing.zip'
+	destinationDir(file('src/generated/resources'))
+ }
+ 
+ jar {
+	 from('src/generated/resources') {
+		include '*.zip'
+	 }
+  }
+ 
+ 
+ 
+
 
 dependencies {
 	testCompile gradleTestKit()
@@ -34,14 +44,10 @@ dependencies {
 	}
 	compile group: 'commons-io', name: 'commons-io', version: '2.6'
 	compile group: 'com.google.guava', name: 'guava', version: '20.0'
+	compile group: 'com.netflix.nebula', name: 'gradle-ospackage-plugin', version: '5.3.5'
 
 }
 
-publishing {
-	repositories {
-		mavenLocal()
-	}
-}
 
-
+processResources { dependsOn packagingZip} 
 

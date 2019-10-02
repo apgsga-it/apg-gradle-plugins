@@ -19,19 +19,18 @@
 - [ ] CHE Get rid of System.out.println logging
 - [x] Establish Rpm Service Packager Plugin Project -> rpm-packager und DSL, see other open TODO's
 - [ ] CHE Apg Dependency Recommender Plugin based on Gradle 5.x Dependency Recommendation Api, which fulfils current Patch Pipeline requirements and also merging of different Version Provider Sources : bom's , patchfile, with precedence ordering
-- [ ] JHE Apg Repository Configuration Plugin using also the common-repo Plugin
+- [ ] JHE Apg Repository Extension Plugin using also the common-repo Plugin
 - [ ] JHE Add mavenLocal to maven-publish 
 - [x] Verify maven-publish and generic-publish DSL against requirements and use cases 
 - [ ] ALL Verify Naming standards for Plugins : package, Plugin Names , Metadata etc
-- [ ] CHE Multi Project Build, but where each Plugin can be buildt seperately
-- [ ] CHE Packaging of rpm-packager template files : zip!? 
+- [x] CHE Multi Project Build, but where each Plugin can be buildt seperately
+- [x] CHE Packaging of rpm-packager template files : zip!? 
 - [x] rpm-packager first shot: 1 : 1 copy tasks of service-rpm-packager -> better merged into one? Resolution: no, actually the granluar Copy Task make it easier to Test the Plugin
 - [x] rpm-packager copy tasks should declare output 
 - [ ] JHE rpm-packager : retrieve repoBaseUrl from common-repo plugin
 - [x] CHE rpm-packager : copy binary dependencies to lib
-- [ ] CHE rpm-packager : ospackage resp buildrpm wrapper, first cut
-- [ ] JHE rpm-packager : ospackage resp buildrpm wrapper, completions
-- [ ] JHE rpm-packager : test project zum Testen
+- [x] CHE rpm-packager : ospackage resp buildrpm wrapper, first cut
+- [x] CHE rpm-packager : test project zum Testen
 - [ ] ALL rpm-packager : review konfigurations DSL
 - [ ] JHE Build Plugin's in Repo deployen -> eigenes Repository 
 - [ ] gradle copy tasks get a : is not up-to-date because:  No history is available. ->  Investigate.
@@ -40,8 +39,13 @@
 - [x] Estabilish Plugin Builds on jenkins.apgsga.ch
 - [ ] JHE Migrate to newer Gradle Version then 5.0 
 - [ ] JHE rpm-packager : BinariesCopyTask make configuration.excludes configurable via extension
-- [ ] rpm-packager : Validation & Review of Default Configuration
-- [ ] Apg Repository Plugin : remove direct repository configuration usage in Plugins and Functional Tests, use repository Plugin instead
+- [ ] ALL rpm-packager : Validation & Review of Default Configuration
+- [ ] JHE Apg Repository Plugin : remove direct repository configuration usage in Plugins and Functional Tests, use repository Plugin instead
+- [ ] Migratation current Gradle Build scripts , apart from Patch System to Apg Plugins
+= [ ] Use Apg Plugins for building them selfs
+- [ ] Tests with a multi project build 
+- [ ] maven-publish : attach and deploy sourcesJar - Task and Publish 
+- [ ] generic-public : probably does'nt need Extension -> move the properties to Task properties, with lazy evaluation of Archive File
 
 
 

@@ -1,0 +1,38 @@
+buildscript {
+	repositories {
+		mavenLocal()
+		mavenCentral()
+	}
+	dependencies {
+		classpath 'com.apgsga.gradle:maven-publish:0.1'
+	}
+}
+apply plugin: 'com.apgsga.maven.publish'
+apply plugin: 'java'
+
+group = 'com.apgsga.testservice'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '1.8'
+
+// TODO (che, 2.10) support repositories alligned to common-repo
+repositories {
+	mavenCentral() 
+}
+
+dependencies {
+	implementation 'org.projectlombok:lombok:1.16.18'
+	annotationProcessor 'org.projectlombok:lombok:1.16.18'
+	implementation 'org.springframework.boot:spring-boot-starter-web:1.4.7.RELEASE'
+	testImplementation 'org.springframework.boot:spring-boot-starter-test:1.4.7.RELEASE'
+}
+// TODO (che, 2.10) support mavenLocal()
+apgMavenPublish {
+	local()
+}
+// TDO (che, 2.10) as soon as apgMavenPublish supports mavenLocal this is not needed anymore
+publishing {
+	repositories {
+		mavenLocal()
+	}
+}
+

@@ -6,8 +6,9 @@ import org.gradle.api.tasks.TaskAction
 
 class BinariesCopyTask extends DefaultTask { 
 	
+	// TODO (che, 2.10 ) : Verifiy if and when needed (in general)
 	@OutputDirectory
-	public File getOutputDir() { return new File("${project.buildDir}/template") }
+	public File getOutputDir() { return new File("${project.buildDir}/app-pkg/app/lib") }
 
 	
 	@TaskAction

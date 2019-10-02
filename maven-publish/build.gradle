@@ -1,18 +1,12 @@
-apply plugin: 'groovy'
-apply plugin: 'java-gradle-plugin'
-apply plugin: 'maven-publish'
+apply from: "${projectDir}/../gradle-common/common-plugin.gradle"
 apply from: "${projectDir}/../gradle-common/integration-test.gradle"
 apply from: "${projectDir}/../gradle-common/functional-test.gradle"
+
 
 
 group = 'com.apgsga.gradle'
 version = '0.1'
 
-
-repositories {
-	mavenLocal()
-	mavenCentral()
-}
 
 dependencies {	 
     testCompile gradleTestKit()
@@ -21,11 +15,5 @@ dependencies {
 	}
 	compile 'com.apgsga.gradle:common-repo:+'
 	
-}
-
-publishing {
-	repositories {
-		mavenLocal()
-	}
 }
 

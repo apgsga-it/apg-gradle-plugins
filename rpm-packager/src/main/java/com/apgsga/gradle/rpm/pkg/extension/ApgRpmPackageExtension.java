@@ -7,6 +7,9 @@ import com.google.common.collect.Lists;
 
 public class ApgRpmPackageExtension {
 	
+	private static final String APG_OPSDEFAULT = "apg_ops";
+	private static final String RELEASENR_DEFAULT = "1";
+	private static final String VERSION_DEFAULT = "0.1";
 	private static final String JDK_DIST_REPO_NAME_DEFAULT = "apgPlatformDependencies";
 	private static final String REPO_BASE_URL_DEFAULT = "https://artifactory4t4apgsga.jfrog.io/artifactory4t4apgsga/";
 	private static final String JAVADIST_DEFAULT = "jdk-8u191-linux-x64.tar.gz";
@@ -45,6 +48,9 @@ public class ApgRpmPackageExtension {
 	// TODO (che, 25.9) : retrieve baseUrl from common-repo Plugin 
 	private String distRepoUrl = REPO_BASE_URL_DEFAULT + JDK_DIST_REPO_NAME_DEFAULT; 
 	private List<String> supportedServices = SUPPORTED_SERVICE_NAMES_DEFAULT; 
+	private String version = VERSION_DEFAULT; 
+	private String releaseNr = RELEASENR_DEFAULT; 
+	private String opsUserGroup = APG_OPSDEFAULT; 
 	
 	public String getServiceName() {
 		return serviceName;
@@ -143,6 +149,27 @@ public class ApgRpmPackageExtension {
 	}
 	public void setSupportedServices(List<String> supportedServices) {
 		this.supportedServices = supportedServices;
+	}
+	
+	public String getVersion() {
+		return version;
+	}
+	public void setVersion(String version) {
+		this.version = version;
+	}
+	public String getReleaseNr() {
+		return releaseNr;
+	}
+	public void setReleaseNr(String releaseNr) {
+		this.releaseNr = releaseNr;
+	}
+	
+	
+	public String getOpsUserGroup() {
+		return opsUserGroup;
+	}
+	public void setOpsUserGroup(String opsUserGroup) {
+		this.opsUserGroup = opsUserGroup;
 	}
 	// Logging 
 	public void log() {

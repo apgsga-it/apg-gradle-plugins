@@ -14,18 +14,10 @@ class TemplateDirCopyTaskTest extends Specification {
 	
     File testProjectDir
     File buildFile
-	@Shared File resourcesDir
-	
-    def setupSpec() {
-		resourcesDir = new File("src/main/resources/packageing")
-    } 
-	
+
 	def setup() {
 		testProjectDir = Files.createTempDirectory('gradletestproject').toFile(); 
 		println "Project Dir : ${testProjectDir.absolutePath}"
-		new AntBuilder().copy(todir: "${testProjectDir}/packageing") {
-			fileset(dir: resourcesDir)
-		}
 		buildFile = new File(testProjectDir,'build.gradle')
 	}
 
@@ -46,23 +38,23 @@ class TemplateDirCopyTaskTest extends Specification {
         then:
 		println "Result output: ${result.output}" 
         result.output.contains('')
-		def appDirSource = new File(resourcesDir,"app")
+		def appDirSource = new File(testProjectDir,"build/packageing/app")
 		def countSrcAppDir = 0
 		appDirSource.traverse {
 			countSrcAppDir++
 		}
-		def appDirTarget = new File(testProjectDir,"packageing/app")
+		def appDirTarget = new File(testProjectDir,"build/template/app")
 		def countTargetAppDir = 0
 		appDirSource.traverse {
 			countTargetAppDir++
 		}
 		countSrcAppDir == countTargetAppDir
-		def rpmDirSource = new File(resourcesDir,"rpm")
+		def rpmDirSource = new File(testProjectDir,"build/packageing/rpm")
 		def countSrcRpmDir = 0
 		rpmDirSource.traverse {
 			countSrcRpmDir++
 		}
-		def rpmDirTarget = new File(testProjectDir,"packageing/rpm")
+		def rpmDirTarget = new File(testProjectDir,"build/template/rpm")
 		def countTargetRpmDir = 0
 		rpmDirTarget.traverse {
 			countTargetRpmDir++

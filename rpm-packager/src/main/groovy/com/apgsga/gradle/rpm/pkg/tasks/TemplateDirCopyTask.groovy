@@ -13,7 +13,7 @@ class TemplateDirCopyTask extends DefaultTask {
 	@TaskAction
 	def taskAction() {
 		project.copy {
-			from 'packageing'
+			from "${project.buildDir}/packageing"
 			into "${project.buildDir}/template"
 			exclude '**/resources'
 			exclude '**/appconfigs'
