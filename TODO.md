@@ -46,6 +46,7 @@
 - [ ] Tests with a multi project build 
 - [ ] maven-publish : attach and deploy sourcesJar - Task and Publish 
 - [ ] generic-public : probably does'nt need Extension -> move the properties to Task properties, with lazy evaluation of Archive File
+- [ ] Support "own" properties for rpm-packager 
 
 
 
