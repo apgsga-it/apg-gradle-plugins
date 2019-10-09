@@ -22,9 +22,11 @@ public class ApgPublishPlugin implements Plugin<Project> {
 		final ExtensionContainer ext = project.getExtensions();
 		final Logger logger = project.getLogger();
 		final PluginContainer plugins = project.getPlugins();
-		ext.create("apgGenericPublishConfig", ApgGenericPublish.class, project);
+		ApgGenericPublish extension = ext.create("apgGenericPublishConfig", ApgGenericPublish.class, project);
 		logger.info("Applying Apg Common Repo Plugin");
 		plugins.apply(ApgCommonRepoPlugin.class);
-		project.getTasks().create("apgGenericPublish", ApgPublishTask.class);
+		ApgPublishTask publishTask = project.getTasks().create("apgGenericPublish", ApgPublishTask.class);
+		publishTask.setArtefactFile(extension.getArtefactFileProvider());
+
 	}
 }

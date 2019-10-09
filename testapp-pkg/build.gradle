@@ -23,6 +23,8 @@ apgRpmPackage {
 	dependencies = [
 		"com.apgsga:testapp-service:0.1-SNAPSHOT"
 	]
+	resourceFilters = "serviceport"
+	appConfigFilters = "general"
 	installTarget = "CHEI212"
 	mainProgramName  = "com.apgsga.testapp.TestappApplication"
 	version = "1.0"

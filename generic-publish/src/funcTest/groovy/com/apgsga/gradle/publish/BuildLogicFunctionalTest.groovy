@@ -35,9 +35,10 @@ class BuildLogicFunctionalTest extends Specification {
                 id 'com.apgsga.publish' 
             }
 			apgGenericPublishConfig {
-				artefactFile = "${rpmToPublish.absolutePath}" 
+				artefactFile = file("${rpmToPublish.absolutePath}") 
 				local()
 			}
+			apgGenericPublishConfig.log()
         """
 
         when:
@@ -51,105 +52,105 @@ class BuildLogicFunctionalTest extends Specification {
         result.output.contains('')
     }
 	
-	
-	def "publish rpm to remote works"() {
-		given:
-		buildFile << """
-            plugins {
-                id 'com.apgsga.publish' 
-            }
-			apgGenericPublishConfig {
-				artefactFile = "${rpmToPublish.absolutePath}" 
-				artifactory()
-			}
-        """
-
-		when:
-		def result = GradleRunner.create()
-			.withProjectDir(testProjectDir)
-			.withArguments('apgGenericPublish','--info', '--stacktrace')
-			.withPluginClasspath()
-			.build()
-		then:
-		println "Result output: ${result.output}"
-		result.output.contains('')
-	}
-	
-	def "publish rpm to both local and remote works"() {
-		given:
-		buildFile << """
-            plugins {
-                id 'com.apgsga.publish' 
-            }
-			apgGenericPublishConfig {
-				artefactFile = "${rpmToPublish.absolutePath}"
-				local()
-				artifactory()
-			}
-        """
-
-		when:
-		def result = GradleRunner.create()
-			.withProjectDir(testProjectDir)
-			.withArguments('apgGenericPublish','--info', '--stacktrace')
-			.withPluginClasspath()
-			.build()
-		then:
-		println "Result output: ${result.output}"
-		result.output.contains('')
-	}
-	
-	def "publish tarball to both local and remote works"() {
-		given:
-		buildFile << """
-            plugins {
-                id 'com.apgsga.publish' 
-            }
-			apgGenericPublishConfig {
-				artefactFile = "${tarToPublish.absolutePath}"
-				local()
-				artifactory()
-			}
-        """
-
-		when:
-		def result = GradleRunner.create()
-			.withProjectDir(testProjectDir)
-			.withArguments('apgGenericPublish','--info', '--stacktrace')
-			.withPluginClasspath()
-			.build()
-		then:
-		println "Result output: ${result.output}"
-		result.output.contains('')
-	}
-	
-	def "publish tarball to local with explicit repo config"() {
-		given:
-		buildFile << """
-            plugins {
-                id 'com.apgsga.publish' 
-            }
-			apgLocalRepo {
-				repoBaseUrl = "build"
-				repoName = "anothertestrepo"
-			}	
-			apgLocalRepo.log()
-			apgGenericPublishConfig {
-				artefactFile = "${tarToPublish.absolutePath}"
-				local()
-			}
-        """
-
-		when:
-		def result = GradleRunner.create()
-			.withProjectDir(testProjectDir)
-			.withArguments('apgGenericPublish','--info', '--stacktrace')
-			.withPluginClasspath()
-			.build()
-		then:
-		println "Result output: ${result.output}"
-		result.output.contains('')
-	}
+//	
+//	def "publish rpm to remote works"() {
+//		given:
+//		buildFile << """
+//            plugins {
+//                id 'com.apgsga.publish' 
+//            }
+//			apgGenericPublishConfig {
+//				artefactFile = file("${rpmToPublish.absolutePath}")
+//				artifactory()
+//			}
+//        """
+//
+//		when:
+//		def result = GradleRunner.create()
+//			.withProjectDir(testProjectDir)
+//			.withArguments('apgGenericPublish','--info', '--stacktrace')
+//			.withPluginClasspath()
+//			.build()
+//		then:
+//		println "Result output: ${result.output}"
+//		result.output.contains('')
+//	}
+//	
+//	def "publish rpm to both local and remote works"() {
+//		given:
+//		buildFile << """
+//            plugins {
+//                id 'com.apgsga.publish' 
+//            }
+//			apgGenericPublishConfig {
+//				artefactFile = file("${rpmToPublish.absolutePath}")
+//				local()
+//				artifactory()
+//			}
+//        """
+//
+//		when:
+//		def result = GradleRunner.create()
+//			.withProjectDir(testProjectDir)
+//			.withArguments('apgGenericPublish','--info', '--stacktrace')
+//			.withPluginClasspath()
+//			.build()
+//		then:
+//		println "Result output: ${result.output}"
+//		result.output.contains('')
+//	}
+//	
+//	def "publish tarball to both local and remote works"() {
+//		given:
+//		buildFile << """
+//            plugins {
+//                id 'com.apgsga.publish' 
+//            }
+//			apgGenericPublishConfig {
+//				artefactFile = file("${tarToPublish.absolutePath}")
+//				local()
+//				artifactory()
+//			}
+//        """
+//
+//		when:
+//		def result = GradleRunner.create()
+//			.withProjectDir(testProjectDir)
+//			.withArguments('apgGenericPublish','--info', '--stacktrace')
+//			.withPluginClasspath()
+//			.build()
+//		then:
+//		println "Result output: ${result.output}"
+//		result.output.contains('')
+//	}
+//	
+//	def "publish tarball to local with explicit repo config"() {
+//		given:
+//		buildFile << """
+//            plugins {
+//                id 'com.apgsga.publish' 
+//            }
+//			apgLocalRepo {
+//				repoBaseUrl = "build"
+//				repoName = "anothertestrepo"
+//			}	
+//			apgLocalRepo.log()
+//			apgGenericPublishConfig {
+//				artefactFile = file("${tarToPublish.absolutePath}")
+//				local()
+//			}
+//        """
+//
+//		when:
+//		def result = GradleRunner.create()
+//			.withProjectDir(testProjectDir)
+//			.withArguments('apgGenericPublish','--info', '--stacktrace')
+//			.withPluginClasspath()
+//			.build()
+//		then:
+//		println "Result output: ${result.output}"
+//		result.output.contains('')
+//	}
 	
 }
 
