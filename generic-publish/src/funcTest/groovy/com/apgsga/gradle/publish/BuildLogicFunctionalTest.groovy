@@ -24,6 +24,8 @@ class BuildLogicFunctionalTest extends Specification {
 	
 	def setup() {
 		testProjectDir = Files.createTempDirectory('gradletestproject').toFile();
+		File buildDir = new File(testProjectDir,'build')
+		buildDir.mkdirs();
 		println "Project Dir : ${testProjectDir.absolutePath}"
 		buildFile = new File(testProjectDir,'build.gradle')
 	}
