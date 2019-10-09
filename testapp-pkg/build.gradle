@@ -32,7 +32,6 @@ apgRpmPackage {
 }
 
 apgGenericPublishConfig {
-	// TODO (che, 2.10 ) move this to Task 
 	artefactFile =  buildRpm.outputs.getFiles().getSingleFile()
 	local()
 }
