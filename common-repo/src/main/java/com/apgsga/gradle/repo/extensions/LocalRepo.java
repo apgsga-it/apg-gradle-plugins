@@ -6,7 +6,6 @@ import org.gradle.api.logging.Logger;
 public class LocalRepo extends AbstractRepo {
 
 	private static final String TARGET_DIR_DEFAULT = "maventestrepo";
-	private static final String LOCAL_REPO_BASE_DIR_DEFAULT = "build";
 
 	public LocalRepo(Project project) {
 		super(project);
@@ -14,7 +13,7 @@ public class LocalRepo extends AbstractRepo {
 
 	@Override
 	public String getDefaultRepoBaseUrl() {
-		return LOCAL_REPO_BASE_DIR_DEFAULT;
+		return project.getBuildDir().getAbsolutePath();
 	}
 
 	@Override

@@ -49,7 +49,7 @@ public class ApgPublishTask extends DefaultTask {
 	}
 
 	private UploadRepository configure(Repo repo, boolean publish) {
-		UploadRepositoryBuilder builder = RepositoryBuilderFactory.createFor(repo.getRepoBaseUrl());
+		UploadRepositoryBuilder builder = RepositoryBuilderFactory.createFor(repo.getRepoBaseUrl(),publish);
 		builder.setTargetRepo(repo.getRepoName());
 		builder.setUsername(repo.getUser());
 		builder.setPassword(repo.getPassword());

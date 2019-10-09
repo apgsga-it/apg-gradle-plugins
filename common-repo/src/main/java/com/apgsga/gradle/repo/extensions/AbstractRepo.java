@@ -3,7 +3,7 @@ package com.apgsga.gradle.repo.extensions;
 import org.gradle.api.Project;
 
 public abstract class AbstractRepo implements Repo {
-	private String repoBaseUrl = getDefaultRepoBaseUrl();
+	private String repoBaseUrl;
 	private String repoName = getDefaultRepoName();
 	private String releaseRepoName = getDefaultReleaseRepoName();
 	private String snapshotRepoName = getDefaultSnapshotRepoName();
@@ -15,8 +15,9 @@ public abstract class AbstractRepo implements Repo {
 		this.project = project;
 	}
 
+	// TODO (che, 9.10 ) : Implement this pattern preferably for all defaults
 	public String getRepoBaseUrl() {
-		return repoBaseUrl;
+		return repoBaseUrl == null ? getDefaultRepoBaseUrl() : repoBaseUrl; 
 	}
 
 	public void setRepoBaseUrl(String repoBaseUrl) {

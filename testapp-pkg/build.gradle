@@ -2,6 +2,7 @@ buildscript {
 	repositories {
 		mavenLocal()
 		mavenCentral()
+		jcenter()
 	}
 	dependencies {
 		classpath 'com.apgsga.gradle:rpm-packager:0.3-SNAPSHOT'
@@ -31,7 +32,12 @@ apgRpmPackage {
 	releaseNr = "1"
 }
 
+println buildRpm.archivePath
+println buildRpm.archivePath.class
+
 apgGenericPublishConfig {
-	artefactFile =  buildRpm.outputs.getFiles().getSingleFile()
+	artefactFile =  file ("${buildDir}/distributions/${apgRpmPackage.archiveName}")
 	local()
 }
+
+apgGenericPublishConfig.log()

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <projectDescription>
-	<name>service-rpm-packager</name>
-	<comment>Project service-rpm-packager created by Buildship.</comment>
+	<name>rpm-packager</name>
+	<comment>Provides a opinated configuration and application for publishing artifacts like rpm, tar.gz</comment>
 	<projects>
 	</projects>
 	<buildSpec>

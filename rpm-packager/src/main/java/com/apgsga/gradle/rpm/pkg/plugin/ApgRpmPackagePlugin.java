@@ -60,8 +60,6 @@ public class ApgRpmPackagePlugin implements Plugin<Project> {
 		osPackageConfigureTask.configure(task -> task.dependsOn(tarGzipDistTask));
 		Task buildRpmTask = tasks.findByName("buildRpm");
 		buildRpmTask.dependsOn(osPackageConfigureTask, rpmCopyAndExpandTask);
-		// TODO (che, 2. 10 ) : Probably not the correct place to do this
-		// buildRpmTask.setDirectory("${targetServiceDataDir}", 0775 );
 
 	}
 

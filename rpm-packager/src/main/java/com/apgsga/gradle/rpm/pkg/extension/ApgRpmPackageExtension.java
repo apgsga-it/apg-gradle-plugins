@@ -179,7 +179,7 @@ public class ApgRpmPackageExtension {
 	// Conventions 
 	
 	public String getTargetServiceName() {
-		return getServiceName() + "-" + getInstallTarget(); 
+		return "apg-" + getServiceName() + "-" + getInstallTarget(); 
 	}
 	
 	public String getTargetServiceExecDir() {
@@ -204,6 +204,11 @@ public class ApgRpmPackageExtension {
 	
 	public String getIbdsTargetSystemInd() {
 		return Character.toString(getInstallTarget().charAt(2)).toLowerCase(); 
+	}
+	
+	// TODO (che, 9.10) Avoid redundancy with buildRpm Task of netflix ospackage
+	public String getArchiveName() {
+		return getTargetServiceName() + "-" + getVersion() + "-" + getReleaseNr()+ ".noarch.rpm"; 
 	}
 	
 	@Override

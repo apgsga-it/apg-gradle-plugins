@@ -57,7 +57,7 @@ class ResourceFileMergerTask extends CommonPropertyFileMergerTask {
 	def taskAction() {
 		def resourceFilters = project.extensions.apgRpmPackage.resourceFilters
 		
-		mergePropertyFiles(project, resourceFilters, "packageing/resources","${project.buildDir}/template/app/conf/ops",'resource')
+		mergePropertyFiles(project, resourceFilters, "${project.buildDir}/packageing/resources","${project.buildDir}/template/app/conf/ops",'resource')
 	}
 }
 class AppConfigFileMergerTask extends CommonPropertyFileMergerTask {
@@ -68,6 +68,6 @@ class AppConfigFileMergerTask extends CommonPropertyFileMergerTask {
 	@TaskAction
 	def taskAction() {
 		def appConfigFilters = project.extensions.apgRpmPackage.appConfigFilters
-		mergePropertyFiles(project, appConfigFilters,"packageing/resources","${project.buildDir}/template/app/conf/app",'appconfig')
+		mergePropertyFiles(project, appConfigFilters,"${project.buildDir}/packageing/appconfigs","${project.buildDir}/template/app/conf/app",'appconfig')
 	}
 }

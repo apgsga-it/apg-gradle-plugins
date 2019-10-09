@@ -29,6 +29,10 @@ public class ApgGenericPublish {
 	public void setArtefactFile(File artefactFile) {
 		this.artefactFile.set(artefactFile);
 	}
+	
+	public void setArtefactFile(RegularFileProperty artefactFile) {
+		this.artefactFile = artefactFile;
+	}
 
 	public RegularFileProperty getArtefactFileProvider() {
 		return artefactFile;

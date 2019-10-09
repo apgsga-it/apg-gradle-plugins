@@ -36,8 +36,10 @@ public class FileRepository implements UploadRepository {
 		Preconditions.checkState(fileToUpload.isFile(), "File to Upload is'nt File");
 		Preconditions.checkState(fileToUpload.canRead(), "File to Upload is'nt readable");
 		File targetFile = new File(repoDir, fileName);
+		System.out.println("Uplaoding File: " + fileName + ", to: " + repoDir.getAbsolutePath()); 
 		try {
 			FileUtils.copyFile(fileToUpload, targetFile);
+			System.out.println("Uplaoding File: " + fileName + ", done"); 
 		} catch (IOException e) {
 			throw new RuntimeException(e);
 		}
