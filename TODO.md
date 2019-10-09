@@ -1,6 +1,6 @@
 # Todos
 
-- [x] Sepcific plugin development repo for each support typ / target
+- [x] Specific plugin development repo for each support typ / target
 - [x] Sepcific User for the automated Tests
 - [x] Refactor com.apgsga.gradle.publish.extension into seperate project, which can be used by different Plugin's
 - [x] Adopt current Publishing Plugin's to work with the common configuration
@@ -46,6 +46,7 @@
 - [ ] Tests with a multi project build 
 - [ ] maven-publish : attach and deploy sourcesJar - Task and Publish 
 - [ ] generic-public : probably does'nt need Extension -> move the properties to Task properties, with lazy evaluation of Archive File
+- [ ] Support "own" properties for rpm-packager 
 
 
 
