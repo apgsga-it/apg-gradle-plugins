@@ -33,6 +33,6 @@ apgRpmPackage {
 
 apgGenericPublishConfig {
 	// TODO (che, 2.10 ) move this to Task 
-	artefactFile = "${buildDir}/distributions/echoservice-CHEI212-1.0-1.noarch.rpm"
+	artefactFile =  buildRpm.outputs.getFiles().getSingleFile()
 	local()
 }
