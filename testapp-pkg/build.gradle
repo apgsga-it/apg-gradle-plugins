@@ -13,6 +13,12 @@ buildscript {
 apply plugin: 'com.apgsga.rpm.package'
 apply plugin: 'com.apgsga.publish'
 
+def installTarget = project.hasProperty('installTarget') ? project.property('installTarget') : "CHEI212"
+println "installTarget = ${installTarget}"
+def version = project.hasProperty('version') ? project.property('version') : "0.1-SNAPSHOT"
+println "version = ${version}"
+def releaseNr = project.hasProperty('releaseNr') ? project.property('releaseNr') : "1"
+println "releaseNr = ${releaseNr}"
 
 // TODO (che, 2.10) support repositories alligned to common-repo
 repositories {
@@ -28,9 +34,9 @@ apgRpmPackage {
 	resourceFilters = "serviceport"
 	appConfigFilters = "general"
   	servicePropertiesDir = "resources"
-	installTarget = "CHEI212"
+	installTarget = "${installTarget}"
 	mainProgramName  = "com.apgsga.testapp.TestappApplication"
-	version = "1.0"
+	version = "${releaseNr}"
 	releaseNr = "1"
 }
 
