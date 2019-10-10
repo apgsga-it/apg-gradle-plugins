@@ -3,6 +3,8 @@ package com.apgsga.gradle.rpm.pkg.extension;
 import java.util.Arrays;
 import java.util.List;
 
+import org.gradle.api.Project;
+
 import com.google.common.collect.Lists;
 
 public class ApgRpmPackageExtension {
@@ -53,7 +55,12 @@ public class ApgRpmPackageExtension {
 	private String releaseNr = RELEASENR_DEFAULT; 
 	private String opsUserGroup = APG_OPSDEFAULT; 
 	private String servicePropertiesDir = SERVICE_PROPERTIES_DIR_DEFAULT; 
+	private final Project project; 
 	
+	public ApgRpmPackageExtension(Project project) {
+		super();
+		this.project = project;
+	}
 	public String getServiceName() {
 		return serviceName;
 	}
@@ -182,7 +189,7 @@ public class ApgRpmPackageExtension {
 	}
 	// Logging 
 	public void log() {
-		toString();
+		project.getLogger().info(toString());
 	}
 	
 	// Conventions 

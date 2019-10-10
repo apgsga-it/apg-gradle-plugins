@@ -7,20 +7,25 @@ buildscript {
 	dependencies {
 		classpath 'com.apgsga.gradle:rpm-packager:0.3-SNAPSHOT'
 		classpath 'com.apgsga.gradle:generic-publish:0.1'
+		classpath 'org.hidetake:gradle-ssh-plugin:2.10.1'
+		classpath 'nu.studer:gradle-credentials-plugin:1.0.7'
 	}
 }
 
 apply plugin: 'com.apgsga.rpm.package'
 apply plugin: 'com.apgsga.publish'
+apply plugin: 'org.hidetake.ssh'
+apply plugin: 'nu.studer.credentials'
 
-def serviceName = project.hasProperty('serviceName') ? project.property('serviceName') : "echoservice"
-println "installTarget = ${installTarget}"
-def installTarget = project.hasProperty('installTarget') ? project.property('installTarget') : "CHEI212"
-println "installTarget = ${installTarget}"
-def version = project.hasProperty('version') ? project.property('version') : "0.1-SNAPSHOT"
-println "version = ${version}"
-def releaseNr = project.hasProperty('releaseNr') ? project.property('releaseNr') : "1"
-println "releaseNr = ${releaseNr}"
+project.ext {
+	serviceName = project.hasProperty('serviceName') ? project.property('serviceName') : "echoservice"
+	installTarget = project.hasProperty('installTarget') ? project.property('installTarget') : "CHEI212"
+    serviceVersion = project.hasProperty('serviceVersion') ? project.property('serviceVersion') : "1.0"
+	releaseNr = project.hasProperty('releaseNr') ? project.property('releaseNr') : "2"
+}
+println "serviceName = ${project.ext.serviceName}"
+println "installTarget = ${project.ext.installTarget}"
+println "serviceVersion = ${project.ext.serviceVersion}"
 
 // TODO (che, 2.10) support repositories alligned to common-repo
 repositories {
@@ -28,22 +33,21 @@ repositories {
 }
 
 apgRpmPackage {
-	serviceName ="echoservice"
-	supportedServices = ["echoservice"]
+	serviceName = project.ext.serviceName
+	supportedServices = [project.ext.serviceName ]
 	dependencies = [
 		"com.apgsga:testapp-service:0.1-SNAPSHOT"
 	]
 	resourceFilters = "serviceport"
 	appConfigFilters = "general"
   	servicePropertiesDir = "resources"
-	installTarget = "${installTarget}"
+	installTarget = project.ext.installTarget
 	mainProgramName  = "com.apgsga.testapp.TestappApplication"
-	version = "${releaseNr}"
-	releaseNr = "1"
+	version = project.ext.serviceVersion 
+	releaseNr = project.ext.releaseNr
 }
 
-println buildRpm.archivePath
-println buildRpm.archivePath.class
+apgRpmPackage.log()
 
 apgGenericPublishConfig {
 	artefactFile =  file ("${buildDir}/distributions/${apgRpmPackage.archiveName}")
@@ -51,3 +55,29 @@ apgGenericPublishConfig {
 }
 
 apgGenericPublishConfig.log()
+
+remotes {
+	dev {
+	  host = '192.168.1.53'
+	  user = credentials.deployUser
+	  password = credentials.deployUserPassword
+	}
+  }
+task deployRpm {
+	doLast {
+		ssh.run {
+		  session(remotes.dev) {
+			  put from: file("${buildDir}/distributions/${apgRpmPackage.archiveName}"), into: 'downloads'
+			  execute('ls -la downloads') { result ->
+				  println result
+				}
+			  def result = executeSudo 'rpm -qa | grep apg' , pty: true
+			  println result
+			  
+			  result = executeSudo "rpm -Uvh downloads/${apgRpmPackage.archiveName}" , pty: true
+			  println result
+		  }
+		}
+	}
+}
+

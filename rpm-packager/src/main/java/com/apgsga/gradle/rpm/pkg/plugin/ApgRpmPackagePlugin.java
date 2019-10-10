@@ -33,7 +33,7 @@ public class ApgRpmPackagePlugin implements Plugin<Project> {
 		final Logger logger = project.getLogger();
 		final PluginContainer plugins = project.getPlugins();
 		plugins.apply(OsPackagingPlugin.class);
-		ext.create("apgRpmPackage", ApgRpmPackageExtension.class);
+		ext.create("apgRpmPackage", ApgRpmPackageExtension.class, project);
 		TaskContainer tasks = project.getTasks();
 		TaskProvider<Copy> copyPackagingResourcesTask = tasks.register("copyPackagingResources", Copy.class,
 				new CopyResourcesToBuildDirAction(project));
