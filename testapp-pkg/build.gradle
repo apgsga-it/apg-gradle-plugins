@@ -13,6 +13,8 @@ buildscript {
 apply plugin: 'com.apgsga.rpm.package'
 apply plugin: 'com.apgsga.publish'
 
+def serviceName = project.hasProperty('serviceName') ? project.property('serviceName') : "echoservice"
+println "installTarget = ${installTarget}"
 def installTarget = project.hasProperty('installTarget') ? project.property('installTarget') : "CHEI212"
 println "installTarget = ${installTarget}"
 def version = project.hasProperty('version') ? project.property('version') : "0.1-SNAPSHOT"
