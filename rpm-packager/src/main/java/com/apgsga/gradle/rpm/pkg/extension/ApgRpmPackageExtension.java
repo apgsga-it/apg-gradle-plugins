@@ -7,6 +7,7 @@ import com.google.common.collect.Lists;
 
 public class ApgRpmPackageExtension {
 	
+	private static final String SERVICE_PROPERTIES_DIR_DEFAULT = "resources";
 	private static final String APG_OPSDEFAULT = "apg_ops";
 	private static final String RELEASENR_DEFAULT = "1";
 	private static final String VERSION_DEFAULT = "0.1";
@@ -51,6 +52,7 @@ public class ApgRpmPackageExtension {
 	private String version = VERSION_DEFAULT; 
 	private String releaseNr = RELEASENR_DEFAULT; 
 	private String opsUserGroup = APG_OPSDEFAULT; 
+	private String servicePropertiesDir = SERVICE_PROPERTIES_DIR_DEFAULT; 
 	
 	public String getServiceName() {
 		return serviceName;
@@ -171,6 +173,13 @@ public class ApgRpmPackageExtension {
 	public void setOpsUserGroup(String opsUserGroup) {
 		this.opsUserGroup = opsUserGroup;
 	}
+	
+	public String getServicePropertiesDir() {
+		return servicePropertiesDir;
+	}
+	public void setServicePropertiesDir(String servicePropertiesDir) {
+		this.servicePropertiesDir = servicePropertiesDir;
+	}
 	// Logging 
 	public void log() {
 		toString();
@@ -210,7 +219,6 @@ public class ApgRpmPackageExtension {
 	public String getArchiveName() {
 		return getTargetServiceName() + "-" + getVersion() + "-" + getReleaseNr()+ ".noarch.rpm"; 
 	}
-	
 	@Override
 	public String toString() {
 		return "ApgRpmPackageExtension [serviceName=" + serviceName + ", mainProgramName=" + mainProgramName
@@ -218,8 +226,12 @@ public class ApgRpmPackageExtension {
 				+ ", resourceFilters=" + resourceFilters + ", appConfigFilters=" + appConfigFilters
 				+ ", dataAccessStrategie=" + dataAccessStrategie + ", it21DbDaoLocations=" + it21DbDaoLocations
 				+ ", ibdsDbDaoLocations=" + ibdsDbDaoLocations + ", serverContextPath=" + serverContextPath
-				+ ", springProfiles=" + springProfiles + ", webEmbedded=" + webuiEmbedded + "]";
-	} 
+				+ ", springProfiles=" + springProfiles + ", webuiEmbedded=" + webuiEmbedded + ", javaDir=" + javaDir
+				+ ", javaDist=" + javaDist + ", distRepoUrl=" + distRepoUrl + ", supportedServices=" + supportedServices
+				+ ", version=" + version + ", releaseNr=" + releaseNr + ", opsUserGroup=" + opsUserGroup
+				+ ", servicePropertiesDir=" + servicePropertiesDir + "]";
+	}
+	
 	
 	
 

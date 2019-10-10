@@ -13,6 +13,7 @@ buildscript {
 apply plugin: 'com.apgsga.rpm.package'
 apply plugin: 'com.apgsga.publish'
 
+
 // TODO (che, 2.10) support repositories alligned to common-repo
 repositories {
 	mavenLocal()
@@ -26,6 +27,7 @@ apgRpmPackage {
 	]
 	resourceFilters = "serviceport"
 	appConfigFilters = "general"
+  	servicePropertiesDir = "resources"
 	installTarget = "CHEI212"
 	mainProgramName  = "com.apgsga.testapp.TestappApplication"
 	version = "1.0"

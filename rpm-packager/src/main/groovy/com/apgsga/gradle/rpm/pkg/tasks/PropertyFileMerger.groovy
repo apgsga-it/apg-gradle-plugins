@@ -12,7 +12,8 @@ import org.slf4j.LoggerFactory
 
 abstract class CommonPropertyFileMergerTask extends DefaultTask {
 	
-	protected static void mergePropertyFiles(Project project, filters, from, to, propertyFile) {
+
+	protected static void mergePropertyFiles(Project project, filters, from, to, servicePropertiesDir, propertyFile) {
 		  
 		  def LOGGER = project.getLogger(); 
 		  
@@ -44,7 +45,18 @@ abstract class CommonPropertyFileMergerTask extends DefaultTask {
 			  }
 		  }
 		  LOGGER.info("Merge Done with includeFilters: ${includeFilters}, merging ${propertyFile}.properties")
-		  
+		  LOGGER.info("Merging Service specific properties from : ${servicePropertiesDir}, into ${propertyFile}.properties")
+		  files = project.fileTree(dir : "${servicePropertiesDir}", includes: ["**/${propertyFile}.properties"] ).filter { it.isFile() }.files.forEach {
+			   LOGGER.info "Processing ${propertyFile} file ${it.path}"
+			  
+			   project.file(it.path).withInputStream {
+				   mergeResourcePropertiesFile.append it.getText()
+				   mergeResourcePropertiesFile.append "\n"
+				   mergeResourcePropertiesFile.append "\n"
+  
+			  }
+		  }
+		  LOGGER.info("Merging Service specific properties done.")
 	  }
 }
 
@@ -56,8 +68,8 @@ class ResourceFileMergerTask extends CommonPropertyFileMergerTask {
 	@TaskAction
 	def taskAction() {
 		def resourceFilters = project.extensions.apgRpmPackage.resourceFilters
-		
-		mergePropertyFiles(project, resourceFilters, "${project.buildDir}/packageing/resources","${project.buildDir}/template/app/conf/ops",'resource')
+		def servicePropertiesDir = project.extensions.apgRpmPackage.servicePropertiesDir
+		mergePropertyFiles(project, resourceFilters, "${project.buildDir}/packageing/resources","${project.buildDir}/template/app/conf/ops","${project.projectDir}/${servicePropertiesDir}",'resource')
 	}
 }
 class AppConfigFileMergerTask extends CommonPropertyFileMergerTask {
@@ -68,6 +80,7 @@ class AppConfigFileMergerTask extends CommonPropertyFileMergerTask {
 	@TaskAction
 	def taskAction() {
 		def appConfigFilters = project.extensions.apgRpmPackage.appConfigFilters
-		mergePropertyFiles(project, appConfigFilters,"${project.buildDir}/packageing/appconfigs","${project.buildDir}/template/app/conf/app",'appconfig')
+		def servicePropertiesDir = project.extensions.apgRpmPackage.servicePropertiesDir
+		mergePropertyFiles(project, appConfigFilters,"${project.buildDir}/packageing/appconfigs","${project.buildDir}/template/app/conf/app","${project.projectDir}/${servicePropertiesDir}",'appconfig')
 	}
 }
