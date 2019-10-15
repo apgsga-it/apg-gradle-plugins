@@ -10,7 +10,9 @@ stage("Build and Install ${params.SERVICENAME} for ${params.TARGET} on ${params.
     withCredentials([usernamePassword(credentialsId:'jadas-e-ssh', passwordVariable: 'passwd', usernameVariable: 'username')])   { 
         node {
         	git (url: 'https://github.com/apgsga-it/apg-gradle-plugins.git', branch: 'master') 
+        	sh 'pwd'
             sh 'cd testapp-pkg' 
+            sh 'pwd'
         	sh "ls -ll"
             sh "chmod +x ./gradlew"
             sh "./gradlew clean buildRpm deployRpm --info -PtargetHost=${params.TARGETHOST} -PsshUser=${username} -PsshPw=${passwd} -PinstallTarget=${params.TARGET} -PserviceName=${params.TARGET} -Pversion=${params.VERSION} -PreleaseNr=200${env.BUILD_NUMBER}"
