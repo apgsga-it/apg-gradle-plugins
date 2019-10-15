@@ -15,7 +15,6 @@ stage("Build and Install ${params.SERVICENAME} for ${params.TARGET} on ${params.
         node {
         	git (url: "${params.REPO}", branch: "${params.BRANCH}") 
             dir "${params.MODULE}"
-            sh 'pwd'
         	sh "ls -ll"
             sh "chmod +x ./gradlew"
             sh "./gradlew clean buildRpm deployRpm --info -PtargetHost=z-PsshUser=${username} -PsshPw=${passwd} -PinstallTarget=${params.TARGET} -PserviceName=${params.TARGET} -Pversion=${params.VERSION} -PreleaseNr=200${env.BUILD_NUMBER}"
