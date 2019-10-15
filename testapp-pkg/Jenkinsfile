@@ -11,16 +11,16 @@ parameters {
 }
 
 stage("Build and Install ${params.SERVICENAME} for ${params.TARGET} on ${params.TARGETHOST}") {
-	checkout changelog: false, poll: false, scm: [$class: 'GitSCM', branches: [[name: "${params.BRANCH}"]], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[url: "${params.REPO}"]]]            
-    withCredentials([usernamePassword(credentialsId:'jadas-e-ssh', passwordVariable: 'passwd', usernameVariable: 'username')])   { 
-        node {
-			dir "${params.MODULE}"
-        	sh "ls -ll"
-            sh "chmod +x ./gradlew"
+ node {
+		checkout changelog: false, poll: false, scm: [$class: 'GitSCM', branches: [[name: "${params.BRANCH}"]], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[url: "${params.REPO}"]]]        
+		dir "${params.MODULE}"
+    	sh "ls -ll"
+        sh "chmod +x ./gradlew"    
+    	withCredentials([usernamePassword(credentialsId:'jadas-e-ssh', passwordVariable: 'passwd', usernameVariable: 'username')])   { 
             sh "./gradlew clean buildRpm deployRpm --info -PtargetHost=z-PsshUser=${username} -PsshPw=${passwd} -PinstallTarget=${params.TARGET} -PserviceName=${params.TARGET} -Pversion=${params.VERSION} -PreleaseNr=200${env.BUILD_NUMBER}"
         }
         echo "Build and Install ${params.SERVICENAME} for ${params.TARGET} on ${params.TARGETHOST} done."
-    }
+   }
 }
 
 
