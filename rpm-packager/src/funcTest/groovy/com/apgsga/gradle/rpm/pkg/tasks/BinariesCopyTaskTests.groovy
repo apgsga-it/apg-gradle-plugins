@@ -37,10 +37,11 @@ class BinariesCopyTaskTests extends Specification {
             plugins {
                 id 'com.apgsga.rpm.package' 
             }
+		// The guava dependency is only for testing purposes, consider to be likely found in mavenCentral()
         apgRpmPackage {
 			serviceName ="testapp"
 			supportedServices = ["testapp"]
-		    dependencies = ["com.apgsga.vk.digiflex:apg-vk-digiflex-web:9.1.0.DIGIFLEX-SNAPSHOT"]
+		    dependencies = ["com.google.guava:guava:+"]
             installTarget = "CHTX211"
 			mainProgramName  = "com.apgsga.test.SomeMain"
          }
