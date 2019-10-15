@@ -4,7 +4,6 @@ include ':generic-publish'
 include ':maven-publish'
 include ':rpm-packager'
 include ':testapp-service'
-include ':testapp-pkg'
 include ':gradle-common'
 include ':repo-config'
 
