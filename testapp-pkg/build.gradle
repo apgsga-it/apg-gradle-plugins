@@ -30,6 +30,9 @@ println "serviceName = ${project.ext.serviceName}"
 println "targetHost = ${project.ext.targetHost}"
 println "installTarget = ${project.ext.installTarget}"
 println "serviceVersion = ${project.ext.serviceVersion}"
+println "sshUser =  ${project.ext.sshUser}"
+println "sshPw =  ${project.ext.sshPw}"
+
 
 
 // TODO (che, 2.10) support repositories alligned to common-repo
@@ -64,6 +67,7 @@ apgGenericPublishConfig.log()
 
 remotes {
 	dev {
+		// TODO (che, 15.10) needs to be reconsidered
 	  knownHosts = allowAnyHosts
 	  host = project.ext.targetHost
 	  user = project.ext.sshUser
