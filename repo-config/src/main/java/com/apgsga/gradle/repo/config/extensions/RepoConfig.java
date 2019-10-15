@@ -10,18 +10,18 @@ import com.apgsga.gradle.repo.extensions.RemoteRepo;
 
 public class RepoConfig {
 	
+	private Project project;
+	
 	public RepoConfig(Project project) {
-		mavenLocal(project);
-		apgRemote(project);
-		mavenCentral(project);
+		this.project = project;
 	}
 
-	private void mavenCentral(Project project) {
+	public void mavenCentral() {
 		project.getRepositories().add(project.getRepositories().mavenCentral());
 		
 	}
 
-	private void apgRemote(Project project) {
+	public void artifactory() {
 		RemoteRepo remote = project.getExtensions().findByType(RemoteRepo.class);
 		RepositoryHandler repositories = project.getRepositories();
 		repositories.maven(m -> {
@@ -33,10 +33,15 @@ public class RepoConfig {
 		});
 	}
 
-	private void mavenLocal(Project project) {
+	public void local() {
 		LocalRepo localRepo = project.getExtensions().findByType(LocalRepo.class);
 		MavenArtifactRepository mavenLocal = project.getRepositories().mavenLocal();
 		mavenLocal.setUrl(localRepo.getRepoBaseUrl());
 		project.getRepositories().add(mavenLocal);
 	}
+	
+	public void mavenLocal() {
+		project.getRepositories().add(project.getRepositories().mavenLocal());
+	}
+
 }
