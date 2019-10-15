@@ -40,7 +40,7 @@ class BuildLogicFunctionalTest extends Specification {
 	                id 'com.apgsga.gradle.repo.config'
 	            }
 
-				apgRepoConfig {
+				apgRepository {
 					local()
 					mavenLocal()
 					artifactory()
@@ -80,7 +80,7 @@ class BuildLogicFunctionalTest extends Specification {
 	                id 'com.apgsga.gradle.repo.config'
 	            }
 
-				apgRepoConfig {
+				apgRepository {
 					local()
 					mavenCentral()
 				}
@@ -114,7 +114,17 @@ class BuildLogicFunctionalTest extends Specification {
 	def "Repo Config works with one concrete dependency"() {
 		given:
 			buildFile << """
+
+	            plugins {
+	                id 'com.apgsga.gradle.repo.config'
+	            }
+
 				apply plugin: 'java'
+
+				apgRepository {
+					local()
+					mavenCentral()
+				}
 				
 				dependencies {
 					implementation 'junit:junit:4.12'
