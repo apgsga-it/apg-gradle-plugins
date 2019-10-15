@@ -19,11 +19,15 @@ apply plugin: 'nu.studer.credentials'
 
 project.ext {
 	serviceName = project.hasProperty('serviceName') ? project.property('serviceName') : "echoservice"
+	targetHost = project.hasProperty('targetHost') ? project.property('targetHost') : "jadas-e.apgsga.ch"
+	sshUser = project.hasProperty('sshUser') ? project.hasProperty('sshUser') : credentials.deployUser
+	sshPw = project.hasProperty('sshPw') ? project.hasProperty('sshPw') : credentials.deployUserPassword
 	installTarget = project.hasProperty('installTarget') ? project.property('installTarget') : "CHEI212"
     serviceVersion = project.hasProperty('serviceVersion') ? project.property('serviceVersion') : "1.0"
 	releaseNr = project.hasProperty('releaseNr') ? project.property('releaseNr') : "2"
 }
 println "serviceName = ${project.ext.serviceName}"
+println "targetHost = ${project.ext.targetHost}"
 println "installTarget = ${project.ext.installTarget}"
 println "serviceVersion = ${project.ext.serviceVersion}"
 
@@ -34,6 +38,7 @@ repositories {
 
 apgRpmPackage {
 	serviceName = project.ext.serviceName
+	// TODO (che,15.10) jadas-e services
 	supportedServices = [project.ext.serviceName ]
 	dependencies = [
 		"com.apgsga:testapp-service:0.1-SNAPSHOT"
@@ -58,11 +63,12 @@ apgGenericPublishConfig.log()
 
 remotes {
 	dev {
-	  host = '192.168.1.53'
-	  user = credentials.deployUser
-	  password = credentials.deployUserPassword
+	  host = ext.targetHost
+	  user = ext.sshUser
+	  password = ext.sshPw
 	}
-  }
+}
+
 task deployRpm {
 	doLast {
 		ssh.run {
@@ -74,8 +80,8 @@ task deployRpm {
 			  def result = executeSudo 'rpm -qa | grep apg' , pty: true
 			  println result
 			  
-			  result = executeSudo "rpm -Uvh downloads/${apgRpmPackage.archiveName}" , pty: true
-			  println result
+			  //result = executeSudo "rpm -Uvh downloads/${apgRpmPackage.archiveName}" , pty: true
+			  //println result
 		  }
 		}
 	}

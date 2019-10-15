@@ -1,4 +1,4 @@
-# Todos
+# Todos (DEPRECATED, see Jira Issues)
 
 - [x] Specific plugin development repo for each support typ / target
 - [x] Sepcific User for the automated Tests
