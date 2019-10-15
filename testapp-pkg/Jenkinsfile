@@ -11,9 +11,9 @@ parameters {
 }
 
 stage("Build and Install ${params.SERVICENAME} for ${params.TARGET} on ${params.TARGETHOST}") {
+	checkout changelog: false, poll: false, scm: [$class: 'GitSCM', branches: [[name: "${params.BRANCH}"]], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[url: "${params.REPO}"]]]            
     withCredentials([usernamePassword(credentialsId:'jadas-e-ssh', passwordVariable: 'passwd', usernameVariable: 'username')])   { 
         node {
-			checkout changelog: false, poll: false, scm: [$class: 'GitSCM', branches: [[name: "${params.BRANCH}"]], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[url: "${params.REPO}"]]]            
 			dir "${params.MODULE}"
         	sh "ls -ll"
             sh "chmod +x ./gradlew"
