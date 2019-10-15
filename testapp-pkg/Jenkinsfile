@@ -4,18 +4,21 @@ parameters {
     string(name: 'VERSION', defaultValue: '0.1-SNAPSHOT', description: 'Version Nummer')
     string(name: 'SERVICENAME', defaultValue: 'echoservice', description: 'Name of Service')
     string(name: 'TARGETHOST', defaultValue: 'jades-e.apgsga.ch', description: 'DSN Name of Targethost')
+    string(name: 'REPO' , defaultValue: 'https://github.com/apgsga-it/apg-gradle-plugins.git', description: 'VCS Repo of module')
+    string(name: 'MODULE' , defaultValue: 'testapp-pkg', description: 'Build directory')
+    string(name: 'BRANCH' , defaultValue: 'master', description: 'Branch of Module')
+    
 }
 
 stage("Build and Install ${params.SERVICENAME} for ${params.TARGET} on ${params.TARGETHOST}") {
     withCredentials([usernamePassword(credentialsId:'jadas-e-ssh', passwordVariable: 'passwd', usernameVariable: 'username')])   { 
         node {
-        	git (url: 'https://github.com/apgsga-it/apg-gradle-plugins.git', branch: 'master') 
-        	sh 'pwd'
-            sh 'cd testapp-pkg' 
+        	git (url: params.REPO, branch: parms.BRANCH) 
+            dir params.MODULE 
             sh 'pwd'
         	sh "ls -ll"
             sh "chmod +x ./gradlew"
-            sh "./gradlew clean buildRpm deployRpm --info -PtargetHost=${params.TARGETHOST} -PsshUser=${username} -PsshPw=${passwd} -PinstallTarget=${params.TARGET} -PserviceName=${params.TARGET} -Pversion=${params.VERSION} -PreleaseNr=200${env.BUILD_NUMBER}"
+            sh "./gradlew clean buildRpm deployRpm --info -PtargetHost=z-PsshUser=${username} -PsshPw=${passwd} -PinstallTarget=${params.TARGET} -PserviceName=${params.TARGET} -Pversion=${params.VERSION} -PreleaseNr=200${env.BUILD_NUMBER}"
         }
         echo "Build and Install ${params.SERVICENAME} for ${params.TARGET} on ${params.TARGETHOST} done."
     }
