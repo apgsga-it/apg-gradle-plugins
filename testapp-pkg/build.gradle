@@ -70,8 +70,8 @@ remotes {
 		// TODO (che, 15.10) needs to be reconsidered
 	  knownHosts = allowAnyHosts
 	  host = project.ext.targetHost
-	  user = project.ext.sshUser
-	  password = project.ext.sshPw
+	  user = "che"
+	  password = "1mirian11"
 	}
 }
 
