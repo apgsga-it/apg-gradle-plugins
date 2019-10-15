@@ -13,6 +13,5 @@ project(':generic-publish').projectDir = "$rootDir/generic-publish" as File
 project(':maven-publish').projectDir = "$rootDir/maven-publish" as File
 project(':rpm-packager').projectDir = "$rootDir/rpm-packager" as File
 project(':testapp-service').projectDir = "$rootDir/testapp-service" as File
-project(':testapp-pkg').projectDir = "$rootDir/testapp-pkg" as File
 project(':gradle-common').projectDir = "$rootDir/gradle-common" as File
 project(':repo-config').projectDir = "$rootDir/repo-config" as File

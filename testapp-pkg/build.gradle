@@ -31,11 +31,6 @@ println "targetHost = ${project.ext.targetHost}"
 println "installTarget = ${project.ext.installTarget}"
 println "serviceVersion = ${project.ext.serviceVersion}"
 
-dependencies {
-	// Only for build ordering, the dependency is resolved through buildscript dependencies above
-   project(':rpm-packager')
-	
-}
 
 // TODO (che, 2.10) support repositories alligned to common-repo
 repositories {
