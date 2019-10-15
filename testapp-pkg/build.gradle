@@ -20,8 +20,8 @@ apply plugin: 'nu.studer.credentials'
 project.ext {
 	serviceName = project.hasProperty('serviceName') ? project.property('serviceName') : "echoservice"
 	targetHost = project.hasProperty('targetHost') ? project.property('targetHost') : "jadas-e.apgsga.ch"
-	sshUser = project.hasProperty('sshUser') ? project.hasProperty('sshUser') : credentials.deployUser
-	sshPw = project.hasProperty('sshPw') ? project.hasProperty('sshPw') : credentials.deployUserPassword
+	sshUser = project.hasProperty('sshUser') ? project.property('sshUser') : credentials.deployUser
+	sshPw = project.hasProperty('sshPw') ? project.property('sshPw') : credentials.deployUserPassword
 	installTarget = project.hasProperty('installTarget') ? project.property('installTarget') : "CHEI212"
     serviceVersion = project.hasProperty('serviceVersion') ? project.property('serviceVersion') : "1.0"
 	releaseNr = project.hasProperty('releaseNr') ? project.property('releaseNr') : "2"
