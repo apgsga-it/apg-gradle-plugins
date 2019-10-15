@@ -64,6 +64,7 @@ apgGenericPublishConfig.log()
 
 remotes {
 	dev {
+	  knownHosts = allowAnyHosts
 	  host = project.ext.targetHost
 	  user = project.ext.sshUser
 	  password = project.ext.sshPw
