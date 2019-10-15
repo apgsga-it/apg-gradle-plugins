@@ -13,14 +13,8 @@ parameters {
 stage("Build and Install ${params.SERVICENAME} for ${params.TARGET} on ${params.TARGETHOST}") {
  node {
 		checkout changelog: false, poll: false, scm: [$class: 'GitSCM', branches: [[name: "${params.BRANCH}"]], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[url: "${params.REPO}"]]]        
-		echo "Changing Directory to ${params.MODULE}"
-		dir "${params.MODULE}" {
-		    echo "Changing Directory to ${params.MODULE}"
-			def cmd = "chmod +x ./gradlew"
-			echo "Executing shell command ${cmd}"
-        	sh "${cmd}"  
-       		echo "Executing shell command ${cmd} done"  
-        	echo "About to withCredentials"
+		dir ("${params.MODULE}") {
+			sh "chmod +x ./gradlew"
     		withCredentials([usernamePassword(credentialsId:'jadas-e-ssh', passwordVariable: 'passwd', usernameVariable: 'username')])   { 
             	sh "./gradlew clean buildRpm deployRpm --info -PtargetHost=${params.TARGETHOST} -PsshUser=${username} -PsshPw=${passwd} -PinstallTarget=${params.TARGET} -PserviceName=${params.TARGET} -Pversion=${params.VERSION} -PreleaseNr=200${env.BUILD_NUMBER}"   
 			}
