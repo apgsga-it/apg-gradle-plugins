@@ -7,6 +7,7 @@ parameters {
     string(name: 'REPO' , defaultValue: 'https://github.com/apgsga-it/apg-gradle-plugins.git', description: 'VCS Repo of module')
     string(name: 'MODULE' , defaultValue: 'testapp-pkg', description: 'Build directory')
     string(name: 'BRANCH' , defaultValue: 'master', description: 'Branch of Module')
+    string(name: 'RELEASENR' , defaultValue: '1', description: 'Release Nr of Rpm')
     
 }
 
@@ -16,13 +17,11 @@ stage("Build and Install ${params.SERVICENAME} for ${params.TARGET} on ${params.
 		dir ("${params.MODULE}") {
 			sh "chmod +x ./gradlew"
     		withCredentials([usernamePassword(credentialsId:'jadas-e-ssh', passwordVariable: 'passwd', usernameVariable: 'username')])   { 
-    		    def cmd = './gradlew clean buildRpm deployRpm --info -PsshUser="$username" -PsshPw="$passwd"'
-    		    cmd <<  "-PtargetHost=${params.TARGETHOST}" 
-    		    cmd << "-PinstallTarget=${params.TARGET}"
-    		    cmd << "-PserviceName=${params.TARGET}"
-    		    cmd "-Pversion=${params.VERSION}"
-    		    cmd "-PreleaseNr=200{$env.BUILD_NUMBER}"
-            	sh cmd.toString()
+    		    def cmd = "./gradlew clean buildRpm deployRpm --info -PsshUser=${username} -PsshPw=${passwd}"
+    		    def cmdWithParameter = "${cmd} -PtargetHost=${params.TARGETHOST} -PinstallTarget=${params.TARGET} -PserviceName=${params.TARGET}" 
+    		    def cmdToExec = "${cmdWithParameter} -PserviceName=${params.SERVICENAME}  -Pversion=${params.VERSION} -PreleaseNr=${params.RELEASENR}"
+    		    echo cmdToExec.toString()
+            	sh cmdToExec
 
 			}
       }

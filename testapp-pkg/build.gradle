@@ -25,13 +25,14 @@ project.ext {
 	installTarget = project.hasProperty('installTarget') ? project.property('installTarget') : "CHEI212"
     serviceVersion = project.hasProperty('serviceVersion') ? project.property('serviceVersion') : "1.0"
 	releaseNr = project.hasProperty('releaseNr') ? project.property('releaseNr') : "2"
+	downloadDir = project.hasProperty('downloadDir') ? project.property('downloadDir') : "downloads"
 }
 println "serviceName = ${project.ext.serviceName}"
 println "targetHost = ${project.ext.targetHost}"
 println "installTarget = ${project.ext.installTarget}"
 println "serviceVersion = ${project.ext.serviceVersion}"
-println "sshUser =  ${project.ext.sshUser}"
-println "sshPw =  ${project.ext.sshPw}"
+println "releaseNr = ${project.ext.releaseNr}"
+println "downloadDir = ${project.ext.downloadDir}"
 
 
 
@@ -42,8 +43,8 @@ repositories {
 
 apgRpmPackage {
 	serviceName = project.ext.serviceName
-	// TODO (che,15.10) jadas-e services
-	supportedServices = [project.ext.serviceName ]
+	// TODO (che,15.10) jadas-e services, neecs to be discussed how this list is maintained
+	supportedServices = ["jadas", "digiflex","vkjadas", "interjadas", "interweb", project.ext.serviceName]
 	dependencies = [
 		"com.apgsga:testapp-service:0.1-SNAPSHOT"
 	]
@@ -67,8 +68,8 @@ apgGenericPublishConfig.log()
 
 remotes {
 	dev {
-		// TODO (che, 15.10) needs to be reconsidered
-	  knownHosts = allowAnyHosts
+	// TODO (che, 15.10) needs to be discussed, ssh policy of jenkins host
+	 //knownHosts = allowAnyHosts
 	  host = project.ext.targetHost
 	  user = project.ext.sshUser
 	  password = project.ext.sshPw
@@ -79,15 +80,11 @@ task deployRpm {
 	doLast {
 		ssh.run {
 		  session(remotes.dev) {
-			  put from: file("${buildDir}/distributions/${apgRpmPackage.archiveName}"), into: 'downloads'
-			  execute('ls -la downloads') { result ->
+			  put from: file("${buildDir}/distributions/${apgRpmPackage.archiveName}"), into: "${project.ext.downloadDir}"
+			  execute("ls -la ${project.ext.downloadDir}") { result ->
 				  println result
-				}
-			  def result = executeSudo 'rpm -qa | grep apg' , pty: true
-			  println result
-			  
-			  //result = executeSudo "rpm -Uvh downloads/${apgRpmPackage.archiveName}" , pty: true
-			  //println result
+			  }
+			  executeSudo "rpm -Uvh ${project.ext.downloadDir}/${apgRpmPackage.archiveName}" , pty: true
 		  }
 		}
 	}
