@@ -37,6 +37,7 @@ println "releaseNr = ${project.ext.releaseNr}"
 println "downloadDir = ${project.ext.downloadDir}"
 
 apgRepository {
+	mavenLocal()
 	mavenCentral()
 }
 
