@@ -33,13 +33,6 @@ println "serviceVersion = ${project.ext.serviceVersion}"
 println "sshUser =  ${project.ext.sshUser}"
 println "sshPw =  ${project.ext.sshPw}"
 
-
-
-// TODO (che, 2.10) support repositories alligned to common-repo
-repositories {
-	mavenLocal()
-}
-
 apgRpmPackage {
 	serviceName = project.ext.serviceName
 	// TODO (che,15.10) jadas-e services

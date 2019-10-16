@@ -34,9 +34,17 @@ class BinariesCopyTaskTests extends Specification {
     def "copyAppBinaries works"() {
         given:
         buildFile << """
+
             plugins {
-                id 'com.apgsga.rpm.package' 
+                id 'com.apgsga.rpm.package'
+				id 'com.apgsga.gradle.repo.config'				
             }
+
+			apgRepository {
+				mavenLocal()
+				mavenCentral()
+			}
+
 		// The guava dependency is only for testing purposes, consider to be likely found in mavenCentral()
         apgRpmPackage {
 			serviceName ="testapp"

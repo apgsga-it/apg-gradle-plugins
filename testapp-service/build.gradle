@@ -5,18 +5,21 @@ buildscript {
 	}
 	dependencies {
 		classpath 'com.apgsga.gradle:maven-publish:0.1'
+		classpath 'com.apgsga.gradle:repo-config:0.1'
 	}
 }
+
+
 apply plugin: 'com.apgsga.maven.publish'
+apply plugin: 'com.apgsga.gradle.repo.config'
 apply plugin: 'java'
 
 group = 'com.apgsga.testservice'
 version = '0.0.1-SNAPSHOT'
 sourceCompatibility = '1.8'
 
-// TODO (che, 2.10) support repositories alligned to common-repo
-repositories {
-	mavenCentral() 
+apgRepository {
+	mavenCentral()
 }
 
 dependencies {
