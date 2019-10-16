@@ -16,10 +16,13 @@ stage("Build and Install ${params.SERVICENAME} for ${params.TARGET} on ${params.
 		dir ("${params.MODULE}") {
 			sh "chmod +x ./gradlew"
     		withCredentials([usernamePassword(credentialsId:'jadas-e-ssh', passwordVariable: 'passwd', usernameVariable: 'username')])   { 
-            	sh '''
-            	 set +x
-            	 ./gradlew clean buildRpm deployRpm --info -PtargetHost="$params.TARGETHOST" -PsshUser="$username" -PsshPw="$passwd" -PinstallTarget="$params.TARGE"T -PserviceName="$params.TARGET" -Pversion="$params.VERSION" -PreleaseNr=200"$env.BUILD_NUMBER"}
-            	'''  
+    		    def cmd = './gradlew clean buildRpm deployRpm --info -PsshUser="$username" -PsshPw="$passwd'
+    		    cmd <<  "-PtargetHost=${params.TARGETHOST}" 
+    		    cmd << "-PinstallTarget=${params.TARGET}"
+    		    cmd << "-PserviceName=${params.TARGET}"
+    		    cmd "-Pversion=${params.VERSION}"
+    		    cmd "-PreleaseNr=200{$env.BUILD_NUMBER}"
+            	sh cmd
 			}
       }
       echo "Build and Install ${params.SERVICENAME} for ${params.TARGET} on ${params.TARGETHOST} done."
