@@ -34,13 +34,6 @@ println "serviceVersion = ${project.ext.serviceVersion}"
 println "releaseNr = ${project.ext.releaseNr}"
 println "downloadDir = ${project.ext.downloadDir}"
 
-
-
-// TODO (che, 2.10) support repositories alligned to common-repo
-repositories {
-	mavenLocal()
-}
-
 apgRpmPackage {
 	serviceName = project.ext.serviceName
 	// TODO (che,15.10) jadas-e services, neecs to be discussed how this list is maintained
