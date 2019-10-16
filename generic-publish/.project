@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <projectDescription>
-	<name>rpm-publish</name>
+	<name>generic-publish</name>
 	<comment>Provides a strongly opinated configuration and application for publishing rpm</comment>
 	<projects>
 	</projects>
