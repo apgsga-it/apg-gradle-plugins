@@ -22,7 +22,7 @@ stage("Build and Install ${params.SERVICENAME} for ${params.TARGET} on ${params.
     		    cmd << "-PserviceName=${params.TARGET}"
     		    cmd "-Pversion=${params.VERSION}"
     		    cmd "-PreleaseNr=200{$env.BUILD_NUMBER}"
-            	sh "${cmd}"
+            	sh "${cmd.toString()}"
 
 			}
       }
