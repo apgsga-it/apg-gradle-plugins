@@ -4,7 +4,12 @@ This is a example Packaging Project for a Echoservice, see ../testapp-service
 
 It is a Gradle Build, which uses the Apg rpm-packager plugin, the gradle-ssh-plugin & the gradle-credentials-plugin
 
-It produces from a number of parameters a RPM package for the service and installs it on the target host.
+It produces from a number of parameters a RPM package for a given service and installs it on the target host.
+
+## Plugins used apart from the Apg Plugins
+
+* gradle-ssh-plugin https://gradle-ssh-plugin.github.io/docs/
+* gradle-credentials-plugin: https://github.com/etiennestuder/gradle-credentials-plugin
 
 ## build.gradle
 
@@ -68,3 +73,14 @@ As additional parameters the JenkinsFile supports:
 
 This is a copy of the Jenkins Job Configruration file, which has been used for testing.
 It is a Jenkins Pipeline Job, which supports the Parameters of the Jenkinsfile and provides Defaults
+
+## Jenkins preconditions
+
+Depending how ssh is installed on the jenkins.apgsga.ch, the user under which jenkins is running may need a valid ssh host key for the target host: jadas-e.apgsga.h
+At least the gradle ssh plugin is configured to do strict knownhost checking. 
+
+## TODOS
+
+- [ ] Discuss and decide on the portnr algorithm, specifically on the maintenance of the services list
+- [ ] Is the gradle-ssh-plugin to be configured with strict knownhost checking for ssh
+- [ ] Support also cvs as scm apart from git
