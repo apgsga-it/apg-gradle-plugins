@@ -18,7 +18,7 @@ The build script build.script supports the following parameters
 * serviceName: The name of the service to be packaged and deployed 
 * targetHost: the host on which the rpm package is installed
 * sshUser: The ssh user with which the rpm will be deploy 
-* sshPw:
+* sshPw: The ssh user password
 * installTarget: The enviroment for which the service is packaged and installed
 * serviceVersion: the rpm package version 
 * releaseNr: the rpm release version 
@@ -62,12 +62,18 @@ The Jenkinsfile for a Jenkins Pipeline. The Pipeline basically mirrors the param
 It uses the Jenkins Pipeline Credentials Binding Plugin, see also https://jenkins.io/doc/pipeline/steps/credentials-binding/
 It assumed the existence of a usernamePassword credentialsId of : jadas-e-ssh
 
-Appart from the Credentials Handling it simply executes the Gradle build script 
-
 As additional parameters the JenkinsFile supports:
 
 * REPO: which is a Jenkins Pipeline scm url. Currently the script only supports Git repositories (GitScm). It supports any valid url for git clone. Examples for Urls: https://github.com/apgsga-it/apg-gradle-plugins.git, also ssh://chhex@192.168.1.34/Users/chhex/git/apg-gradle-plugins 
 * BRANCH: any valid git branch, eg master
+* MODULE: The vcs root directory of the module
+
+Appart from the Credentials Handling it simply: 
+* Checksout the the Module from the VCS (Git)
+* Changes into the Module Directory 
+* Paramertizes the Gradle Script invocation
+* Executes the Gradle Script
+
 
 ## config.xml 
 
