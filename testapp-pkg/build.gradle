@@ -17,7 +17,6 @@ apply plugin: 'com.apgsga.rpm.package'
 apply plugin: 'com.apgsga.publish'
 apply plugin: 'org.hidetake.ssh'
 apply plugin: 'nu.studer.credentials'
-apply plugin: 'com.apgsga.gradle.repo.config'
 
 project.ext {
 	serviceName = project.hasProperty('serviceName') ? project.property('serviceName') : "echoservice"
