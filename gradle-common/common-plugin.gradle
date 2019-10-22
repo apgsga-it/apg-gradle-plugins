@@ -16,3 +16,11 @@ publishing {
 		mavenLocal()
 	}
 }
+
+eclipse {
+	classpath {
+		downloadJavadoc = true
+		downloadSources = true
+	}
+}
+ 

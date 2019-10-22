@@ -19,7 +19,7 @@ class OsPackageConfigureTask extends DefaultTask {
 	@TaskAction
 	def taskAction() {
 		final ExtensionContainer ext = project.getExtensions();
-		def apgRpmPackage = project.extensions.apgRpmPackage
+		def apgRpmPackage = project.extensions.apgPackage
 		def osPackageExtention = ext.getByName("ospackage")
 		osPackageExtention.packageName = "${apgRpmPackage.targetServiceName}"
 		osPackageExtention.version = "${apgRpmPackage.version}"

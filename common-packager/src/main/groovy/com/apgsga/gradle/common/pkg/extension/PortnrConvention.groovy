@@ -1,4 +1,4 @@
-package com.apgsga.gradle.rpm.pkg.extension
+package com.apgsga.gradle.common.pkg.extension
 
 // TODO (che, 25.9 ) : verify and expand to support all Target Types (production etc)
 class PortnrConvention {

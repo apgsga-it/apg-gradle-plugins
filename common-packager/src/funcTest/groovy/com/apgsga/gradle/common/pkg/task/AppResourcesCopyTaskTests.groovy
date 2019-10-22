@@ -1,4 +1,4 @@
-package com.apgsga.gradle.rpm.pkg.tasks
+package com.apgsga.gradle.common.pkg.task
 
 import static groovy.io.FileType.*
 import static groovy.io.FileVisitResult.*
@@ -12,7 +12,7 @@ import static org.gradle.testkit.runner.TaskOutcome.*
 import java.nio.file.Files
 import java.nio.file.Path
 
-class BinariesCopyTaskTests extends Specification {
+class AppResourcesCopyTaskTests extends Specification {
 	
     File testProjectDir
     File buildFile
@@ -31,34 +31,18 @@ class BinariesCopyTaskTests extends Specification {
 		buildFile = new File(testProjectDir,'build.gradle')
 	}
 
-    def "copyAppBinaries works"() {
+    def "copyRpmScripts works"() {
         given:
         buildFile << """
-
             plugins {
-                id 'com.apgsga.rpm.package'
-				id 'com.apgsga.gradle.repo.config'				
+                id 'com.apgsga.common.package' 
             }
-
-			apgRepository {
-				mavenLocal()
-				mavenCentral()
-			}
-
-		// The guava dependency is only for testing purposes, consider to be likely found in mavenCentral()
-        apgRpmPackage {
-			serviceName ="testapp"
-			supportedServices = ["testapp"]
-		    dependencies = ["com.google.guava:guava:+"]
-            installTarget = "CHTX211"
-			mainProgramName  = "com.apgsga.test.SomeMain"
-         }
         """
 
         when:
         def result = GradleRunner.create()
             .withProjectDir(testProjectDir)
-            .withArguments('copyAppBinaries','--info', '--stacktrace')
+            .withArguments('copyAppResources','--info', '--stacktrace')
             .withPluginClasspath()
             .build()
         then:
@@ -77,6 +61,41 @@ class BinariesCopyTaskTests extends Specification {
 	
     }
 	
+	def "copyRpmScripts with explicit configuration works"() {
+		given:
+		buildFile << """
+            plugins {
+                id 'com.apgsga.common.package' 
+            }
+		 apgPackage {
+			serviceName ="testapp"
+			supportedServices = ["testapp"]
+            installTarget = "CHTX211"
+			mainProgramName  = "com.apgsga.test.SomeMain"
+         }
+        """
+
+		when:
+		def result = GradleRunner.create()
+			.withProjectDir(testProjectDir)
+			.withArguments('copyAppResources','--info', '--stacktrace')
+			.withPluginClasspath()
+			.build()
+		then:
+		println "Result output: ${result.output}"
+		result.output.contains('')
+		new File(testProjectDir,"build/app-pkg/app").exists()
+		def dirTarget = new File(testProjectDir,"build/app-pkg/app")
+		def cntFiles = 0
+		def cntFileVisitor = {
+			cntFiles++
+		}
+		dirTarget.traverse type: FILES , visit: cntFileVisitor
+		// TODO (che, 25.9) : haha, test is really terrific
+		cntFiles > 4
+		// TODO (che, 25.9) : test expected files
+	
+	}
 	
 }
 

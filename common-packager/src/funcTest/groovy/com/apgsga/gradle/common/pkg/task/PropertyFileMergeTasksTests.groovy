@@ -1,4 +1,4 @@
-package com.apgsga.gradle.rpm.pkg.tasks
+package com.apgsga.gradle.common.pkg.task
 
 import static groovy.io.FileType.*
 import static groovy.io.FileVisitResult.*
@@ -35,7 +35,7 @@ class PropertyFileMergeTasksTests extends Specification {
         given:
         buildFile << """
             plugins {
-                id 'com.apgsga.rpm.package' 
+                id 'com.apgsga.common.package' 
             }
         """
 
@@ -64,9 +64,9 @@ class PropertyFileMergeTasksTests extends Specification {
 		given:
 		buildFile << """
             plugins {
-                id 'com.apgsga.rpm.package' 
+                id 'com.apgsga.common.package' 
             }
-			apgRpmPackage {
+			apgPackage {
 				resourceFilters = "serviceport"
 				appConfigFilters = "general"
 				servicePropertiesDir = "resources"
@@ -108,9 +108,9 @@ class PropertyFileMergeTasksTests extends Specification {
 		given:
 		buildFile << """
             plugins {
-                id 'com.apgsga.rpm.package' 
+                id 'com.apgsga.common.package' 
             }
-			apgRpmPackage {
+			apgPackage {
 				resourceFilters = "serviceport"
 				appConfigFilters = "general"
 				servicePropertiesDir = "resources"
@@ -150,7 +150,7 @@ class PropertyFileMergeTasksTests extends Specification {
 		given:
 		buildFile << """
             plugins {
-                id 'com.apgsga.rpm.package' 
+                id 'com.apgsga.common.package' 
             }
         """
 

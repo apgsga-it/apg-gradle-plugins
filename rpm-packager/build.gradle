@@ -1,7 +1,7 @@
 apply from: "${projectDir}/../gradle-common/common-plugin.gradle"
 apply from: "${projectDir}/../gradle-common/integration-test.gradle"
 apply from: "${projectDir}/../gradle-common/functional-test.gradle"
-apply plugin: 'eclipse'
+
 
 group = 'com.apgsga.gradle'
 version = '0.3-SNAPSHOT'
@@ -20,30 +20,6 @@ sourceSets {
 }
 
 
-eclipse {
-	classpath {
-		downloadJavadoc = true
-		downloadSources = true
-	}
-}
-
-task packagingZip(type: Zip) {
-	from 'src/main/resources/packageing/'
-	include '*'
-	include '*/*' //to include contents of a folder present inside Reports directory
-	archiveName 'packageing.zip'
-	destinationDir(file('src/generated/resources'))
- }
- 
- jar {
-	 from('src/generated/resources') {
-		include '*.zip'
-	 }
-  }
- 
- 
- 
-
 dependencies {
 	testCompile gradleTestKit()
 	testCompile('org.spockframework:spock-core:1.1-groovy-2.4') {
@@ -53,9 +29,8 @@ dependencies {
 	compile group: 'com.google.guava', name: 'guava', version: '20.0'
 	compile group: 'com.netflix.nebula', name: 'gradle-ospackage-plugin', version: '5.3.5'
 	compile project(':repo-config')
+	compile project(':common-packager')
 
 }
 
-
-processResources { dependsOn packagingZip} 
 

@@ -36,7 +36,6 @@ class TarGzipTaskTests extends Specification {
         buildFile << """
             plugins {
                 id 'com.apgsga.rpm.package'
-				id 'com.apgsga.gradle.repo.config'
             }
 
 			apgRepository {
@@ -45,7 +44,7 @@ class TarGzipTaskTests extends Specification {
 			}
 
 		// The guava dependency is only for testing purposes, consider to be likely found in mavenCentral()
-        apgRpmPackage {
+        apgPackage {
 			serviceName ="testapp"
 			supportedServices = ["testapp"]
 		    dependencies = ["com.google.guava:guava:+"]

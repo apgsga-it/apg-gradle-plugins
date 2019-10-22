@@ -1,4 +1,4 @@
-package com.apgsga.gradle.rpm.pkg.tasks
+package com.apgsga.gradle.common.pkg.task
 
 import org.gradle.api.DefaultTask
 import org.gradle.api.tasks.OutputDirectory
@@ -13,7 +13,7 @@ class BinariesCopyTask extends DefaultTask {
 	
 	@TaskAction
 	def taskAction() {
-		def ex = project.extensions.apgRpmPackage
+		def ex = project.extensions.apgPackage
 		// TODO (che, 1.10.19) : make excludes configurable via extension
 		project.configurations {
 			serviceRuntime

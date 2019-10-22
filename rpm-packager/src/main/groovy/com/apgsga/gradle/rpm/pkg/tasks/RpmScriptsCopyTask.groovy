@@ -17,7 +17,7 @@ class RpmScriptsCopyTask extends DefaultTask {
 
 	@TaskAction
 	def taskAction() {
-		def ex = project.extensions.apgRpmPackage
+		def ex = project.extensions.apgPackage
 		project.copy() {
 			
 			from "${project.buildDir}/template/rpm"

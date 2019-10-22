@@ -1,4 +1,4 @@
-package com.apgsga.gradle.rpm.pkg.extension;
+package com.apgsga.gradle.common.pkg.extension;
 
 import java.util.Arrays;
 import java.util.List;
@@ -7,7 +7,7 @@ import org.gradle.api.Project;
 
 import com.google.common.collect.Lists;
 
-public class ApgRpmPackageExtension {
+public class ApgPackageExtension {
 	
 	private static final String SERVICE_PROPERTIES_DIR_DEFAULT = "resources";
 	private static final String APG_OPSDEFAULT = "apg_ops";
@@ -57,7 +57,7 @@ public class ApgRpmPackageExtension {
 	private String servicePropertiesDir = SERVICE_PROPERTIES_DIR_DEFAULT; 
 	private final Project project; 
 	
-	public ApgRpmPackageExtension(Project project) {
+	public ApgPackageExtension(Project project) {
 		super();
 		this.project = project;
 	}

@@ -32,7 +32,7 @@ class CopyResourcesToBuildDirActionTests extends Specification {
         when:
         def result = GradleRunner.create()
             .withProjectDir(testProjectDir)
-            .withArguments('copyPackagingResources','--info', '--stacktrace')
+            .withArguments('copyRpmPackagingResources','--info', '--stacktrace')
             .withPluginClasspath()
             .build()
         then:

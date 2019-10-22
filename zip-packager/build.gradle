@@ -1,0 +1,36 @@
+apply from: "${projectDir}/../gradle-common/common-plugin.gradle"
+apply from: "${projectDir}/../gradle-common/integration-test.gradle"
+apply from: "${projectDir}/../gradle-common/functional-test.gradle"
+
+
+group = 'com.apgsga.gradle'
+version = '0.3-SNAPSHOT'
+
+description 'Simple zip packager, which depends on common-packager'
+
+sourceSets {
+	main {
+		java {
+			srcDirs = []
+		}
+		groovy {
+			srcDirs = ['src/main/groovy', 'src/main/java']
+		}
+	}
+}
+
+
+dependencies {
+	testCompile gradleTestKit()
+	testCompile('org.spockframework:spock-core:1.1-groovy-2.4') {
+		exclude module: 'groovy-all'
+	}
+	compile group: 'commons-io', name: 'commons-io', version: '2.6'
+	compile group: 'com.google.guava', name: 'guava', version: '20.0'
+	compile project(':repo-config')
+	compile project(':common-packager')
+	
+
+}
+
+

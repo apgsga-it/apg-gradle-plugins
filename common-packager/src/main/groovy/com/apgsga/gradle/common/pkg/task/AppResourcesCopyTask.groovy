@@ -1,4 +1,4 @@
-package com.apgsga.gradle.rpm.pkg.tasks
+package com.apgsga.gradle.common.pkg.task
 
 import org.gradle.api.DefaultTask
 import org.gradle.api.tasks.OutputDirectory
@@ -15,7 +15,7 @@ class AppResourcesCopyTask extends DefaultTask {
 
 	@TaskAction
 	def taskAction() {
-		def ex = project.extensions.apgRpmPackage
+		def ex = project.extensions.apgPackage
 		project.copy {
 			from "${project.buildDir}/template/app"
 			into "$project.buildDir/app-pkg/app"
