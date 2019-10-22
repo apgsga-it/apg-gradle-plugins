@@ -1,7 +1,7 @@
 
 parameters {
     string(name: 'TARGET', defaultValue: 'CHEI212', description: 'Installations Target')
-    string(name: 'VERSION', defaultValue: '0.3-SNAPSHOT', description: 'Version Nummer')
+    string(name: 'VERSION', defaultValue: '0.1-SNAPSHOT', description: 'Version Nummer')
     string(name: 'SERVICENAME', defaultValue: 'echoservice', description: 'Name of Service')
     string(name: 'TARGETHOST', defaultValue: 'jades-e.apgsga.ch', description: 'DSN Name of Targethost')
     string(name: 'REPO' , defaultValue: 'https://github.com/apgsga-it/apg-gradle-plugins.git', description: 'VCS Repo of module')
@@ -19,7 +19,7 @@ stage("Build and Install ${params.SERVICENAME} for ${params.TARGET} on ${params.
     		withCredentials([usernamePassword(credentialsId:'jadas-e-ssh', passwordVariable: 'passwd', usernameVariable: 'username')])   { 
     		    def cmd = "./gradlew clean buildRpm deployRpm --info -PsshUser=${username} -PsshPw=${passwd}"
     		    def cmdWithParameter = "${cmd} -PtargetHost=${params.TARGETHOST} -PinstallTarget=${params.TARGET} -PserviceName=${params.TARGET}" 
-    		    def cmdToExec = "${cmdWithParameter} -PserviceName=${params.SERVICENAME}  -Pversion=${params.VERSION} -PreleaseNr=${params.RELEASENR}"
+    		    def cmdToExec = "${cmdWithParameter} -PserviceName=${params.SERVICENAME}  -PserviceVersion=${params.VERSION} -PreleaseNr=${params.RELEASENR}"
     		    echo cmdToExec.toString()
             	sh cmdToExec
 
