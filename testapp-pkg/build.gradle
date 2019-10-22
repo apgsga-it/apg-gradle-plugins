@@ -80,7 +80,7 @@ task deployRpm {
 	doLast {
 		ssh.run {
 		  session(remotes.dev) {
-			  put from: file("${buildDir}/distributions/${apgackage.archiveName}"), into: "${project.ext.downloadDir}"
+			  put from: file("${buildDir}/distributions/${apgPackage.archiveName}"), into: "${project.ext.downloadDir}"
 			  execute("ls -la ${project.ext.downloadDir}") { result ->
 				  println result
 			  }
