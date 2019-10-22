@@ -5,9 +5,9 @@ buildscript {
 		jcenter()
 	}
 	dependencies {
-		classpath 'com.apgsga.gradle:rpm-packager:0.3-SNAPSHOT'
+		classpath 'com.apgsga.gradle:rpm-service-packager:0.3-SNAPSHOT'
 		classpath 'com.apgsga.gradle:generic-publish:0.3-SNAPSHOT'
-		classpath 'com.apgsga.gradle:zip-packager:0.3-SNAPSHOT'
+		classpath 'com.apgsga.gradle:zip-service-packager:0.3-SNAPSHOT'
 		classpath 'org.hidetake:gradle-ssh-plugin:2.10.1'
 		classpath 'nu.studer:gradle-credentials-plugin:1.0.7'
 		classpath 'com.apgsga.gradle:repo-config:0.3-SNAPSHOT'
