@@ -6,14 +6,16 @@ buildscript {
 	}
 	dependencies {
 		classpath 'com.apgsga.gradle:rpm-packager:0.3-SNAPSHOT'
-		classpath 'com.apgsga.gradle:generic-publish:0.1'
+		classpath 'com.apgsga.gradle:generic-publish:0.3-SNAPSHOT'
+		classpath 'com.apgsga.gradle:zip-packager:0.3-SNAPSHOT'
 		classpath 'org.hidetake:gradle-ssh-plugin:2.10.1'
 		classpath 'nu.studer:gradle-credentials-plugin:1.0.7'
-		classpath 'com.apgsga.gradle:repo-config:0.1'
+		classpath 'com.apgsga.gradle:repo-config:0.3-SNAPSHOT'
 	}
 }
 
 apply plugin: 'com.apgsga.rpm.package'
+apply plugin: 'com.apgsga.zip.package'
 apply plugin: 'com.apgsga.publish'
 apply plugin: 'org.hidetake.ssh'
 apply plugin: 'nu.studer.credentials'

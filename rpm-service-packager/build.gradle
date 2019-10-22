@@ -2,7 +2,19 @@ apply from: "${projectDir}/../gradle-common/common-plugin.gradle"
 apply from: "${projectDir}/../gradle-common/integration-test.gradle"
 apply from: "${projectDir}/../gradle-common/functional-test.gradle"
 
+
 description 'Provides a opinated configuration and application for publishing artifacts like rpm, tar.gz'
+
+sourceSets {
+	main {
+		java {
+			srcDirs = []
+		}
+		groovy {
+			srcDirs = ['src/main/groovy', 'src/main/java']
+		}
+	}
+}
 
 
 dependencies {
@@ -10,15 +22,12 @@ dependencies {
 	testCompile('org.spockframework:spock-core:1.1-groovy-2.4') {
 		exclude module: 'groovy-all'
 	}
-    testCompile group: 'org.jasypt', name: 'jasypt', version: '1.9.3'
-	
-	compile 'org.jfrog.artifactory.client:artifactory-java-client-services:+'
-	compile project(':common-repo')
 	compile group: 'commons-io', name: 'commons-io', version: '2.6'
 	compile group: 'com.google.guava', name: 'guava', version: '20.0'
+	compile group: 'com.netflix.nebula', name: 'gradle-ospackage-plugin', version: '5.3.5'
+	compile project(':repo-config')
+	compile project(':common-service-packager')
 
 }
-
-
 
 

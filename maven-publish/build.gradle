@@ -2,10 +2,7 @@ apply from: "${projectDir}/../gradle-common/common-plugin.gradle"
 apply from: "${projectDir}/../gradle-common/integration-test.gradle"
 apply from: "${projectDir}/../gradle-common/functional-test.gradle"
 
-
-
-group = 'com.apgsga.gradle'
-version = '0.1'
+description 'Apg Maven Publish Plugin'
 
 
 dependencies {	 

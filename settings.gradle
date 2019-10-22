@@ -2,17 +2,17 @@ rootProject.name = 'apg-gradle-plugins'
 include ':common-repo'
 include ':generic-publish'
 include ':maven-publish'
-include ':common-packager'
-include ':rpm-packager'
-include ':zip-packager'
+include ':common-service-packager'
+include ':rpm-service-packager'
+include ':zip-service-packager'
 include ':gradle-common'
 include ':repo-config'
 
 project(':common-repo').projectDir = "$rootDir/common-repo" as File
 project(':generic-publish').projectDir = "$rootDir/generic-publish" as File
 project(':maven-publish').projectDir = "$rootDir/maven-publish" as File
-project(':common-packager').projectDir = "$rootDir/common-packager" as File
-project(':zip-packager').projectDir = "$rootDir/zip-packager" as File
-project(':rpm-packager').projectDir = "$rootDir/rpm-packager" as File
+project(':common-service-packager').projectDir = "$rootDir/common-service-packager" as File
+project(':zip-service-packager').projectDir = "$rootDir/zip-service-packager" as File
+project(':rpm-service-packager').projectDir = "$rootDir/rpm-service-packager" as File
 project(':gradle-common').projectDir = "$rootDir/gradle-common" as File
 project(':repo-config').projectDir = "$rootDir/repo-config" as File
