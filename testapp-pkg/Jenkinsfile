@@ -1,7 +1,7 @@
 
 parameters {
     string(name: 'TARGET', defaultValue: 'CHEI212', description: 'Installations Target')
-    string(name: 'VERSION', defaultValue: '0.1-SNAPSHOT', description: 'Version Nummer')
+    string(name: 'VERSION', defaultValue: '0.3-SNAPSHOT', description: 'Version Nummer')
     string(name: 'SERVICENAME', defaultValue: 'echoservice', description: 'Name of Service')
     string(name: 'TARGETHOST', defaultValue: 'jades-e.apgsga.ch', description: 'DSN Name of Targethost')
     string(name: 'REPO' , defaultValue: 'https://github.com/apgsga-it/apg-gradle-plugins.git', description: 'VCS Repo of module')
