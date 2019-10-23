@@ -4,7 +4,7 @@ import org.gradle.api.Project;
 
 public abstract class AbstractRepo implements Repo {
 	private String repoBaseUrl;
-	private String repoName = getDefaultRepoName();
+	private String repoName;
 	private String releaseRepoName = getDefaultReleaseRepoName();
 	private String snapshotRepoName = getDefaultSnapshotRepoName();
 	private String user = getDefaultUser();
@@ -25,7 +25,7 @@ public abstract class AbstractRepo implements Repo {
 	}
 
 	public String getRepoName() {
-		return repoName;
+		return repoName == null ? getDefaultRepoName() : repoName;
 	}
 
 	public void setRepoName(String repoName) {
@@ -33,7 +33,7 @@ public abstract class AbstractRepo implements Repo {
 	}
 
 	public String getUser() {
-		return user;
+		return user == null ? getDefaultUser() : user;
 	}
 
 	public void setUser(String user) {
@@ -61,7 +61,7 @@ public abstract class AbstractRepo implements Repo {
 	
 
 	public String getReleaseRepoName() {
-		return releaseRepoName;
+		return releaseRepoName == null ? getDefaultReleaseRepoName() : releaseRepoName;
 	}
 
 	public void setReleaseRepoName(String releaseRepoName) {
@@ -69,7 +69,7 @@ public abstract class AbstractRepo implements Repo {
 	}
 
 	public String getSnapshotRepoName() {
-		return snapshotRepoName;
+		return snapshotRepoName == null ? getDefaultSnapshotRepoName() : snapshotRepoName;
 	}
 
 	public void setSnapshotRepoName(String snapshotRepoName) {
@@ -78,8 +78,8 @@ public abstract class AbstractRepo implements Repo {
 
 	@Override
 	public String toString() {
-		return "[repoBaseUrl=" + repoBaseUrl + ", repoName=" + repoName + ", releaseRepoName="
-				+ releaseRepoName + ", snapshotRepoName=" + snapshotRepoName + ", user=" + user + ", password=xxxxxx"
+		return "[repoBaseUrl=" + getRepoBaseUrl() + ", repoName=" + getRepoName() + ", releaseRepoName="
+				+ getReleaseRepoName() + ", snapshotRepoName=" + getSnapshotRepoName() + ", user=" + getUser() + ", password=xxxxxx"
 				 + ", project=" + project + "]";
 	}
 

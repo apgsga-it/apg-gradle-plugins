@@ -6,8 +6,7 @@ import org.gradle.api.Project;
 
 public class ApgGuiPackageExtension {
 	
-	
-
+	private static final String VERSiON_DEFAULT = "1.0-SNAPSHOT";
 	private static final String JAVAOPTS_DEFAULT = "-Xms100m -Xmx2560m -Xincgc -XX:NewRatio=2";
 	private static final String RESOURCES_PATH_DEFAULT = "resources";
 	private static final String PKGNAME_DEFAULT = "it21gui";
@@ -16,7 +15,8 @@ public class ApgGuiPackageExtension {
 	// TODO (che,23.11) : we can also support more Directories here, also for ex with a absolute Path
 	private String resourcesPath = RESOURCES_PATH_DEFAULT; 
 	private String[] dependencies = new String[] {};
-	private String javaOpts = JAVAOPTS_DEFAULT; 
+	private String javaOpts = JAVAOPTS_DEFAULT;
+	private String version = VERSiON_DEFAULT; 
 	
 	private final Project project;
 
@@ -67,6 +67,22 @@ public class ApgGuiPackageExtension {
 	public void setJavaOpts(String javaOpts) {
 		this.javaOpts = javaOpts;
 	}
+	
+	
+
+	public String getVersion() {
+		return version;
+	}
+
+	public void setVersion(String version) {
+		this.version = version;
+	}
+	
+	// Standards 
+	
+	public String getArchiveName() {
+		return getPkgName() + "-" + getVersion() +  ".zip"; 
+	}
 
 	// Logging 
 	public void log() {
@@ -77,8 +93,10 @@ public class ApgGuiPackageExtension {
 	public String toString() {
 		return "ApgGuiPackageExtension [pkgName=" + pkgName + ", mainProgramm=" + mainProgramm + ", resourcesPath="
 				+ resourcesPath + ", dependencies=" + Arrays.toString(dependencies) + ", javaOpts=" + javaOpts
-				+ ", project=" + project + "]";
+				+ ", version=" + version + "]";
 	}
+
+	
 
 	
 }

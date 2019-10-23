@@ -23,9 +23,11 @@ public class RepoConfig {
 
 	public void artifactory() {
 		RemoteRepo remote = project.getExtensions().findByType(RemoteRepo.class);
+		project.getLogger().info("Using Artifactory with the following configuration");
+		remote.log();
 		RepositoryHandler repositories = project.getRepositories();
 		repositories.maven(m -> {
-			m.setUrl(remote.getRepoBaseUrl());
+			m.setUrl(remote.getRepoBaseUrl() + "/" + remote.getRepoName());
 			m.setName(remote.getRepoName());
 			PasswordCredentials credentials = m.getCredentials();
 			credentials.setUsername(remote.getUser());
@@ -35,6 +37,8 @@ public class RepoConfig {
 
 	public void local() {
 		LocalRepo localRepo = project.getExtensions().findByType(LocalRepo.class);
+		project.getLogger().info("Using Local Maven Repo with the following configuration");
+		localRepo.log();
 		MavenArtifactRepository mavenLocal = project.getRepositories().mavenLocal();
 		mavenLocal.setUrl(localRepo.getRepoBaseUrl());
 		project.getRepositories().add(mavenLocal);

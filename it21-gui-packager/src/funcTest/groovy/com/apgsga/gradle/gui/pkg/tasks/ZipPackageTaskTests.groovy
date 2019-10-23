@@ -41,6 +41,7 @@ class ZipPackageTaskTests extends Specification {
         apgPackage {
 			pkgName ="testuiapp"
 		    dependencies = ["com.google.guava:guava:+"]
+			version = "2.1-SNAPSHOT"
          }
 		 apgPackage.log()
         """
@@ -64,7 +65,7 @@ class ZipPackageTaskTests extends Specification {
 		// TODO (che, 25.9) : haha, test is really terrific
 		cntFiles > 4
 		// TODO (che, 25.9) : test expected files
-		new File(testProjectDir,"build/distributions/testuiapp.zip").exists()
+		new File(testProjectDir,"build/distributions/testuiapp-2.1-SNAPSHOT.zip").exists()
     }
 	
 	

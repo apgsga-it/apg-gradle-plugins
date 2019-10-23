@@ -25,6 +25,7 @@ class ZipPackageAction implements Action<Zip> {
 		zip.from("${project.buildDir}/${ex.pkgName}")
 		// TODO (che, 1.10 ) Verify 
 		zip.destinationDir = new File("${project.buildDir}/distributions")
-		zip.archiveName = "${ex.pkgName}.zip"
+		// TODO (che, 23.10) : Is this enough for Version?
+		zip.archiveName = "${ex.pkgName}-${ex.version}.zip"
 	}
 }
