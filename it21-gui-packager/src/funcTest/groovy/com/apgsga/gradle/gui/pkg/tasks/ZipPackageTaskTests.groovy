@@ -42,6 +42,7 @@ class ZipPackageTaskTests extends Specification {
 			pkgName ="testuiapp"
 		    dependencies = ["com.google.guava:guava:+"]
          }
+		 apgPackage.log()
         """
 
         when:

@@ -4,7 +4,7 @@ import org.gradle.api.DefaultTask
 import org.gradle.api.tasks.OutputDirectory
 import org.gradle.api.tasks.TaskAction
 
-class ResourcesCopyTask extends DefaultTask { 
+class SerivceResourcesCopyTask extends DefaultTask { 
 	
 	// TODO (che, 2.10 ) : Verifiy if and when needed (in general)
 	@OutputDirectory
