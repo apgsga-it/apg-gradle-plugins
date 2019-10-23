@@ -7,7 +7,7 @@ import org.gradle.api.Project;
 
 import com.google.common.collect.Lists;
 
-public class ApgPackageExtension {
+public class ApgCommonPackageExtension {
 	
 	private static final String SERVICE_PROPERTIES_DIR_DEFAULT = "resources";
 	private static final String APG_OPSDEFAULT = "apg_ops";
@@ -57,7 +57,7 @@ public class ApgPackageExtension {
 	private String servicePropertiesDir = SERVICE_PROPERTIES_DIR_DEFAULT; 
 	private final Project project; 
 	
-	public ApgPackageExtension(Project project) {
+	public ApgCommonPackageExtension(Project project) {
 		super();
 		this.project = project;
 	}

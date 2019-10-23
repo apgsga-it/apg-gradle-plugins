@@ -10,7 +10,7 @@ import org.gradle.api.tasks.TaskContainer;
 import org.gradle.api.tasks.TaskProvider;
 
 import com.apgsga.gradle.common.pkg.actions.CopyResourcesToBuildDirAction;
-import com.apgsga.gradle.common.pkg.extension.ApgPackageExtension;
+import com.apgsga.gradle.common.pkg.extension.ApgCommonPackageExtension;
 import com.apgsga.gradle.common.pkg.task.AppConfigFileMergerTask;
 import com.apgsga.gradle.common.pkg.task.AppResourcesCopyTask;
 import com.apgsga.gradle.common.pkg.task.BinariesCopyTask;
@@ -28,7 +28,7 @@ public class ApgCommonPackagePlugin implements Plugin<Project> {
 		final Logger logger = project.getLogger();
 		final PluginContainer plugins = project.getPlugins();
 		plugins.apply(ApgRepoConfigPlugin.class);
-		ext.create("apgPackage", ApgPackageExtension.class, project);
+		ext.create("apgPackage", ApgCommonPackageExtension.class, project);
 		TaskContainer tasks = project.getTasks();
 		TaskProvider<Copy> copyPackagingResourcesTask = tasks.register("copyCommonPackagingResources", Copy.class,
 				new CopyResourcesToBuildDirAction(project));

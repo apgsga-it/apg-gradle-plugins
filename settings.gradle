@@ -5,6 +5,7 @@ include ':maven-publish'
 include ':common-service-packager'
 include ':rpm-service-packager'
 include ':zip-service-packager'
+include ':it21-gui-packager'
 include ':gradle-common'
 include ':repo-config'
 
@@ -12,6 +13,7 @@ project(':common-repo').projectDir = "$rootDir/common-repo" as File
 project(':generic-publish').projectDir = "$rootDir/generic-publish" as File
 project(':maven-publish').projectDir = "$rootDir/maven-publish" as File
 project(':common-service-packager').projectDir = "$rootDir/common-service-packager" as File
+project(':it21-gui-packager').projectDir = "$rootDir/it21-gui-packager" as File
 project(':zip-service-packager').projectDir = "$rootDir/zip-service-packager" as File
 project(':rpm-service-packager').projectDir = "$rootDir/rpm-service-packager" as File
 project(':gradle-common').projectDir = "$rootDir/gradle-common" as File
