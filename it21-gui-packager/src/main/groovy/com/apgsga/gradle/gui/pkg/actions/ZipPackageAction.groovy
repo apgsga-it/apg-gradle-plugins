@@ -23,6 +23,7 @@ class ZipPackageAction implements Action<Zip> {
 	public void execute(Zip zip) {
 		def ex = project.extensions.apgPackage
 		zip.from("${project.buildDir}/${ex.pkgName}")
+		zip.into("${ex.pkgName}")
 		// TODO (che, 1.10 ) Verify 
 		zip.destinationDir = new File("${project.buildDir}/distributions")
 		// TODO (che, 23.10) : Is this enough for Version?
