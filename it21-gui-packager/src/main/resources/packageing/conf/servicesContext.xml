@@ -14,10 +14,9 @@
 	 					http://www.springframework.org/schema/integration/websocket/spring-integration-websocket.xsd
 		http://www.springframework.org/schema/integration 
 		http://www.springframework.org/schema/integration/spring-integration.xsd">
-
-
+		
 	<bean
-			class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer" >
+		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer" >
 		<property name="systemPropertiesMode" value="2"></property>
 	    <property name="ignoreUnresolvablePlaceholders" value="true"/>
 		<property name="locations">
@@ -70,6 +69,10 @@
 			value="http://${host}:${port}${contextPfad}/services/tearDownConversation" />
 	</bean>
 
+	<bean id="notificationClient" class="com.apgsga.app.integration.notification.client.NotificationClient">
+		 <constructor-arg index="0" value="${host}:${port}${contextPfad}" />
+		 <constructor-arg index="1" ref="restTemplate" />		
+	</bean>
 
 	<bean id="httpRequestFactory" class="org.springframework.http.client.HttpComponentsClientHttpRequestFactory">
 		<property name="httpClient" ref="httpClient"></property>
@@ -81,7 +84,7 @@
 
 	<bean id="httpInvokerRequestExecutor"
 		class="com.affichage.persistence.service.client.ConversationContextHttpInvokerRequestExecutor">
-		<property name="readTimeout" value="1200000"></property>
+		<property name="readTimeout" value="600000"></property>
 		<constructor-arg index="0" ref="httpClient" />
 	</bean>
 

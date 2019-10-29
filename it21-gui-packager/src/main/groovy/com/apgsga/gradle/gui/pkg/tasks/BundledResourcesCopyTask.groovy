@@ -26,6 +26,7 @@ class BundledResourcesCopyTask extends DefaultTask {
 			}
 			from ("${project.buildDir}/packageing") {
 				exclude '**/*.bat'
+				exclude '**/logback.xml'
 			}
 	
 		 

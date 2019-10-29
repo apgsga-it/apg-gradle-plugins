@@ -9,7 +9,7 @@
 		<Prudent>true</Prudent>
 		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
 			<!-- roll hourly -->
-			<FileNamePattern>../log/${pkgName}.%d{yyyy-MM-dd_HH}.log
+			<FileNamePattern>log/${pkgName}.%d{yyyy-MM-dd_HH}.log
 			</FileNamePattern>
 			<!-- keep 5 days (5 x 24) worth of history -->
 			<MaxHistory>120</MaxHistory>
@@ -21,11 +21,13 @@
 	
 
 
-	<root level="\${root-level:-INFO}">
+	<root level="INFO">
 		<appender-ref ref="file" />
 	</root>
 
-	<logger name="org.springframework" level="\${logger-level:-ERROR}" />
+	<logger name="org.springframework" level="INFO" />
+	<logger name="org.apache.http" level="INFO" />
+
 	
 
 </configuration>
