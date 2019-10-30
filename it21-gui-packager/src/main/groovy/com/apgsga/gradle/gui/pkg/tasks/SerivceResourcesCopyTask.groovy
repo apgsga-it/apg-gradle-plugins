@@ -19,7 +19,9 @@ class SerivceResourcesCopyTask extends DefaultTask {
 		def ex = project.extensions.apgPackage
 		project.copy {
 			into "${project.buildDir}/${ex.pkgName}"
-			from "${project.projectDir}/${ex.resourcesPath}"
+			from ("${project.projectDir}/${ex.resourcesPath}") {
+				include '**/*'
+			}
 
 		}
 		
