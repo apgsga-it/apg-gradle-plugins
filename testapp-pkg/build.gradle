@@ -46,7 +46,7 @@ apgRepository {
 apgPackage {
 	serviceName = project.ext.serviceName
 	// TODO (che,15.10) jadas-e services, neecs to be discussed how this list is maintained
-	supportedServices = ["jadas", "digiflex","vkjadas", "interjadas", "interweb", project.ext.serviceName]
+	supportedServices = ["jadas", "digiflex-jadas","digiflex-web-it21" , "digiflex-web-sa", "echoservice"]
 	dependencies = [
 		"com.apgsga:testapp-service:0.1-SNAPSHOT"
 	]
