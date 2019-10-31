@@ -1,0 +1,57 @@
+val dev = remotes.create("dev") {
+    host = parTargetHost
+    user = parSshUser
+    password = parSshPw
+}
+
+tasks.create("deployRpm") {
+    doLast {
+        ssh.runSessions {
+            session(dev) {
+                put(parDownloadDir, "${buildDir}/distributions/${apgPackage.archiveName}")
+                execute("ls -la ${parDownloadDir}")
+                executeSudo("rpm -Uvh ${parDownloadDir}/${apgPackage.archiveName}")
+            }
+        }
+    }
+}
+@Suppress("unused")
+fun Service.runSessions(action: RunHandler.() -> Unit) =
+    run(delegateClosureOf(action))
+
+fun RunHandler.session(vararg remotes: Remote, action: SessionHandler.() -> Unit) =
+    session(*remotes, delegateClosureOf(action))
+
+fun SessionHandler.put(from: Any, into: Any) =
+    put(hashMapOf("from" to from, "into" to into))
+
+    
+    
+    ///////////
+    
+    
+    
+remotes {
+   withGroovyBuilder {
+      "create"("dev") {
+         setProperty("host", parTargetHost)
+         setProperty("user", parSshUser)
+         setProperty("password", parSshPw)
+      }
+   }
+}
+
+var dev: Any = remotes.withGroovyBuilder { "get"("dev") } 
+val deployRpm by tasks.registering {
+     doLast {
+      ssh.run {
+          delegateClosureOf<RunHandler> {
+          		session(dev, delegateClosureOf<SessionHandler> {
+          			 put(parDownloadDir, "${buildDir}/distributions/${apgPackage.archiveName}")
+                     execute("ls -la ${parDownloadDir}")
+               		 executeSudo("rpm -Uvh ${parDownloadDir}/${apgPackage.archiveName}")
+            })
+          }
+      }
+    }
+}
