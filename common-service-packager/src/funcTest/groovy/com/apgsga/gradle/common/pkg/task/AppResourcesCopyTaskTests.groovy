@@ -1,16 +1,12 @@
 package com.apgsga.gradle.common.pkg.task
 
-import static groovy.io.FileType.*
-import static groovy.io.FileVisitResult.*
 import org.gradle.testkit.runner.GradleRunner
-import org.junit.Rule
 import spock.lang.Shared
 import spock.lang.Specification
 
-import static org.gradle.testkit.runner.TaskOutcome.*
-
 import java.nio.file.Files
-import java.nio.file.Path
+
+import static groovy.io.FileType.FILES
 
 class AppResourcesCopyTaskTests extends Specification {
 	
@@ -23,7 +19,7 @@ class AppResourcesCopyTaskTests extends Specification {
     } 
 	
 	def setup() {
-		testProjectDir = Files.createTempDirectory('gradletestproject').toFile(); 
+		testProjectDir = Files.createTempDirectory('gradletestproject').toFile()
 		println "Project Dir : ${testProjectDir.absolutePath}"
 			new AntBuilder().copy(todir: "${testProjectDir}/packageing") {
 			fileset(dir: resourcesDir)
