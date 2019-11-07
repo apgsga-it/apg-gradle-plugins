@@ -1,8 +1,8 @@
 // tag::test-source-set[]
 sourceSets {
 	integrationTest {
-		groovy.srcDir file('src/intTest/groovy')
-		resources.srcDir file('src/intTest/resources')
+		groovy.srcDir file('src/integrationTest/groovy')
+		resources.srcDir file('src/integrationTest/resources')
 		compileClasspath += sourceSets.main.output + configurations.testRuntime
 		runtimeClasspath += output + compileClasspath
 	}
