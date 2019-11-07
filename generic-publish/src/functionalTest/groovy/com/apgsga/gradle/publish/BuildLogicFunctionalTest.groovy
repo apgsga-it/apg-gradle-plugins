@@ -1,34 +1,18 @@
 package com.apgsga.gradle.publish
 
+import com.apgsga.gradle.test.utils.AbstractSpecification
 import org.gradle.testkit.runner.GradleRunner
-import org.junit.Rule
 import spock.lang.Shared
-import spock.lang.Specification
 
-import static org.gradle.testkit.runner.TaskOutcome.*
+class BuildLogicFunctionalTest extends AbstractSpecification {
 
-import java.nio.file.Files
-import java.nio.file.Path
-
-class BuildLogicFunctionalTest extends Specification {
-	
-    File testProjectDir
-    File buildFile
 	@Shared File rpmToPublish
 	@Shared File tarToPublish
 
     def setupSpec() {
 		rpmToPublish = new File("src/functionalTest/resources/apg-plugintests-0.8.9-1.noarch.rpm")
 		tarToPublish = new File("src/functionalTest/resources/app-plugintests-0.1.tar.gz")
-    } 
-	
-	def setup() {
-		testProjectDir = Files.createTempDirectory('gradletestproject').toFile()
-		File buildDir = new File(testProjectDir,'build')
-		buildDir.mkdirs()
-		println "Project Dir : ${testProjectDir.absolutePath}"
-		buildFile = new File(testProjectDir,'build.gradle')
-	}
+    }
 
     def "publish rpm to local works"() {
         given:

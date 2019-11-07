@@ -1,5 +1,6 @@
 package com.apgsga.gradle.common.pkg.task
 
+import com.apgsga.gradle.test.utils.AbstractSpecification
 import org.gradle.testkit.runner.GradleRunner
 import org.junit.Rule
 import spock.lang.Shared
@@ -10,16 +11,7 @@ import static org.gradle.testkit.runner.TaskOutcome.*
 import java.nio.file.Files
 import java.nio.file.Path
 
-class CopyResourcesToBuildDirActionTests extends Specification {
-	
-    File testProjectDir
-    File buildFile
-
-	def setup() {
-		testProjectDir = Files.createTempDirectory('gradletestproject').toFile()
-		println "Project Dir : ${testProjectDir.absolutePath}"
-		buildFile = new File(testProjectDir,'build.gradle')
-	}
+class CopyResourcesToBuildDirActionTests extends AbstractSpecification {
 
     def "copy resources to build Dir works"() {
         given:

@@ -8,4 +8,10 @@ plugins {
     `kotlin-dsl`
 }
 
-
+dependencies {
+    testCompile(gradleTestKit())
+    testCompile(project(":common-test"))  {
+        exclude("","groovy-all")
+    }
+    compile (project(":common-repo"))
+}

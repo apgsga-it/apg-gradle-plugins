@@ -1,25 +1,14 @@
 package com.apg.gradle.plugins
 
+import com.apgsga.gradle.test.utils.AbstractSpecification
 import org.gradle.testkit.runner.GradleRunner
-import org.junit.Rule
-import spock.lang.Specification
 
-import static org.gradle.testkit.runner.TaskOutcome.*
+class BuildLogicFunctionalTest extends AbstractSpecification {
 
-import java.nio.file.Files
-import java.nio.file.Path
-
-class BuildLogicFunctionalTest extends Specification {
-	
-    File testProjectDir
-    File buildFile
 	File sourcePath
 	File propertyFile
 
     def setup() {
-		testProjectDir = Files.createTempDirectory('gradletestproject').toFile()
-		println "Project Dir : ${testProjectDir.absolutePath}"
-        buildFile = new File(testProjectDir,'build.gradle')
 		sourcePath = new File(testProjectDir,'src/main/resources')
 		println "Source  Dir : ${sourcePath.absolutePath}"
 		

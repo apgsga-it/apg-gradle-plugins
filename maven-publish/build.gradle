@@ -7,9 +7,7 @@ description 'Apg Maven Publish Plugin'
 
 dependencies {	 
     testCompile gradleTestKit()
-	testCompile('org.spockframework:spock-core:1.1-groovy-2.4') {
-		exclude module: 'groovy-all'
-	}
+	testCompile project(':common-test')
 	compile project(':common-repo')
 	
 }

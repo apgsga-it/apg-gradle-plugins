@@ -1,5 +1,6 @@
 package com.apgsga.gradle.common.pkg.task
 
+import com.apgsga.gradle.test.utils.AbstractSpecification
 import org.gradle.testkit.runner.GradleRunner
 import spock.lang.Shared
 import spock.lang.Specification
@@ -8,24 +9,14 @@ import java.nio.file.Files
 
 import static groovy.io.FileType.FILES
 
-class AppResourcesCopyTaskTests extends Specification {
+class AppResourcesCopyTaskTests extends AbstractSpecification {
 	
-    File testProjectDir
-    File buildFile
+
 	@Shared File resourcesDir
 	
     def setupSpec() {
 		resourcesDir = new File("src/main/resources/packageing")
-    } 
-	
-	def setup() {
-		testProjectDir = Files.createTempDirectory('gradletestproject').toFile()
-		println "Project Dir : ${testProjectDir.absolutePath}"
-			new AntBuilder().copy(todir: "${testProjectDir}/packageing") {
-			fileset(dir: resourcesDir)
-		}
-		buildFile = new File(testProjectDir,'build.gradle')
-	}
+    }
 
     def "copyRpmScripts works"() {
         given:

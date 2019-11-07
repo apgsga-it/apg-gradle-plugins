@@ -1,28 +1,11 @@
 package com.apgsga.gradle.gui.pkg.tasks
 
-
-import static groovy.io.FileType.*
-import static groovy.io.FileVisitResult.*
+import com.apgsga.gradle.test.utils.AbstractSpecification
 import org.gradle.testkit.runner.GradleRunner
-import org.junit.Rule
-import spock.lang.Shared
-import spock.lang.Specification
 
-import static org.gradle.testkit.runner.TaskOutcome.*
+import static groovy.io.FileType.FILES
 
-import java.nio.file.Files
-import java.nio.file.Path
-
-class ZipPackageTaskTests extends Specification {
-	
-    File testProjectDir
-    File buildFile
-	
-	def setup() {
-		testProjectDir = Files.createTempDirectory('gradletestproject').toFile()
-		println "Project Dir : ${testProjectDir.absolutePath}"
-		buildFile = new File(testProjectDir,'build.gradle')
-	}
+class ZipPackageTaskTests extends AbstractSpecification  {
 
     def "archivePackage works"() {
         given:

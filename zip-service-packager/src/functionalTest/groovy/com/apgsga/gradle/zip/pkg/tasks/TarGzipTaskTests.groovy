@@ -1,28 +1,13 @@
 package com.apgsga.gradle.zip.pkg.tasks
 
-import static groovy.io.FileType.*
-import static groovy.io.FileVisitResult.*
+import com.apgsga.gradle.test.utils.AbstractSpecification
 import org.gradle.testkit.runner.GradleRunner
-import org.junit.Rule
-import spock.lang.Shared
-import spock.lang.Specification
-
-import static org.gradle.testkit.runner.TaskOutcome.*
 
 import java.nio.file.Files
-import java.nio.file.Path
 
-class TarGzipTaskTests extends Specification {
-	
-    File testProjectDir
-    File buildFile	
+import static groovy.io.FileType.FILES
 
-	
-	def setup() {
-		testProjectDir = Files.createTempDirectory('gradletestproject').toFile()
-		println "Project Dir : ${testProjectDir.absolutePath}"
-		buildFile = new File(testProjectDir,'build.gradle')
-	}
+class TarGzipTaskTests extends AbstractSpecification {
 
     def "tarGzipAppPkg Task works"() {
         given:

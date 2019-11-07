@@ -1,5 +1,7 @@
 package com.apgsga.gradle.common.pkg.task
 
+import com.apgsga.gradle.test.utils.AbstractSpecification
+
 import static groovy.io.FileType.*
 import static groovy.io.FileVisitResult.*
 import org.gradle.testkit.runner.GradleRunner
@@ -12,24 +14,14 @@ import static org.gradle.testkit.runner.TaskOutcome.*
 import java.nio.file.Files
 import java.nio.file.Path
 
-class PropertyFileMergeTasksTests extends Specification {
+class PropertyFileMergeTasksTests extends AbstractSpecification {
 	
-    File testProjectDir
-    File buildFile
+
 	@Shared File resourcesDir
 	
     def setupSpec() {
 		resourcesDir = new File("src/main/resources/packageing")
-    } 
-	
-	def setup() {
-		testProjectDir = Files.createTempDirectory('gradletestproject').toFile()
-		println "Project Dir : ${testProjectDir.absolutePath}"
-		new AntBuilder().copy(todir: "${testProjectDir}/build/packageing") {
-			fileset(dir: resourcesDir)
-		}
-		buildFile = new File(testProjectDir,'build.gradle')
-	}
+    }
 
     def "merge mergeResourcePropertyFiles Dir works"() {
         given:

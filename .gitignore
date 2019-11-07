@@ -21,3 +21,5 @@ out/
 *.ipr
 *.iws
 /depemdency-manager/build/
+/dependency-manager/build/
+/common-test/build/

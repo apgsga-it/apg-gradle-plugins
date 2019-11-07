@@ -1,35 +1,21 @@
 package com.apgsga.gradle.rpm.pkg.tasks
 
-import static groovy.io.FileType.*
-import static groovy.io.FileVisitResult.*
+import com.apgsga.gradle.test.utils.AbstractSpecification
 import org.gradle.testkit.runner.GradleRunner
-import org.junit.Rule
 import spock.lang.Shared
-import spock.lang.Specification
-
-import static org.gradle.testkit.runner.TaskOutcome.*
 
 import java.nio.file.Files
-import java.nio.file.Path
 
-class BuildRpmTaskTests extends Specification {
-	
-    File testProjectDir
-    File buildFile
+import static groovy.io.FileType.FILES
+
+class BuildRpmTaskTests extends AbstractSpecification {
+
 	@Shared File resourcesDir
 	
     def setupSpec() {
 		resourcesDir = new File("src/main/resources/packageing")
     } 
-	
-	def setup() {
-		testProjectDir = Files.createTempDirectory('gradletestproject').toFile()
-		println "Project Dir : ${testProjectDir.absolutePath}"
-			new AntBuilder().copy(todir: "${testProjectDir}/packageing") {
-			fileset(dir: resourcesDir)
-		}
-		buildFile = new File(testProjectDir,'build.gradle')
-	}
+
 
     def "buildRpm works"() {
         given:

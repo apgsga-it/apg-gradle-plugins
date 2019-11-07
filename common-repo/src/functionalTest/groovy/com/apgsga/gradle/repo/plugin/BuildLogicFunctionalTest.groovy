@@ -1,5 +1,6 @@
 package com.apgsga.gradle.repo.plugin
 
+import com.apgsga.gradle.test.utils.AbstractSpecification
 import org.gradle.testkit.runner.GradleRunner
 import org.junit.Rule
 import spock.lang.Shared
@@ -10,31 +11,7 @@ import static org.gradle.testkit.runner.TaskOutcome.*
 import java.nio.file.Files
 import java.nio.file.Path
 
-class BuildLogicFunctionalTest extends Specification {
-	
-    File testProjectDir
-    File buildFile
-
-	
-	def setup() {
-		println "Running setup"
-		String tempDir = System.getProperty("java.io.tmpdir")
-		println tempDir
-		def tempDirFile = new File(tempDir)
-		def testDirsToDelete = []
-		tempDirFile.eachDir { file ->
-			if (file.name.startsWith("gradletestproject")) {
-				testDirsToDelete.add(file)
-			}
-		 }
-		 testDirsToDelete.each { testDir -> 
-			 println "About to delete ${testDir}"
-			 testDir.deleteDir()
-		 }
-		testProjectDir = Files.createTempDirectory('gradletestproject').toFile()
-		println "Project Dir : ${testProjectDir.absolutePath}"
-		buildFile = new File(testProjectDir,'build.gradle')
-	}
+class BuildLogicFunctionalTest extends AbstractSpecification {
 	
 	def "Common Repo Plugin works with defaults"() {
 		given:
