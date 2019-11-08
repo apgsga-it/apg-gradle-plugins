@@ -1,7 +1,11 @@
 package com.apgsga.gradle.repo.extensions;
 
+import java.util.Map;
+
 import org.gradle.api.Project;
 import org.gradle.api.logging.Logger;
+
+import com.google.common.collect.Maps;
 
 public class RemoteRepo extends AbstractRepo {
 
@@ -14,6 +18,15 @@ public class RemoteRepo extends AbstractRepo {
 	
 	public RemoteRepo(Project project) {
 		super(project);
+	}
+	
+	public Map<String,String> getAvailableRepoNames() {
+		Map<String, String> m = Maps.newHashMap();
+		// TODO JHE: To be discussed, which repos we want in the list, and from where do we retrieve this list ... hardcoded here?
+		m.put("rpm-publish", "yumpatchrepo");
+		m.put("db-publish", "dbpatch");
+		m.put("maven-publish", "releases");
+		return m;
 	}
 
 	@Override

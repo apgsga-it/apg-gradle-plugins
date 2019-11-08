@@ -11,7 +11,7 @@ description 'Provides standardized configurations for Artefact Repos (local, art
 dependencies {	 
     testCompile gradleTestKit()
 	testCompile project(':common-test')
-	
+	compile group: 'com.google.guava', name: 'guava', version: '11.0.2' 
 }
 
 
