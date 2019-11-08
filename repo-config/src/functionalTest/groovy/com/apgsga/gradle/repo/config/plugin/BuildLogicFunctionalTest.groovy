@@ -123,14 +123,12 @@ class BuildLogicFunctionalTest extends AbstractSpecification {
 	def "Repo Config works with repositories name coming from map"() {
 		
 		// TODO JHE: Well, not sure I got it correctly, how can we configure the artifactory Repo differently within the same build?
-		//			 I would say:
-		//				- As shown below
-		//				- Eventually also in a "publish" section?
 		
 		given:
 			buildFile << """
 	            plugins {
 	                id 'com.apgsga.gradle.repo.config'
+					id 'com.apgsga.maven.publish'
 	            }
 
 				apgArtifactoryRepo {
@@ -140,6 +138,10 @@ class BuildLogicFunctionalTest extends AbstractSpecification {
 				apgRepository {
 					artifactory()
 				}
+
+				apgMavenPublish {
+					artifactory()
+				} 
 
 				task listrepos {
 				    doLast {
