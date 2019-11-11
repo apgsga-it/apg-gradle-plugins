@@ -14,21 +14,26 @@ public class RemoteRepo extends AbstractRepo {
 	private static final String REPO_PW_DEFAULT = "gradledev-tests-user";
 	private static final String REPO_USER_DEFAULT = "gradledev-tests-user";
 	private static final String REPO_DEDFAULT = "rpm-functionaltest";
-	private static final String REPO_BASE_URL_DEFAULT = "https://artifactory4t4apgsga.jfrog.io/artifactory4t4apgsga"; 
+	private static final String REPO_BASE_URL_DEFAULT = "https://artifactory4t4apgsga.jfrog.io/artifactory4t4apgsga";
+	private static Map<String,String> repoNames = Maps.newHashMap();
 	
 	public RemoteRepo(Project project) {
 		super(project);
+		// TODO JHE: Right place for init ?!?
+		initRepoNames();
 	}
 	
-	public Map<String,String> getAvailableRepoNames() {
-		Map<String, String> m = Maps.newHashMap();
-		// TODO JHE: To be discussed, which repos we want in the list, and from where do we retrieve this list ... hardcoded here?
-		m.put("rpm-publish", "yumpatchrepo");
-		m.put("db-publish", "dbpatch");
-		m.put("maven-publish", "releases");
-		return m;
+	private void initRepoNames() {
+		// TODO JHE: Other Repo to be configured?
+		repoNames.put(RepoNames.GENERIC.toString(), REPO_DEDFAULT);
+		repoNames.put(RepoNames.MAVEN.toString(), RELEASE_REPO_NAME_DEFAULT);
+		repoNames.put(RepoNames.SNAPSHOT.toString(), SNAPSHOT_REPO_NAME_DEFAULT);
 	}
-
+	
+	public Map<String, String> getRepoNames() {
+		return repoNames;
+	}
+	
 	@Override
 	public String getDefaultRepoBaseUrl() {
 		return REPO_BASE_URL_DEFAULT;
@@ -36,7 +41,7 @@ public class RemoteRepo extends AbstractRepo {
 
 	@Override
 	public String getDefaultRepoName() {
-		return REPO_DEDFAULT;
+		return repoNames.get(RepoNames.GENERIC.toString());
 	}
 
 
@@ -52,12 +57,12 @@ public class RemoteRepo extends AbstractRepo {
 
 	@Override
 	public String getDefaultReleaseRepoName() {
-		return RELEASE_REPO_NAME_DEFAULT;
+		return repoNames.get(RepoNames.MAVEN.toString());
 	}
 
 	@Override
 	public String getDefaultSnapshotRepoName() {
-		return SNAPSHOT_REPO_NAME_DEFAULT;
+		return repoNames.get(RepoNames.SNAPSHOT.toString());
 	}
 
 	@Override
