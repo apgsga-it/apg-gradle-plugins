@@ -121,52 +121,33 @@ class BuildLogicFunctionalTest extends AbstractSpecification {
 	}
 	
 	def "Repo Config works with repositories name coming from map"() {
-		
-		// TODO JHE: Well, not sure I got it correctly, how can we configure the artifactory Repo differently within the same build?
-		
 		given:
 			buildFile << """
 	            plugins {
 	                id 'com.apgsga.gradle.repo.config'
-					id 'com.apgsga.maven.publish'
 	            }
 
 				apgArtifactoryRepo {
-					repoName = getAvailableRepoNames().get('rpm-publish')
+					repoNames['GENERIC'] = "thisIsMyGenericTestRepo"
+					repoNames['MAVEN'] = "thisIsMyReleaseTestRepo"
 				}
 
 				apgRepository {
 					artifactory()
 				}
-
-				apgMavenPublish {
-					artifactory()
-				} 
-
-				task listrepos {
-				    doLast {
-				        println "Repositories:"
-				        project.repositories.each { repo -> 
-							println "Repo Name: " + repo.name
-						    println "Repo Url: " + repo.url 
-					    }
-						println "Done"
-				   }
-				}
 	        """
 		when:
 			def result = GradleRunner.create()
 				.withProjectDir(testProjectDir)
-				.withArguments( 'listrepos')
+				.withArguments('init','--info', '--stacktrace')
 				.withPluginClasspath()
 				.build()
 				
 		then:
 			println "Result output: ${result.output}"
-			!result.output.contains('MavenLocal')
-			!result.output.contains('MavenLocal2')
 			!result.output.contains('rpm-functionaltest')
-			!result.output.contains('MavenRepo')
-			result.output.contains('yumpatchrepo')
+			!result.output.contains('release-functionaltest')
+			result.output.contains('thisIsMyGenericTestRepo')
+			result.output.contains('thisIsMyReleaseTestRepo')
 	}
 }
