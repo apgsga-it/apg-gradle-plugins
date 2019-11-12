@@ -6,12 +6,12 @@ import org.jfrog.artifactory.client.Artifactory;
 import org.jfrog.artifactory.client.ArtifactoryClientBuilder;
 import org.jfrog.artifactory.client.ProxyConfig;
 
-import com.apgsga.gradle.repository.UploadRepository;
-import com.apgsga.gradle.repository.UploadRepositoryBuilder;
+import com.apgsga.gradle.repository.Repository;
+import com.apgsga.gradle.repository.RepositoryBuilder;
 
-public class RemoteRepositoryBuilder implements UploadRepositoryBuilder {
+public class RemoteRepositoryBuilder implements RepositoryBuilder {
 	private ArtifactoryClientBuilder artifactortyBuilder = ArtifactoryClientBuilder.create();
-	public static UploadRepositoryBuilder create(String baseUrl) {
+	public static RepositoryBuilder create(String baseUrl) {
 		RemoteRepositoryBuilder builder = new RemoteRepositoryBuilder();
 		builder.setBaseUrl(baseUrl);
 		return builder;
@@ -21,7 +21,7 @@ public class RemoteRepositoryBuilder implements UploadRepositoryBuilder {
 	
 	
 	@Override
-	public UploadRepository build() {
+	public Repository build() {
 		Artifactory artifactory = artifactortyBuilder.build();
 		return new RemoteRepository(artifactory.repository(targetRepo));
 		
@@ -29,12 +29,7 @@ public class RemoteRepositoryBuilder implements UploadRepositoryBuilder {
 
 
 	@Override
-	public String getTargetRepo() {
-		return targetRepo;
-	}
-
-	@Override
-	public UploadRepositoryBuilder setTargetRepo(String targetRepo) {
+	public RepositoryBuilder setTargetRepo(String targetRepo) {
 		this.targetRepo = targetRepo;
 		return this;
 	}
@@ -43,22 +38,6 @@ public class RemoteRepositoryBuilder implements UploadRepositoryBuilder {
 
 	public ProxyConfig getProxy() {
 		return artifactortyBuilder.getProxy();
-	}
-
-
-	@Override
-	public String getBaseUrl() {
-		return artifactortyBuilder.getUrl();
-	}
-
-
-	public String getUsername() {
-		return artifactortyBuilder.getUsername();
-	}
-
-
-	public String getPassword() {
-		return artifactortyBuilder.getPassword();
 	}
 
 
@@ -87,17 +66,17 @@ public class RemoteRepositoryBuilder implements UploadRepositoryBuilder {
 	}
 
 
-	public UploadRepositoryBuilder setBaseUrl(String url) {
+	public RepositoryBuilder setBaseUrl(String url) {
 		artifactortyBuilder.setUrl(url);
 		return this;
 	}
 
-	public UploadRepositoryBuilder setUsername(String username) {
+	public RepositoryBuilder setUsername(String username) {
 		artifactortyBuilder.setUsername(username);
 		return this;
 	}
 
-	public UploadRepositoryBuilder setPassword(String password) {
+	public RepositoryBuilder setPassword(String password) {
 		artifactortyBuilder.setPassword(password);
 		return this; 
 	}

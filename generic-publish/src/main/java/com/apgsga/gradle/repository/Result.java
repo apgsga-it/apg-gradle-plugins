@@ -2,7 +2,7 @@ package com.apgsga.gradle.repository;
 
 import java.util.Date;
 
-public interface UploadResult {
+public interface Result {
 
 	Date getCreated();
 

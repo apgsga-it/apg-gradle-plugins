@@ -13,8 +13,8 @@ import com.apgsga.gradle.repo.extensions.LocalRepo;
 import com.apgsga.gradle.repo.extensions.RemoteRepo;
 import com.apgsga.gradle.repo.extensions.Repo;
 import com.apgsga.gradle.repository.RepositoryBuilderFactory;
-import com.apgsga.gradle.repository.UploadRepository;
-import com.apgsga.gradle.repository.UploadRepositoryBuilder;
+import com.apgsga.gradle.repository.Repository;
+import com.apgsga.gradle.repository.RepositoryBuilder;
 
 public class ApgPublishTask extends DefaultTask {
 
@@ -40,6 +40,7 @@ public class ApgPublishTask extends DefaultTask {
 		ApgGenericPublish config = getProject().getExtensions().findByType(ApgGenericPublish.class);
 		LocalRepo localConfig = getProject().getExtensions().findByType(LocalRepo.class);
 		RemoteRepo remoteConfig = getProject().getExtensions().findByType(RemoteRepo.class);
+		assert config != null;
 		config.log();
 		File theFile = artefactFile.getAsFile().get();
 		configure(localConfig, config.isPublishLocal()).upload(theFile.getName(), theFile);
@@ -48,8 +49,8 @@ public class ApgPublishTask extends DefaultTask {
 
 	}
 
-	private UploadRepository configure(Repo repo, boolean publish) {
-		UploadRepositoryBuilder builder = RepositoryBuilderFactory.createFor(repo.getRepoBaseUrl(),publish);
+	private Repository configure(Repo repo, boolean publish) {
+		RepositoryBuilder builder = RepositoryBuilderFactory.createFor(repo.getRepoBaseUrl(),publish);
 		builder.setTargetRepo(repo.getRepoName());
 		builder.setUsername(repo.getUser());
 		builder.setPassword(repo.getPassword());

@@ -1,6 +1,7 @@
 package com.apgsga.gradle.repository.artifactory;
 
 import java.io.File;
+import java.io.IOException;
 import java.io.InputStream;
 
 import org.jfrog.artifactory.client.DownloadableArtifact;
@@ -9,14 +10,14 @@ import org.jfrog.artifactory.client.RepositoryHandle;
 import org.jfrog.artifactory.client.UploadListener;
 import org.jfrog.artifactory.client.UploadableArtifact;
 
-import com.apgsga.gradle.repository.UploadRepository;
-import com.apgsga.gradle.repository.UploadResult;
+import com.apgsga.gradle.repository.Repository;
+import com.apgsga.gradle.repository.Result;
 
-public class RemoteRepository implements UploadRepository {
+public class RemoteRepository implements Repository {
 
 	private final RepositoryHandle repositoryHandle;
 
-	public RemoteRepository(RepositoryHandle repositoryHandle) {
+	RemoteRepository(RepositoryHandle repositoryHandle) {
 		super();
 		this.repositoryHandle = repositoryHandle;
 	}
@@ -27,7 +28,7 @@ public class RemoteRepository implements UploadRepository {
 	}
 
 	@Override
-	public UploadResult upload(String fileName, File fileToUpload) {
+	public Result upload(String fileName, File fileToUpload) {
 		UploadableArtifact uploadable = repositoryHandle.upload(fileName, fileToUpload);
 		uploadable.withListener(new UploadListener() {
 
@@ -42,15 +43,22 @@ public class RemoteRepository implements UploadRepository {
 				}
 			}
 		});
-		return new RemoteUploadResult(uploadable.doUpload());
+		return new RemoteResult(uploadable.doUpload());
 	}
+
+	@Override
+	public InputStream download(String relativePath)  {
+		DownloadableArtifact artifact = repositoryHandle.download(relativePath);
+		try {
+			return artifact.doDownload();
+		} catch (IOException e) {
+			throw new RuntimeException(e);
+		}
+	}
+
 
 	public String delete(String path) {
 		return repositoryHandle.delete(path);
-	}
-
-	public DownloadableArtifact download(String path) {
-		return repositoryHandle.download(path);
 	}
 
 	public ItemHandle file(String arg0) {

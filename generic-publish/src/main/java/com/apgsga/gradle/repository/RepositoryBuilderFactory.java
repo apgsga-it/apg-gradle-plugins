@@ -6,7 +6,7 @@ import com.apgsga.gradle.repository.nop.NopRepositoryBuilder;
 
 public class RepositoryBuilderFactory {
 	
-	public static UploadRepositoryBuilder createFor(String baseUrl, boolean publish) {
+	public static RepositoryBuilder createFor(String baseUrl, boolean publish) {
 		if (!publish)  {
 			return NopRepositoryBuilder.NOP;
 		}

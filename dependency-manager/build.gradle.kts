@@ -13,5 +13,7 @@ dependencies {
     testCompile(project(":common-test"))  {
         exclude("","groovy-all")
     }
-    compile (project(":common-repo"))
+    implementation (project(":common-repo"))
+    implementation (project(":generic-publish"))
+
 }

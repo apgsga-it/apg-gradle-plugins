@@ -3,12 +3,12 @@ package com.apgsga.gradle.repository.local;
 import java.io.File;
 
 
-import com.apgsga.gradle.repository.UploadRepository;
-import com.apgsga.gradle.repository.UploadRepositoryBuilder;
+import com.apgsga.gradle.repository.Repository;
+import com.apgsga.gradle.repository.RepositoryBuilder;
 import com.google.common.base.Preconditions;
 
-public class FileRepositoryBuilder implements UploadRepositoryBuilder {
-	public static UploadRepositoryBuilder create(String baseUrl) {
+public class FileRepositoryBuilder implements RepositoryBuilder {
+	public static RepositoryBuilder create(String baseUrl) {
 		FileRepositoryBuilder builder = new FileRepositoryBuilder();
 		builder.setBaseUrl(baseUrl);
 		return builder;
@@ -18,7 +18,7 @@ public class FileRepositoryBuilder implements UploadRepositoryBuilder {
 	private String targetRepo;
 
 	@Override
-	public UploadRepository build() {
+	public Repository build() {
 		File parentDir = new File(baseUrl);
 		Preconditions.checkState(parentDir.exists(), "Base Repository Directory doesn't exist: ", baseUrl);
 		Preconditions.checkState(parentDir.isDirectory(), "Base Repository Directory is not a Directory: ", baseUrl);
@@ -36,23 +36,13 @@ public class FileRepositoryBuilder implements UploadRepositoryBuilder {
 	}
 
 	@Override
-	public String getTargetRepo() {
-		return targetRepo;
-	}
-
-	@Override
-	public UploadRepositoryBuilder setTargetRepo(String targetRepo) {
+	public RepositoryBuilder setTargetRepo(String targetRepo) {
 		this.targetRepo = targetRepo;
 		return this;
 	}
 
 	@Override
-	public String getBaseUrl() {
-		return baseUrl;
-	}
-
-	@Override
-	public UploadRepositoryBuilder setBaseUrl(String baseUrl) {
+	public RepositoryBuilder setBaseUrl(String baseUrl) {
 		this.baseUrl = baseUrl;
 		return this;
 	}
@@ -60,24 +50,14 @@ public class FileRepositoryBuilder implements UploadRepositoryBuilder {
 	// Null Ops
 
 	@Override
-	public UploadRepositoryBuilder setUsername(String username) {
+	public RepositoryBuilder setUsername(String username) {
 		return this;
 	}
 
 	@Override
-	public String getUsername() {
-		return ""; 
-	}
-
-	@Override
-	public UploadRepositoryBuilder setPassword(String password) {
+	public RepositoryBuilder setPassword(String password) {
 		return this;
 	}
 
-	@Override
-	public String getPassword() {
-		return ""; 
-	}
 
-	
 }

@@ -2,13 +2,13 @@ package com.apgsga.gradle.repository.nop;
 
 import java.util.Date;
 
-import com.apgsga.gradle.repository.UploadResult;
+import com.apgsga.gradle.repository.Result;
 
-public class NopUploadResult implements UploadResult {
+public class NopResult implements Result {
 	
-	public static UploadResult NOP = new NopUploadResult(); 
+	static Result NOP = new NopResult();
 
-	private NopUploadResult() {
+	private NopResult() {
 
 	}
 

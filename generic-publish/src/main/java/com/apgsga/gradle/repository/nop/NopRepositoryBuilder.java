@@ -1,55 +1,35 @@
 package com.apgsga.gradle.repository.nop;
 
-import com.apgsga.gradle.repository.UploadRepository;
-import com.apgsga.gradle.repository.UploadRepositoryBuilder;
+import com.apgsga.gradle.repository.Repository;
+import com.apgsga.gradle.repository.RepositoryBuilder;
 
-public class NopRepositoryBuilder implements UploadRepositoryBuilder {
+public class NopRepositoryBuilder implements RepositoryBuilder {
 	
-	public static UploadRepositoryBuilder NOP = new NopRepositoryBuilder();
+	public static RepositoryBuilder NOP = new NopRepositoryBuilder();
 
 	@Override
-	public UploadRepository build() {
-		return NopUploadRepository.NOP;
+	public Repository build() {
+		return NopRepository.NOP;
 	}
 
 	@Override
-	public String getTargetRepo() {
-		return "";
-	}
-
-	@Override
-	public UploadRepositoryBuilder setTargetRepo(String targetRepo) {
+	public RepositoryBuilder setTargetRepo(String targetRepo) {
 		return this;
 	}
 
 	@Override
-	public String getBaseUrl() {
-		return "";
-	}
-
-	@Override
-	public UploadRepositoryBuilder setBaseUrl(String baseUrl) {
+	public RepositoryBuilder setBaseUrl(String baseUrl) {
 		return this;
 	}
 
 	@Override
-	public UploadRepositoryBuilder setUsername(String username) {
+	public RepositoryBuilder setUsername(String username) {
 		return this;
 	}
 
 	@Override
-	public String getUsername() {
-		return "";
-	}
-
-	@Override
-	public UploadRepositoryBuilder setPassword(String password) {
+	public RepositoryBuilder setPassword(String password) {
 		return this;
-	}
-
-	@Override
-	public String getPassword() {
-		return "";
 	}
 
 }

@@ -1,10 +1,8 @@
 package com.apgsga.gradle.repository.artifactory
 
+
+import com.apgsga.gradle.repository.Repository
 import org.apache.commons.io.FileUtils
-import org.jasypt.util.text.BasicTextEncryptor
-import org.jfrog.artifactory.client.ItemHandle
-import com.apgsga.gradle.repository.UploadRepository
-import com.apgsga.gradle.repository.UploadRepositoryBuilder
 import spock.lang.Specification
 
 class RemoteRepositoryIntegrationTests extends Specification {
@@ -49,7 +47,7 @@ class RemoteRepositoryIntegrationTests extends Specification {
 			builder.targetRepo = TEST_RPM_REPO
 		    builder.username = USER 
 			builder.password = USER
-	        UploadRepository uploadRepo = builder.build()
+	        Repository uploadRepo = builder.build()
 		when:
 			def deploy = uploadRepo.upload(rpmToPublish.getName(),rpmToPublish)
 		then:
@@ -68,7 +66,7 @@ class RemoteRepositoryIntegrationTests extends Specification {
 			builder.targetRepo = TEST_TARBALL_REPO
 			builder.username = USER
 			builder.password = USER
-			UploadRepository uploadRepo = builder.build()
+			Repository uploadRepo = builder.build()
 		when:
 			def deploy = uploadRepo.upload(SOMEAPP_PKG_TAR_GZ_NAME,toPublish)
 		then:
@@ -77,6 +75,24 @@ class RemoteRepositoryIntegrationTests extends Specification {
 			deploy.path == "/" + SOMEAPP_PKG_TAR_GZ_NAME
 			deploy.repo == TEST_TARBALL_REPO
 			deploy.uri ==   ARTIFACTORY_URL + "/" + TEST_TARBALL_REPO + "/" + SOMEAPP_PKG_TAR_GZ_NAME
+	}
+
+	def "download pom.xml from artifactory works"() {
+		given:
+		RemoteRepositoryBuilder builder = RemoteRepositoryBuilder.create(ARTIFACTORY_URL)
+		builder.targetRepo = "snapshots"
+		builder.username = USER
+		builder.password = USER
+		Repository repo = builder.build()
+		when:
+		def download = repo.download("com/affichage/common/maven/dm-bom/9.0.6.ADMIN-UIMIG-SNAPSHOT/dm-bom-9.0.6.ADMIN-UIMIG-SNAPSHOT.pom")
+		File downloadedFile = new File("build/result.pom")
+		FileUtils.copyInputStreamToFile(download, downloadedFile)
+		then:
+		downloadedFile.isFile()
+		def pom = new XmlParser().parse(downloadedFile)
+		pom.properties.'*'.size() > 20
+		pom.dependencyManagement.dependencies.'*'.size() > 20
 	}
 	
 

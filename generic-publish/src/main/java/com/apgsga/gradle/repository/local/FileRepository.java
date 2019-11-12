@@ -1,9 +1,6 @@
 package com.apgsga.gradle.repository.local;
 
-import java.io.File;
-import java.io.FileFilter;
-import java.io.FilenameFilter;
-import java.io.IOException;
+import java.io.*;
 import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URL;
@@ -12,15 +9,16 @@ import java.nio.file.Path;
 import org.apache.commons.io.FileUtils;
 
 
-import com.apgsga.gradle.repository.UploadRepository;
-import com.apgsga.gradle.repository.UploadResult;
+import com.apgsga.gradle.repository.Repository;
+import com.apgsga.gradle.repository.Result;
 import com.google.common.base.Preconditions;
+import org.apache.commons.io.IOUtils;
 
-public class FileRepository implements UploadRepository {
+public class FileRepository implements Repository {
 
 	private final File repoDir;
 
-	public FileRepository(File repoDir) {
+	FileRepository(File repoDir) {
 		super();
 		this.repoDir = repoDir;
 	}
@@ -31,7 +29,7 @@ public class FileRepository implements UploadRepository {
 	}
 
 	@Override
-	public UploadResult upload(String fileName, File fileToUpload) {
+	public Result upload(String fileName, File fileToUpload) {
 		Preconditions.checkState(fileToUpload.exists(), "File to Upload does'nt exist");
 		Preconditions.checkState(fileToUpload.isFile(), "File to Upload is'nt File");
 		Preconditions.checkState(fileToUpload.canRead(), "File to Upload is'nt readable");
@@ -44,7 +42,17 @@ public class FileRepository implements UploadRepository {
 			throw new RuntimeException(e);
 		}
 
-		return new FileUploadResult(targetFile);
+		return new FileResult(targetFile);
+	}
+
+	@Override
+	public InputStream download(String path) {
+		File targetFile = new File(repoDir, path);
+		try {
+			return FileUtils.openInputStream(targetFile);
+		} catch (IOException e) {
+			throw new RuntimeException(e);
+		}
 	}
 
 

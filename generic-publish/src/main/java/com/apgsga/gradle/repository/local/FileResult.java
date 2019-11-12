@@ -7,13 +7,13 @@ import java.nio.file.attribute.BasicFileAttributes;
 import java.nio.file.attribute.FileTime;
 import java.util.Date;
 
-import com.apgsga.gradle.repository.UploadResult;
+import com.apgsga.gradle.repository.Result;
 
-public class FileUploadResult implements UploadResult {
+public class FileResult implements Result {
 
 	private File uploadResultFile;
 
-	public FileUploadResult(File targetFile) {
+	FileResult(File targetFile) {
 		this.uploadResultFile = targetFile;
 	}
 

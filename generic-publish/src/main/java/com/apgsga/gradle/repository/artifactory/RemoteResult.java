@@ -5,13 +5,13 @@ import java.util.Date;
 import org.jfrog.artifactory.client.model.Checksums;
 import org.jfrog.artifactory.client.model.File;
 
-import com.apgsga.gradle.repository.UploadResult;
+import com.apgsga.gradle.repository.Result;
 
-public class RemoteUploadResult implements UploadResult {
+public class RemoteResult implements Result {
 
 	private File file;
 
-	public RemoteUploadResult(File file) {
+	RemoteResult(File file) {
 		super();
 		this.file = file;
 	}
