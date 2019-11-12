@@ -11,7 +11,6 @@ import org.gradle.api.tasks.TaskContainer;
 import org.gradle.api.tasks.TaskProvider;
 
 import com.apgsga.gradle.common.pkg.plugin.ApgCommonPackagePlugin;
-import com.apgsga.gradle.repo.config.plugin.ApgRepoConfigPlugin;
 import com.apgsga.gradle.rpm.pkg.actions.CopyResourcesToBuildDirAction;
 import com.apgsga.gradle.rpm.pkg.plugins.OsPackagingPlugin;
 import com.apgsga.gradle.rpm.pkg.tasks.OsPackageConfigureTask;
@@ -36,14 +35,16 @@ public class ApgRpmPackagePlugin implements Plugin<Project> {
 		TaskProvider<OsPackageConfigureTask> osPackageConfigureTask = tasks.register("osPackageConfigure",
 				OsPackageConfigureTask.class);
 		Task buildRpmTask = tasks.findByName("buildRpm");
-		Task copyCommonPkgResourcesTask = tasks.findByName("copyCommonPackagingResources"); 
-		Task templateDirCopyTask = tasks.findByName("templateDirCopy"); 
-		Task copyBinariesIntoLib = tasks.findByName("copyAppBinaries"); 
-		Task copyRpmPkgResources = tasks.findByName("copyRpmPackagingResources"); 
-		templateDirCopyTask.dependsOn(copyRpmPkgResources,copyCommonPkgResourcesTask);
+		Task copyCommonPkgResourcesTask = tasks.findByName("copyCommonPackagingResources");
+		Task templateDirCopyTask = tasks.findByName("templateDirCopy");
+		Task copyBinariesIntoLib = tasks.findByName("copyAppBinaries");
+		Task copyRpmPkgResources = tasks.findByName("copyRpmPackagingResources");
+        assert templateDirCopyTask != null;
+        templateDirCopyTask.dependsOn(copyRpmPkgResources, copyCommonPkgResourcesTask);
 		rpmCopyAndExpandTask.configure(task -> task.dependsOn(templateDirCopyTask));
 		osPackageConfigureTask.configure(task -> task.dependsOn(copyBinariesIntoLib));
-		buildRpmTask.dependsOn(osPackageConfigureTask, rpmCopyAndExpandTask);
+        assert buildRpmTask != null;
+        buildRpmTask.dependsOn(osPackageConfigureTask, rpmCopyAndExpandTask);
 
 	}
 

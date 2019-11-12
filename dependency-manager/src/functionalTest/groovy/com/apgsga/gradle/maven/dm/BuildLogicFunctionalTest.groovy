@@ -17,7 +17,7 @@ class BuildLogicFunctionalTest extends AbstractSpecification {
         when:
         def result = GradleRunner.create()
             .withProjectDir(testProjectDir)
-            .withArguments('build','--info', '--stacktrace')
+            .withArguments('apgDmBomReport','--info', '--stacktrace')
             .withPluginClasspath()
             .build()
         then:

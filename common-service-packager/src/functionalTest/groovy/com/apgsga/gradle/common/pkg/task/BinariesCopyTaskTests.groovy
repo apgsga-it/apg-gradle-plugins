@@ -1,18 +1,10 @@
 package com.apgsga.gradle.common.pkg.task
 
 import com.apgsga.gradle.test.utils.AbstractSpecification
-
-import static groovy.io.FileType.*
-import static groovy.io.FileVisitResult.*
 import org.gradle.testkit.runner.GradleRunner
-import org.junit.Rule
 import spock.lang.Shared
-import spock.lang.Specification
 
-import static org.gradle.testkit.runner.TaskOutcome.*
-
-import java.nio.file.Files
-import java.nio.file.Path
+import static groovy.io.FileType.FILES
 
 class BinariesCopyTaskTests extends AbstractSpecification {
 	@Shared File resourcesDir

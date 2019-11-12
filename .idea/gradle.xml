@@ -12,6 +12,7 @@
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/common-repo" />
             <option value="$PROJECT_DIR$/common-service-packager" />
+            <option value="$PROJECT_DIR$/common-test" />
             <option value="$PROJECT_DIR$/dependency-manager" />
             <option value="$PROJECT_DIR$/generic-publish" />
             <option value="$PROJECT_DIR$/gradle-common" />

@@ -2,14 +2,6 @@ package com.apgsga.gradle.common.pkg.task
 
 import com.apgsga.gradle.test.utils.AbstractSpecification
 import org.gradle.testkit.runner.GradleRunner
-import org.junit.Rule
-import spock.lang.Shared
-import spock.lang.Specification
-
-import static org.gradle.testkit.runner.TaskOutcome.*
-
-import java.nio.file.Files
-import java.nio.file.Path
 
 class TemplateDirCopyTaskTest extends AbstractSpecification {
 
