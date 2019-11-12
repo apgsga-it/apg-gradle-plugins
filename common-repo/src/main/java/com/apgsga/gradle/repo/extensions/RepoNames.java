@@ -6,7 +6,8 @@ public enum RepoNames {
 	MAVEN("MAVEN"),
 	RPM("RPM"),
 	SNAPSHOT("SNAPSHOT"),
-	ZIP("ZIP");
+	ZIP("ZIP"),
+	LOCAL("LOCAL");
 	
 	private String repoName;
 	

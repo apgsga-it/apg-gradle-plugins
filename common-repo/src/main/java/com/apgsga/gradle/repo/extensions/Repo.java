@@ -1,22 +1,12 @@
 package com.apgsga.gradle.repo.extensions;
 
+import java.util.Map;
+
 public interface Repo {
 
 	String getRepoBaseUrl();
 
 	void setRepoBaseUrl(String repoBaseUrl);
-
-	String getRepoName();
-
-	void setRepoName(String repoName);
-	
-	String getReleaseRepoName();
-
-	void setReleaseRepoName(String repoName);
-	
-	String getSnapshotRepoName();
-
-	void setSnapshotRepoName(String repoName);
 
 	String getUser();
 
@@ -28,11 +18,7 @@ public interface Repo {
 	
 	String getDefaultRepoBaseUrl();
 	
-	String getDefaultRepoName();
-	
-	String getDefaultReleaseRepoName();
-	
-	String getDefaultSnapshotRepoName();
+	Map<String, String> getRepoNames();
 	
 	String getDefaultUser(); 
 	

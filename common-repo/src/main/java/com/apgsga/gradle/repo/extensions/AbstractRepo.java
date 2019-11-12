@@ -1,12 +1,13 @@
 package com.apgsga.gradle.repo.extensions;
 
+import java.util.Map;
+
 import org.gradle.api.Project;
+
+import com.google.common.collect.Maps;
 
 public abstract class AbstractRepo implements Repo {
 	private String repoBaseUrl;
-	private String repoName;
-	private String releaseRepoName = getDefaultReleaseRepoName();
-	private String snapshotRepoName = getDefaultSnapshotRepoName();
 	private String user = getDefaultUser();
 	private String password = getDefaultPassword();
 	protected Project project; 
@@ -22,14 +23,6 @@ public abstract class AbstractRepo implements Repo {
 
 	public void setRepoBaseUrl(String repoBaseUrl) {
 		this.repoBaseUrl = repoBaseUrl;
-	}
-
-	public String getRepoName() {
-		return repoName == null ? getDefaultRepoName() : repoName;
-	}
-
-	public void setRepoName(String repoName) {
-		this.repoName = repoName;
 	}
 
 	public String getUser() {
@@ -60,27 +53,10 @@ public abstract class AbstractRepo implements Repo {
 	}
 	
 
-	public String getReleaseRepoName() {
-		return releaseRepoName == null ? getDefaultReleaseRepoName() : releaseRepoName;
-	}
-
-	public void setReleaseRepoName(String releaseRepoName) {
-		this.releaseRepoName = releaseRepoName;
-	}
-
-	public String getSnapshotRepoName() {
-		return snapshotRepoName == null ? getDefaultSnapshotRepoName() : snapshotRepoName;
-	}
-
-	public void setSnapshotRepoName(String snapshotRepoName) {
-		this.snapshotRepoName = snapshotRepoName;
-	}
-
 	@Override
 	public String toString() {
-		return "[repoBaseUrl=" + getRepoBaseUrl() + ", repoName=" + getRepoName() + ", releaseRepoName="
-				+ getReleaseRepoName() + ", snapshotRepoName=" + getSnapshotRepoName() + ", user=" + getUser() + ", password=xxxxxx"
-				 + ", project=" + project + "]";
+		return "[repoBaseUrl=" + getRepoBaseUrl() + ", user=" + getUser() + ", password=xxxxxx"
+				+ ", repoNames=" + getRepoNames() + ", project=" + project + "]";
 	}
 
 	
