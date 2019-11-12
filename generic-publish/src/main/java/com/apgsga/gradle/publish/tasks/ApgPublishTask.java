@@ -12,6 +12,7 @@ import com.apgsga.gradle.publish.extension.ApgGenericPublish;
 import com.apgsga.gradle.repo.extensions.LocalRepo;
 import com.apgsga.gradle.repo.extensions.RemoteRepo;
 import com.apgsga.gradle.repo.extensions.Repo;
+import com.apgsga.gradle.repo.extensions.RepoNames;
 import com.apgsga.gradle.repository.RepositoryBuilderFactory;
 import com.apgsga.gradle.repository.UploadRepository;
 import com.apgsga.gradle.repository.UploadRepositoryBuilder;
@@ -50,7 +51,8 @@ public class ApgPublishTask extends DefaultTask {
 
 	private UploadRepository configure(Repo repo, boolean publish) {
 		UploadRepositoryBuilder builder = RepositoryBuilderFactory.createFor(repo.getRepoBaseUrl(),publish);
-		builder.setTargetRepo(repo.getRepoName());
+		// JHE: Really, always within RPM Repo? Or should we provide the target Repo as parameter?
+		builder.setTargetRepo(repo.getRepoNames().get(RepoNames.RPM.toString()));
 		builder.setUsername(repo.getUser());
 		builder.setPassword(repo.getPassword());
 		return builder.build();

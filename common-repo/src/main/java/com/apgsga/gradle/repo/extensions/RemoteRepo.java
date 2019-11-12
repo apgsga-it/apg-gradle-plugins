@@ -11,27 +11,20 @@ public class RemoteRepo extends AbstractRepo {
 
 	private static final String RELEASE_REPO_NAME_DEFAULT = "release-functionaltest";
 	private static final String SNAPSHOT_REPO_NAME_DEFAULT = "snapshot-functionaltest";
-	private static final String REPO_PW_DEFAULT = "gradledev-tests-user";
 	private static final String REPO_USER_DEFAULT = "gradledev-tests-user";
 	private static final String REPO_DEDFAULT = "rpm-functionaltest";
 	private static final String REPO_BASE_URL_DEFAULT = "https://artifactory4t4apgsga.jfrog.io/artifactory4t4apgsga";
-	private static Map<String,String> repoNames = Maps.newHashMap();
+	private static Map<String,String> repoNames;
 	
-	public RemoteRepo(Project project) {
-		super(project);
-		// TODO JHE: Right place for init ?!?
-		initRepoNames();
-	}
-	
-	private void initRepoNames() {
-		// TODO JHE: Other Repo to be configured?
+	static {
+		repoNames = Maps.newHashMap();
 		repoNames.put(RepoNames.GENERIC.toString(), REPO_DEDFAULT);
 		repoNames.put(RepoNames.MAVEN.toString(), RELEASE_REPO_NAME_DEFAULT);
 		repoNames.put(RepoNames.SNAPSHOT.toString(), SNAPSHOT_REPO_NAME_DEFAULT);
 	}
 	
-	public Map<String, String> getRepoNames() {
-		return repoNames;
+	public RemoteRepo(Project project) {
+		super(project);
 	}
 	
 	@Override
@@ -40,29 +33,8 @@ public class RemoteRepo extends AbstractRepo {
 	}
 
 	@Override
-	public String getDefaultRepoName() {
-		return repoNames.get(RepoNames.GENERIC.toString());
-	}
-
-
-	@Override
 	public String getDefaultUser() {
 		return REPO_USER_DEFAULT; 
-	}
-
-	@Override
-	public String getDefaultPassword() {
-		return REPO_PW_DEFAULT; 
-	}
-
-	@Override
-	public String getDefaultReleaseRepoName() {
-		return repoNames.get(RepoNames.MAVEN.toString());
-	}
-
-	@Override
-	public String getDefaultSnapshotRepoName() {
-		return repoNames.get(RepoNames.SNAPSHOT.toString());
 	}
 
 	@Override
@@ -72,9 +44,9 @@ public class RemoteRepo extends AbstractRepo {
 		logger.info(super.toString());
 	}
 
-	
-
-
-	
+	@Override
+	public Map<String, String> getRepoNames() {
+		return repoNames;
+	}
 
 }
