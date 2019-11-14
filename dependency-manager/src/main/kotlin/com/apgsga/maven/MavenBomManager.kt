@@ -1,17 +1,12 @@
 package com.apgsga.maven
 
-import java.io.InputStream
-
-fun createMavenBomManager(repoUrlBom: String, repoName: String , repoUser: String , repoPass: String ) : MavenBomManager {
-    return  MavenBomManagerDefaultImpl(repoUrlBom,repoName,repoUser,repoPass)
-}
+data class MavenArtifact(val groupId: String, val artifactid: String, val version: String, val type: String)
 
 interface MavenBomManager {
 
-    fun loadModel(groupId: String, artifactid: String, version: String)
+    fun loadModel(groupId: String, artifactid: String, version: String): Collection<MavenArtifact>
 
-    fun loadModel(repoPathBom: String)
+    fun loadModel(repoPathBom: String): Collection<MavenArtifact>
 
-    fun loadModel(bomFile: InputStream)
 }
 
