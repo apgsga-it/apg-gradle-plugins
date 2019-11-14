@@ -15,7 +15,7 @@ public class LocalRepo extends AbstractRepo {
 	// JHE: Ok, overkill for local Repo, but we follow same logic as for Remote. And who knows, maybe we'll once have more than one local Repo?
 	static {
 		repoNames = Maps.newHashMap();
-		repoNames.put(RepoNames.LOCAL.toString(), TARGET_DIR_DEFAULT);
+		repoNames.put("LOCAL", TARGET_DIR_DEFAULT);
 	}
 	
 	public LocalRepo(Project project) {
@@ -35,7 +35,7 @@ public class LocalRepo extends AbstractRepo {
 	}
 
 	@Override
-	public Map<String, String> getRepoNames() {
+	public Map<String, String> getDefaultRepoNames() {
 		return repoNames;
 	}
 }

@@ -18,7 +18,7 @@ public interface Repo {
 	
 	String getDefaultRepoBaseUrl();
 	
-	Map<String, String> getRepoNames();
+	Map<String, String> getDefaultRepoNames();
 	
 	String getDefaultUser(); 
 	

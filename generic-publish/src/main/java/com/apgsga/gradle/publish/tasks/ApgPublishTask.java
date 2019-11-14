@@ -44,20 +44,28 @@ public class ApgPublishTask extends DefaultTask {
 		assert config != null;
 		config.log();
 		File theFile = artefactFile.getAsFile().get();
-		configure(localConfig, config.isPublishLocal()).upload(theFile.getName(), theFile);
-		configure(remoteConfig, config.isPublishRemote()).upload(theFile.getName(), theFile);
+		configure(localConfig, config.isPublishLocal(), theFile.getName()).upload(theFile.getName(), theFile);
+		configure(remoteConfig, config.isPublishRemote(), theFile.getName()).upload(theFile.getName(), theFile);
 		logger.info("ApgRpmPublishTask done.");
 
 	}
 
 	private Repository configure(Repo repo, boolean publish) {
 		RepositoryBuilder builder = RepositoryBuilderFactory.createFor(publish ? null : repo.getRepoBaseUrl());
-        // JHE: Really, always within RPM Repo? Or should we provide the target Repo as parameter?
-        builder.setTargetRepo(repo.getRepoNames().get(RepoNames.RPM.toString()));
+        builder.setTargetRepo(getMavenRepoName(repo,filename));
 		builder.setUsername(repo.getUser());
 		builder.setPassword(repo.getPassword());
 		return builder.build();
-
 	}
 
+	private String getMavenRepoName(Repo repo, String filename) {
+		String mavenRepo = "RPM";
+		if(repo.getDefaultRepoNames().containsKey("LOCAL")) {
+			mavenRepo = repo.getDefaultRepoNames().get("LOCAL");
+		}
+		else {
+			mavenRepo = filename.toLowerCase().endsWith("rpm") ? repo.getDefaultRepoNames().get("RPM") : repo.getDefaultRepoNames().get("MAVEN");
+		}
+		return mavenRepo;
+	}
 }

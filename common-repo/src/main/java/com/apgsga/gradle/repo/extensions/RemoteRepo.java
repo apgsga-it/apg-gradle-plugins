@@ -7,20 +7,23 @@ import org.gradle.api.logging.Logger;
 
 import com.google.common.collect.Maps;
 
+
 public class RemoteRepo extends AbstractRepo {
 
 	private static final String RELEASE_REPO_NAME_DEFAULT = "release-functionaltest";
 	private static final String SNAPSHOT_REPO_NAME_DEFAULT = "snapshot-functionaltest";
+	private static final String RPM_REPO_NAME_DEFAULT = "rpm-functionaltest";
 	private static final String REPO_USER_DEFAULT = "gradledev-tests-user";
-	private static final String REPO_DEDFAULT = "rpm-functionaltest";
+	private static final String REPO_DEDFAULT = RPM_REPO_NAME_DEFAULT;
 	private static final String REPO_BASE_URL_DEFAULT = "https://artifactory4t4apgsga.jfrog.io/artifactory4t4apgsga";
 	private static Map<String,String> repoNames;
 	
 	static {
 		repoNames = Maps.newHashMap();
-		repoNames.put(RepoNames.GENERIC.toString(), REPO_DEDFAULT);
-		repoNames.put(RepoNames.MAVEN.toString(), RELEASE_REPO_NAME_DEFAULT);
-		repoNames.put(RepoNames.SNAPSHOT.toString(), SNAPSHOT_REPO_NAME_DEFAULT);
+		repoNames.put("GENERIC", REPO_DEDFAULT);
+		repoNames.put("MAVEN", RELEASE_REPO_NAME_DEFAULT);
+		repoNames.put("MAVEN-SNAPSHOT", SNAPSHOT_REPO_NAME_DEFAULT);
+		repoNames.put("RPM", RPM_REPO_NAME_DEFAULT);
 	}
 	
 	public RemoteRepo(Project project) {
@@ -45,7 +48,7 @@ public class RemoteRepo extends AbstractRepo {
 	}
 
 	@Override
-	public Map<String, String> getRepoNames() {
+	public Map<String, String> getDefaultRepoNames() {
 		return repoNames;
 	}
 
