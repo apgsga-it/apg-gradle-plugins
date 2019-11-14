@@ -21,7 +21,7 @@ class BuildLogicFunctionalTest extends AbstractSpecification {
                 id 'com.apgsga.publish' 
             }
 			apgGenericPublishConfig {
-				artefactFile = file("${rpmToPublish.absolutePath}") 
+				artefactFile = file("${rpmToPublish.absolutePath.replace("\\","\\\\")}")
 				local()
 			}
 			apgGenericPublishConfig.log()
@@ -34,7 +34,7 @@ class BuildLogicFunctionalTest extends AbstractSpecification {
             .withPluginClasspath()
             .build()
         then:
-		println "Result output: ${result.output}" 
+		println "Result output: ${rpmToPublish.absolutePath.replace("\\","\\\\")}"
         result.output.contains('')
     }
 	
@@ -46,7 +46,7 @@ class BuildLogicFunctionalTest extends AbstractSpecification {
                 id 'com.apgsga.publish' 
             }
 			apgGenericPublishConfig {
-				artefactFile = file("${rpmToPublish.absolutePath}")
+				artefactFile = file("${rpmToPublish.absolutePath.replace("\\","\\\\")}")
 				artifactory()
 			}
         """
@@ -69,7 +69,7 @@ class BuildLogicFunctionalTest extends AbstractSpecification {
                 id 'com.apgsga.publish' 
             }
 			apgGenericPublishConfig {
-				artefactFile = file("${rpmToPublish.absolutePath}")
+				artefactFile = file("${rpmToPublish.absolutePath.replace("\\","\\\\")}")
 				local()
 				artifactory()
 			}
@@ -93,7 +93,7 @@ class BuildLogicFunctionalTest extends AbstractSpecification {
                 id 'com.apgsga.publish' 
             }
 			apgGenericPublishConfig {
-				artefactFile = file("${tarToPublish.absolutePath}")
+				artefactFile = file("${tarToPublish.absolutePath.replace("\\","\\\\")}")
 				local()
 				artifactory()
 			}
@@ -122,7 +122,7 @@ class BuildLogicFunctionalTest extends AbstractSpecification {
 			}	
 			apgLocalRepo.log()
 			apgGenericPublishConfig {
-				artefactFile = file("${tarToPublish.absolutePath}")
+				artefactFile = file("${tarToPublish.absolutePath.replace("\\","\\\\")}")
 				local()
 			}
         """

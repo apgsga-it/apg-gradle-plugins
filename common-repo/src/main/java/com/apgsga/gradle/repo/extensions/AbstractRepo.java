@@ -1,10 +1,6 @@
 package com.apgsga.gradle.repo.extensions;
 
-import java.util.Map;
-
 import org.gradle.api.Project;
-
-import com.google.common.collect.Maps;
 
 public abstract class AbstractRepo implements Repo {
 	private String repoBaseUrl;
@@ -56,7 +52,7 @@ public abstract class AbstractRepo implements Repo {
 	@Override
 	public String toString() {
 		return "[repoBaseUrl=" + getRepoBaseUrl() + ", user=" + getUser() + ", password=xxxxxx"
-				+ ", repoNames=" + getRepoNames() + ", project=" + project + "]";
+				+ ", repoNames=" + getDefaultRepoNames() + ", project=" + project + "]";
 	}
 
 	
