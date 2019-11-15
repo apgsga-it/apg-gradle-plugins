@@ -50,7 +50,7 @@ public class ApgPublishTask extends DefaultTask {
 
 	}
 
-	private Repository configure(Repo repo, boolean publish) {
+	private Repository configure(Repo repo, boolean publish, String filename) {
 		RepositoryBuilder builder = RepositoryBuilderFactory.createFor(publish ? null : repo.getRepoBaseUrl());
         builder.setTargetRepo(getMavenRepoName(repo,filename));
 		builder.setUsername(repo.getUser());
