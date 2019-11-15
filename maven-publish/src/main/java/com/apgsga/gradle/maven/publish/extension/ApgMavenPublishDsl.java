@@ -5,6 +5,7 @@ import java.net.URI;
 
 import javax.inject.Inject;
 
+import com.apgsga.gradle.repo.extensions.RepoNames;
 import org.gradle.api.Project;
 import org.gradle.api.artifacts.dsl.RepositoryHandler;
 import org.gradle.api.artifacts.repositories.PasswordCredentials;
@@ -77,7 +78,7 @@ public class ApgMavenPublishDsl {
 				"Configuring publish repository to be a maven type remote repository hosted at: " + repoConfig.getRepoBaseUrl());
 		RepositoryHandler repositories = publishingExtension.getRepositories();
 		repositories.maven(m -> {
-			m.setUrl(repoConfig.getRepoBaseUrl() + "/" + (getVersion().endsWith("SNAPSHOT") ? repoConfig.getDefaultRepoNames().get("MAVEN-SNAPSHOT") : repoConfig.getDefaultRepoNames().get("MAVEN")));
+			m.setUrl(repoConfig.getRepoBaseUrl() + "/" + (getVersion().endsWith("SNAPSHOT") ? repoConfig.getDefaultRepoNames().get(RepoNames.MAVEN_SNAPSHOT.getName()) : repoConfig.getDefaultRepoNames().get(RepoNames.MAVEN_RELEASE.getName())));
 			m.setName("artifactoryMavenRepo");
 			PasswordCredentials credentials = m.getCredentials();
 			credentials.setUsername(repoConfig.getUser());

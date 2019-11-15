@@ -1,5 +1,6 @@
 package com.apgsga.gradle.repo.config.extensions;
 
+import com.apgsga.gradle.repo.extensions.RepoNames;
 import org.gradle.api.Project;
 import org.gradle.api.artifacts.dsl.RepositoryHandler;
 import org.gradle.api.artifacts.repositories.MavenArtifactRepository;
@@ -24,7 +25,7 @@ public class RepoConfig {
 	public void artifactory(String p_repoName) {
 
 		// JHE: Default is our MAVEN repo definition ... really correct?
-		String repoName = p_repoName != null ? p_repoName : "MAVEN";
+		String repoName = p_repoName != null ? p_repoName : RepoNames.MAVEN_RELEASE.getName();
 		
 		RemoteRepo remote = project.getExtensions().findByType(RemoteRepo.class);
 		project.getLogger().info("Using Artifactory with the following configuration");
