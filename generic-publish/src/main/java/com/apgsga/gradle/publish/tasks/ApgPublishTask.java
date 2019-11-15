@@ -13,7 +13,6 @@ import com.apgsga.gradle.publish.extension.ApgGenericPublish;
 import com.apgsga.gradle.repo.extensions.LocalRepo;
 import com.apgsga.gradle.repo.extensions.RemoteRepo;
 import com.apgsga.gradle.repo.extensions.Repo;
-import com.apgsga.gradle.repo.extensions.RepoNames;
 import com.apgsga.gradle.repository.RepositoryBuilderFactory;
 import com.apgsga.gradle.repository.Repository;
 import com.apgsga.gradle.repository.RepositoryBuilder;
