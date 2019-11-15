@@ -2,6 +2,7 @@ package com.apgsga.gradle.publish.tasks;
 
 import java.io.File;
 
+import com.apgsga.gradle.repo.extensions.RepoNames;
 import org.gradle.api.DefaultTask;
 import org.gradle.api.file.RegularFileProperty;
 import org.gradle.api.logging.Logger;
@@ -64,7 +65,7 @@ public class ApgPublishTask extends DefaultTask {
 			mavenRepo = repo.getDefaultRepoNames().get("LOCAL");
 		}
 		else {
-			mavenRepo = filename.toLowerCase().endsWith("rpm") ? repo.getDefaultRepoNames().get("RPM") : repo.getDefaultRepoNames().get("MAVEN");
+			mavenRepo = filename.toLowerCase().endsWith("rpm") ? repo.getDefaultRepoNames().get(RepoNames.RPM.getName()) : repo.getDefaultRepoNames().get(RepoNames.MAVEN_RELEASE.getName());
 		}
 		return mavenRepo;
 	}

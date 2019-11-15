@@ -48,7 +48,7 @@ class BuildLogicFunctionalTest extends AbstractSpecification {
 			println "Result output: ${result.output}"
 			result.output.contains('MavenLocal')
 			result.output.contains('MavenLocal2')
-			result.output.contains('rpm-functionaltest')
+			result.output.contains('release-functionaltest')
 			result.output.contains('MavenRepo')
 	}
 	
@@ -128,8 +128,8 @@ class BuildLogicFunctionalTest extends AbstractSpecification {
 	            }
 
 				apgArtifactoryRepo {
-					repoNames['GENERIC'] = "thisIsMyGenericTestRepo"
-					repoNames['MAVEN'] = "thisIsMyReleaseTestRepo"
+					defaultRepoNames['RPM'] = "thisIsMyGenericTestRepo"
+					defaultRepoNames['MAVEN-RELEASE'] = "thisIsMyReleaseTestRepo"
 				}
 
 				apgRepository {
@@ -146,7 +146,6 @@ class BuildLogicFunctionalTest extends AbstractSpecification {
 		then:
 			println "Result output: ${result.output}"
 			!result.output.contains('rpm-functionaltest')
-			!result.output.contains('release-functionaltest')
 			result.output.contains('thisIsMyGenericTestRepo')
 			result.output.contains('thisIsMyReleaseTestRepo')
 	}
