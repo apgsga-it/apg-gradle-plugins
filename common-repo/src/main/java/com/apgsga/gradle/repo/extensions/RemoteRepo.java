@@ -1,13 +1,8 @@
 package com.apgsga.gradle.repo.extensions;
 
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 import groovy.json.JsonSlurper;
 import org.gradle.api.Project;
@@ -15,8 +10,6 @@ import org.gradle.api.logging.Logger;
 
 import com.google.common.collect.Maps;
 import org.springframework.core.io.ClassPathResource;
-import org.springframework.core.io.FileSystemResourceLoader;
-import org.springframework.core.io.Resource;
 import org.springframework.util.Assert;
 
 
@@ -45,13 +38,13 @@ public class RemoteRepo extends AbstractRepo {
 
 	private static void initRepoNames(List<Map> repos) {
 		repoNames = Maps.newHashMap();
-		repoNames.put(RepoNames.MAVEN_RELEASE.toString(), getRepoTypeName(RepoNames.MAVEN_RELEASE, repos));
-		repoNames.put(RepoNames.MAVEN_SNAPSHOT.toString(), getRepoTypeName(RepoNames.MAVEN_SNAPSHOT, repos));
-		repoNames.put(RepoNames.RPM.toString(), getRepoTypeName(RepoNames.RPM, repos));
-		repoNames.put(RepoNames.ZIP.toString(), getRepoTypeName(RepoNames.ZIP, repos));
+		repoNames.put(RepoNames.MAVEN_RELEASE.toString(), getRepoName(RepoNames.MAVEN_RELEASE, repos));
+		repoNames.put(RepoNames.MAVEN_SNAPSHOT.toString(), getRepoName(RepoNames.MAVEN_SNAPSHOT, repos));
+		repoNames.put(RepoNames.RPM.toString(), getRepoName(RepoNames.RPM, repos));
+		repoNames.put(RepoNames.ZIP.toString(), getRepoName(RepoNames.ZIP, repos));
 	}
 
-	private static String getRepoTypeName(RepoNames repo, List<Map> repos) {
+	private static String getRepoName(RepoNames repo, List<Map> repos) {
 		// TODO JHE: Mmh, not very efficient, replace the below with a Lambda
 		String repoName = "";
 		for(Map m : repos) {
