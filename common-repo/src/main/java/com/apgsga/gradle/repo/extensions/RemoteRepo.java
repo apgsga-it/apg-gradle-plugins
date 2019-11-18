@@ -15,9 +15,6 @@ import org.springframework.util.Assert;
 
 public class RemoteRepo extends AbstractRepo {
 
-//	private static final String RELEASE_REPO_NAME_DEFAULT = "release-functionaltest";
-//	private static final String SNAPSHOT_REPO_NAME_DEFAULT = "snapshot-functionaltest";
-//	private static final String RPM_REPO_NAME_DEFAULT = "rpm-functionaltest";
 	private static final String REPO_USER_DEFAULT = "gradledev-tests-user";
 	private static final String REPO_PW_DEFAULT = "gradledev-tests-user";
 	private static final String REPO_BASE_URL_DEFAULT = "https://artifactory4t4apgsga.jfrog.io/artifactory4t4apgsga";
