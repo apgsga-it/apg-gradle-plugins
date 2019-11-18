@@ -24,3 +24,4 @@ out/
 /dependency-manager/build/
 /common-test/build/
 /dependency-manager/bin/
+/testapp-kotlin-service/build/
