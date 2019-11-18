@@ -47,13 +47,13 @@ apgPackage {
 	serviceName = parServiceName
 	// TODO (che,15.10) jadas-e services, neecs to be discussed how this list is maintained
 	supportedServices = Lists.newArrayList("jadas", "digiflex","vkjadas", "interjadas", "interweb", parServiceName)
-	dependencies = arrayOf("com.apgsga:testapp-service:0.1-SNAPSHOT")
+	dependencies = arrayOf("com.apgsga:testapp-service-kotlin:0.1-SNAPSHOT")
 	resourceFilters = "serviceport"
 	appConfigFilters = "general"
   	servicePropertiesDir = "resources"
 	installTarget = parInstallTarget
 	mainProgramName  = "com.apgsga.testapp.TestappApplication"
-	version = parServiceVersion 
+	version = parServiceVersion
 	releaseNr = parReleaseNr
 }
 

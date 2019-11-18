@@ -49,3 +49,14 @@ tasks.withType<KotlinCompile> {
 tasks.withType<Test> {
     useJUnitPlatform()
 }
+
+// TODO (che, 2.10) support mavenLocal()
+apgMavenPublish {
+    local()
+}
+// TDO (che, 2.10) as soon as apgMavenPublish supports mavenLocal this is not needed anymore
+publishing {
+    repositories {
+        mavenLocal()
+    }
+}
