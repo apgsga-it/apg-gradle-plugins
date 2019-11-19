@@ -1,0 +1,23 @@
+apply from: "${projectDir}/../gradle-common/common-plugin.gradle"
+apply from: "${projectDir}/../gradle-common/integration-test.gradle"
+apply from: "${projectDir}/../gradle-common/functional-test.gradle"
+
+group = 'com.apgsga.gradle'
+version = '0.1'
+description 'Provides standardized configurations for SSH deployment'
+
+sourceSets {
+    main {
+        java {
+            srcDirs = []
+        }
+        groovy {
+            srcDirs = ['src/main/groovy', 'src/main/java']
+        }
+    }
+}
+
+dependencies {
+    testCompile gradleTestKit()
+    testCompile project(':common-test')
+}
