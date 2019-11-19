@@ -7,7 +7,7 @@ group = 'com.apgsga.gradle'
 version = '0.1'
 description 'Provides standardized configurations for Artefact Repos (local, artefactory)'
 
-// JHE: Tasks useful for developer only in order to get the GRADLE_HOME folder path where repoNames.json file has to be put
+// JHE: Task useful for developer only in order to get the GRADLE_HOME folder path where repoNames.json file has to be put
 task getHomeDir {
 	doLast {
 		println gradle.gradleHomeDir
