@@ -4,8 +4,8 @@ buildscript {
 		mavenCentral()
 	}
 	dependencies {
-		classpath 'com.apgsga.gradle:maven-publish:0.1'
-		classpath 'com.apgsga.gradle:repo-config:0.1'
+		classpath 'com.apgsga.gradle:maven-publish:0.3-SNAPSHOT'
+		classpath 'com.apgsga.gradle:repo-config:0.3-SNAPSHOT'
 	}
 }
 
