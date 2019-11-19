@@ -23,9 +23,10 @@ class FileRepositoryIntegrationTests extends Specification {
 		when:
 		def deploy = uploadRepo.upload(rpmToPublish.getName(), rpmToPublish)
 		then:
-		!deploy.isFolder()
-		deploy.name == "apg-plugintests-0.8.9-1.noarch.rpm"
-		deploy.repo == "build/testrepo"
+			!deploy.isFolder()
+			deploy.name == "apg-plugintests-0.8.9-1.noarch.rpm"
+			deploy.repo.contains("build")
+			deploy.repo.contains("testrepo")
 	}
 
 	def "publish repo does'nt exist"() {

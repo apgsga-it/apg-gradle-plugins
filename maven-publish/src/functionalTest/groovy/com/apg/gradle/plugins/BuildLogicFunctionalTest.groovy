@@ -40,7 +40,6 @@ class BuildLogicFunctionalTest extends AbstractSpecification {
         result.output.contains('')
     }
 	
-	
 	def "publish to maven Remote works with Defaults"() {
 		given:
 		buildFile << """
@@ -65,7 +64,7 @@ class BuildLogicFunctionalTest extends AbstractSpecification {
 		println "Result output: ${result.output}"
 		result.output.contains('')
 	}
-	
+
 	def "publish to both a maven Local and Remote Repo works with SNAPSHOT Version"() {
 		given:	
 		buildFile << """
@@ -92,7 +91,7 @@ class BuildLogicFunctionalTest extends AbstractSpecification {
 		println "Result output: ${result.output}"
 		result.output.contains('')
 	}
-	
+
 	def "publish to both a maven Local and Remote Repo works with Release Version"() {
 		given:
 		buildFile << """

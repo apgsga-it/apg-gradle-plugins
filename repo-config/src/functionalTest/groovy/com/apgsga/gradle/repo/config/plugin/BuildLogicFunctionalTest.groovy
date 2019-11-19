@@ -12,7 +12,7 @@ import spock.lang.Specification
 
 class BuildLogicFunctionalTest extends AbstractSpecification {
 	
-	def "Repo Config works with all repositiories configured"() {
+	def "Repo Config works with all default repositiories configured"() {
 		given:
 			buildFile << """
 	            plugins {
@@ -48,7 +48,7 @@ class BuildLogicFunctionalTest extends AbstractSpecification {
 			println "Result output: ${result.output}"
 			result.output.contains('MavenLocal')
 			result.output.contains('MavenLocal2')
-			result.output.contains('rpm-functionaltest')
+			result.output.contains('release-functionaltest')
 			result.output.contains('MavenRepo')
 	}
 	
@@ -118,5 +118,35 @@ class BuildLogicFunctionalTest extends AbstractSpecification {
 				
 		then:
 			println "Result output: ${result.output}"
+	}
+	
+	def "Repo Config works with repositories name coming from map"() {
+		given:
+			buildFile << """
+	            plugins {
+	                id 'com.apgsga.gradle.repo.config'
+	            }
+
+				apgArtifactoryRepo {
+					defaultRepoNames['RPM'] = "thisIsMyGenericTestRepo"
+					defaultRepoNames['MAVEN-RELEASE'] = "thisIsMyReleaseTestRepo"
+				}
+
+				apgRepository {
+					artifactory()
+				}
+	        """
+		when:
+			def result = GradleRunner.create()
+				.withProjectDir(testProjectDir)
+				.withArguments('init','--info', '--stacktrace')
+				.withPluginClasspath()
+				.build()
+				
+		then:
+			println "Result output: ${result.output}"
+			!result.output.contains('rpm-functionaltest')
+			result.output.contains('thisIsMyGenericTestRepo')
+			result.output.contains('thisIsMyReleaseTestRepo')
 	}
 }

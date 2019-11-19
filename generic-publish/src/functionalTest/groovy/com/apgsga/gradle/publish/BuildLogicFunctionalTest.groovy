@@ -21,7 +21,7 @@ class BuildLogicFunctionalTest extends AbstractSpecification {
                 id 'com.apgsga.publish' 
             }
 			apgGenericPublishConfig {
-				artefactFile = file("${rpmToPublish.absolutePath}") 
+				artefactFile = file("${rpmToPublish.absolutePath.replace("\\","\\\\")}")
 				local()
 			}
 			apgGenericPublishConfig.log()
@@ -34,19 +34,19 @@ class BuildLogicFunctionalTest extends AbstractSpecification {
             .withPluginClasspath()
             .build()
         then:
-		println "Result output: ${result.output}" 
+		println "Result output: ${rpmToPublish.absolutePath.replace("\\","\\\\")}"
         result.output.contains('')
     }
-	
-	
+
 	def "publish rpm to remote works"() {
 		given:
 		buildFile << """
             plugins {
                 id 'com.apgsga.publish' 
             }
+
 			apgGenericPublishConfig {
-				artefactFile = file("${rpmToPublish.absolutePath}")
+				artefactFile = file("${rpmToPublish.absolutePath.replace("\\","\\\\")}")
 				artifactory()
 			}
         """
@@ -61,7 +61,7 @@ class BuildLogicFunctionalTest extends AbstractSpecification {
 		println "Result output: ${result.output}"
 		result.output.contains('')
 	}
-	
+
 	def "publish rpm to both local and remote works"() {
 		given:
 		buildFile << """
@@ -69,7 +69,7 @@ class BuildLogicFunctionalTest extends AbstractSpecification {
                 id 'com.apgsga.publish' 
             }
 			apgGenericPublishConfig {
-				artefactFile = file("${rpmToPublish.absolutePath}")
+				artefactFile = file("${rpmToPublish.absolutePath.replace("\\","\\\\")}")
 				local()
 				artifactory()
 			}
@@ -85,7 +85,7 @@ class BuildLogicFunctionalTest extends AbstractSpecification {
 		println "Result output: ${result.output}"
 		result.output.contains('')
 	}
-	
+
 	def "publish tarball to both local and remote works"() {
 		given:
 		buildFile << """
@@ -93,7 +93,7 @@ class BuildLogicFunctionalTest extends AbstractSpecification {
                 id 'com.apgsga.publish' 
             }
 			apgGenericPublishConfig {
-				artefactFile = file("${tarToPublish.absolutePath}")
+				artefactFile = file("${tarToPublish.absolutePath.replace("\\","\\\\")}")
 				local()
 				artifactory()
 			}
@@ -109,7 +109,7 @@ class BuildLogicFunctionalTest extends AbstractSpecification {
 		println "Result output: ${result.output}"
 		result.output.contains('')
 	}
-	
+
 	def "publish tarball to local with explicit repo config"() {
 		given:
 		buildFile << """
@@ -118,11 +118,11 @@ class BuildLogicFunctionalTest extends AbstractSpecification {
             }
 			apgLocalRepo {
 				repoBaseUrl = "build"
-				repoName = "anothertestrepo"
+				defaultRepoNames['LOCAL'] = "anothertestrepo"
 			}	
 			apgLocalRepo.log()
 			apgGenericPublishConfig {
-				artefactFile = file("${tarToPublish.absolutePath}")
+				artefactFile = file("${tarToPublish.absolutePath.replace("\\","\\\\")}")
 				local()
 			}
         """

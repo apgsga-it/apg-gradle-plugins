@@ -2,6 +2,7 @@ package com.apgsga.gradle.publish.tasks;
 
 import java.io.File;
 
+import com.apgsga.gradle.repo.extensions.RepoNames;
 import org.gradle.api.DefaultTask;
 import org.gradle.api.file.RegularFileProperty;
 import org.gradle.api.logging.Logger;
@@ -43,19 +44,28 @@ public class ApgPublishTask extends DefaultTask {
 		assert config != null;
 		config.log();
 		File theFile = artefactFile.getAsFile().get();
-		configure(localConfig, config.isPublishLocal()).upload(theFile.getName(), theFile);
-		configure(remoteConfig, config.isPublishRemote()).upload(theFile.getName(), theFile);
+		configure(localConfig, config.isPublishLocal(), theFile.getName()).upload(theFile.getName(), theFile);
+		configure(remoteConfig, config.isPublishRemote(), theFile.getName()).upload(theFile.getName(), theFile);
 		logger.info("ApgRpmPublishTask done.");
 
 	}
 
-	private Repository configure(Repo repo, boolean publish) {
+	private Repository configure(Repo repo, boolean publish, String filename) {
 		RepositoryBuilder builder = RepositoryBuilderFactory.createFor(publish ? null : repo.getRepoBaseUrl());
-		builder.setTargetRepo(repo.getRepoName());
+        builder.setTargetRepo(getMavenRepoName(repo,filename));
 		builder.setUsername(repo.getUser());
 		builder.setPassword(repo.getPassword());
 		return builder.build();
-
 	}
 
+	private String getMavenRepoName(Repo repo, String filename) {
+		String mavenRepo = "RPM";
+		if(repo.getDefaultRepoNames().containsKey("LOCAL")) {
+			mavenRepo = repo.getDefaultRepoNames().get("LOCAL");
+		}
+		else {
+			mavenRepo = filename.toLowerCase().endsWith("rpm") ? repo.getDefaultRepoNames().get(RepoNames.RPM.getName()) : repo.getDefaultRepoNames().get(RepoNames.MAVEN_RELEASE.getName());
+		}
+		return mavenRepo;
+	}
 }

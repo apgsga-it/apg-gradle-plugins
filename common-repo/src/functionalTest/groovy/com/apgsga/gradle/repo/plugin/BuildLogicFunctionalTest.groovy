@@ -31,9 +31,10 @@ class BuildLogicFunctionalTest extends AbstractSpecification {
 			.build()
 		then:
 		println "Result output: ${result.output}"
-		result.output.contains('')
+		result.output.contains('maventestrepo')
 	}
 
+	
     def "Common Repo Plugin works explicit with Defaults"() {
         given:
         buildFile << """
@@ -56,7 +57,9 @@ class BuildLogicFunctionalTest extends AbstractSpecification {
             .build()
         then:
 		println "Result output: ${result.output}" 
-        result.output.contains('')
+        result.output.contains('maventestrepo')
+		result.output.contains('release-functionaltest')
+		result.output.contains('rpm-functionaltest')
     }
 	
 	
@@ -67,16 +70,15 @@ class BuildLogicFunctionalTest extends AbstractSpecification {
                 id 'com.apgsga.common.repo' 
             }
 			apgArtifactoryRepo {
-		        releaseRepoName = "YYYYY"
-				snapshotRepoName ="BBBBB"
+				defaultRepoNames['MAVEN'] = "YYYYY"
+				defaultRepoNames['MAVEN-SNAPSHOT'] = "BBBBB"
 				repoBaseUrl = "xxxx"
-				repoName = "remoteRepoName"
 				user = "abc"
 				password = "def"
 			}
 			apgLocalRepo {
-				repoBaseUrl = "otherdirectorty"
-				repoName = "testrepo"
+				repoBaseUrl = "otherdirectory"
+				defaultRepoNames['LOCAL'] = "testrepo"
 			}
 			apgLocalRepo.log()
 			apgArtifactoryRepo.log()
@@ -90,9 +92,10 @@ class BuildLogicFunctionalTest extends AbstractSpecification {
 			.build()
 		then:
 		println "Result output: ${result.output}"
-		result.output.contains('')
+		result.output.contains('YYYYY')
+		result.output.contains('BBBBB')
+		result.output.contains('otherdirectory')
 	}
-	
 }
 
 
