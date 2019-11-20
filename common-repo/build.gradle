@@ -7,6 +7,12 @@ group = 'com.apgsga.gradle'
 version = '0.1'
 description 'Provides standardized configurations for Artefact Repos (local, artefactory)'
 
+// JHE: Task useful for developer only in order to get the GRADLE_HOME folder path where repoNames.json file has to be put
+task getHomeDir {
+	doLast {
+		println gradle.gradleHomeDir
+	}
+}
 
 dependencies {	 
     testCompile gradleTestKit()
@@ -14,5 +20,3 @@ dependencies {
 	compile group: 'com.google.guava', name: 'guava', version: '11.0.2'
 	compile group: 'org.springframework', name: 'spring-core', version: '5.2.1.RELEASE'
 }
-
-
