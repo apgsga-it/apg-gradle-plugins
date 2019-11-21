@@ -27,7 +27,7 @@ public class RemoteRepo extends AbstractRepo {
 		try {
 			String gradleHome = project.getGradle().getGradleHomeDir().getAbsolutePath();
 			FileSystemResourceLoader loader = new FileSystemResourceLoader();
-			String repoNamesJsonFilePath = gradleHome + File.separator + REPO_NAMES_JSON_FILENAME;
+			String repoNamesJsonFilePath = "file://" + gradleHome + File.separator + REPO_NAMES_JSON_FILENAME;
 			Resource repoNamesJsonAsResource = loader.getResource(repoNamesJsonFilePath);
 			Assert.isTrue(repoNamesJsonAsResource.exists(), "repoNames.json file not found! repoNamesJsonFilePath = " + repoNamesJsonFilePath);
 			JsonSlurper slurper = new JsonSlurper();
