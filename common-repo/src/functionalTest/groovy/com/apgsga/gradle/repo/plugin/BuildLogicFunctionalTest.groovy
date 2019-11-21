@@ -26,7 +26,7 @@ class BuildLogicFunctionalTest extends AbstractSpecification {
 		when:
 		def result = GradleRunner.create()
 			.withProjectDir(testProjectDir)
-			.withArguments( 'init','--info', '--stacktrace')
+			.withArguments( "-Dgradle.user.home=${gradleHomeDir}", 'init','--info', '--stacktrace')
 			.withPluginClasspath()
 			.build()
 		then:
@@ -34,7 +34,6 @@ class BuildLogicFunctionalTest extends AbstractSpecification {
 		result.output.contains('maventestrepo')
 	}
 
-	
     def "Common Repo Plugin works explicit with Defaults"() {
         given:
         buildFile << """
@@ -52,7 +51,7 @@ class BuildLogicFunctionalTest extends AbstractSpecification {
         when:
         def result = GradleRunner.create()
             .withProjectDir(testProjectDir)
-            .withArguments( 'init','--info', '--stacktrace')
+            .withArguments( "-Dgradle.user.home=${gradleHomeDir}", 'init','--info', '--stacktrace')
             .withPluginClasspath()
             .build()
         then:
@@ -87,7 +86,7 @@ class BuildLogicFunctionalTest extends AbstractSpecification {
 		when:
 		def result = GradleRunner.create()
 			.withProjectDir(testProjectDir)
-			.withArguments( 'init','--info', '--stacktrace')
+			.withArguments( "-Dgradle.user.home=${gradleHomeDir}", 'init','--info', '--stacktrace')
 			.withPluginClasspath()
 			.build()
 		then:
@@ -97,5 +96,3 @@ class BuildLogicFunctionalTest extends AbstractSpecification {
 		result.output.contains('otherdirectory')
 	}
 }
-
-

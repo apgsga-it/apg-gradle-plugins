@@ -29,7 +29,7 @@ class AppResourcesCopyTaskTests extends AbstractSpecification {
         when:
         def result = GradleRunner.create()
             .withProjectDir(testProjectDir)
-            .withArguments('copyAppResources','--info', '--stacktrace')
+            .withArguments("-Dgradle.user.home=${gradleHomeDir}", 'copyAppResources','--info', '--stacktrace')
             .withPluginClasspath()
             .build()
         then:
@@ -65,7 +65,7 @@ class AppResourcesCopyTaskTests extends AbstractSpecification {
 		when:
 		def result = GradleRunner.create()
 			.withProjectDir(testProjectDir)
-			.withArguments('copyAppResources','--info', '--stacktrace')
+			.withArguments("-Dgradle.user.home=${gradleHomeDir}", 'copyAppResources','--info', '--stacktrace')
 			.withPluginClasspath()
 			.build()
 		then:

@@ -32,7 +32,7 @@ class ZipPackageTaskTests extends AbstractSpecification  {
         when:
         def result = GradleRunner.create()
             .withProjectDir(testProjectDir)
-            .withArguments('zipPackageTask','--info', '--stacktrace')
+            .withArguments("-Dgradle.user.home=${gradleHomeDir}", 'zipPackageTask','--info', '--stacktrace')
             .withPluginClasspath()
             .build()
         then:

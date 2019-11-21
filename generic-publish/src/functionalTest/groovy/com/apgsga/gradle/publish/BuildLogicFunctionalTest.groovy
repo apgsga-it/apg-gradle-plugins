@@ -30,7 +30,7 @@ class BuildLogicFunctionalTest extends AbstractSpecification {
         when:
         def result = GradleRunner.create()
             .withProjectDir(testProjectDir)
-            .withArguments('apgGenericPublish','--info', '--stacktrace')
+            .withArguments("-Dgradle.user.home=${gradleHomeDir}", 'apgGenericPublish','--info', '--stacktrace')
             .withPluginClasspath()
             .build()
         then:
@@ -54,7 +54,7 @@ class BuildLogicFunctionalTest extends AbstractSpecification {
 		when:
 		def result = GradleRunner.create()
 			.withProjectDir(testProjectDir)
-			.withArguments('apgGenericPublish','--info', '--stacktrace')
+			.withArguments("-Dgradle.user.home=${gradleHomeDir}", 'apgGenericPublish','--info', '--stacktrace')
 			.withPluginClasspath()
 			.build()
 		then:
@@ -78,7 +78,7 @@ class BuildLogicFunctionalTest extends AbstractSpecification {
 		when:
 		def result = GradleRunner.create()
 			.withProjectDir(testProjectDir)
-			.withArguments('apgGenericPublish','--info', '--stacktrace')
+			.withArguments("-Dgradle.user.home=${gradleHomeDir}", 'apgGenericPublish','--info', '--stacktrace')
 			.withPluginClasspath()
 			.build()
 		then:
@@ -102,7 +102,7 @@ class BuildLogicFunctionalTest extends AbstractSpecification {
 		when:
 		def result = GradleRunner.create()
 			.withProjectDir(testProjectDir)
-			.withArguments('apgGenericPublish','--info', '--stacktrace')
+			.withArguments("-Dgradle.user.home=${gradleHomeDir}", 'apgGenericPublish','--info', '--stacktrace')
 			.withPluginClasspath()
 			.build()
 		then:
@@ -130,7 +130,7 @@ class BuildLogicFunctionalTest extends AbstractSpecification {
 		when:
 		def result = GradleRunner.create()
 			.withProjectDir(testProjectDir)
-			.withArguments('apgGenericPublish','--info', '--stacktrace')
+			.withArguments("-Dgradle.user.home=${gradleHomeDir}", 'apgGenericPublish','--info', '--stacktrace')
 			.withPluginClasspath()
 			.build()
 		then:
