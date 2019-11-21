@@ -8,6 +8,7 @@ import java.io.InputStream
 
 class MavenBomManagerDefaultImpl(repoPathBom: String, repoName: String, repoUser: String?, repoPass: String?) : MavenBomManager {
 
+    private val logger by LoggerDelegate()
     private val repository: Repository = RepositoryBuilderFactory.createFor(repoPathBom, repoName, repoUser, repoPass).build()
 
     private fun resolveVersion(mavenModel: Model, version: String): String? {
@@ -19,6 +20,7 @@ class MavenBomManagerDefaultImpl(repoPathBom: String, repoName: String, repoUser
     }
 
     private fun loadModel(bomFile: InputStream): Collection<MavenArtifact> {
+        logger.lifecycle("Loading Maven Model")
         val mavenReader = MavenXpp3Reader()
         val mavenModel = mavenReader.read(bomFile)
         val dependencies = mavenModel.dependencyManagement.dependencies
@@ -28,12 +30,12 @@ class MavenBomManagerDefaultImpl(repoPathBom: String, repoName: String, repoUser
             if (resolvedVersion != null) {
                 artificatList = artificatList + MavenArtifact(dependency.groupId, dependency.artifactId, resolvedVersion, dependency.type)
             } else {
-                println("Error ")
-                TODO("CHE, 14.11: Introduce at least Error Logging")
-
+                logger.error("No artifact found for groupid:  $dependency.groupId, artifactid: $dependency.artifactId, version: $resolvedVersion")
             }
 
         }
+        logger.lifecycle("Loading Maven Model done.")
+        logger.debug("Resolved the following artifactfs: $artificatList")
         return artificatList
     }
 
