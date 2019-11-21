@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RestController
 import java.util.concurrent.atomic.AtomicLong
 
 @SpringBootApplication
-class TestappApplication
+open class TestappApplication
 fun main(args: Array<String>) {
     runApplication<TestappApplication>(*args)
 }
@@ -18,7 +18,7 @@ data class EchoMessage (val message: String)
 
 @RestController
 @RequestMapping(path = ["service"])
-class EchoController {
+open class EchoController {
 
     private val atomicCounter = AtomicLong()
 
