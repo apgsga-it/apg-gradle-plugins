@@ -1,5 +1,6 @@
 package com.apgsga.gradle.test.utils
 
+import org.gradle.testkit.runner.GradleRunner
 import org.springframework.core.io.ClassPathResource
 import spock.lang.Specification
 
@@ -44,6 +45,20 @@ abstract class AbstractSpecification extends Specification {
         ClassPathResource cpr = new ClassPathResource("repoNames.json")
         Files.copy(cpr.getInputStream(), Paths.get(gradleHomeDir + File.separator + "repoNames.json"), StandardCopyOption.REPLACE_EXISTING)
     }
+
+    protected def gradleRunnerFactory() {
+        return gradleRunnerFactory([])
+    }
+
+    protected def gradleRunnerFactory(List<String> specificTestArguments) {
+        // Cast to String to avoid java-lang.ArayStoreException
+        specificTestArguments.add((String) "-Dgradle.user.home=${gradleHomeDir}")
+        return GradleRunner.create()
+                .withArguments(specificTestArguments)
+                .withPluginClasspath()
+                .withProjectDir(testProjectDir)
+    }
+
 // may be overwritten with kts
     protected def buildTyp() {
         ""

@@ -30,11 +30,7 @@ class ZipPackageTaskTests extends AbstractSpecification  {
         """
 
         when:
-        def result = GradleRunner.create()
-            .withProjectDir(testProjectDir)
-            .withArguments("-Dgradle.user.home=${gradleHomeDir}", 'zipPackageTask','--info', '--stacktrace')
-            .withPluginClasspath()
-            .build()
+        def result = gradleRunnerFactory(['zipPackageTask','--info', '--stacktrace']).build()
         then:
 		println "Result output: ${result.output}" 
         result.output.contains('')	

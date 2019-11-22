@@ -38,12 +38,7 @@ class BuildLogicFunctionalTest extends AbstractSpecification {
 				}
 	        """
 		when:
-			def result = GradleRunner.create()
-				.withProjectDir(testProjectDir)
-				.withArguments( "-Dgradle.user.home=${gradleHomeDir}", 'listrepos')
-				.withPluginClasspath()
-				.build()
-				
+			def result = gradleRunnerFactory(['listrepos']).build()
 		then:
 			println "Result output: ${result.output}"
 			result.output.contains('MavenLocal')
@@ -76,12 +71,7 @@ class BuildLogicFunctionalTest extends AbstractSpecification {
 				}
 	        """
 		when:
-			def result = GradleRunner.create()
-				.withProjectDir(testProjectDir)
-				.withArguments( "-Dgradle.user.home=${gradleHomeDir}", 'listrepos')
-				.withPluginClasspath()
-				.build()
-				
+			def result = gradleRunnerFactory(['listrepos']).build()
 		then:
 			println "Result output: ${result.output}"
 			result.output.contains('MavenLocal')
@@ -110,12 +100,7 @@ class BuildLogicFunctionalTest extends AbstractSpecification {
 				}
 	        """
 		when:
-			def result = GradleRunner.create()
-				.withProjectDir(testProjectDir)
-				.withArguments("-Dgradle.user.home=${gradleHomeDir}", 'clean','build','--info','--stacktrace')
-				.withPluginClasspath()
-				.build()
-				
+			def result = gradleRunnerFactory(['clean','build','--info','--stacktrace']).build()
 		then:
 			println "Result output: ${result.output}"
 	}
@@ -137,12 +122,7 @@ class BuildLogicFunctionalTest extends AbstractSpecification {
 				}
 	        """
 		when:
-			def result = GradleRunner.create()
-				.withProjectDir(testProjectDir)
-				.withArguments("-Dgradle.user.home=${gradleHomeDir}", 'init','--info', '--stacktrace')
-				.withPluginClasspath()
-				.build()
-				
+			def result = gradleRunnerFactory(['init','--info', '--stacktrace']).build()
 		then:
 			println "Result output: ${result.output}"
 			!result.output.contains('rpm-functionaltest')

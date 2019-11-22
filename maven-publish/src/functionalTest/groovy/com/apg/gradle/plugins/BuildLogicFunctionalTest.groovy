@@ -30,11 +30,7 @@ class BuildLogicFunctionalTest extends AbstractSpecification {
         """
 
         when:
-        def result = GradleRunner.create()
-            .withProjectDir(testProjectDir)
-            .withArguments("-Dgradle.user.home=${gradleHomeDir}", 'clean','build', 'publish','--info', '--stacktrace')
-            .withPluginClasspath()
-            .build()
+        def result = gradleRunnerFactory(['clean','build', 'publish','--info', '--stacktrace']).build()
         then:
 		println "Result output: ${result.output}" 
         result.output.contains('')
@@ -55,11 +51,7 @@ class BuildLogicFunctionalTest extends AbstractSpecification {
         """
 
 		when:
-		def result = GradleRunner.create()
-			.withProjectDir(testProjectDir)
-			.withArguments("-Dgradle.user.home=${gradleHomeDir}", 'clean','build', 'publish','--info', '--stacktrace')
-			.withPluginClasspath()
-			.build()
+		def result = gradleRunnerFactory(['clean','build', 'publish','--info', '--stacktrace']).build()
 		then:
 		println "Result output: ${result.output}"
 		result.output.contains('')
@@ -82,11 +74,7 @@ class BuildLogicFunctionalTest extends AbstractSpecification {
         """
 
 		when:
-		def result = GradleRunner.create()
-			.withProjectDir(testProjectDir)
-			.withArguments("-Dgradle.user.home=${gradleHomeDir}", 'clean','build', 'publish','--info', '--stacktrace')
-			.withPluginClasspath()
-			.build()
+		def result = gradleRunnerFactory(['clean','build', 'publish','--info', '--stacktrace']).build()
 		then:
 		println "Result output: ${result.output}"
 		result.output.contains('')
@@ -109,11 +97,7 @@ class BuildLogicFunctionalTest extends AbstractSpecification {
         """
 
 		when:
-		def result = GradleRunner.create()
-			.withProjectDir(testProjectDir)
-			.withArguments("-Dgradle.user.home=${gradleHomeDir}", 'clean','build', 'publish','--info', '--stacktrace')
-			.withPluginClasspath()
-			.build()
+		def result = gradleRunnerFactory(['clean','build', 'publish','--info', '--stacktrace']).build()
 		then:
 		println "Result output: ${result.output}"
 		result.output.contains('')

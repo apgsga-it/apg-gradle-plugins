@@ -28,11 +28,7 @@ class BuildLogicFunctionalTest extends AbstractSpecification {
         """
 
         when:
-        def result = GradleRunner.create()
-            .withProjectDir(testProjectDir)
-            .withArguments("-Dgradle.user.home=${gradleHomeDir}", 'apgGenericPublish','--info', '--stacktrace')
-            .withPluginClasspath()
-            .build()
+        def result = gradleRunnerFactory(['apgGenericPublish','--info', '--stacktrace']).build()
         then:
 		println "Result output: ${rpmToPublish.absolutePath.replace("\\","\\\\")}"
         result.output.contains('')
@@ -52,11 +48,7 @@ class BuildLogicFunctionalTest extends AbstractSpecification {
         """
 
 		when:
-		def result = GradleRunner.create()
-			.withProjectDir(testProjectDir)
-			.withArguments("-Dgradle.user.home=${gradleHomeDir}", 'apgGenericPublish','--info', '--stacktrace')
-			.withPluginClasspath()
-			.build()
+		def result = gradleRunnerFactory(['apgGenericPublish','--info', '--stacktrace']).build()
 		then:
 		println "Result output: ${result.output}"
 		result.output.contains('')
@@ -76,11 +68,7 @@ class BuildLogicFunctionalTest extends AbstractSpecification {
         """
 
 		when:
-		def result = GradleRunner.create()
-			.withProjectDir(testProjectDir)
-			.withArguments("-Dgradle.user.home=${gradleHomeDir}", 'apgGenericPublish','--info', '--stacktrace')
-			.withPluginClasspath()
-			.build()
+		def result = gradleRunnerFactory(['apgGenericPublish','--info', '--stacktrace']).build()
 		then:
 		println "Result output: ${result.output}"
 		result.output.contains('')
@@ -100,11 +88,7 @@ class BuildLogicFunctionalTest extends AbstractSpecification {
         """
 
 		when:
-		def result = GradleRunner.create()
-			.withProjectDir(testProjectDir)
-			.withArguments("-Dgradle.user.home=${gradleHomeDir}", 'apgGenericPublish','--info', '--stacktrace')
-			.withPluginClasspath()
-			.build()
+		def result = gradleRunnerFactory(['apgGenericPublish','--info', '--stacktrace']).build()
 		then:
 		println "Result output: ${result.output}"
 		result.output.contains('')
@@ -128,11 +112,7 @@ class BuildLogicFunctionalTest extends AbstractSpecification {
         """
 
 		when:
-		def result = GradleRunner.create()
-			.withProjectDir(testProjectDir)
-			.withArguments("-Dgradle.user.home=${gradleHomeDir}", 'apgGenericPublish','--info', '--stacktrace')
-			.withPluginClasspath()
-			.build()
+		def result = gradleRunnerFactory(['apgGenericPublish','--info', '--stacktrace']).build()
 		then:
 		println "Result output: ${result.output}"
 		result.output.contains('')
