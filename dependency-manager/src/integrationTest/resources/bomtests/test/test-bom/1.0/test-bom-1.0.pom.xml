@@ -4,51 +4,13 @@
 
     <modelVersion>4.0.0</modelVersion>
     <parent>
-        <artifactId>parentpom</artifactId>
-        <groupId>com.affichage.common.maven</groupId>
-        <version>9.0.6.ADMIN-UIMIG-SNAPSHOT</version>
+        <artifactId>x</artifactId>
+        <groupId>y</groupId>
+        <version>1.0</version>
     </parent>
-    <artifactId>dm-bom</artifactId>
+    <artifactId>test-bom</artifactId>
     <packaging>pom</packaging>
-    <name>_dm_bom</name>
-    <description>This is a "Bill of material" pom, which specifies the version of
-        all artefacts used in Apg projects. The versions for the by Apg buildt
-        artefacts are the default SNAPSHOT Versions used for deveolpment
-    </description>
-
-    <developers>
-        <developer>
-            <id>che</id>
-            <name>Christoph Henrici</name>
-            <email>christoph.henrici@apg.ch</email>
-            <organization>apg.ch</organization>
-            <roles>
-                <role>Entwickler</role>
-            </roles>
-            <timezone>0</timezone>
-        </developer>
-    </developers>
-
-    <distributionManagement>
-        <repository>
-            <id>releases</id>
-            <url>
-                http://artifactory4t4apgsga.jfrog.io/artifactory4t4apgsga/releases/
-            </url>
-        </repository>
-        <snapshotRepository>
-            <id>snapshots</id>
-            <url>
-                http://artifactory4t4apgsga.jfrog.io/artifactory4t4apgsga/snapshots
-            </url>
-        </snapshotRepository>
-        <site>
-            <id>site</id>
-            <url>
-                file:///var/continuum/mavensites/com.affichage.common.maven.parentpom
-            </url>
-        </site>
-    </distributionManagement>
+    <name>whatever</name>
 
     <properties>
         <!-- General Version Properties relevent for in-house development -->
