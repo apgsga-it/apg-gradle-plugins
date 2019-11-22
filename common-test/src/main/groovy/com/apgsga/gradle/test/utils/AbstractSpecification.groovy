@@ -75,7 +75,10 @@ abstract class AbstractSpecification extends Specification {
     {
       "MAVEN_RELEASE": "release-functionaltest"
     }
-  ]
+  ],
+  "repoUserName": "gradledev-tests-user",
+  "repoUserPwd": "gradledev-tests-user",
+  "repoBaseUrl": "https://artifactory4t4apgsga.jfrog.io/artifactory4t4apgsga"
 }
 """
     }
