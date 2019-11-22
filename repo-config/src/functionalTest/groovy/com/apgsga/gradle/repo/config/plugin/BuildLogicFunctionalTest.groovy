@@ -40,7 +40,7 @@ class BuildLogicFunctionalTest extends AbstractSpecification {
 		when:
 			def result = GradleRunner.create()
 				.withProjectDir(testProjectDir)
-				.withArguments( 'listrepos')
+				.withArguments( "-Dgradle.user.home=${gradleHomeDir}", 'listrepos')
 				.withPluginClasspath()
 				.build()
 				
@@ -78,7 +78,7 @@ class BuildLogicFunctionalTest extends AbstractSpecification {
 		when:
 			def result = GradleRunner.create()
 				.withProjectDir(testProjectDir)
-				.withArguments( 'listrepos')
+				.withArguments( "-Dgradle.user.home=${gradleHomeDir}", 'listrepos')
 				.withPluginClasspath()
 				.build()
 				
@@ -112,7 +112,7 @@ class BuildLogicFunctionalTest extends AbstractSpecification {
 		when:
 			def result = GradleRunner.create()
 				.withProjectDir(testProjectDir)
-				.withArguments('clean','build','--info','--stacktrace')
+				.withArguments("-Dgradle.user.home=${gradleHomeDir}", 'clean','build','--info','--stacktrace')
 				.withPluginClasspath()
 				.build()
 				
@@ -139,7 +139,7 @@ class BuildLogicFunctionalTest extends AbstractSpecification {
 		when:
 			def result = GradleRunner.create()
 				.withProjectDir(testProjectDir)
-				.withArguments('init','--info', '--stacktrace')
+				.withArguments("-Dgradle.user.home=${gradleHomeDir}", 'init','--info', '--stacktrace')
 				.withPluginClasspath()
 				.build()
 				

@@ -27,7 +27,7 @@ class RpmScriptsCopyTaskTests extends AbstractSpecification {
         when:
         def result = GradleRunner.create()
             .withProjectDir(testProjectDir)
-            .withArguments('copyRpmScripts','--info', '--stacktrace')
+            .withArguments("-Dgradle.user.home=${gradleHomeDir}", 'copyRpmScripts','--info', '--stacktrace')
             .withPluginClasspath()
             .build()
         then:

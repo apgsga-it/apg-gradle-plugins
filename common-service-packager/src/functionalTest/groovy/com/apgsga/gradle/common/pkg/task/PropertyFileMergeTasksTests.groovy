@@ -26,7 +26,7 @@ class PropertyFileMergeTasksTests extends AbstractSpecification {
         when:
         def result = GradleRunner.create()
             .withProjectDir(testProjectDir)
-            .withArguments('mergeResourcePropertyFiles','--info', '--stacktrace')
+            .withArguments("-Dgradle.user.home=${gradleHomeDir}", 'mergeResourcePropertyFiles','--info', '--stacktrace')
             .withPluginClasspath()
             .build()
         then:
@@ -67,7 +67,7 @@ class PropertyFileMergeTasksTests extends AbstractSpecification {
 		when:
 		def result = GradleRunner.create()
 			.withProjectDir(testProjectDir)
-			.withArguments('mergeResourcePropertyFiles','--info', '--stacktrace')
+			.withArguments("-Dgradle.user.home=${gradleHomeDir}", 'mergeResourcePropertyFiles','--info', '--stacktrace')
 			.withPluginClasspath()
 			.build()
 		then:
@@ -110,7 +110,7 @@ class PropertyFileMergeTasksTests extends AbstractSpecification {
 		when:
 		def result = GradleRunner.create()
 			.withProjectDir(testProjectDir)
-			.withArguments('mergeAppConfigPropertyFiles','--info', '--stacktrace')
+			.withArguments("-Dgradle.user.home=${gradleHomeDir}", 'mergeAppConfigPropertyFiles','--info', '--stacktrace')
 			.withPluginClasspath()
 			.build()
 		then:
@@ -141,7 +141,7 @@ class PropertyFileMergeTasksTests extends AbstractSpecification {
 		when:
 		def result = GradleRunner.create()
 			.withProjectDir(testProjectDir)
-			.withArguments('mergeAppConfigPropertyFiles','--info', '--stacktrace')
+			.withArguments("-Dgradle.user.home=${gradleHomeDir}", 'mergeAppConfigPropertyFiles','--info', '--stacktrace')
 			.withPluginClasspath()
 			.build()
 		then:

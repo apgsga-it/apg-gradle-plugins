@@ -43,7 +43,7 @@ class BuildRpmTaskTests extends AbstractSpecification {
         when:
         def result = GradleRunner.create()
             .withProjectDir(testProjectDir)
-            .withArguments('buildRpm','--info', '--stacktrace')
+            .withArguments("-Dgradle.user.home=${gradleHomeDir}", 'buildRpm','--info', '--stacktrace')
             .withPluginClasspath()
             .build()
         then:

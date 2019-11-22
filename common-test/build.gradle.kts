@@ -15,4 +15,5 @@ dependencies {
         exclude("","groovy-all")
     }
     compileOnly( "org.codehaus.groovy:groovy-all:2.4.17")
+    compile("org.springframework:spring-core:5.2.1.RELEASE")
 }

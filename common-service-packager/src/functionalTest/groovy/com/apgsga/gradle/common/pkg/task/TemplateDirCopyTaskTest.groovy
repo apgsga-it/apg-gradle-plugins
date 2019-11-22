@@ -16,7 +16,7 @@ class TemplateDirCopyTaskTest extends AbstractSpecification {
         when:
         def result = GradleRunner.create()
             .withProjectDir(testProjectDir)
-            .withArguments('templateDirCopy','--info', '--stacktrace')
+            .withArguments("-Dgradle.user.home=${gradleHomeDir}", 'templateDirCopy','--info', '--stacktrace')
             .withPluginClasspath()
             .build()
         then:

@@ -32,7 +32,7 @@ class BuildLogicFunctionalTest extends AbstractSpecification {
         when:
         def result = GradleRunner.create()
             .withProjectDir(testProjectDir)
-            .withArguments('clean','build', 'publish','--info', '--stacktrace')
+            .withArguments("-Dgradle.user.home=${gradleHomeDir}", 'clean','build', 'publish','--info', '--stacktrace')
             .withPluginClasspath()
             .build()
         then:
@@ -57,7 +57,7 @@ class BuildLogicFunctionalTest extends AbstractSpecification {
 		when:
 		def result = GradleRunner.create()
 			.withProjectDir(testProjectDir)
-			.withArguments('clean','build', 'publish','--info', '--stacktrace')
+			.withArguments("-Dgradle.user.home=${gradleHomeDir}", 'clean','build', 'publish','--info', '--stacktrace')
 			.withPluginClasspath()
 			.build()
 		then:
@@ -84,7 +84,7 @@ class BuildLogicFunctionalTest extends AbstractSpecification {
 		when:
 		def result = GradleRunner.create()
 			.withProjectDir(testProjectDir)
-			.withArguments('clean','build', 'publish','--info', '--stacktrace')
+			.withArguments("-Dgradle.user.home=${gradleHomeDir}", 'clean','build', 'publish','--info', '--stacktrace')
 			.withPluginClasspath()
 			.build()
 		then:
@@ -111,7 +111,7 @@ class BuildLogicFunctionalTest extends AbstractSpecification {
 		when:
 		def result = GradleRunner.create()
 			.withProjectDir(testProjectDir)
-			.withArguments('clean','build', 'publish','--info', '--stacktrace')
+			.withArguments("-Dgradle.user.home=${gradleHomeDir}", 'clean','build', 'publish','--info', '--stacktrace')
 			.withPluginClasspath()
 			.build()
 		then:

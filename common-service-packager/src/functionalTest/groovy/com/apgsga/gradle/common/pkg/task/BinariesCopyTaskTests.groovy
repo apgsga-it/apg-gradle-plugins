@@ -39,7 +39,7 @@ class BinariesCopyTaskTests extends AbstractSpecification {
         when:
         def result = GradleRunner.create()
             .withProjectDir(testProjectDir)
-            .withArguments('copyAppBinaries','--info', '--stacktrace')
+            .withArguments("-Dgradle.user.home=${gradleHomeDir}", 'copyAppBinaries','--info', '--stacktrace')
             .withPluginClasspath()
             .build()
         then:
