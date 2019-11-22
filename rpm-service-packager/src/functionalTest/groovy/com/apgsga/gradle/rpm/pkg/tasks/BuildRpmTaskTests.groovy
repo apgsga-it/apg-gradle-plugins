@@ -41,11 +41,7 @@ class BuildRpmTaskTests extends AbstractSpecification {
         """
 
         when:
-        def result = GradleRunner.create()
-            .withProjectDir(testProjectDir)
-            .withArguments("-Dgradle.user.home=${gradleHomeDir}", 'buildRpm','--info', '--stacktrace')
-            .withPluginClasspath()
-            .build()
+        def result = gradleRunnerFactory(['buildRpm','--info', '--stacktrace']).build()
         then:
 		println "Result output: ${result.output}" 
         result.output.contains('')	

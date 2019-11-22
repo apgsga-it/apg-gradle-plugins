@@ -24,11 +24,7 @@ class PropertyFileMergeTasksTests extends AbstractSpecification {
         """
 
         when:
-        def result = GradleRunner.create()
-            .withProjectDir(testProjectDir)
-            .withArguments("-Dgradle.user.home=${gradleHomeDir}", 'mergeResourcePropertyFiles','--info', '--stacktrace')
-            .withPluginClasspath()
-            .build()
+        def result = gradleRunnerFactory(['mergeResourcePropertyFiles','--info', '--stacktrace']).build()
         then:
 		println "Result output: ${result.output}" 
         result.output.contains('')	
@@ -65,11 +61,7 @@ class PropertyFileMergeTasksTests extends AbstractSpecification {
 		"""
 
 		when:
-		def result = GradleRunner.create()
-			.withProjectDir(testProjectDir)
-			.withArguments("-Dgradle.user.home=${gradleHomeDir}", 'mergeResourcePropertyFiles','--info', '--stacktrace')
-			.withPluginClasspath()
-			.build()
+		def result = gradleRunnerFactory(['mergeResourcePropertyFiles','--info', '--stacktrace']).build()
 		then:
 		println "Result output: ${result.output}"
 		result.output.contains('')
@@ -108,11 +100,7 @@ class PropertyFileMergeTasksTests extends AbstractSpecification {
 			message=hello
 		"""
 		when:
-		def result = GradleRunner.create()
-			.withProjectDir(testProjectDir)
-			.withArguments("-Dgradle.user.home=${gradleHomeDir}", 'mergeAppConfigPropertyFiles','--info', '--stacktrace')
-			.withPluginClasspath()
-			.build()
+		def result = gradleRunnerFactory(['mergeAppConfigPropertyFiles','--info', '--stacktrace']).build()
 		then:
 		println "Result output: ${result.output}"
 		result.output.contains('')
@@ -139,11 +127,7 @@ class PropertyFileMergeTasksTests extends AbstractSpecification {
         """
 
 		when:
-		def result = GradleRunner.create()
-			.withProjectDir(testProjectDir)
-			.withArguments("-Dgradle.user.home=${gradleHomeDir}", 'mergeAppConfigPropertyFiles','--info', '--stacktrace')
-			.withPluginClasspath()
-			.build()
+		def result = gradleRunnerFactory(['mergeAppConfigPropertyFiles','--info', '--stacktrace']).build()
 		then:
 		println "Result output: ${result.output}"
 		result.output.contains('')

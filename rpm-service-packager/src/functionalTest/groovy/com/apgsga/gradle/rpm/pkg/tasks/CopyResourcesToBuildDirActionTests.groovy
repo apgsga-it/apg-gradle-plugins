@@ -6,15 +6,6 @@ import org.gradle.testkit.runner.GradleRunner
 import java.nio.file.Files
 
 class CopyResourcesToBuildDirActionTests extends AbstractSpecification {
-	
-    File testProjectDir
-    File buildFile
-
-	def setup() {
-		testProjectDir = Files.createTempDirectory('gradletestproject').toFile()
-		println "Project Dir : ${testProjectDir.absolutePath}"
-		buildFile = new File(testProjectDir,'build.gradle')
-	}
 
     def "copy resources to build Dir works"() {
         given:
@@ -25,11 +16,7 @@ class CopyResourcesToBuildDirActionTests extends AbstractSpecification {
         """
 
         when:
-        def result = GradleRunner.create()
-            .withProjectDir(testProjectDir)
-            .withArguments("-Dgradle.user.home=${gradleHomeDir}", 'copyRpmPackagingResources','--info', '--stacktrace')
-            .withPluginClasspath()
-            .build()
+        def result = gradleRunnerFactory(['copyRpmPackagingResources','--info', '--stacktrace']).build()
         then:
 		println "Result output: ${result.output}" 
         result.output.contains('')

@@ -32,11 +32,7 @@ class TarGzipTaskTests extends AbstractSpecification {
         """
 
         when:
-        def result = GradleRunner.create()
-            .withProjectDir(testProjectDir)
-            .withArguments('buildZipPkg','--info', '--stacktrace')
-            .withPluginClasspath()
-            .build()
+        def result = gradleRunnerFactory(['buildZipPkg','--info', '--stacktrace']).build()
         then:
 		println "Result output: ${result.output}" 
         result.output.contains('')	

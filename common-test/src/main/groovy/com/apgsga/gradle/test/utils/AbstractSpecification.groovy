@@ -1,5 +1,6 @@
 package com.apgsga.gradle.test.utils
 
+import org.gradle.testkit.runner.GradleRunner
 import org.springframework.core.io.ClassPathResource
 import spock.lang.Specification
 
@@ -11,10 +12,21 @@ abstract class AbstractSpecification extends Specification {
 
     protected File testProjectDir
     protected File buildFile
-    protected String gradleHomeDir
+    protected String gradleHomeDirPath
 
     def setup() {
         println "Running setup"
+        deletePreviousTestFolders()
+        setupTestProjectDir()
+        createBuildFile()
+        setupRepoNameJson()
+    }
+
+    private def createBuildFile() {
+        buildFile = new File(testProjectDir,"build.gradle" + buildTyp())
+    }
+
+    private def deletePreviousTestFolders() {
         String tempDir = System.getProperty("java.io.tmpdir")
         println tempDir
         def tempDirFile = new File(tempDir)
@@ -28,22 +40,59 @@ abstract class AbstractSpecification extends Specification {
             println "About to delete ${testDir}"
             testDir.deleteDir()
         }
+    }
+
+    private def setupTestProjectDir() {
         testProjectDir = Files.createTempDirectory('gradletestproject').toFile()
         File buildDir = new File(testProjectDir,'build')
         buildDir.mkdirs()
         println "Project Dir : ${testProjectDir.absolutePath}"
-        buildFile = new File(testProjectDir,"build.gradle" + buildTyp())
-        setupRepoNameJson()
     }
 
-    def setupRepoNameJson() {
-        gradleHomeDir = "${System.getProperty('user.home')}${File.separator}.gradle${File.separator}"
-        if(!(new File(gradleHomeDir).exists())) {
-            Files.createDirectory(gradleHomeDir)
-        }
-        ClassPathResource cpr = new ClassPathResource("repoNames.json")
-        Files.copy(cpr.getInputStream(), Paths.get(gradleHomeDir + File.separator + "repoNames.json"), StandardCopyOption.REPLACE_EXISTING)
+    private def setupRepoNameJson() {
+        gradleHomeDirPath = "${testProjectDir}${File.separator}.gradle${File.separator}"
+        File gradleHomeDir = new File(gradleHomeDirPath)
+        gradleHomeDir.mkdirs()
+        println "Gradle Home directory for tests: ${gradleHomeDir.absolutePath}"
+        File repoNamesJson = new File(gradleHomeDir, "repoNames.json")
+        initTepoNamesJsonContent(repoNamesJson)
     }
+
+    private def initTepoNamesJsonContent(File repoNames) {
+        repoNames << """
+
+    {
+  "repos": [
+    {
+      "ZIP": "release-functionaltest"
+    },
+    {
+      "RPM": "rpm-functionaltest"
+    },
+    {
+      "MAVEN_SNAPSHOT": "snapshot-functionaltest"
+    },
+    {
+      "MAVEN_RELEASE": "release-functionaltest"
+    }
+  ]
+}
+"""
+    }
+
+    protected def gradleRunnerFactory() {
+        return gradleRunnerFactory([])
+    }
+
+    protected def gradleRunnerFactory(List<String> specificTestArguments) {
+        // Cast to String to avoid java-lang.ArayStoreException
+        specificTestArguments.add((String) "-Dgradle.user.home=${gradleHomeDirPath}")
+        return GradleRunner.create()
+                .withArguments(specificTestArguments)
+                .withPluginClasspath()
+                .withProjectDir(testProjectDir)
+    }
+
 // may be overwritten with kts
     protected def buildTyp() {
         ""
