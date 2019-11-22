@@ -44,7 +44,7 @@ public class RemoteRepo extends AbstractRepo {
 			JsonSlurper slurper = new JsonSlurper();
 			return (Map) slurper.parse(getRepoNameResource().getFile());
 		} catch (IOException e) {
-			throw e;
+			throw new RuntimeException("common-repo Plugin couldn't be correctly instanciated, probably because " + REPO_NAMES_JSON_FILENAME + " couldn't be found. Original Exception Message was: " + e.getMessage());
 		}
 	}
 
@@ -110,7 +110,7 @@ public class RemoteRepo extends AbstractRepo {
 
 	@Override
 	public void log() {
-		Logger logger = project.getLogger(); 
+		Logger logger = project.getLogger();
 		logger.info("Remote Repository Configuration is:" );
 		logger.info(super.toString());
 	}
