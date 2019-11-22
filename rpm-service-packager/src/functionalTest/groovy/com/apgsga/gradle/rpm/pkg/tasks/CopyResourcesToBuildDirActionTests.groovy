@@ -27,7 +27,7 @@ class CopyResourcesToBuildDirActionTests extends AbstractSpecification {
         when:
         def result = GradleRunner.create()
             .withProjectDir(testProjectDir)
-            .withArguments('copyRpmPackagingResources','--info', '--stacktrace')
+            .withArguments("-Dgradle.user.home=${gradleHomeDir}", 'copyRpmPackagingResources','--info', '--stacktrace')
             .withPluginClasspath()
             .build()
         then:
