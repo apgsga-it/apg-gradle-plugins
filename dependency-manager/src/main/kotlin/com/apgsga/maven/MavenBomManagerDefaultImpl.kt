@@ -7,10 +7,16 @@ import org.apache.maven.model.Model
 import org.apache.maven.model.io.xpp3.MavenXpp3Reader
 import java.io.InputStream
 
+/**
+ *  Default implementation
+ *  @author che
+ *
+ */
 class MavenBomManagerDefaultImpl(repoPathBom: String, repoName: String, repoUser: String?, repoPass: String?) : MavenBomManager {
 
     private val logger by LoggerDelegate()
     private val repository: Repository = RepositoryBuilderFactory.createFor(repoPathBom, repoName, repoUser, repoPass).build()
+
 
     private fun resolveVersion(mavenModel: Model, version: String): String? {
         return if (version.startsWith("\${") && version.endsWith("}")) {
