@@ -28,12 +28,12 @@ class MavenBomManagerDefaultImpl(repoPathBom: String, repoName: String, repoUser
 
 
     private fun loadModel(bomFile: InputStream, artList: Collection<MavenArtifact>): Collection<MavenArtifact> {
-        logger.lifecycle("Loading Maven Model")
+        logger.info("Loading Maven Model")
         val mavenReader = MavenXpp3Reader()
         val mavenModel = mavenReader.read(bomFile)
         val dependencies = mavenModel.dependencyManagement.dependencies
         val artifactList = list(dependencies, mavenModel, artList)
-        logger.lifecycle("Loading Maven Model done.")
+        logger.info("Loading Maven Model done.")
         logger.debug("Resolved the following artifactfs: $artifactList")
         return artifactList
     }

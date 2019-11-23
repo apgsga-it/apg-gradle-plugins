@@ -9,6 +9,7 @@ sourceSets {
 }
 // end::test-source-set[]
 
+
 // tag::test-task[]
 task integrationTest(type: Test) {
 	description = 'Runs the integration tests.'
