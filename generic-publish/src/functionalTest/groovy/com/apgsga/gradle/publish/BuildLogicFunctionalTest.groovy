@@ -28,7 +28,7 @@ class BuildLogicFunctionalTest extends AbstractSpecification {
         """
 
         when:
-        def result = gradleRunnerFactory(['apgGenericPublish','--info', '--stacktrace']).build()
+        def result = gradleRunnerFactory(['apgGenericPublish']).build()
         then:
 		println "Result output: ${rpmToPublish.absolutePath.replace("\\","\\\\")}"
         result.output.contains('')
@@ -48,7 +48,7 @@ class BuildLogicFunctionalTest extends AbstractSpecification {
         """
 
 		when:
-		def result = gradleRunnerFactory(['apgGenericPublish','--info', '--stacktrace']).build()
+		def result = gradleRunnerFactory(['apgGenericPublish']).build()
 		then:
 		println "Result output: ${result.output}"
 		result.output.contains('')
@@ -68,7 +68,7 @@ class BuildLogicFunctionalTest extends AbstractSpecification {
         """
 
 		when:
-		def result = gradleRunnerFactory(['apgGenericPublish','--info', '--stacktrace']).build()
+		def result = gradleRunnerFactory(['apgGenericPublish']).build()
 		then:
 		println "Result output: ${result.output}"
 		result.output.contains('')
@@ -88,7 +88,7 @@ class BuildLogicFunctionalTest extends AbstractSpecification {
         """
 
 		when:
-		def result = gradleRunnerFactory(['apgGenericPublish','--info', '--stacktrace']).build()
+		def result = gradleRunnerFactory(['apgGenericPublish']).build()
 		then:
 		println "Result output: ${result.output}"
 		result.output.contains('')
@@ -112,7 +112,7 @@ class BuildLogicFunctionalTest extends AbstractSpecification {
         """
 
 		when:
-		def result = gradleRunnerFactory(['apgGenericPublish','--info', '--stacktrace']).build()
+		def result = gradleRunnerFactory(['apgGenericPublish']).build()
 		then:
 		println "Result output: ${result.output}"
 		result.output.contains('')

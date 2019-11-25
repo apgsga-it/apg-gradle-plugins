@@ -14,7 +14,7 @@ class TemplateDirCopyTaskTest extends AbstractSpecification {
         """
 
         when:
-        def result = gradleRunnerFactory(['templateDirCopy','--info', '--stacktrace']).build()
+        def result = gradleRunnerFactory(['templateDirCopy']).build()
         then:
 		println "Result output: ${result.output}" 
         result.output.contains('')

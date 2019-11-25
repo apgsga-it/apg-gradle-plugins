@@ -30,7 +30,7 @@ class BuildLogicFunctionalTest extends AbstractSpecification {
         """
 
         when:
-        def result = gradleRunnerFactory(['clean','build', 'publish','--info', '--stacktrace']).build()
+        def result = gradleRunnerFactory(['clean','build', 'publish']).build()
         then:
 		println "Result output: ${result.output}" 
         result.output.contains('')
@@ -51,7 +51,7 @@ class BuildLogicFunctionalTest extends AbstractSpecification {
         """
 
 		when:
-		def result = gradleRunnerFactory(['clean','build', 'publish','--info', '--stacktrace']).build()
+		def result = gradleRunnerFactory(['clean','build', 'publish']).build()
 		then:
 		println "Result output: ${result.output}"
 		result.output.contains('')
@@ -74,7 +74,7 @@ class BuildLogicFunctionalTest extends AbstractSpecification {
         """
 
 		when:
-		def result = gradleRunnerFactory(['clean','build', 'publish','--info', '--stacktrace']).build()
+		def result = gradleRunnerFactory(['clean','build', 'publish']).build()
 		then:
 		println "Result output: ${result.output}"
 		result.output.contains('')
@@ -97,7 +97,7 @@ class BuildLogicFunctionalTest extends AbstractSpecification {
         """
 
 		when:
-		def result = gradleRunnerFactory(['clean','build', 'publish','--info', '--stacktrace']).build()
+		def result = gradleRunnerFactory(['clean','build', 'publish']).build()
 		then:
 		println "Result output: ${result.output}"
 		result.output.contains('')

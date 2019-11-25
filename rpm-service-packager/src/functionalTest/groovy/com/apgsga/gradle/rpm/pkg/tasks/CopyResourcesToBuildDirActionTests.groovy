@@ -16,7 +16,7 @@ class CopyResourcesToBuildDirActionTests extends AbstractSpecification {
         """
 
         when:
-        def result = gradleRunnerFactory(['copyRpmPackagingResources','--info', '--stacktrace']).build()
+        def result = gradleRunnerFactory(['copyRpmPackagingResources']).build()
         then:
 		println "Result output: ${result.output}" 
         result.output.contains('')

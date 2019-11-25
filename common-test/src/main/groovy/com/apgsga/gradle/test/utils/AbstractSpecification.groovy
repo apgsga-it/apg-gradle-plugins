@@ -88,12 +88,16 @@ abstract class AbstractSpecification extends Specification {
     }
 
     protected def gradleRunnerFactory(List<String> specificTestArguments) {
-        // Cast to String to avoid java-lang.ArayStoreException
-        specificTestArguments.add((String) "-Dgradle.user.home=${gradleHomeDirPath}")
+        specificTestArguments.addAll(getDefaultArguments())
         return GradleRunner.create()
                 .withArguments(specificTestArguments)
                 .withPluginClasspath()
                 .withProjectDir(testProjectDir)
+    }
+
+    private List<String> getDefaultArguments() {
+        // Cast to String to avoid java-lang.ArayStoreException
+        return [(String) "-Dgradle.user.home=${gradleHomeDirPath}", "--info", "--stacktrace"]
     }
 
 // may be overwritten with kts

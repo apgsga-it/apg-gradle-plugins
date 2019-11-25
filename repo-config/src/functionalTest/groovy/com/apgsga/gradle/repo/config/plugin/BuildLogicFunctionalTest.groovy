@@ -100,7 +100,7 @@ class BuildLogicFunctionalTest extends AbstractSpecification {
 				}
 	        """
 		when:
-			def result = gradleRunnerFactory(['clean','build','--info','--stacktrace']).build()
+			def result = gradleRunnerFactory(['clean','build']).build()
 		then:
 			println "Result output: ${result.output}"
 	}
@@ -122,7 +122,7 @@ class BuildLogicFunctionalTest extends AbstractSpecification {
 				}
 	        """
 		when:
-			def result = gradleRunnerFactory(['init','--info', '--stacktrace']).build()
+			def result = gradleRunnerFactory(['init']).build()
 		then:
 			println "Result output: ${result.output}"
 			!result.output.contains('rpm-functionaltest')

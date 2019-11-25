@@ -37,7 +37,7 @@ class BinariesCopyTaskTests extends AbstractSpecification {
         """
 
         when:
-        def result = gradleRunnerFactory(['copyAppBinaries','--info', '--stacktrace']).build()
+        def result = gradleRunnerFactory(['copyAppBinaries']).build()
         then:
 		println "Result output: ${result.output}" 
         result.output.contains('')	

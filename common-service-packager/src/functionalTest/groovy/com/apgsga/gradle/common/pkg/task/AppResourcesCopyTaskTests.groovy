@@ -27,7 +27,7 @@ class AppResourcesCopyTaskTests extends AbstractSpecification {
         """
 
         when:
-        def result = gradleRunnerFactory(['copyAppResources','--info', '--stacktrace']).build()
+        def result = gradleRunnerFactory(['copyAppResources']).build()
         then:
 		println "Result output: ${result.output}" 
         result.output.contains('')	
@@ -59,7 +59,7 @@ class AppResourcesCopyTaskTests extends AbstractSpecification {
         """
 
 		when:
-		def result = gradleRunnerFactory(['copyAppResources','--info', '--stacktrace']).build()
+		def result = gradleRunnerFactory(['copyAppResources']).build()
 		then:
 		println "Result output: ${result.output}"
 		result.output.contains('')

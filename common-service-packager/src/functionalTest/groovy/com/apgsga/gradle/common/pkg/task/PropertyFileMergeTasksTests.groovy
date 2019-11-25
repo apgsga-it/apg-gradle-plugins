@@ -24,7 +24,7 @@ class PropertyFileMergeTasksTests extends AbstractSpecification {
         """
 
         when:
-        def result = gradleRunnerFactory(['mergeResourcePropertyFiles','--info', '--stacktrace']).build()
+        def result = gradleRunnerFactory(['mergeResourcePropertyFiles']).build()
         then:
 		println "Result output: ${result.output}" 
         result.output.contains('')	
@@ -61,7 +61,7 @@ class PropertyFileMergeTasksTests extends AbstractSpecification {
 		"""
 
 		when:
-		def result = gradleRunnerFactory(['mergeResourcePropertyFiles','--info', '--stacktrace']).build()
+		def result = gradleRunnerFactory(['mergeResourcePropertyFiles']).build()
 		then:
 		println "Result output: ${result.output}"
 		result.output.contains('')
@@ -100,7 +100,7 @@ class PropertyFileMergeTasksTests extends AbstractSpecification {
 			message=hello
 		"""
 		when:
-		def result = gradleRunnerFactory(['mergeAppConfigPropertyFiles','--info', '--stacktrace']).build()
+		def result = gradleRunnerFactory(['mergeAppConfigPropertyFiles']).build()
 		then:
 		println "Result output: ${result.output}"
 		result.output.contains('')
@@ -127,7 +127,7 @@ class PropertyFileMergeTasksTests extends AbstractSpecification {
         """
 
 		when:
-		def result = gradleRunnerFactory(['mergeAppConfigPropertyFiles','--info', '--stacktrace']).build()
+		def result = gradleRunnerFactory(['mergeAppConfigPropertyFiles']).build()
 		then:
 		println "Result output: ${result.output}"
 		result.output.contains('')

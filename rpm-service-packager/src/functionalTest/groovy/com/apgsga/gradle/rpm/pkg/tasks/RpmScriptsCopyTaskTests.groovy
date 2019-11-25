@@ -25,7 +25,7 @@ class RpmScriptsCopyTaskTests extends AbstractSpecification {
         """
 
         when:
-        def result = gradleRunnerFactory(['copyRpmScripts','--info', '--stacktrace']).build()
+        def result = gradleRunnerFactory(['copyRpmScripts']).build()
         then:
 		println "Result output: ${result.output}" 
         result.output.contains('')	
