@@ -30,7 +30,7 @@ class ZipPackageTaskTests extends AbstractSpecification  {
         """
 
         when:
-        def result = gradleRunnerFactory(['zipPackageTask','--info', '--stacktrace']).build()
+        def result = gradleRunnerFactory(['zipPackageTask']).build()
         then:
 		println "Result output: ${result.output}" 
         result.output.contains('')	

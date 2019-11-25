@@ -15,31 +15,64 @@ import java.util.Map;
 
 public class RemoteRepo extends AbstractRepo {
 
-	private static final String REPO_USER_DEFAULT = "gradledev-tests-user";
-	private static final String REPO_PW_DEFAULT = "gradledev-tests-user";
-	private static final String REPO_BASE_URL_DEFAULT = "https://artifactory4t4apgsga.jfrog.io/artifactory4t4apgsga";
 	private static final String REPO_NAMES_JSON_FILENAME = "repoNames.json";
+
+	private static final String REPO_BASE_URL_KEY = "repoBaseUrl";
+
+	private static final String REPO_USER_NAME_KEY = "repoUserName";
+
+	private static final String REPO_USER_PWD_KEY = "repoUserPwd";
+
+	private static final String REPOS_KEY = "repos";
+
 	private static Map<String,String> repoNames;
+	private String repoUserDefault;
+	private String repoPwdDefault;
+	private String repoBaseUrl;
 
 	public RemoteRepo(Project project) {
 		super(project);
+		Map repoNameAsJson = getRepoNameJsonAsMap();
+		initRepoNames(repoNameAsJson);
+		initRepoUserAndPwd(repoNameAsJson);
+		initRepoBaseUrl(repoNameAsJson);
+	}
 
+	private Map getRepoNameJsonAsMap() {
 		try {
-			String gradleHome = project.getGradle().getGradleUserHomeDir().getAbsolutePath();
-			FileSystemResourceLoader loader = new FileSystemResourceLoader();
-			String repoNamesJsonFilePath = "file://" + gradleHome + File.separator + REPO_NAMES_JSON_FILENAME;
-			Resource repoNamesJsonAsResource = loader.getResource(repoNamesJsonFilePath);
-			Assert.isTrue(repoNamesJsonAsResource.exists(), "repoNames.json file not found! repoNamesJsonFilePath = " + repoNamesJsonFilePath);
 			JsonSlurper slurper = new JsonSlurper();
-			Map parse = (Map) slurper.parse(repoNamesJsonAsResource.getFile());
-			List<Map> repos = (List<Map>) parse.get("repos");
-			initRepoNames(repos);
+			return (Map) slurper.parse(getRepoNameResource().getFile());
 		} catch (IOException e) {
-			e.printStackTrace();
+			throw new RuntimeException("common-repo Plugin couldn't be correctly instanciated, probably because " + REPO_NAMES_JSON_FILENAME + " couldn't be found. Original Exception Message was: " + e.getMessage());
 		}
 	}
 
-	private void initRepoNames(List<Map> repos) {
+	private Resource getRepoNameResource() {
+		String gradleHome = project.getGradle().getGradleUserHomeDir().getAbsolutePath();
+		FileSystemResourceLoader loader = new FileSystemResourceLoader();
+		String repoNamesJsonFilePath = "file://" + gradleHome + File.separator + REPO_NAMES_JSON_FILENAME;
+		Resource repoNamesJsonAsResource = loader.getResource(repoNamesJsonFilePath);
+		Assert.isTrue(repoNamesJsonAsResource.exists(), "repoNames.json file not found! repoNamesJsonFilePath = " + repoNamesJsonFilePath);
+		return repoNamesJsonAsResource;
+	}
+
+	private void initRepoBaseUrl(Map repoNameAsJson) {
+		String baseUrl = (String) repoNameAsJson.get(REPO_BASE_URL_KEY);
+		Assert.notNull(baseUrl, "repoBaseUrl not found within " + REPO_NAMES_JSON_FILENAME);
+		repoBaseUrl = baseUrl;
+	}
+
+	private void initRepoUserAndPwd(Map repoNameAsJson) {
+		String user = (String) repoNameAsJson.get(REPO_USER_NAME_KEY);
+		String pwd = (String) repoNameAsJson.get(REPO_USER_PWD_KEY);
+		Assert.notNull(user, "repoUserName not found within " + REPO_NAMES_JSON_FILENAME);
+		Assert.notNull(pwd, "repoUserPwd not found within " + REPO_NAMES_JSON_FILENAME);
+		repoUserDefault = user;
+		repoPwdDefault = pwd;
+	}
+
+	private void initRepoNames(Map repoNameAsJson) {
+		List<Map> repos = (List<Map>) repoNameAsJson.get(REPOS_KEY);
 		repoNames = Maps.newHashMap();
 		repoNames.put(RepoNames.MAVEN_RELEASE.toString(), getRepoName(RepoNames.MAVEN_RELEASE, repos));
 		repoNames.put(RepoNames.MAVEN_SNAPSHOT.toString(), getRepoName(RepoNames.MAVEN_SNAPSHOT, repos));
@@ -61,22 +94,22 @@ public class RemoteRepo extends AbstractRepo {
 	
 	@Override
 	public String getDefaultRepoBaseUrl() {
-		return REPO_BASE_URL_DEFAULT;
+		return repoBaseUrl;
 	}
 
 	@Override
 	public String getDefaultUser() {
-		return REPO_USER_DEFAULT; 
+		return repoUserDefault;
 	}
 
 	@Override
 	public String getDefaultPassword() {
-		return REPO_PW_DEFAULT;
+		return repoPwdDefault;
 	}
 
 	@Override
 	public void log() {
-		Logger logger = project.getLogger(); 
+		Logger logger = project.getLogger();
 		logger.info("Remote Repository Configuration is:" );
 		logger.info(super.toString());
 	}

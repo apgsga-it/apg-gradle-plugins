@@ -41,7 +41,7 @@ class BuildRpmTaskTests extends AbstractSpecification {
         """
 
         when:
-        def result = gradleRunnerFactory(['buildRpm','--info', '--stacktrace']).build()
+        def result = gradleRunnerFactory(['buildRpm']).build()
         then:
 		println "Result output: ${result.output}" 
         result.output.contains('')	

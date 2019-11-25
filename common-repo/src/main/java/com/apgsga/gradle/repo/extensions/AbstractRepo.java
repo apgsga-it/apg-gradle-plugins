@@ -30,7 +30,7 @@ public abstract class AbstractRepo implements Repo {
 	}
 
 	public String getPassword() {
-		return password;
+		return password == null ? getDefaultPassword() : password;
 	}
 
 	public void setPassword(String password) {

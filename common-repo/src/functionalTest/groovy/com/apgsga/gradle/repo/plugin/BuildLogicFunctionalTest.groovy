@@ -24,7 +24,7 @@ class BuildLogicFunctionalTest extends AbstractSpecification {
 			"""
 
 		when:
-			def result = gradleRunnerFactory(['init','--info', '--stacktrace']).build()
+			def result = gradleRunnerFactory(['init']).build()
 		then:
 			println "Result output: ${result.output}"
 			result.output.contains('maventestrepo')
@@ -44,7 +44,7 @@ class BuildLogicFunctionalTest extends AbstractSpecification {
 				apgArtifactoryRepo.log()
 			"""
         when:
-        	def result = gradleRunnerFactory(['init','--info', '--stacktrace']).build()
+        	def result = gradleRunnerFactory(['init']).build()
         then:
 			println "Result output: ${result.output}"
 			result.output.contains('maventestrepo')
@@ -74,7 +74,7 @@ class BuildLogicFunctionalTest extends AbstractSpecification {
 				apgArtifactoryRepo.log()
 	        """
 		when:
-			def result = gradleRunnerFactory(['init','--info', '--stacktrace']).build()
+			def result = gradleRunnerFactory(['init']).build()
 		then:
 			println "Result output: ${result.output}"
 			result.output.contains('YYYYY')

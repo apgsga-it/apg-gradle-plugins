@@ -15,7 +15,7 @@ class BuildLogicFunctionalTest extends AbstractSpecification {
         """
 
         when:
-        def result = gradleRunnerFactory(['apgDmBomReport','--info', '--stacktrace']).build()
+        def result = gradleRunnerFactory(['apgDmBomReport']).build()
         then:
 		println "Result output: ${result.output}" 
         result.output.contains('')
