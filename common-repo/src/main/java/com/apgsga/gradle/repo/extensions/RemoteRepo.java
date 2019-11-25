@@ -30,8 +30,7 @@ public class RemoteRepo extends AbstractRepo {
 	private String repoPwdDefault;
 	private String repoBaseUrl;
 
-	// TODO JHE: Not sure we want to throw an exception here ... but if the JSON isn't found , well, we can't really go further...
-	public RemoteRepo(Project project) throws Exception {
+	public RemoteRepo(Project project) {
 		super(project);
 		Map repoNameAsJson = getRepoNameJsonAsMap();
 		initRepoNames(repoNameAsJson);
@@ -39,7 +38,7 @@ public class RemoteRepo extends AbstractRepo {
 		initRepoBaseUrl(repoNameAsJson);
 	}
 
-	private Map getRepoNameJsonAsMap() throws Exception {
+	private Map getRepoNameJsonAsMap() {
 		try {
 			JsonSlurper slurper = new JsonSlurper();
 			return (Map) slurper.parse(getRepoNameResource().getFile());
