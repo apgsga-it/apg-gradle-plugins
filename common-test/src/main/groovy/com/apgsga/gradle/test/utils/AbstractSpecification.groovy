@@ -113,7 +113,7 @@ abstract class AbstractSpecification extends Specification {
 
     private List<String> getDefaultArguments() {
         // Cast to String to avoid java-lang.ArayStoreException
-        return [(String) "-Dgradle.user.home=${gradleHomeDirPath}", "--info", "defaultRepoNames[--stacktrace"]
+        return [(String) "-Dgradle.user.home=${gradleHomeDirPath}", "--info", "--stacktrace"]
     }
 
 // may be overwritten with kts
