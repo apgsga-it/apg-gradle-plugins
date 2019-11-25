@@ -60,15 +60,15 @@ class BuildLogicFunctionalTest extends AbstractSpecification {
 					id 'com.apgsga.common.repo' 
 				}
 				apgArtifactoryRepo {
-					defaultRepoNames['MAVEN'] = "YYYYY"
-					defaultRepoNames['MAVEN-SNAPSHOT'] = "BBBBB"
+					defaultRepoNames[RepoNames.MAVEN_RELEASE] = "YYYYY"
+					defaultRepoNames[RepoNames.MAVEN_SNAPSHOT] = "BBBBB"
 					repoBaseUrl = "xxxx"
 					user = "abc"
 					password = "def"
 				}
 				apgLocalRepo {
 					repoBaseUrl = "otherdirectory"
-					defaultRepoNames['LOCAL'] = "testrepo"
+					defaultRepoNames[RepoNames.LOCAL] = "testrepo"
 				}
 				apgLocalRepo.log()
 				apgArtifactoryRepo.log()
@@ -80,5 +80,7 @@ class BuildLogicFunctionalTest extends AbstractSpecification {
 			result.output.contains('YYYYY')
 			result.output.contains('BBBBB')
 			result.output.contains('otherdirectory')
+			!result.output.contains('snapshot-functionaltest')
+			!result.output.contains('MAVEN_RELEASE=release-functionaltest')
 	}
 }

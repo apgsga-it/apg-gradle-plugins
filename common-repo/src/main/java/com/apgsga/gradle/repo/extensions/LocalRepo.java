@@ -10,12 +10,12 @@ import com.google.common.collect.Maps;
 public class LocalRepo extends AbstractRepo {
 
 	private static final String TARGET_DIR_DEFAULT = "maventestrepo";
-	private static final Map<String,String> repoNames;
+	private static final Map<RepoNames,String> repoNames;
 	
 	// JHE: Ok, overkill for local Repo, but we follow same logic as for Remote. And who knows, maybe we'll once have more than one local Repo?
 	static {
 		repoNames = Maps.newHashMap();
-		repoNames.put("LOCAL", TARGET_DIR_DEFAULT);
+		repoNames.put(RepoNames.LOCAL, TARGET_DIR_DEFAULT);
 	}
 	
 	public LocalRepo(Project project) {
@@ -35,7 +35,7 @@ public class LocalRepo extends AbstractRepo {
 	}
 
 	@Override
-	public Map<String, String> getDefaultRepoNames() {
+	public Map<RepoNames, String> getDefaultRepoNames() {
 		return repoNames;
 	}
 }

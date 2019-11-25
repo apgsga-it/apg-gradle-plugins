@@ -24,6 +24,22 @@ abstract class AbstractSpecification extends Specification {
 
     private def createBuildFile() {
         buildFile = new File(testProjectDir,"build.gradle" + buildTyp())
+        buildFile << getDefaultBuildFileContent()
+    }
+
+    private def getDefaultBuildFileContent() {
+        return """
+        import com.apgsga.gradle.repo.extensions.RepoNames
+
+        buildscript {
+            repositories {
+                mavenLocal()
+            }
+            dependencies {
+                classpath group: 'com.apgsga.gradle', name: 'common-repo', version: '+'
+            }
+        }
+        """
     }
 
     private def deletePreviousTestFolders() {
@@ -97,7 +113,7 @@ abstract class AbstractSpecification extends Specification {
 
     private List<String> getDefaultArguments() {
         // Cast to String to avoid java-lang.ArayStoreException
-        return [(String) "-Dgradle.user.home=${gradleHomeDirPath}", "--info", "--stacktrace"]
+        return [(String) "-Dgradle.user.home=${gradleHomeDirPath}", "--info", "defaultRepoNames[--stacktrace"]
     }
 
 // may be overwritten with kts
