@@ -20,7 +20,7 @@ class MavenBomManagerTests extends Specification {
 
         def bomManager = new MavenBomManagerDefaultImpl(REPO_URL, TEST_REPO, null, null)
         when:
-        def result = bomManager.loadModel("test", "test-bom", "1.0")
+        def result = bomManager.retrieve("test", "test-bom", "1.0", true)
         then:
         result != null
         result.size() == 4
@@ -37,7 +37,7 @@ class MavenBomManagerTests extends Specification {
         given:
         def bomManager = new MavenBomManagerDefaultImpl(REPO_URL, TEST_REPO, null, null)
         when:
-        def result = bomManager.loadModel("test", "test-nested-bom", "1.1")
+        def result = bomManager.retrieve("test", "test-nested-bom", "1.1", true)
         then:
         result != null
         result.size() == 4
@@ -54,7 +54,7 @@ class MavenBomManagerTests extends Specification {
 		given:
 		def bomManager = new MavenBomManagerDefaultImpl(REPO_URL, TEST_REPO, null, null)
 		when:
-		def result = bomManager.loadModel("test", "test-nested-withadd-bom", "1.2")
+		def result = bomManager.retrieve("test", "test-nested-withadd-bom", "1.2", true)
 		then:
 		result != null
 		result.size() == 5
@@ -66,6 +66,35 @@ class MavenBomManagerTests extends Specification {
 		expectedArtifacts.size() == 0
 
 	}
+
+    def "load nested Bom non recursive from Repository"() {
+        given:
+        def bomManager = new MavenBomManagerDefaultImpl(REPO_URL, TEST_REPO, null, null)
+        when:
+        def result = bomManager.retrieve("test", "test-nested-bom", "1.1", false)
+        then:
+        result != null
+        result.size() == 0
+
+    }
+
+
+    def "load nested Bom with some more artifacts  no recursive from Repository"() {
+        given:
+        def bomManager = new MavenBomManagerDefaultImpl(REPO_URL, TEST_REPO, null, null)
+        when:
+        def result = bomManager.retrieve("test", "test-nested-withadd-bom", "1.2", true)
+        then:
+        result != null
+        result.size() == 5
+        def expectedArtifacts = ['org.test:jamesbond:0.0.7:jar']
+        result.each {
+            def artString = "${it.groupId}:${it.artifactid}:${it.version}:${it.type}".toString()
+            expectedArtifacts.remove(artString)
+        }
+        expectedArtifacts.size() == 0
+
+    }
 
 
 

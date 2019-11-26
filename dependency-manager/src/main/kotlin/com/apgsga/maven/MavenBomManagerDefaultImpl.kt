@@ -26,25 +26,34 @@ class MavenBomManagerDefaultImpl(repoPathBom: String, repoName: String, repoUser
             version
     }
 
-
-    private fun loadModel(bomFile: InputStream, artList: Collection<MavenArtifact>): Collection<MavenArtifact> {
+    /**
+     * Loads the Maven [Model] from a pom.xml InputStream and extracts the Dependencies of the Dependency
+     * Management Section into a List of [MavenArtifact]
+     *
+     * @param bomFile Inputstream of a pom.xml File3
+     * @param artList the List, in which the Maven Artifacts are collected.
+     * @return Collection of [MavenArtifact]
+     */
+    private fun loadModel(bomFile: InputStream, artList: Collection<MavenArtifact>, resursive: Boolean): Collection<MavenArtifact> {
         logger.info("Loading Maven Model")
         val mavenReader = MavenXpp3Reader()
         val mavenModel = mavenReader.read(bomFile)
         val dependencies = mavenModel.dependencyManagement.dependencies
-        val artifactList = list(dependencies, mavenModel, artList)
+        val artifactList = list(dependencies, mavenModel, artList, resursive)
         logger.info("Loading Maven Model done.")
         logger.debug("Resolved the following artifactfs: $artifactList")
         return artifactList
     }
 
-    private fun list(dependencies: MutableList<Dependency>, mavenModel: Model, artList: Collection <MavenArtifact>) : Collection<MavenArtifact> {
+    private fun list(dependencies: MutableList<Dependency>, mavenModel: Model, artList: Collection<MavenArtifact>, recursive: Boolean) : Collection<MavenArtifact> {
         var artifactList = artList
         for (dependency in dependencies) {
             val resolvedVersion = resolveVersion(mavenModel, dependency.version)
             if (resolvedVersion != null && dependency.type == "pom") {
-                // recursively resolve bom
-                artifactList = loadModel(buildPath(dependency.groupId, dependency.artifactId, dependency.version), artifactList)
+                if (recursive) {
+                    // recursively resolve bom
+                    artifactList = loadModelFromPath(buildPath(dependency.groupId, dependency.artifactId, dependency.version), artifactList, recursive = true)
+                }
             } else if (resolvedVersion != null) {
                 artifactList += MavenArtifact(dependency.groupId, dependency.artifactId, resolvedVersion, dependency.type)
                 } else {
@@ -59,18 +68,19 @@ class MavenBomManagerDefaultImpl(repoPathBom: String, repoName: String, repoUser
         return "$groupId/$artifactid/$version/$artifactid-$version.pom.xml"
     }
 
-    private fun loadModel(repoPathBom: String, artList: Collection<MavenArtifact>): Collection<MavenArtifact> {
+    private fun loadModelFromPath(repoPathBom: String, artList: Collection<MavenArtifact>, recursive: Boolean): Collection<MavenArtifact> {
         val stream = repository.download(repoPathBom)
-        return loadModel(stream, artList)
+        return loadModel(stream, artList, recursive)
     }
 
-    override fun loadModel(repoPathBom: String): Collection<MavenArtifact> {
+    override fun retrieve(artifact: String, recursive: Boolean): Collection<MavenArtifact> {
         val artifactList = emptyList<MavenArtifact>()
-        return loadModel(repoPathBom, artifactList)
+        val (groupId, artifactId, version)= artifact.split(':')
+        return loadModelFromPath(buildPath(groupId,artifactId,version), artifactList, recursive)
     }
 
 
-    override fun loadModel(groupId: String, artifactid: String, version: String): Collection<MavenArtifact> {
-        return loadModel(buildPath(groupId, artifactid, version))
+    override fun retrieve(groupId: String, artifactid: String, version: String, recursive: Boolean): Collection<MavenArtifact> {
+        return retrieve("$groupId:$artifactid:$version", recursive)
     }
 }
