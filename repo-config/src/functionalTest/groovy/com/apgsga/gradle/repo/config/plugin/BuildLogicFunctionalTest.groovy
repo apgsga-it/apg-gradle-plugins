@@ -113,8 +113,8 @@ class BuildLogicFunctionalTest extends AbstractSpecification {
 	            }
 
 				apgArtifactoryRepo {
-					defaultRepoNames['RPM'] = "thisIsMyGenericTestRepo"
-					defaultRepoNames['MAVEN-RELEASE'] = "thisIsMyReleaseTestRepo"
+					defaultRepoNames[RepoNames.RPM] = "thisIsMyGenericTestRepo"
+					defaultRepoNames[RepoNames.MAVEN_RELEASE] = "thisIsMyReleaseTestRepo"
 				}
 
 				apgRepository {

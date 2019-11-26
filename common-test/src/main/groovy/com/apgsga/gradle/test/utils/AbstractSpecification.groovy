@@ -24,6 +24,22 @@ abstract class AbstractSpecification extends Specification {
 
     private def createBuildFile() {
         buildFile = new File(testProjectDir,"build.gradle" + buildTyp())
+        buildFile << getDefaultBuildFileContent()
+    }
+
+    private def getDefaultBuildFileContent() {
+        return """
+        import static com.apgsga.gradle.repo.extensions.RepoNames.*
+
+        buildscript {
+            repositories {
+                mavenLocal()
+            }
+            dependencies {
+                classpath group: 'com.apgsga.gradle', name: 'common-repo', version: '+'
+            }
+        }
+        """
     }
 
     private def deletePreviousTestFolders() {

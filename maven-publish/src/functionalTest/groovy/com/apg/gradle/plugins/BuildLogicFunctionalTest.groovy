@@ -35,7 +35,7 @@ class BuildLogicFunctionalTest extends AbstractSpecification {
 		println "Result output: ${result.output}" 
         result.output.contains('')
     }
-	
+
 	def "publish to maven Remote works with Defaults"() {
 		given:
 		buildFile << """

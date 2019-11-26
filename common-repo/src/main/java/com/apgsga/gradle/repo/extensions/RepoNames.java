@@ -5,7 +5,8 @@ public enum RepoNames {
     ZIP("ZIP"),
     RPM("RPM"),
     MAVEN_SNAPSHOT("MAVEN_SNAPSHOT"),
-    MAVEN_RELEASE("MAVEN_RELEASE");
+    MAVEN_RELEASE("MAVEN_RELEASE"),
+    LOCAL("LOCAL");
 
     String name;
 

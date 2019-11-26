@@ -22,18 +22,17 @@ public class RepoConfig {
 		
 	}
 
-	public void artifactory(String p_repoName) {
+	public void artifactory(RepoNames p_repoName) {
 
 		// JHE: Default is our MAVEN repo definition ... really correct?
-		String repoName = p_repoName != null ? p_repoName : RepoNames.MAVEN_RELEASE.getName();
-		
+		RepoNames repoName = p_repoName != null ? p_repoName : RepoNames.MAVEN_RELEASE;
 		RemoteRepo remote = project.getExtensions().findByType(RemoteRepo.class);
 		project.getLogger().info("Using Artifactory with the following configuration");
 		remote.log();
 		RepositoryHandler repositories = project.getRepositories();
 		repositories.maven(m -> {
 			m.setUrl(remote.getRepoBaseUrl() + "/" + remote.getDefaultRepoNames().get(repoName));
-			m.setName(repoName);
+			m.setName(repoName.getName());
 			PasswordCredentials credentials = m.getCredentials();
 			credentials.setUsername(remote.getUser());
 			credentials.setPassword(remote.getPassword());

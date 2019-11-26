@@ -35,7 +35,6 @@ public class RemoteRepositoryBuilder implements RepositoryBuilder {
 	}
 
 
-
 	public ProxyConfig getProxy() {
 		return artifactortyBuilder.getProxy();
 	}

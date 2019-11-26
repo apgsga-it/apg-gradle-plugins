@@ -25,7 +25,7 @@ public class RemoteRepo extends AbstractRepo {
 
 	private static final String REPOS_KEY = "repos";
 
-	private static Map<String,String> repoNames;
+	private static Map<RepoNames,String> repoNames;
 	private String repoUserDefault;
 	private String repoPwdDefault;
 	private String repoBaseUrl;
@@ -74,10 +74,10 @@ public class RemoteRepo extends AbstractRepo {
 	private void initRepoNames(Map repoNameAsJson) {
 		List<Map> repos = (List<Map>) repoNameAsJson.get(REPOS_KEY);
 		repoNames = Maps.newHashMap();
-		repoNames.put(RepoNames.MAVEN_RELEASE.toString(), getRepoName(RepoNames.MAVEN_RELEASE, repos));
-		repoNames.put(RepoNames.MAVEN_SNAPSHOT.toString(), getRepoName(RepoNames.MAVEN_SNAPSHOT, repos));
-		repoNames.put(RepoNames.RPM.toString(), getRepoName(RepoNames.RPM, repos));
-		repoNames.put(RepoNames.ZIP.toString(), getRepoName(RepoNames.ZIP, repos));
+		repoNames.put(RepoNames.MAVEN_RELEASE, getRepoName(RepoNames.MAVEN_RELEASE, repos));
+		repoNames.put(RepoNames.MAVEN_SNAPSHOT, getRepoName(RepoNames.MAVEN_SNAPSHOT, repos));
+		repoNames.put(RepoNames.RPM, getRepoName(RepoNames.RPM, repos));
+		repoNames.put(RepoNames.ZIP, getRepoName(RepoNames.ZIP, repos));
 	}
 
 	private String getRepoName(RepoNames repo, List<Map> repos) {
@@ -115,7 +115,7 @@ public class RemoteRepo extends AbstractRepo {
 	}
 
 	@Override
-	public Map<String, String> getDefaultRepoNames() {
+	public Map<RepoNames, String> getDefaultRepoNames() {
 		return repoNames;
 	}
 
