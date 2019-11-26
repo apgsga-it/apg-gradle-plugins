@@ -61,18 +61,12 @@ public class ApgPublishTask extends DefaultTask {
 	private String getMavenRepoName(Repo repo, String filename) {
 		String mavenRepo = "RPM";
 		if(repo.getDefaultRepoNames().containsKey(RepoNames.LOCAL)) {
-			//TODO JHE : remove this
-			System.out.println("getMAvenRepoName, dealing with a LOCAL Repo , repo.getDefaultRepoNames() = " + repo.getDefaultRepoNames());
 			mavenRepo = repo.getDefaultRepoNames().get(RepoNames.LOCAL);
 		}
 		else {
-			//TODO JHE : remove this
-			System.out.println("getMAvenRepoName, dealing with a REMOTE Repo , repo.getDefaultRepoNames() = " + repo.getDefaultRepoNames());
 			mavenRepo = filename.toLowerCase().endsWith("rpm") ? repo.getDefaultRepoNames().get(RepoNames.RPM) : repo.getDefaultRepoNames().get(RepoNames.MAVEN_RELEASE);
 		}
 
-		// TODO JHE: Remove this
-		System.out.println("within getMavenRepoName, mavenRepo = " + mavenRepo);
 		return mavenRepo;
 	}
 }

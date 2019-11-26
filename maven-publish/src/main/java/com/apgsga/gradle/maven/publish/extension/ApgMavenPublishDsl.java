@@ -78,7 +78,7 @@ public class ApgMavenPublishDsl {
 				"Configuring publish repository to be a maven type remote repository hosted at: " + repoConfig.getRepoBaseUrl());
 		RepositoryHandler repositories = publishingExtension.getRepositories();
 		repositories.maven(m -> {
-			m.setUrl(repoConfig.getRepoBaseUrl() + "/" + (getVersion().endsWith("SNAPSHOT") ? repoConfig.getDefaultRepoNames().get(RepoNames.MAVEN_SNAPSHOT.getName()) : repoConfig.getDefaultRepoNames().get(RepoNames.MAVEN_RELEASE.getName())));
+			m.setUrl(repoConfig.getRepoBaseUrl() + "/" + (getVersion().endsWith("SNAPSHOT") ? repoConfig.getDefaultRepoNames().get(RepoNames.MAVEN_SNAPSHOT) : repoConfig.getDefaultRepoNames().get(RepoNames.MAVEN_RELEASE)));
 			m.setName("artifactoryMavenRepo");
 			PasswordCredentials credentials = m.getCredentials();
 			credentials.setUsername(repoConfig.getUser());
@@ -107,7 +107,7 @@ public class ApgMavenPublishDsl {
 	private URI createLocalRepoDirectory() {
 		LocalRepo localConfig = project.getExtensions().findByType(LocalRepo.class);
 		File baseDir = new File(localConfig.getRepoBaseUrl());
-		File repoDir = new File(baseDir,localConfig.getDefaultRepoNames().get("LOCAL"));
+		File repoDir = new File(baseDir,localConfig.getDefaultRepoNames().get(RepoNames.LOCAL));
 		repoDir.mkdirs();
 		return repoDir.toURI();
 	}

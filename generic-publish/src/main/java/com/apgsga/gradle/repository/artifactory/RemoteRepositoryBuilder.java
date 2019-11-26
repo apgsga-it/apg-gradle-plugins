@@ -22,8 +22,6 @@ public class RemoteRepositoryBuilder implements RepositoryBuilder {
 	
 	@Override
 	public Repository build() {
-		// TODO JHE: Remove this
-		System.out.println("JHE .... targetRepo : " + targetRepo);
 		Artifactory artifactory = artifactortyBuilder.build();
 		return new RemoteRepository(artifactory.repository(targetRepo));
 		
@@ -32,12 +30,9 @@ public class RemoteRepositoryBuilder implements RepositoryBuilder {
 
 	@Override
 	public RepositoryBuilder setTargetRepo(String targetRepo) {
-		// TODO JHE: Remove this
-		System.out.println("within setTargetRepo .... targetRepo = " + targetRepo);
 		this.targetRepo = targetRepo;
 		return this;
 	}
-
 
 
 	public ProxyConfig getProxy() {
