@@ -29,7 +29,7 @@ abstract class AbstractSpecification extends Specification {
 
     private def getDefaultBuildFileContent() {
         return """
-        import com.apgsga.gradle.repo.extensions.RepoNames
+        import static com.apgsga.gradle.repo.extensions.RepoNames.*
 
         buildscript {
             repositories {

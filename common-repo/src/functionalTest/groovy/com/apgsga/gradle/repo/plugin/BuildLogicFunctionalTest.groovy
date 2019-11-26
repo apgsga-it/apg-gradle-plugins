@@ -60,15 +60,15 @@ class BuildLogicFunctionalTest extends AbstractSpecification {
 					id 'com.apgsga.common.repo' 
 				}
 				apgArtifactoryRepo {
-					defaultRepoNames[RepoNames.MAVEN_RELEASE] = "YYYYY"
-					defaultRepoNames[RepoNames.MAVEN_SNAPSHOT] = "BBBBB"
+					defaultRepoNames[MAVEN_RELEASE] = "YYYYY"
+					defaultRepoNames[MAVEN_SNAPSHOT] = "BBBBB"
 					repoBaseUrl = "xxxx"
 					user = "abc"
 					password = "def"
 				}
 				apgLocalRepo {
 					repoBaseUrl = "otherdirectory"
-					defaultRepoNames[RepoNames.LOCAL] = "testrepo"
+					defaultRepoNames[LOCAL] = "testrepo"
 				}
 				apgLocalRepo.log()
 				apgArtifactoryRepo.log()
