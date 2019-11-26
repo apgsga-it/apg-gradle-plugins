@@ -102,7 +102,7 @@ class BuildLogicFunctionalTest extends AbstractSpecification {
             }
 			apgLocalRepo {
 				repoBaseUrl = "build"
-				defaultRepoNames[RepoNames.LOCAL] = "anothertestrepo"
+				defaultRepoNames[LOCAL] = "anothertestrepo"
 			}	
 			apgLocalRepo.log()
 			apgGenericPublishConfig {
