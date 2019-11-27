@@ -60,26 +60,13 @@ public class ApgPublishTask extends DefaultTask {
 	}
 
 	private String getMavenRepoName(Repo repo, String filename) {
-
-		// TODO JHE : to be deleted, need to temporarily output couple of info
-		System.out.println("(getMavenRepoName) repo.getRepoBaseUrl() = " + repo.getRepoBaseUrl());
-		System.out.println("(getMavenRepoName) repo.getDefaultRepoNames() = " + repo.getDefaultRepoNames());
-		System.out.println("(getMavenRepoName) filename = " + filename);
-
 		String mavenRepo = "RPM";
 		if(repo.getDefaultRepoNames().containsKey(RepoNames.LOCAL)) {
-			// TODO JHE : to be deleted, need to temporarily output couple of info
-			System.out.println("(getMavenRepoName) Dealing with local repo");
 			mavenRepo = repo.getDefaultRepoNames().get(RepoNames.LOCAL);
 		}
 		else {
-			// TODO JHE : to be deleted, need to temporarily output couple of info
-			System.out.println("(getMavenRepoName) Dealing with remote repo");
 			mavenRepo = filename.toLowerCase().endsWith("rpm") ? repo.getDefaultRepoNames().get(RepoNames.RPM) : repo.getDefaultRepoNames().get(RepoNames.MAVEN_RELEASE);
 		}
-
-		// TODO JHE : to be deleted, need to temporarily output couple of info
-		System.out.println("(getMavenRepoName) mavenRepo = " + mavenRepo);
 		return mavenRepo;
 	}
 }
