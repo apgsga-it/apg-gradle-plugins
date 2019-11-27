@@ -88,11 +88,12 @@ public class ApgMavenPublishDsl {
 	}
 
 	public void local() {
-		// TODO JHE: Add logging info
 		final Logger logger = project.getLogger();
 		LocalRepo localConfig = project.getExtensions().findByType(LocalRepo.class);
 		PublishingExtension publishingExtension = project.getExtensions().getByType(PublishingExtension.class);
 		// Configure Repository Location
+		logger.info(
+				"Configuring publish repository to be a maven type remote repository hosted at: " + localConfig.getRepoBaseUrl());
 		createLocalRepoDirectories();
 		RepositoryHandler repositories = publishingExtension.getRepositories();
 		repositories.maven(m -> {
