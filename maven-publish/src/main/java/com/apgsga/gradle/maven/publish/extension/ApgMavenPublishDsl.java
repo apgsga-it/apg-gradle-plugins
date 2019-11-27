@@ -2,6 +2,7 @@ package com.apgsga.gradle.maven.publish.extension;
 
 import java.io.File;
 import java.net.URI;
+import java.rmi.Remote;
 
 import javax.inject.Inject;
 
@@ -62,48 +63,40 @@ public class ApgMavenPublishDsl {
 		this.version = version;
 	}
 
-
 	public void log() {
 		Logger logger = project.getLogger();
 		logger.info("Logging ApgRpmPublishConfig:");
 		logger.info(toString());
-
 	}
 
 	public void artifactory() {
-		final Logger logger = project.getLogger();
-		PublishingExtension publishingExtension = project.getExtensions().getByType(PublishingExtension.class);
-		RemoteRepo repoConfig = project.getExtensions().findByType(RemoteRepo.class);
-		// Configure Repository Location
-		logger.info(
-				"Configuring publish repository to be a maven type remote repository hosted at: " + repoConfig.getRepoBaseUrl());
-		RepositoryHandler repositories = publishingExtension.getRepositories();
-		repositories.maven(m -> {
-			m.setUrl(getRepoUrl(repoConfig));
-			m.setName("artifactoryMavenRepo");
-			PasswordCredentials credentials = m.getCredentials();
-			credentials.setUsername(repoConfig.getUser());
-			credentials.setPassword(repoConfig.getPassword());
-		});
-	    configureMavenPublication("RemoteJavaMaven",publishingExtension);
-
+		configure(RemoteRepo.class);
 	}
 
 	public void local() {
-		final Logger logger = project.getLogger();
-		PublishingExtension publishingExtension = project.getExtensions().getByType(PublishingExtension.class);
-		LocalRepo localConfig = project.getExtensions().findByType(LocalRepo.class);
-		// Configure Repository Location
-		logger.info(
-				"Configuring publish repository to be a maven type remote repository hosted at: " + localConfig.getRepoBaseUrl());
 		createLocalRepoDirectories();
-		RepositoryHandler repositories = publishingExtension.getRepositories();
-		repositories.maven(m -> {
-			m.setName("localMavenRepo");
-			m.setUrl(getRepoUrl(localConfig));
-		});
-		configureMavenPublication("LocalJavaMaven", publishingExtension);
+		configure(LocalRepo.class);
 	}
+
+    private void configure(Class repo) {
+        final Logger logger = project.getLogger();
+        PublishingExtension publishingExtension = project.getExtensions().getByType(PublishingExtension.class);
+        Repo config = (Repo) project.getExtensions().findByType(repo);
+        // Configure Repository Location
+        logger.info(
+                "Configuring publish repository to be a maven type remote repository hosted at: " + config.getRepoBaseUrl());
+        RepositoryHandler repositories = publishingExtension.getRepositories();
+        repositories.maven(m -> {
+            m.setName(repo.getClass().getTypeName());
+            m.setUrl(getRepoUrl(config));
+            if(repo.equals(RemoteRepo.class)) {
+				PasswordCredentials credentials = m.getCredentials();
+				credentials.setUsername(config.getUser());
+				credentials.setPassword(config.getPassword());
+			}
+        });
+        configureMavenPublication(repo.equals(RemoteRepo.class) ? "RemoteJavaMaven" : "LocalJavaMaven", publishingExtension);
+    }
 
 	private String getRepoUrl(Repo repo) {
 		return (repo.getRepoBaseUrl() + "/" + (getVersion().endsWith("SNAPSHOT") ? repo.getDefaultRepoNames().get(RepoNames.MAVEN_SNAPSHOT) : repo.getDefaultRepoNames().get(RepoNames.MAVEN_RELEASE)));
