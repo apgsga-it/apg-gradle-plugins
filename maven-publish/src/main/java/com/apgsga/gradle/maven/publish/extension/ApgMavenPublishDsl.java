@@ -104,9 +104,6 @@ public class ApgMavenPublishDsl {
 	}
 	
 	private void createLocalRepoDirectories() {
-
-		// TODO JHE: Add logging info
-
 		LocalRepo localConfig = project.getExtensions().findByType(LocalRepo.class);
 		File baseDir = new File(localConfig.getRepoBaseUrl());
 		localConfig.getDefaultRepoNames().forEach((repoNames, s) -> {
