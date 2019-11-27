@@ -30,6 +30,7 @@ public abstract class AbstractRepo implements Repo {
 		initRepoNames(repoNameAsJson);
 	}
 
+	@SuppressWarnings("unchecked")
 	private void initRepoNames(Map repoNameAsJson) {
 		List<Map> repos = (List<Map>) repoNameAsJson.get(REPOS_KEY);
 		repoNames = Maps.newHashMap();
