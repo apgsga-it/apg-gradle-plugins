@@ -6,6 +6,8 @@ import org.apache.maven.model.Dependency
 import org.apache.maven.model.Model
 import org.apache.maven.model.io.xpp3.MavenXpp3Reader
 import java.io.InputStream
+import java.util.*
+import java.util.stream.Collectors
 
 /**
  *  Default implementation
@@ -41,7 +43,7 @@ class MavenBomManagerDefaultImpl(repoPathBom: String, repoName: String, repoUser
         val dependencies = mavenModel.dependencyManagement.dependencies
         val artifactList = list(dependencies, mavenModel, artList, resursive)
         logger.info("Loading Maven Model done.")
-        logger.debug("Resolved the following artifactfs: $artifactList")
+        logger.debug("Resolved the following artifacts from pom $mavenModel.groupId, ${mavenModel.artifactId} : $artifactList")
         return artifactList
     }
 
@@ -57,7 +59,7 @@ class MavenBomManagerDefaultImpl(repoPathBom: String, repoName: String, repoUser
             } else if (resolvedVersion != null) {
                 artifactList += MavenArtifact(dependency.groupId, dependency.artifactId, resolvedVersion, dependency.type)
                 } else {
-                    logger.error("No artifact found for groupid:  $dependency.groupId, artifactid: $dependency.artifactId, version: $resolvedVersion")
+                    logger.error("No Version found for groupid:  $dependency.groupId, artifactid: $dependency.artifactId, version: $resolvedVersion")
                 }
 
         }
@@ -73,14 +75,31 @@ class MavenBomManagerDefaultImpl(repoPathBom: String, repoName: String, repoUser
         return loadModel(stream, artList, recursive)
     }
 
-    override fun retrieve(artifact: String, recursive: Boolean): Collection<MavenArtifact> {
+    override fun retrieve(bomArtifact: String, recursive: Boolean): Collection<MavenArtifact> {
         val artifactList = emptyList<MavenArtifact>()
-        val (groupId, artifactId, version)= artifact.split(':')
+        val (groupId, artifactId, version)= bomArtifact.split(':')
         return loadModelFromPath(buildPath(groupId,artifactId,version), artifactList, recursive)
     }
-
 
     override fun retrieve(groupId: String, artifactid: String, version: String, recursive: Boolean): Collection<MavenArtifact> {
         return retrieve("$groupId:$artifactid:$version", recursive)
     }
+
+    override fun intersect(firstBomArtifact: String, secondBomArtifact: String, recursive: Boolean): Collection<MavenArtifact> {
+        val firstDependencyList = retrieve(firstBomArtifact,recursive)
+        val secDepList = retrieve(secondBomArtifact,recursive)
+        return firstDependencyList.stream().filter(secDepList::contains).collect(Collectors.toList())
+    }
+
+    override fun retrieveAsProperties(bomArtifact: String, recursive: Boolean) : Properties {
+        val result = retrieve(bomArtifact,recursive)
+        val props = Properties()
+        result.forEach {
+            val key = it.groupId + ":" + it.artifactid
+            props[key] = it.version
+        }
+        return props
+    }
+
+
 }

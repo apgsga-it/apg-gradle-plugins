@@ -8,9 +8,9 @@
         <groupId>y</groupId>
         <version>1.0</version>
     </parent>
-    <artifactId>test-bom-independent</artifactId>
+    <artifactId>test-bom</artifactId>
     <packaging>pom</packaging>
-    <name>whateverelse</name>
+    <name>whatever</name>
 
     <properties>
         <!-- General Version Properties relevent for in-house development -->
@@ -28,21 +28,6 @@
                 <groupId>org.apache.httpcomponents</groupId>
                 <artifactId>httpclient</artifactId>
                 <version>${httpclient.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.google.code.guice</groupId>
-                <artifactId>guice</artifactId>
-                <version>${guice.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.affichage.ui.utils</groupId>
-                <artifactId>jgoodies-utils</artifactId>
-                <version>${apg-forms2java-framework.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.affichage.it21.ppix</groupId>
-                <artifactId>ppix-dao</artifactId>
-                <version>${branch.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

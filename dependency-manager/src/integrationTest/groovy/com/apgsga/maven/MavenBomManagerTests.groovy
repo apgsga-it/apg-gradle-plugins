@@ -15,7 +15,7 @@ class MavenBomManagerTests extends Specification {
         GFileUtils.copyDirectory(source, destination)
     }
 
-    def "load simple Bom from Repository"() {
+    def "Retrieve model from simple Bom "() {
         given:
 
         def bomManager = new MavenBomManagerDefaultImpl(REPO_URL, TEST_REPO, null, null)
@@ -24,16 +24,13 @@ class MavenBomManagerTests extends Specification {
         then:
         result != null
         result.size() == 4
-        def expectedArtifacts = ['org.apache.httpcomponents:httpclient:4.5.2:jar', 'com.google.code.guice:guice:4.1:jar', 'com.affichage.ui.utils:jgoodies-utils:1.9.6:jar', 'com.affichage.it21.ppix:ppix-dao:9.0.6.ADMIN-UIMIG-SNAPSHOT:jar']
-        result.each {
-            def artString = "${it.groupId}:${it.artifactid}:${it.version}:${it.type}".toString()
-            expectedArtifacts.remove(artString)
-        }
-        expectedArtifacts.size() == 0
+        expectedResult(result, ['org.apache.httpcomponents:httpclient:4.5.2:jar', 'com.google.code.guice:guice:4.1:jar', 'com.affichage.ui.utils:jgoodies-utils:1.9.6:jar', 'com.affichage.it21.ppix:ppix-dao:9.0.6.ADMIN-UIMIG-SNAPSHOT:jar'])
 
     }
 
-    def "load nested Bom from Repository"() {
+
+
+    def "Retrieve model from nested Bom"() {
         given:
         def bomManager = new MavenBomManagerDefaultImpl(REPO_URL, TEST_REPO, null, null)
         when:
@@ -41,16 +38,11 @@ class MavenBomManagerTests extends Specification {
         then:
         result != null
         result.size() == 4
-        def expectedArtifacts = ['org.apache.httpcomponents:httpclient:4.5.2:jar', 'com.google.code.guice:guice:4.1:jar', 'com.affichage.ui.utils:jgoodies-utils:1.9.6:jar', 'com.affichage.it21.ppix:ppix-dao:9.0.6.ADMIN-UIMIG-SNAPSHOT:jar']
-        result.each {
-            def artString = "${it.groupId}:${it.artifactid}:${it.version}:${it.type}".toString()
-            expectedArtifacts.remove(artString)
-        }
-        expectedArtifacts.size() == 0
+        expectedResult(result, ['org.apache.httpcomponents:httpclient:4.5.2:jar', 'com.google.code.guice:guice:4.1:jar', 'com.affichage.ui.utils:jgoodies-utils:1.9.6:jar', 'com.affichage.it21.ppix:ppix-dao:9.0.6.ADMIN-UIMIG-SNAPSHOT:jar'])
 
     }
 
-	def "load nested Bom with some more artifacts from Repository"() {
+	def "Retrieve model from nested Bom with some additional artifacts"() {
 		given:
 		def bomManager = new MavenBomManagerDefaultImpl(REPO_URL, TEST_REPO, null, null)
 		when:
@@ -58,16 +50,10 @@ class MavenBomManagerTests extends Specification {
 		then:
 		result != null
 		result.size() == 5
-		def expectedArtifacts = ['org.test:jamesbond:0.0.7:jar','org.apache.httpcomponents:httpclient:4.5.2:jar', 'com.google.code.guice:guice:4.1:jar', 'com.affichage.ui.utils:jgoodies-utils:1.9.6:jar', 'com.affichage.it21.ppix:ppix-dao:9.0.6.ADMIN-UIMIG-SNAPSHOT:jar']
-		result.each {
-			def artString = "${it.groupId}:${it.artifactid}:${it.version}:${it.type}".toString()
-			expectedArtifacts.remove(artString)
-		}
-		expectedArtifacts.size() == 0
-
+        expectedResult(result, ['org.test:jamesbond:0.0.7:jar','org.apache.httpcomponents:httpclient:4.5.2:jar', 'com.google.code.guice:guice:4.1:jar', 'com.affichage.ui.utils:jgoodies-utils:1.9.6:jar', 'com.affichage.it21.ppix:ppix-dao:9.0.6.ADMIN-UIMIG-SNAPSHOT:jar'])
 	}
 
-    def "load nested Bom non recursive from Repository"() {
+    def "Retrieve empty Model from  nested Bom with any own artifacts non recursively"() {
         given:
         def bomManager = new MavenBomManagerDefaultImpl(REPO_URL, TEST_REPO, null, null)
         when:
@@ -79,21 +65,121 @@ class MavenBomManagerTests extends Specification {
     }
 
 
-    def "load nested Bom with some more artifacts  no recursive from Repository"() {
+    def "Retrieve model from nested Bom with some own artifacts non recursively"() {
         given:
         def bomManager = new MavenBomManagerDefaultImpl(REPO_URL, TEST_REPO, null, null)
         when:
-        def result = bomManager.retrieve("test", "test-nested-withadd-bom", "1.2", true)
+        def result = bomManager.retrieve("test", "test-nested-withadd-bom", "1.2", false)
         then:
         result != null
-        result.size() == 5
-        def expectedArtifacts = ['org.test:jamesbond:0.0.7:jar']
+        result.size() == 1
+        expectedResult(result,  ['org.test:jamesbond:0.0.7:jar'])
+    }
+
+    def "Retrieve intersection from same pom"() {
+        given:
+        def bomManager = new MavenBomManagerDefaultImpl(REPO_URL, TEST_REPO, null, null)
+        when:
+        def result = bomManager.intersect("test:test-bom:1.0", "test:test-bom:1.0", true)
+        then:
+        result != null
+        result.size() == 4
+        expectedResult(result, ['org.apache.httpcomponents:httpclient:4.5.2:jar', 'com.google.code.guice:guice:4.1:jar', 'com.affichage.ui.utils:jgoodies-utils:1.9.6:jar', 'com.affichage.it21.ppix:ppix-dao:9.0.6.ADMIN-UIMIG-SNAPSHOT:jar'])
+
+    }
+
+    def "Retrieve intersection with two different pom's recursively, one including the other"() {
+        given:
+        def bomManager = new MavenBomManagerDefaultImpl(REPO_URL, TEST_REPO, null, null)
+        when:
+        def result = bomManager.intersect("test:test-bom:1.0", "test:test-nested-bom:1.1", true)
+        then:
+        result != null
+        result.size() == 4
+        expectedResult(result, ['org.apache.httpcomponents:httpclient:4.5.2:jar', 'com.google.code.guice:guice:4.1:jar', 'com.affichage.ui.utils:jgoodies-utils:1.9.6:jar', 'com.affichage.it21.ppix:ppix-dao:9.0.6.ADMIN-UIMIG-SNAPSHOT:jar'])
+
+    }
+    def "Retrieve intersection with two different pom not recursively, one including the other"() {
+        given:
+        def bomManager = new MavenBomManagerDefaultImpl(REPO_URL, TEST_REPO, null, null)
+        when:
+        def result = bomManager.intersect("test:test-bom:1.0", "test:test-nested-bom:1.1", false)
+        then:
+        result != null
+        result.size() == 0
+
+    }
+
+    def "Retrieve intersection from two different pom's recursively"() {
+        given:
+        def bomManager = new MavenBomManagerDefaultImpl(REPO_URL, TEST_REPO, null, null)
+        when:
+        def result = bomManager.intersect("test:test-bom:1.0", "test:test-bom-independent:1.0", true)
+        then:
+        result != null
+        result.size() == 1
+        expectedResult(result, ['org.apache.httpcomponents:httpclient:4.5.2:jar'])
+
+    }
+
+    def "Retrieve intersection with two different pom's non recursively"() {
+        given:
+        def bomManager = new MavenBomManagerDefaultImpl(REPO_URL, TEST_REPO, null, null)
+        when:
+        def result = bomManager.intersect("test:test-bom:1.0", "test:test-bom-independent:1.0", false)
+        then:
+        result != null
+        result.size() == 1
+        expectedResult(result, ['org.apache.httpcomponents:httpclient:4.5.2:jar'])
+
+    }
+
+    def "Properties from simple Bom"() {
+        given:
+
+        def bomManager = new MavenBomManagerDefaultImpl(REPO_URL, TEST_REPO, null, null)
+        when:
+        def result = bomManager.retrieveAsProperties("test:test-bom:1.0", true)
+        then:
+        result != null
+        result.size() == 4
+        expectedResultFromProperties(result, ['org.apache.httpcomponents:httpclient:4.5.2:jar', 'com.google.code.guice:guice:4.1:jar', 'com.affichage.ui.utils:jgoodies-utils:1.9.6:jar', 'com.affichage.it21.ppix:ppix-dao:9.0.6.ADMIN-UIMIG-SNAPSHOT:jar'])
+
+    }
+
+    def "Retrieve Properties with two different pom's recursively, one including the other"() {
+        given:
+        def bomManager = new MavenBomManagerDefaultImpl(REPO_URL, TEST_REPO, null, null)
+        when:
+        def result = bomManager.retrieveAsProperties("test:test-nested-bom:1.1", true)
+        then:
+        result != null
+        result.size() == 4
+        expectedResultFromProperties(result, ['org.apache.httpcomponents:httpclient:4.5.2:jar', 'com.google.code.guice:guice:4.1:jar', 'com.affichage.ui.utils:jgoodies-utils:1.9.6:jar', 'com.affichage.it21.ppix:ppix-dao:9.0.6.ADMIN-UIMIG-SNAPSHOT:jar'])
+
+    }
+
+
+
+
+    private static boolean expectedResult(Collection<MavenArtifact> result, expectedArtifacts) {
         result.each {
             def artString = "${it.groupId}:${it.artifactid}:${it.version}:${it.type}".toString()
             expectedArtifacts.remove(artString)
         }
         expectedArtifacts.size() == 0
+    }
 
+    private static boolean expectedResultFromProperties(Properties properties, expectedArtifacts) {
+        def propertyKeys = properties.keySet()
+        propertyKeys.forEach() {
+            def parts = "$it".split(':')
+            def key = parts[0] + ":" + parts[1]
+            def value = properties.getProperty("$it")
+            def artString = "${key}:${value}:jar".toString()
+            expectedArtifacts.remove(artString)
+        }
+        expectedArtifacts.size() == 0
     }
 
 

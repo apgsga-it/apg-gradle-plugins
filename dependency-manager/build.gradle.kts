@@ -10,6 +10,10 @@ plugins {
     `project-report`
 }
 
+val runtimeOnly: Configuration by configurations.getting {
+    exclude("","gradle-api")
+}
+
 val integrationTestRuntimeOnly: Configuration by configurations.getting {
     extendsFrom(configurations.testRuntimeOnly.get())
 }
