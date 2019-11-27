@@ -7,6 +7,10 @@ import com.apgsga.gradle.repository.nop.NopRepositoryBuilder;
 public class RepositoryBuilderFactory {
 	
 	public static RepositoryBuilder createFor(String baseUrl) {
+
+		//TODO JHE: to be removed
+		System.out.println("createFor baseUrl = " + baseUrl);
+
 		if (baseUrl == null)  {
 			return NopRepositoryBuilder.NOP;
 		}

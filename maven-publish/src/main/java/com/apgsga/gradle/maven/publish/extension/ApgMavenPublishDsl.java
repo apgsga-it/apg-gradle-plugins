@@ -1,7 +1,6 @@
 package com.apgsga.gradle.maven.publish.extension;
 
 import java.io.File;
-import java.net.URI;
 
 import javax.inject.Inject;
 
@@ -89,29 +88,32 @@ public class ApgMavenPublishDsl {
 	}
 
 	public void local() {
+		// TODO JHE: Add logging info
 		final Logger logger = project.getLogger();
-
+		LocalRepo localConfig = project.getExtensions().findByType(LocalRepo.class);
 		PublishingExtension publishingExtension = project.getExtensions().getByType(PublishingExtension.class);
 		// Configure Repository Location
-		URI localRepoDirURI = createLocalRepoDirectory();
-		logger.info("Configuring publish repository to be a maven type hosted at local URI: "
-				+ localRepoDirURI.toASCIIString());
+		createLocalRepoDirectories();
 		RepositoryHandler repositories = publishingExtension.getRepositories();
 		repositories.maven(m -> {
 			m.setName("localMavenRepo");
-			m.setUrl(localRepoDirURI);
+			m.setUrl(localConfig.getRepoBaseUrl() + "/" + (getVersion().endsWith("SNAPSHOT") ? localConfig.getDefaultRepoNames().get(RepoNames.MAVEN_SNAPSHOT) : localConfig.getDefaultRepoNames().get(RepoNames.MAVEN_RELEASE)));
 		});
 		configureMavenPublication("LocalJavaMaven", publishingExtension);
 	}
 	
-	private URI createLocalRepoDirectory() {
+	private void createLocalRepoDirectories() {
+
+		// TODO JHE: Add logging info
+
 		LocalRepo localConfig = project.getExtensions().findByType(LocalRepo.class);
 		File baseDir = new File(localConfig.getRepoBaseUrl());
-		File repoDir = new File(baseDir,localConfig.getDefaultRepoNames().get(RepoNames.LOCAL));
-		repoDir.mkdirs();
-		return repoDir.toURI();
+		localConfig.getDefaultRepoNames().forEach((repoNames, s) -> {
+			File repoDir = new File(baseDir,s);
+			repoDir.mkdirs();
+		});
 	}
-	
+
 	private void configureMavenPublication(String name, PublishingExtension publishingExtension) {
 		// Configure Publications
 		PublicationContainer publications = publishingExtension.getPublications();
