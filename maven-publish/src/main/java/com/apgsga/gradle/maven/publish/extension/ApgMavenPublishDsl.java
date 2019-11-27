@@ -1,9 +1,11 @@
 package com.apgsga.gradle.maven.publish.extension;
 
 import java.io.File;
+import java.net.URI;
 
 import javax.inject.Inject;
 
+import com.apgsga.gradle.repo.extensions.Repo;
 import com.apgsga.gradle.repo.extensions.RepoNames;
 import org.gradle.api.Project;
 import org.gradle.api.artifacts.dsl.RepositoryHandler;
@@ -77,7 +79,7 @@ public class ApgMavenPublishDsl {
 				"Configuring publish repository to be a maven type remote repository hosted at: " + repoConfig.getRepoBaseUrl());
 		RepositoryHandler repositories = publishingExtension.getRepositories();
 		repositories.maven(m -> {
-			m.setUrl(repoConfig.getRepoBaseUrl() + "/" + (getVersion().endsWith("SNAPSHOT") ? repoConfig.getDefaultRepoNames().get(RepoNames.MAVEN_SNAPSHOT) : repoConfig.getDefaultRepoNames().get(RepoNames.MAVEN_RELEASE)));
+			m.setUrl(getRepoUrl(repoConfig));
 			m.setName("artifactoryMavenRepo");
 			PasswordCredentials credentials = m.getCredentials();
 			credentials.setUsername(repoConfig.getUser());
@@ -89,8 +91,8 @@ public class ApgMavenPublishDsl {
 
 	public void local() {
 		final Logger logger = project.getLogger();
-		LocalRepo localConfig = project.getExtensions().findByType(LocalRepo.class);
 		PublishingExtension publishingExtension = project.getExtensions().getByType(PublishingExtension.class);
+		LocalRepo localConfig = project.getExtensions().findByType(LocalRepo.class);
 		// Configure Repository Location
 		logger.info(
 				"Configuring publish repository to be a maven type remote repository hosted at: " + localConfig.getRepoBaseUrl());
@@ -98,9 +100,13 @@ public class ApgMavenPublishDsl {
 		RepositoryHandler repositories = publishingExtension.getRepositories();
 		repositories.maven(m -> {
 			m.setName("localMavenRepo");
-			m.setUrl(localConfig.getRepoBaseUrl() + "/" + (getVersion().endsWith("SNAPSHOT") ? localConfig.getDefaultRepoNames().get(RepoNames.MAVEN_SNAPSHOT) : localConfig.getDefaultRepoNames().get(RepoNames.MAVEN_RELEASE)));
+			m.setUrl(getRepoUrl(localConfig));
 		});
 		configureMavenPublication("LocalJavaMaven", publishingExtension);
+	}
+
+	private String getRepoUrl(Repo repo) {
+		return (repo.getRepoBaseUrl() + "/" + (getVersion().endsWith("SNAPSHOT") ? repo.getDefaultRepoNames().get(RepoNames.MAVEN_SNAPSHOT) : repo.getDefaultRepoNames().get(RepoNames.MAVEN_RELEASE)));
 	}
 	
 	private void createLocalRepoDirectories() {
