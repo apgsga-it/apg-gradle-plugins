@@ -1,11 +1,21 @@
 package com.apgsga.gradle.common.pkg.extension;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.FileSystemException;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
+import groovy.json.JsonSlurper;
 import org.gradle.api.Project;
 
 import com.google.common.collect.Lists;
+import org.springframework.core.io.FileSystemResourceLoader;
+import org.springframework.core.io.Resource;
+import org.springframework.util.Assert;
 
 public class ApgCommonPackageExtension {
 	
@@ -30,10 +40,9 @@ public class ApgCommonPackageExtension {
 	private static final String TARGET_DEFAULT = "CHEI212";
 	private static final String MAIN_PRG_DEFAULT = "com.apgsga.it21.ui.webapp.Webapp";
 	private static final String SERVICE_NAME_DEFAULT = "jadas";
-	// TODO (che, 25.9) : probably not the perfect places 
-	private static final List<String> SUPPORTED_SERVICE_NAMES_DEFAULT = Lists.newArrayList("jadas", "digiflex","vkjadas", "interjadas", "interweb"); 
-	
-	
+	private static final String INSTALLABLE_SERVICES_JSON_FILENAME = "installableServices.json";
+
+
 	private String serviceName =  SERVICE_NAME_DEFAULT; 
 	private String mainProgramName = MAIN_PRG_DEFAULT; 
 	private String installTarget = TARGET_DEFAULT; 
@@ -50,7 +59,7 @@ public class ApgCommonPackageExtension {
 	private String javaDist = JAVADIST_DEFAULT; 
 	// TODO (che, 25.9) : retrieve baseUrl from common-repo Plugin 
 	private String distRepoUrl = REPO_BASE_URL_DEFAULT + JDK_DIST_REPO_NAME_DEFAULT; 
-	private List<String> supportedServices = SUPPORTED_SERVICE_NAMES_DEFAULT; 
+	private List<String> supportedServices;
 	private String version = VERSION_DEFAULT; 
 	private String releaseNr = RELEASENR_DEFAULT; 
 	private String opsUserGroup = APG_OPSDEFAULT; 
@@ -60,7 +69,32 @@ public class ApgCommonPackageExtension {
 	public ApgCommonPackageExtension(Project project) {
 		super();
 		this.project = project;
+		initServiceList();
 	}
+
+	private void initServiceList() {
+		String services = (String)getInstallableServicesAsMap().get("installableServices");
+		this.supportedServices = Stream.of(services.split(",")).collect(Collectors.toList());
+	}
+
+	protected Map getInstallableServicesAsMap() {
+		try {
+			JsonSlurper slurper = new JsonSlurper();
+			return (Map) slurper.parse(getInstallableServiceAsResource().getFile());
+		} catch (IOException e) {
+			throw new RuntimeException("common-service-packager Plugin couldn't be correctly instanciated, probably because " + INSTALLABLE_SERVICES_JSON_FILENAME + " couldn't be found. Original Exception Message was: " + e.getMessage());
+		}
+	}
+
+	private Resource getInstallableServiceAsResource() {
+		String gradleHome = project.getGradle().getGradleUserHomeDir().getAbsolutePath();
+		FileSystemResourceLoader loader = new FileSystemResourceLoader();
+		String installableServicesJsonFilePath = "file://" + gradleHome + File.separator + INSTALLABLE_SERVICES_JSON_FILENAME;
+		Resource installableServicesJsonAsResource = loader.getResource(installableServicesJsonFilePath);
+		Assert.isTrue(installableServicesJsonAsResource.exists(), "installableServices.json file not found! installableServicesJsonFilePath = " + installableServicesJsonFilePath);
+		return installableServicesJsonAsResource;
+	}
+
 	public String getServiceName() {
 		return serviceName;
 	}
