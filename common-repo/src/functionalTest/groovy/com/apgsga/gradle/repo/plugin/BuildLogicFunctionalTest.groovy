@@ -27,7 +27,9 @@ class BuildLogicFunctionalTest extends AbstractSpecification {
 			def result = gradleRunnerFactory(['init']).build()
 		then:
 			println "Result output: ${result.output}"
-			result.output.contains('maventestrepo')
+			result.output.contains('release-functionaltest')
+			result.output.contains('rpm-functionaltest')
+			result.output.contains('snapshot-functionaltest')
 	}
 
     def "Common Repo Plugin works explicit with Defaults"() {
@@ -47,13 +49,13 @@ class BuildLogicFunctionalTest extends AbstractSpecification {
         	def result = gradleRunnerFactory(['init']).build()
         then:
 			println "Result output: ${result.output}"
-			result.output.contains('maventestrepo')
 			result.output.contains('release-functionaltest')
 			result.output.contains('rpm-functionaltest')
+			result.output.contains('snapshot-functionaltest')
     }
 	
 	
-	def "Common Repo Plugin works explicit ovrriding defaults"() {
+	def "Common Repo Plugin works explicit overriding defaults"() {
 		given:
 			buildFile << """
 				plugins {
@@ -68,7 +70,7 @@ class BuildLogicFunctionalTest extends AbstractSpecification {
 				}
 				apgLocalRepo {
 					repoBaseUrl = "otherdirectory"
-					defaultRepoNames[LOCAL] = "testrepo"
+					defaultRepoNames[MAVEN_RELEASE] = "testrepo"
 				}
 				apgLocalRepo.log()
 				apgArtifactoryRepo.log()
@@ -77,10 +79,10 @@ class BuildLogicFunctionalTest extends AbstractSpecification {
 			def result = gradleRunnerFactory(['init']).build()
 		then:
 			println "Result output: ${result.output}"
-			result.output.contains('YYYYY')
-			result.output.contains('BBBBB')
-			result.output.contains('otherdirectory')
-			!result.output.contains('snapshot-functionaltest')
+			result.output.contains('MAVEN_SNAPSHOT=BBBBB')
+			result.output.contains('MAVEN_RELEASE=YYYYY')
+			result.output.contains('MAVEN_RELEASE=testrepo')
+			result.output.contains('MAVEN_SNAPSHOT=snapshot-functionaltest')
 			!result.output.contains('MAVEN_RELEASE=release-functionaltest')
 	}
 }

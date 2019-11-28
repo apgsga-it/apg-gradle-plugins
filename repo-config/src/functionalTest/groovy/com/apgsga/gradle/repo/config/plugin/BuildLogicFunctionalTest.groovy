@@ -74,10 +74,11 @@ class BuildLogicFunctionalTest extends AbstractSpecification {
 			def result = gradleRunnerFactory(['listrepos']).build()
 		then:
 			println "Result output: ${result.output}"
+			result.output.contains('MAVEN_RELEASE=release-functionaltest')
+			result.output.contains('ZIP=release-functionaltest')
+			result.output.contains('MAVEN_SNAPSHOT=snapshot-functionaltest')
+			result.output.contains('RPM=rpm-functionaltest')
 			result.output.contains('MavenLocal')
-			!result.output.contains('MavenLocal2')
-			!result.output.contains('rpm-functionaltest')
-			result.output.contains('MavenRepo')
 	}
 	
 	def "Repo Config works with one concrete dependency"() {
