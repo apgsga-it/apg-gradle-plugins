@@ -69,6 +69,7 @@ public class ApgCommonPackageExtension {
 	public ApgCommonPackageExtension(Project project) {
 		super();
 		this.project = project;
+		// TODO JHE: Probably not the place we'll want to do it, but can be improved with IT-35079
 		initServiceList();
 	}
 
