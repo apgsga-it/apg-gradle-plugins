@@ -78,6 +78,12 @@ public class ApgMavenPublishDsl {
 		configure(LocalRepo.class);
 	}
 
+	public void mavenLocal() {
+		PublishingExtension publishingExtension = project.getExtensions().getByType(PublishingExtension.class);
+		project.getRepositories().add(project.getRepositories().mavenLocal());
+		configureMavenPublication("mavenLocal", publishingExtension);
+	}
+
     private void configure(Class repo) {
         final Logger logger = project.getLogger();
         PublishingExtension publishingExtension = project.getExtensions().getByType(PublishingExtension.class);

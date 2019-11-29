@@ -102,6 +102,24 @@ class BuildLogicFunctionalTest extends AbstractSpecification {
 		println "Result output: ${result.output}"
 		result.output.contains('')
 	}
+
+	def "publish to mavenLocal works"() {
+		given:
+		buildFile << """
+            plugins {
+                 id 'com.apgsga.maven.publish' 
+            }
+			apgMavenPublish {
+				mavenLocal()
+			} 
+        """
+
+		when:
+		def result = gradleRunnerFactory(['clean','build', 'publish']).build()
+		then:
+		println "Result output: ${result.output}"
+		result.output.contains('')
+	}
 }
 
 
