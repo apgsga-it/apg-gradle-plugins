@@ -188,13 +188,6 @@ public class ApgCommonPackageExtension {
 		this.distRepoUrl = distRepoUrl;
 	}
 	
-	public List<String> getSupportedServices() {
-		return supportedServices;
-	}
-	public void setSupportedServices(List<String> supportedServices) {
-		this.supportedServices = supportedServices;
-	}
-	
 	public String getVersion() {
 		return version;
 	}
@@ -246,7 +239,7 @@ public class ApgCommonPackageExtension {
 	}
 	
 	public String getPortNr() {
-		return PortnrConvention.calculate(getSupportedServices(), getInstallTarget(), getServiceName()); 
+		return PortnrConvention.calculate(supportedServices, getInstallTarget(), getServiceName());
 	}
 	
 	public String getEcmTargetSystemInd() {
@@ -261,6 +254,11 @@ public class ApgCommonPackageExtension {
 	public String getArchiveName() {
 		return getTargetServiceName() + "-" + getVersion() + "-" + getReleaseNr()+ ".noarch.rpm"; 
 	}
+
+	public String getInstallableServiceFilePath() {
+		return project.getGradle().getGradleUserHomeDir().getAbsolutePath() + File.separator + INSTALLABLE_SERVICES_JSON_FILENAME;
+	}
+
 	@Override
 	public String toString() {
 		return "ApgRpmPackageExtension [serviceName=" + serviceName + ", mainProgramName=" + mainProgramName
