@@ -1,13 +1,9 @@
 package com.apgsga.gradle.maven.publish.extension;
 
-import java.io.File;
-import java.net.URI;
-import java.rmi.Remote;
-
-import javax.inject.Inject;
-
+import com.apgsga.gradle.repo.extensions.LocalRepo;
+import com.apgsga.gradle.repo.extensions.RemoteRepo;
 import com.apgsga.gradle.repo.extensions.Repo;
-import com.apgsga.gradle.repo.extensions.RepoNames;
+import com.apgsga.gradle.repo.extensions.RepoType;
 import org.gradle.api.Project;
 import org.gradle.api.artifacts.dsl.RepositoryHandler;
 import org.gradle.api.artifacts.repositories.PasswordCredentials;
@@ -16,8 +12,8 @@ import org.gradle.api.publish.PublicationContainer;
 import org.gradle.api.publish.PublishingExtension;
 import org.gradle.api.publish.maven.MavenPublication;
 
-import com.apgsga.gradle.repo.extensions.LocalRepo;
-import com.apgsga.gradle.repo.extensions.RemoteRepo;
+import javax.inject.Inject;
+import java.io.File;
 
 public class ApgMavenPublishDsl {
 
@@ -105,7 +101,7 @@ public class ApgMavenPublishDsl {
     }
 
 	private String getRepoUrl(Repo repo) {
-		return (repo.getRepoBaseUrl() + "/" + (getVersion().endsWith("SNAPSHOT") ? repo.getDefaultRepoNames().get(RepoNames.MAVEN_SNAPSHOT) : repo.getDefaultRepoNames().get(RepoNames.MAVEN_RELEASE)));
+		return (repo.getRepoBaseUrl() + "/" + (getVersion().endsWith("SNAPSHOT") ? repo.getDefaultRepoNames().get(RepoType.MAVEN_SNAPSHOT) : repo.getDefaultRepoNames().get(RepoType.MAVEN_RELEASE)));
 	}
 	
 	private void createLocalRepoDirectories() {

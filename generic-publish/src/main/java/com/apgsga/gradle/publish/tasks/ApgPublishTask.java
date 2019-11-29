@@ -1,21 +1,20 @@
 package com.apgsga.gradle.publish.tasks;
 
-import java.io.File;
-
-import com.apgsga.gradle.repo.extensions.RepoNames;
+import com.apgsga.gradle.publish.extension.ApgGenericPublish;
+import com.apgsga.gradle.repo.extensions.LocalRepo;
+import com.apgsga.gradle.repo.extensions.RemoteRepo;
+import com.apgsga.gradle.repo.extensions.Repo;
+import com.apgsga.gradle.repo.extensions.RepoType;
+import com.apgsga.gradle.repository.Repository;
+import com.apgsga.gradle.repository.RepositoryBuilder;
+import com.apgsga.gradle.repository.RepositoryBuilderFactory;
 import org.gradle.api.DefaultTask;
 import org.gradle.api.file.RegularFileProperty;
 import org.gradle.api.logging.Logger;
 import org.gradle.api.tasks.InputFile;
 import org.gradle.api.tasks.TaskAction;
 
-import com.apgsga.gradle.publish.extension.ApgGenericPublish;
-import com.apgsga.gradle.repo.extensions.LocalRepo;
-import com.apgsga.gradle.repo.extensions.RemoteRepo;
-import com.apgsga.gradle.repo.extensions.Repo;
-import com.apgsga.gradle.repository.RepositoryBuilderFactory;
-import com.apgsga.gradle.repository.Repository;
-import com.apgsga.gradle.repository.RepositoryBuilder;
+import java.io.File;
 
 public class ApgPublishTask extends DefaultTask {
 
@@ -60,6 +59,6 @@ public class ApgPublishTask extends DefaultTask {
 	}
 
 	private String getMavenRepoName(Repo repo, String filename) {
-		return filename.toLowerCase().endsWith("rpm") ? repo.getDefaultRepoNames().get(RepoNames.RPM) : repo.getDefaultRepoNames().get(RepoNames.MAVEN_RELEASE);
+		return filename.toLowerCase().endsWith("rpm") ? repo.getDefaultRepoNames().get(RepoType.RPM) : repo.getDefaultRepoNames().get(RepoType.MAVEN_RELEASE);
 	}
 }

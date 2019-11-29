@@ -1,4 +1,4 @@
-package com.apgsga.maven
+package com.apgsga.dependency.reporting
 
 import java.util.*
 

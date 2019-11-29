@@ -14,17 +14,17 @@ import java.util.Map;
 
 public abstract class AbstractRepo implements Repo {
 
-	protected static final String REPO_NAMES_JSON_FILENAME = "repoNames.json";
+	static final String REPO_NAMES_JSON_FILENAME = "repoNames.json";
 
 	private static final String REPOS_KEY = "repos";
 
 	private String user = getDefaultUser();
 	private String password = getDefaultPassword();
 	protected Project project;
-	protected Map<RepoNames,String> repoNames;
-	protected String repoBaseUrl;
+	private Map<RepoType,String> repoNames;
+	String repoBaseUrl;
 
-	public AbstractRepo(Project project) {
+	AbstractRepo(Project project) {
 		this.project = project;
 		Map repoNameAsJson = getRepoNameJsonAsMap();
 		initRepoNames(repoNameAsJson);
@@ -34,13 +34,13 @@ public abstract class AbstractRepo implements Repo {
 	private void initRepoNames(Map repoNameAsJson) {
 		List<Map> repos = (List<Map>) repoNameAsJson.get(REPOS_KEY);
 		repoNames = Maps.newHashMap();
-		repoNames.put(RepoNames.MAVEN_RELEASE, getRepoName(RepoNames.MAVEN_RELEASE, repos));
-		repoNames.put(RepoNames.MAVEN_SNAPSHOT, getRepoName(RepoNames.MAVEN_SNAPSHOT, repos));
-		repoNames.put(RepoNames.RPM, getRepoName(RepoNames.RPM, repos));
-		repoNames.put(RepoNames.ZIP, getRepoName(RepoNames.ZIP, repos));
+		repoNames.put(RepoType.MAVEN_RELEASE, getRepoName(RepoType.MAVEN_RELEASE, repos));
+		repoNames.put(RepoType.MAVEN_SNAPSHOT, getRepoName(RepoType.MAVEN_SNAPSHOT, repos));
+		repoNames.put(RepoType.RPM, getRepoName(RepoType.RPM, repos));
+		repoNames.put(RepoType.ZIP, getRepoName(RepoType.ZIP, repos));
 	}
 
-	private String getRepoName(RepoNames repo, List<Map> repos) {
+	private String getRepoName(RepoType repo, List<Map> repos) {
 		// TODO JHE: Mmh, not very efficient, replace the below with a Lambda
 		String repoName = "";
 		for(Map m : repos) {
@@ -52,7 +52,7 @@ public abstract class AbstractRepo implements Repo {
 		return repoName;
 	}
 
-	protected Map getRepoNameJsonAsMap() {
+	Map getRepoNameJsonAsMap() {
 		try {
 			JsonSlurper slurper = new JsonSlurper();
 			return (Map) slurper.parse(getRepoNameResource().getFile());
@@ -70,8 +70,8 @@ public abstract class AbstractRepo implements Repo {
 		return repoNamesJsonAsResource;
 	}
 
-	@Override
-	public Map<RepoNames, String> getDefaultRepoNames() {
+
+	public Map<RepoType, String> getDefaultRepoNames() {
 		return repoNames;
 	}
 
@@ -79,10 +79,6 @@ public abstract class AbstractRepo implements Repo {
 	public String getRepoBaseUrl() {
 
 		return repoBaseUrl == null ? getDefaultRepoBaseUrl() : repoBaseUrl;
-	}
-
-	public void setRepoBaseUrl(String repoBaseUrl) {
-		this.repoBaseUrl = repoBaseUrl;
 	}
 
 	public String getUser() {
@@ -102,12 +98,12 @@ public abstract class AbstractRepo implements Repo {
 	}
 
 
-	@Override
+
 	public String getDefaultUser() {
 		return "";
 	}
 
-	@Override
+
 	public String getDefaultPassword() {
 		return "";
 	}

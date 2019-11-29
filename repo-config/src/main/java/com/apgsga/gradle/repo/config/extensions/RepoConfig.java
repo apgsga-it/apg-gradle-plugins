@@ -1,13 +1,12 @@
 package com.apgsga.gradle.repo.config.extensions;
 
-import com.apgsga.gradle.repo.extensions.RepoNames;
+import com.apgsga.gradle.repo.extensions.LocalRepo;
+import com.apgsga.gradle.repo.extensions.RemoteRepo;
+import com.apgsga.gradle.repo.extensions.RepoType;
 import org.gradle.api.Project;
 import org.gradle.api.artifacts.dsl.RepositoryHandler;
 import org.gradle.api.artifacts.repositories.MavenArtifactRepository;
 import org.gradle.api.artifacts.repositories.PasswordCredentials;
-
-import com.apgsga.gradle.repo.extensions.LocalRepo;
-import com.apgsga.gradle.repo.extensions.RemoteRepo;
 
 public class RepoConfig {
 	
@@ -22,17 +21,17 @@ public class RepoConfig {
 		
 	}
 
-	public void artifactory(RepoNames p_repoName) {
+	public void artifactory(RepoType p_repoName) {
 
 		// JHE: Default is our MAVEN repo definition ... really correct?
-		RepoNames repoName = p_repoName != null ? p_repoName : RepoNames.MAVEN_RELEASE;
+		RepoType repoName = p_repoName != null ? p_repoName : RepoType.MAVEN_RELEASE;
 		RemoteRepo remote = project.getExtensions().findByType(RemoteRepo.class);
 		project.getLogger().info("Using Artifactory with the following configuration");
 		remote.log();
 		RepositoryHandler repositories = project.getRepositories();
 		repositories.maven(m -> {
 			m.setUrl(remote.getRepoBaseUrl() + "/" + remote.getDefaultRepoNames().get(repoName));
-			m.setName(repoName.getName());
+			m.setName(repoName.asString());
 			PasswordCredentials credentials = m.getCredentials();
 			credentials.setUsername(remote.getUser());
 			credentials.setPassword(remote.getPassword());

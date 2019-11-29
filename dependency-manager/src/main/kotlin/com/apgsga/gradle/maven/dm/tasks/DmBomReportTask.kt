@@ -1,6 +1,7 @@
 package com.apgsga.gradle.maven.dm.tasks
 
-import com.apgsga.maven.MavenBomManagerDefaultImpl
+import com.apgsga.dependency.reporting.MavenBomManagerDefaultImpl
+import com.apgsga.gradle.repo.extensions.Repo
 import org.gradle.api.DefaultTask
 import org.gradle.api.logging.LogLevel
 import org.gradle.api.tasks.Input
@@ -11,6 +12,10 @@ open class DmBomReportTask : DefaultTask() {
 
     @Input
     var boms: Collection<String> = listOf<String>()
+
+    @Input
+    lateinit var repoConfig : Repo
+
 
     @TaskAction
     fun doAction() {

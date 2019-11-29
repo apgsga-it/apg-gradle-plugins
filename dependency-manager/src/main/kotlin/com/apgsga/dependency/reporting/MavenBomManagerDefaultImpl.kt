@@ -1,7 +1,8 @@
-package com.apgsga.maven
+package com.apgsga.dependency.reporting
 
 import com.apgsga.gradle.repository.Repository
 import com.apgsga.gradle.repository.RepositoryBuilderFactory
+import com.apgsga.logger.LoggerDelegate
 import org.apache.maven.model.Dependency
 import org.apache.maven.model.Model
 import org.apache.maven.model.io.xpp3.MavenXpp3Reader

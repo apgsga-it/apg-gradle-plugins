@@ -1,5 +1,7 @@
 package com.apgsga.maven
 
+import com.apgsga.dependency.reporting.MavenArtifact
+import com.apgsga.dependency.reporting.MavenBomManagerDefaultImpl
 import org.gradle.util.GFileUtils
 import spock.lang.Specification
 
