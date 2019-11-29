@@ -5,14 +5,8 @@ apply from: "${projectDir}/../gradle-common/functional-test.gradle"
 description 'A packager for IT21 based GUIs'
 
 sourceSets {
-	main {
-		java {
-			srcDirs = []
-		}
-		groovy {
-			srcDirs = ['src/main/groovy', 'src/main/java']
-		}
-	}
+	main.java.srcDirs = []
+	main.groovy.srcDirs  = ['src/main/groovy', 'src/main/java']
 }
 
 
@@ -22,7 +16,6 @@ dependencies {
 	compile group: 'commons-io', name: 'commons-io', version: '2.6'
 	compile group: 'com.google.guava', name: 'guava', version: '20.0'
 	compile project(':repo-config')
-
 
 }
 

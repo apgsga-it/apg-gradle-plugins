@@ -1,11 +1,11 @@
+@file:Suppress("UnstableApiUsage")
+
 package com.apgsga.gradle.maven.dm.plugin
 
 import com.apgsga.gradle.maven.dm.ext.DmBombAnalyzersExtension
 import com.apgsga.gradle.maven.dm.tasks.DmBomReportTask
 import org.gradle.api.Plugin
 import org.gradle.api.Project
-import org.gradle.kotlin.dsl.create
-import org.gradle.kotlin.dsl.register
 
 private const val EXTENSION_NAME = "apgDmBomReportConfig"
 private const val TASK_NAME = "apgDmBomReport"

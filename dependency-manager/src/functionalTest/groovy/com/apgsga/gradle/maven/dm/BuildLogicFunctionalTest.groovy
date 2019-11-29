@@ -2,8 +2,21 @@ package com.apgsga.gradle.maven.dm
 
 import com.apgsga.gradle.test.utils.AbstractSpecification
 import org.gradle.testkit.runner.GradleRunner
+import org.gradle.util.GFileUtils
 
 class BuildLogicFunctionalTest extends AbstractSpecification {
+
+    private static final String REPO_URL = "build/repo"
+
+    private static final String TEST_REPO = "bom-test"
+
+
+
+    def setup() {
+        def source = new File("src/functionalTest/resources/bomtests")
+        def destination = new File("$REPO_URL/$TEST_REPO")
+        GFileUtils.copyDirectory(source, destination)
+    }
 
 
     def "publish rpm to local works"() {
@@ -12,6 +25,7 @@ class BuildLogicFunctionalTest extends AbstractSpecification {
             plugins {
                 id("com.apgsga.bom.report")
             }
+            apgDmBomReport.boms = ["test:test-bom:1.0"]
         """
 
         when:
