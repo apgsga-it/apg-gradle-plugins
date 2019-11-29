@@ -4,8 +4,12 @@ public enum RepoType {
 
     ZIP("ZIP"),
     RPM("RPM"),
+    NAVEN("MAVEN"),
     MAVEN_SNAPSHOT("MAVEN_SNAPSHOT"),
-    MAVEN_RELEASE("MAVEN_RELEASE");
+    MAVEN_RELEASE("MAVEN_RELEASE"),
+    LOCAL("LOCAL"),
+    JAVA_DIST("JAVA_DIST");
+
 
     String name;
 

@@ -38,6 +38,8 @@ public class ApgPublishTask extends DefaultTask {
 		Logger logger = getLogger();
 		logger.info("Starting ApgRpmPublishTask");
 		ApgGenericPublish config = getProject().getExtensions().findByType(ApgGenericPublish.class);
+		// TODO (jhe, che, 29.11 API Discussion)
+		// Goes away
 		LocalRepo localConfig = getProject().getExtensions().findByType(LocalRepo.class);
 		RemoteRepo remoteConfig = getProject().getExtensions().findByType(RemoteRepo.class);
 		assert config != null;
@@ -50,6 +52,8 @@ public class ApgPublishTask extends DefaultTask {
 	}
 
 	private Repository configure(Repo repo, boolean publish, String filename) {
+		// TODO (jhe, che, 29.11 API Discussion)
+		// The Remote Repo ist provided by common repo
 		getLogger().info("Are following repo(s) configured for publish:  " + repo.getDefaultRepoNames() + " -> " + publish);
 		RepositoryBuilder builder = RepositoryBuilderFactory.createFor(publish ? repo.getRepoBaseUrl() : null);
         builder.setTargetRepo(getMavenRepoName(repo,filename));

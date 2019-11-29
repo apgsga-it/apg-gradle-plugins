@@ -3,13 +3,12 @@
  */
 package com.apgsga.gradle.repo.plugin;
 
+import com.apgsga.gradle.repo.extensions.Repos;
+import com.apgsga.gradle.repo.extensions.ReposImpl;
 import org.gradle.api.NonNullApi;
 import org.gradle.api.Plugin;
 import org.gradle.api.Project;
 import org.gradle.api.plugins.ExtensionContainer;
-
-import com.apgsga.gradle.repo.extensions.LocalRepo;
-import com.apgsga.gradle.repo.extensions.RemoteRepo;
 
 
 @NonNullApi
@@ -17,8 +16,16 @@ public class ApgCommonRepoPlugin implements Plugin<Project> {
 
 	@Override
 	public void apply(final Project project) {
+
+		// TODO (jhe, che, 29.11 API Discussion) : Example change , code does'nt compile
+		// Load repos from Json here
+		final Repos reposDefault = loadFromJson();
 		final ExtensionContainer ext = project.getExtensions();
-		ext.create("apgArtifactoryRepo", RemoteRepo.class, project);
-		ext.create("apgLocalRepo", LocalRepo.class, project);
+		// Initialize the Extension Object from default
+		ext.create("apgRepos", ReposImpl.class, reposDefault, project);
+	}
+
+	private Repos loadFromJson() {
+		return null;
 	}
 }

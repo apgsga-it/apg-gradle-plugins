@@ -20,11 +20,10 @@ public class RepoConfig {
 		project.getRepositories().add(project.getRepositories().mavenCentral());
 		
 	}
+	// TODO (jhe, che, 29.11 Api Discussion) : Example change , code does'nt compile
+	public void mavenApgCentral() {
 
-	public void artifactory(RepoType p_repoName) {
-
-		// JHE: Default is our MAVEN repo definition ... really correct?
-		RepoType repoName = p_repoName != null ? p_repoName : RepoType.MAVEN_RELEASE;
+		RepoType repoName = RepoType.MAVEN;
 		RemoteRepo remote = project.getExtensions().findByType(RemoteRepo.class);
 		project.getLogger().info("Using Artifactory with the following configuration");
 		remote.log();

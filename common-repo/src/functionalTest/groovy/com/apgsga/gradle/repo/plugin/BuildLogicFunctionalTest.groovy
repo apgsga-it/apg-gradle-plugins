@@ -1,15 +1,6 @@
 package com.apgsga.gradle.repo.plugin
 
 import com.apgsga.gradle.test.utils.AbstractSpecification
-import org.gradle.testkit.runner.GradleRunner
-import org.junit.Rule
-import spock.lang.Shared
-import spock.lang.Specification
-
-import static org.gradle.testkit.runner.TaskOutcome.*
-
-import java.nio.file.Files
-import java.nio.file.Path
 
 class BuildLogicFunctionalTest extends AbstractSpecification {
 	
@@ -38,12 +29,12 @@ class BuildLogicFunctionalTest extends AbstractSpecification {
 				plugins {
 					id 'com.apgsga.common.repo' 
 				}
-				apgArtifactoryRepo {
+				apgReposConfig {
+				   // TODO (jhe, che, 29.11 Apg Discussion) : Example change , code does'nt test
+				   // apgRepos Dsl with a Map Interface: property Name = key
+				   repos[ZIP]  =  ['baseUrl:somebaseUrl','repoName:somerepoName', .....]
+				  
 				}
-				apgLocalRepo {
-				}
-				apgLocalRepo.log()
-				apgArtifactoryRepo.log()
 			"""
         when:
         	def result = gradleRunnerFactory(['init']).build()
