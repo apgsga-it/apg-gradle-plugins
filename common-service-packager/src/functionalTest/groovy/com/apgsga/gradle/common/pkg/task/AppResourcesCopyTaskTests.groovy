@@ -52,7 +52,6 @@ class AppResourcesCopyTaskTests extends AbstractSpecification {
             }
 		 apgPackage {
 			serviceName ="testapp"
-			supportedServices = ["testapp"]
             installTarget = "CHTX211"
 			mainProgramName  = "com.apgsga.test.SomeMain"
          }
