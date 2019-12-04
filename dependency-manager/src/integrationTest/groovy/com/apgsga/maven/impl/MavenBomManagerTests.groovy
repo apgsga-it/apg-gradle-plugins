@@ -1,5 +1,6 @@
-package com.apgsga.maven
+package com.apgsga.maven.impl
 
+import com.apgsga.maven.MavenArtifact
 import org.gradle.util.GFileUtils
 import spock.lang.Specification
 
@@ -9,16 +10,17 @@ class MavenBomManagerTests extends Specification {
 
     private static final String TEST_REPO = "bom-test"
 
+    def bomManager
+
     def setup() {
         def source = new File("src/integrationTest/resources/bomtests")
         def destination = new File("$REPO_URL/$TEST_REPO")
         GFileUtils.copyDirectory(source, destination)
+        bomManager = new MavenBomManagerDefault(RepositoryFactory.createFactory(REPO_URL,TEST_REPO).makeRepo())
+
     }
 
     def "Retrieve model from simple Bom "() {
-        given:
-
-        def bomManager = new MavenBomManagerDefaultImpl(REPO_URL, TEST_REPO, null, null)
         when:
         def result = bomManager.retrieve("test", "test-bom", "1.0", true)
         then:
@@ -28,11 +30,7 @@ class MavenBomManagerTests extends Specification {
 
     }
 
-
-
     def "Retrieve model from nested Bom"() {
-        given:
-        def bomManager = new MavenBomManagerDefaultImpl(REPO_URL, TEST_REPO, null, null)
         when:
         def result = bomManager.retrieve("test", "test-nested-bom", "1.1", true)
         then:
@@ -43,8 +41,6 @@ class MavenBomManagerTests extends Specification {
     }
 
 	def "Retrieve model from nested Bom with some additional artifacts"() {
-		given:
-		def bomManager = new MavenBomManagerDefaultImpl(REPO_URL, TEST_REPO, null, null)
 		when:
 		def result = bomManager.retrieve("test", "test-nested-withadd-bom", "1.2", true)
 		then:
@@ -54,8 +50,6 @@ class MavenBomManagerTests extends Specification {
 	}
 
     def "Retrieve empty Model from  nested Bom with any own artifacts non recursively"() {
-        given:
-        def bomManager = new MavenBomManagerDefaultImpl(REPO_URL, TEST_REPO, null, null)
         when:
         def result = bomManager.retrieve("test", "test-nested-bom", "1.1", false)
         then:
@@ -66,8 +60,6 @@ class MavenBomManagerTests extends Specification {
 
 
     def "Retrieve model from nested Bom with some own artifacts non recursively"() {
-        given:
-        def bomManager = new MavenBomManagerDefaultImpl(REPO_URL, TEST_REPO, null, null)
         when:
         def result = bomManager.retrieve("test", "test-nested-withadd-bom", "1.2", false)
         then:
@@ -77,8 +69,6 @@ class MavenBomManagerTests extends Specification {
     }
 
     def "Retrieve intersection from same pom"() {
-        given:
-        def bomManager = new MavenBomManagerDefaultImpl(REPO_URL, TEST_REPO, null, null)
         when:
         def result = bomManager.intersect("test:test-bom:1.0", "test:test-bom:1.0", true)
         then:
@@ -89,8 +79,6 @@ class MavenBomManagerTests extends Specification {
     }
 
     def "Retrieve intersection with two different pom's recursively, one including the other"() {
-        given:
-        def bomManager = new MavenBomManagerDefaultImpl(REPO_URL, TEST_REPO, null, null)
         when:
         def result = bomManager.intersect("test:test-bom:1.0", "test:test-nested-bom:1.1", true)
         then:
@@ -100,8 +88,6 @@ class MavenBomManagerTests extends Specification {
 
     }
     def "Retrieve intersection with two different pom not recursively, one including the other"() {
-        given:
-        def bomManager = new MavenBomManagerDefaultImpl(REPO_URL, TEST_REPO, null, null)
         when:
         def result = bomManager.intersect("test:test-bom:1.0", "test:test-nested-bom:1.1", false)
         then:
@@ -111,8 +97,6 @@ class MavenBomManagerTests extends Specification {
     }
 
     def "Retrieve intersection from two different pom's recursively"() {
-        given:
-        def bomManager = new MavenBomManagerDefaultImpl(REPO_URL, TEST_REPO, null, null)
         when:
         def result = bomManager.intersect("test:test-bom:1.0", "test:test-bom-independent:1.0", true)
         then:
@@ -123,8 +107,6 @@ class MavenBomManagerTests extends Specification {
     }
 
     def "Retrieve intersection with two different pom's non recursively"() {
-        given:
-        def bomManager = new MavenBomManagerDefaultImpl(REPO_URL, TEST_REPO, null, null)
         when:
         def result = bomManager.intersect("test:test-bom:1.0", "test:test-bom-independent:1.0", false)
         then:
@@ -135,9 +117,6 @@ class MavenBomManagerTests extends Specification {
     }
 
     def "Properties from simple Bom"() {
-        given:
-
-        def bomManager = new MavenBomManagerDefaultImpl(REPO_URL, TEST_REPO, null, null)
         when:
         def result = bomManager.retrieveAsProperties("test:test-bom:1.0", true)
         then:
@@ -148,8 +127,6 @@ class MavenBomManagerTests extends Specification {
     }
 
     def "Retrieve Properties with two different pom's recursively, one including the other"() {
-        given:
-        def bomManager = new MavenBomManagerDefaultImpl(REPO_URL, TEST_REPO, null, null)
         when:
         def result = bomManager.retrieveAsProperties("test:test-nested-bom:1.1", true)
         then:

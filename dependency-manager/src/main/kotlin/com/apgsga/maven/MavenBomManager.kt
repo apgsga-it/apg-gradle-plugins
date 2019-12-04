@@ -13,13 +13,13 @@ interface MavenBomManager {
      * Of a pom  the DependencyManagement Section is loaded, analyzed and
      * collected into a List of [MavenArtifact] 's
      * Artifact Coordinates:
-     * @param groupId Groupid of Bom Artifact
-     * @param artifactid ArtifactId of Bom
-     * @param version Version of Bom
+     * @param bomGroupId Groupid of Bom Artifact
+     * @param bomArtifactid ArtifactId of Bom
+     * @param bomVersion Version of Bom
      * @param recursive if to resolve pom's recursively
      * @return List of [MavenArtifact]
      */
-    fun retrieve(groupId: String, artifactid: String, version: String, recursive: Boolean = true): Collection<MavenArtifact>
+    fun retrieve(bomGroupId: String, bomArtifactid: String, bomVersion: String, recursive: Boolean = true): Collection<MavenArtifact>
 
     /**
      * @see [retrieve]

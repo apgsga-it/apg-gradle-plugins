@@ -1,7 +1,9 @@
-package com.apgsga.maven
+package com.apgsga.maven.impl
 
 import com.apgsga.gradle.repository.Repository
-import com.apgsga.gradle.repository.RepositoryBuilderFactory
+import com.apgsga.maven.LoggerDelegate
+import com.apgsga.maven.MavenArtifact
+import com.apgsga.maven.MavenBomManager
 import org.apache.maven.model.Dependency
 import org.apache.maven.model.Model
 import org.apache.maven.model.io.xpp3.MavenXpp3Reader
@@ -14,11 +16,9 @@ import java.util.stream.Collectors
  *  @author che
  *
  */
-class MavenBomManagerDefaultImpl(repoPathBom: String, repoName: String, repoUser: String?, repoPass: String?) : MavenBomManager {
+class MavenBomManagerDefault(private val repository: Repository) : MavenBomManager {
 
     private val logger by LoggerDelegate()
-    private val repository: Repository = RepositoryBuilderFactory.createFor(repoPathBom, repoName, repoUser, repoPass).build()
-
 
     private fun resolveVersion(mavenModel: Model, version: String): String? {
         return if (version.startsWith("\${") && version.endsWith("}")) {
@@ -47,7 +47,7 @@ class MavenBomManagerDefaultImpl(repoPathBom: String, repoName: String, repoUser
         return artifactList
     }
 
-    private fun list(dependencies: MutableList<Dependency>, mavenModel: Model, artList: Collection<MavenArtifact>, recursive: Boolean) : Collection<MavenArtifact> {
+    private fun list(dependencies: MutableList<Dependency>, mavenModel: Model, artList: Collection<MavenArtifact>, recursive: Boolean): Collection<MavenArtifact> {
         var artifactList = artList
         for (dependency in dependencies) {
             val resolvedVersion = resolveVersion(mavenModel, dependency.version)
@@ -58,9 +58,9 @@ class MavenBomManagerDefaultImpl(repoPathBom: String, repoName: String, repoUser
                 }
             } else if (resolvedVersion != null) {
                 artifactList += MavenArtifact(dependency.groupId, dependency.artifactId, resolvedVersion, dependency.type)
-                } else {
-                    logger.error("No Version found for groupid:  $dependency.groupId, artifactid: $dependency.artifactId, version: $resolvedVersion")
-                }
+            } else {
+                logger.error("No Version found for groupid:  $dependency.groupId, artifactid: $dependency.artifactId, version: $resolvedVersion")
+            }
 
         }
         return artifactList
@@ -77,22 +77,22 @@ class MavenBomManagerDefaultImpl(repoPathBom: String, repoName: String, repoUser
 
     override fun retrieve(bomArtifact: String, recursive: Boolean): Collection<MavenArtifact> {
         val artifactList = emptyList<MavenArtifact>()
-        val (groupId, artifactId, version)= bomArtifact.split(':')
-        return loadModelFromPath(buildPath(groupId,artifactId,version), artifactList, recursive)
+        val (groupId, artifactId, version) = bomArtifact.split(':')
+        return loadModelFromPath(buildPath(groupId, artifactId, version), artifactList, recursive)
     }
 
-    override fun retrieve(groupId: String, artifactid: String, version: String, recursive: Boolean): Collection<MavenArtifact> {
-        return retrieve("$groupId:$artifactid:$version", recursive)
+    override fun retrieve(bomGroupId: String, bomArtifactid: String, bomVersion: String, recursive: Boolean): Collection<MavenArtifact> {
+        return retrieve("$bomGroupId:$bomArtifactid:$bomVersion", recursive)
     }
 
     override fun intersect(firstBomArtifact: String, secondBomArtifact: String, recursive: Boolean): Collection<MavenArtifact> {
-        val firstDependencyList = retrieve(firstBomArtifact,recursive)
-        val secDepList = retrieve(secondBomArtifact,recursive)
+        val firstDependencyList = retrieve(firstBomArtifact, recursive)
+        val secDepList = retrieve(secondBomArtifact, recursive)
         return firstDependencyList.stream().filter(secDepList::contains).collect(Collectors.toList())
     }
 
-    override fun retrieveAsProperties(bomArtifact: String, recursive: Boolean) : Properties {
-        val result = retrieve(bomArtifact,recursive)
+    override fun retrieveAsProperties(bomArtifact: String, recursive: Boolean): Properties {
+        val result = retrieve(bomArtifact, recursive)
         val props = Properties()
         result.forEach {
             val key = it.groupId + ":" + it.artifactid
@@ -100,6 +100,7 @@ class MavenBomManagerDefaultImpl(repoPathBom: String, repoName: String, repoUser
         }
         return props
     }
+
 
 
 }

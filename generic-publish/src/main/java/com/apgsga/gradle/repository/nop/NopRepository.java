@@ -1,14 +1,14 @@
 package com.apgsga.gradle.repository.nop;
 
-import java.io.File;
-import java.io.InputStream;
-
 import com.apgsga.gradle.repository.Repository;
 import com.apgsga.gradle.repository.Result;
 
+import java.io.File;
+import java.io.InputStream;
+
 public class NopRepository implements Repository {
 	
-	static Repository NOP = new NopRepository();
+	public static Repository NOP = new NopRepository();
 
 	@Override
 	public boolean exists() {
