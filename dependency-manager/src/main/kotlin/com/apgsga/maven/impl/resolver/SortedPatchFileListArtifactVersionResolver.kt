@@ -8,7 +8,7 @@ import java.io.File
 class SortedPatchFileListArtifactVersionResolver(var patchFiles: Collection<File>, var ascending: Boolean? = true) : AbstractVersionResolver() {
 
     override fun getMavenArtifactList(): Collection<MavenArtifact>? {
-        val mapper = ObjectMapper()
+        val mapper =  ObjectMapper()
         val patchList : MutableList<Patch> = mutableListOf()
         patchFiles.forEach{
             patchList.add(mapper.readValue(it, Patch::class.java))

@@ -20,7 +20,7 @@ dependencies {
     testCompile("org.spockframework:spock-core:1.1-groovy-2.4") {
         exclude("","groovy-all")
     }
-    compile("com.apgsga.patchframework:apg-patch-service-common:1.3.20") {
+    compile("com.apgsga.patchframework:apg-patch-service-common:1.3.14") {
         exclude("","groovy-all")
     }
     kotlin("stdlib")
