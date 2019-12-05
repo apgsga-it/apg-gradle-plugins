@@ -1,6 +1,6 @@
 package com.apgsga.maven
 
-interface DependencyRecommender {
+interface VersionResolver {
     
     fun getVersion(groupId: String , artifactId: String) : String
 }

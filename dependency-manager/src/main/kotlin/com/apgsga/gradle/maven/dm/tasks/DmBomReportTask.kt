@@ -1,7 +1,7 @@
 package com.apgsga.gradle.maven.dm.tasks
 
-import com.apgsga.maven.impl.MavenBomManagerDefault
-import com.apgsga.maven.impl.RepositoryFactory
+import com.apgsga.maven.impl.bom.MavenBomManagerDefault
+import com.apgsga.maven.impl.bom.RepositoryFactory
 import org.gradle.api.DefaultTask
 import org.gradle.api.logging.LogLevel
 import org.gradle.api.tasks.Input
@@ -16,7 +16,7 @@ open class DmBomReportTask : DefaultTask() {
     @TaskAction
     fun doAction() {
         logger.log(LogLevel.INFO, "Reporting started")
-        val bomManager = MavenBomManagerDefault(RepositoryFactory.createFactory("build/repo","bom-test").makeRepo())
+        val bomManager = MavenBomManagerDefault(RepositoryFactory.createFactory("build/repo", "bom-test").makeRepo())
         boms.forEach{
             logger.info("Reporting for artifactid: $it")
             val result = bomManager.retrieve(it)

@@ -1,4 +1,4 @@
-package com.apgsga.maven.impl
+package com.apgsga.maven.impl.bom
 
 import com.apgsga.gradle.repository.Repository
 import com.apgsga.maven.LoggerDelegate

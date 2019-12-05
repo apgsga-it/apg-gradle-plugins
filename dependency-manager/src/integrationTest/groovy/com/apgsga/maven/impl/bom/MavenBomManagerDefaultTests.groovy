@@ -1,10 +1,12 @@
-package com.apgsga.maven.impl
+package com.apgsga.maven.impl.bom
 
 import com.apgsga.maven.MavenArtifact
+import com.apgsga.maven.impl.bom.MavenBomManagerDefault
+import com.apgsga.maven.impl.bom.RepositoryFactory
 import org.gradle.util.GFileUtils
 import spock.lang.Specification
 
-class MavenBomManagerTests extends Specification {
+class MavenBomManagerDefaultTests extends Specification {
 
     private static final String REPO_URL = "build/repo"
 

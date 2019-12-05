@@ -1,4 +1,4 @@
-package com.apgsga.maven.impl
+package com.apgsga.maven.impl.bom
 
 import com.apgsga.gradle.repository.Repository
 import com.apgsga.gradle.repository.artifactory.RemoteRepositoryBuilder
@@ -14,7 +14,8 @@ abstract class RepositoryFactory(val baseUrl: String? = null, val repoName: Stri
         @JvmOverloads
         fun createFactory(baseUrl: String?, repoName: String? ="", user: String? = "", password: String = ""): RepositoryFactory = when {
             baseUrl == null -> NopRepositoryFactory()
-            baseUrl.startsWith("http:") -> RemoteRepositoryFactory(baseUrl, repoName ?: "", user ?: "", password)
+            baseUrl.startsWith("http:") -> RemoteRepositoryFactory(baseUrl, repoName
+                    ?: "", user ?: "", password)
             else -> FileRepositoryFactory(baseUrl, repoName ?: "")
         }
 
