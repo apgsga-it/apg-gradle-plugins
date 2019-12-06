@@ -2,7 +2,9 @@ package com.apgsga.gradle.publish.tasks;
 
 import java.io.File;
 
-import com.apgsga.gradle.repo.extensions.RepoNames;
+import com.apgsga.gradle.repo.extensions.RepoType;
+import com.apgsga.gradle.repo.extensions.Repos;
+import com.apgsga.gradle.repo.extensions.ReposImpl;
 import org.gradle.api.DefaultTask;
 import org.gradle.api.file.RegularFileProperty;
 import org.gradle.api.logging.Logger;
@@ -10,8 +12,6 @@ import org.gradle.api.tasks.InputFile;
 import org.gradle.api.tasks.TaskAction;
 
 import com.apgsga.gradle.publish.extension.ApgGenericPublish;
-import com.apgsga.gradle.repo.extensions.LocalRepo;
-import com.apgsga.gradle.repo.extensions.RemoteRepo;
 import com.apgsga.gradle.repo.extensions.Repo;
 import com.apgsga.gradle.repository.RepositoryBuilderFactory;
 import com.apgsga.gradle.repository.Repository;
@@ -39,13 +39,16 @@ public class ApgPublishTask extends DefaultTask {
 		Logger logger = getLogger();
 		logger.info("Starting ApgRpmPublishTask");
 		ApgGenericPublish config = getProject().getExtensions().findByType(ApgGenericPublish.class);
-		LocalRepo localConfig = getProject().getExtensions().findByType(LocalRepo.class);
-		RemoteRepo remoteConfig = getProject().getExtensions().findByType(RemoteRepo.class);
 		assert config != null;
+//		LocalRepo localConfig = getProject().getExtensions().findByType(LocalRepo.class);
+//		RemoteRepo remoteConfig = getProject().getExtensions().findByType(RemoteRepo.class);
+		Repos repos = getProject().getExtensions().findByType(ReposImpl.class);
+		assert repos != null;
 		config.log();
 		File theFile = artefactFile.getAsFile().get();
-		configure(localConfig, config.isPublishLocal(), theFile.getName()).upload(theFile.getName(), theFile);
-		configure(remoteConfig, config.isPublishRemote(), theFile.getName()).upload(theFile.getName(), theFile);
+		configure(repos.get(RepoType.LOCAL), config.isPublishLocal(), theFile.getName()).upload(theFile.getName(), theFile);
+		// TODO JHE: Well, probably not correct to arbitrary choose the MAVEN Repo ... is anything missing in our interface?
+		configure(repos.get(RepoType.MAVEN), config.isPublishRemote(), theFile.getName()).upload(theFile.getName(), theFile);
 		logger.info("ApgRpmPublishTask done.");
 
 	}
@@ -60,6 +63,6 @@ public class ApgPublishTask extends DefaultTask {
 	}
 
 	private String getMavenRepoName(Repo repo, String filename) {
-		return filename.toLowerCase().endsWith("rpm") ? repo.getDefaultRepoNames().get(RepoNames.RPM) : repo.getDefaultRepoNames().get(RepoNames.MAVEN_RELEASE);
+		return filename.toLowerCase().endsWith("rpm") ? repo.getDefaultRepoNames().get(RepoType.RPM) : repo.getDefaultRepoNames().get(RepoType.MAVEN_RELEASE);
 	}
 }

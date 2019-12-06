@@ -1,13 +1,12 @@
 package com.apgsga.gradle.repo.config.extensions;
 
-import com.apgsga.gradle.repo.extensions.RepoNames;
+import com.apgsga.gradle.repo.extensions.RepoType;
+import com.apgsga.gradle.repo.extensions.Repos;
+import com.apgsga.gradle.repo.extensions.ReposImpl;
 import org.gradle.api.Project;
 import org.gradle.api.artifacts.dsl.RepositoryHandler;
 import org.gradle.api.artifacts.repositories.MavenArtifactRepository;
 import org.gradle.api.artifacts.repositories.PasswordCredentials;
-
-import com.apgsga.gradle.repo.extensions.LocalRepo;
-import com.apgsga.gradle.repo.extensions.RemoteRepo;
 
 public class RepoConfig {
 	
@@ -22,30 +21,37 @@ public class RepoConfig {
 		
 	}
 
-	public void artifactory(RepoNames p_repoName) {
-
+	public void artifactory(RepoType rt) {
 		// JHE: Default is our MAVEN repo definition ... really correct?
-		RepoNames repoName = p_repoName != null ? p_repoName : RepoNames.MAVEN_RELEASE;
-		RemoteRepo remote = project.getExtensions().findByType(RemoteRepo.class);
+		RepoType repoName = rt != null ? rt : RepoType.MAVEN_RELEASE;
+		Repos repos = getReposExtension();
 		project.getLogger().info("Using Artifactory with the following configuration");
-		remote.log();
+		repos.get(rt).log();
 		RepositoryHandler repositories = project.getRepositories();
 		repositories.maven(m -> {
-			m.setUrl(remote.getRepoBaseUrl() + "/" + remote.getDefaultRepoNames().get(repoName));
-			m.setName(repoName.getName());
+			m.setUrl(repos.get(rt).getRepoBaseUrl() + "/" + repos.get(rt).getDefaultRepoNames().get(repoName));
+			m.setName(repoName.asString());
 			PasswordCredentials credentials = m.getCredentials();
-			credentials.setUsername(remote.getUser());
-			credentials.setPassword(remote.getPassword());
+			credentials.setUsername(repos.get(rt).getUser());
+			credentials.setPassword(repos.get(rt).getPassword());
 		});
 	}
 
 	public void local() {
-		LocalRepo localRepo = project.getExtensions().findByType(LocalRepo.class);
+		Repos repos = getReposExtension();
 		project.getLogger().info("Using Local Maven Repo with the following configuration");
-		localRepo.log();
+		repos.get(RepoType.LOCAL).log();
 		MavenArtifactRepository mavenLocal = project.getRepositories().mavenLocal();
-		mavenLocal.setUrl(localRepo.getRepoBaseUrl());
+		mavenLocal.setUrl(repos.get(RepoType.LOCAL).getRepoBaseUrl());
 		project.getRepositories().add(mavenLocal);
+	}
+
+	private Repos getReposExtension() {
+/*
+		 TODO JHE: When finding by type, I find it bad having to specify the implementation class here ... Could/should that be configured somewhere?
+					 Other said: should repo-config really know about the implementation class?
+*/
+		return project.getExtensions().findByType(ReposImpl.class);
 	}
 	
 	public void mavenLocal() {

@@ -1,13 +1,8 @@
 package com.apgsga.gradle.maven.publish.extension;
 
-import java.io.File;
-import java.net.URI;
-import java.rmi.Remote;
-
-import javax.inject.Inject;
-
-import com.apgsga.gradle.repo.extensions.Repo;
-import com.apgsga.gradle.repo.extensions.RepoNames;
+import com.apgsga.gradle.repo.extensions.RepoType;
+import com.apgsga.gradle.repo.extensions.Repos;
+import com.apgsga.gradle.repo.extensions.ReposImpl;
 import org.gradle.api.Project;
 import org.gradle.api.artifacts.dsl.RepositoryHandler;
 import org.gradle.api.artifacts.repositories.PasswordCredentials;
@@ -16,8 +11,8 @@ import org.gradle.api.publish.PublicationContainer;
 import org.gradle.api.publish.PublishingExtension;
 import org.gradle.api.publish.maven.MavenPublication;
 
-import com.apgsga.gradle.repo.extensions.LocalRepo;
-import com.apgsga.gradle.repo.extensions.RemoteRepo;
+import javax.inject.Inject;
+import java.io.File;
 
 public class ApgMavenPublishDsl {
 
@@ -69,13 +64,15 @@ public class ApgMavenPublishDsl {
 		logger.info(toString());
 	}
 
-	public void artifactory() {
-		configure(RemoteRepo.class);
+	public void artifactory(RepoType p_rt) {
+		// TODO JHE: mmhh, default Maven? really? Maybe we want another approach to configure where to publish
+		RepoType rt = p_rt != null ? p_rt : RepoType.MAVEN;
+		configure(rt);
 	}
 
 	public void local() {
 		createLocalRepoDirectories();
-		configure(LocalRepo.class);
+		configure(RepoType.LOCAL);
 	}
 
 	public void mavenLocal() {
@@ -84,34 +81,29 @@ public class ApgMavenPublishDsl {
 		configureMavenPublication("mavenLocal", publishingExtension);
 	}
 
-    private void configure(Class repo) {
+    private void configure(RepoType rt) {
         final Logger logger = project.getLogger();
         PublishingExtension publishingExtension = project.getExtensions().getByType(PublishingExtension.class);
-        Repo config = (Repo) project.getExtensions().findByType(repo);
+        Repos repos = project.getExtensions().findByType(ReposImpl.class);
         // Configure Repository Location
         logger.info(
-                "Configuring publish repository to be a maven type remote repository hosted at: " + config.getRepoBaseUrl());
+                "Configuring publish repository to be a maven type remote repository hosted at: " + repos.get(rt).getRepoBaseUrl());
         RepositoryHandler repositories = publishingExtension.getRepositories();
         repositories.maven(m -> {
-            m.setName(repo.getClass().getTypeName());
-            m.setUrl(getRepoUrl(config));
-            if(repo.equals(RemoteRepo.class)) {
-				PasswordCredentials credentials = m.getCredentials();
-				credentials.setUsername(config.getUser());
-				credentials.setPassword(config.getPassword());
-			}
+            m.setName(rt.asString());
+            m.setUrl(repos.get(rt).getRepoBaseUrl() + "/" + (getVersion().endsWith("SNAPSHOT") ? repos.get(rt).getDefaultRepoNames().get(RepoType.MAVEN_SNAPSHOT) : repos.get(rt).getDefaultRepoNames().get(RepoType.MAVEN_RELEASE)));
+            // In case of LocalRepo, well, we'll just get nulls
+			PasswordCredentials credentials = m.getCredentials();
+			credentials.setUsername(repos.get(rt).getUser());
+			credentials.setPassword(repos.get(rt).getPassword());
         });
-        configureMavenPublication(repo.equals(RemoteRepo.class) ? "RemoteJavaMaven" : "LocalJavaMaven", publishingExtension);
+        configureMavenPublication(rt.equals(RepoType.LOCAL) ? "LocalJavaMaven" : "RemoteJavaMaven", publishingExtension);
     }
 
-	private String getRepoUrl(Repo repo) {
-		return (repo.getRepoBaseUrl() + "/" + (getVersion().endsWith("SNAPSHOT") ? repo.getDefaultRepoNames().get(RepoNames.MAVEN_SNAPSHOT) : repo.getDefaultRepoNames().get(RepoNames.MAVEN_RELEASE)));
-	}
-	
 	private void createLocalRepoDirectories() {
-		LocalRepo localConfig = project.getExtensions().findByType(LocalRepo.class);
-		File baseDir = new File(localConfig.getRepoBaseUrl());
-		localConfig.getDefaultRepoNames().forEach((repoNames, s) -> {
+		Repos repos = project.getExtensions().findByType(ReposImpl.class);
+		File baseDir = new File(repos.get(RepoType.LOCAL).getRepoBaseUrl());
+		repos.get(RepoType.LOCAL).getDefaultRepoNames().forEach((repoNames, s) -> {
 			File repoDir = new File(baseDir,s);
 			repoDir.mkdirs();
 		});

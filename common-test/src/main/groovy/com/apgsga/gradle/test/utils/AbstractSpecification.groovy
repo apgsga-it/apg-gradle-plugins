@@ -29,7 +29,8 @@ abstract class AbstractSpecification extends Specification {
 
     private def getDefaultBuildFileContent() {
         return """
-        import static com.apgsga.gradle.repo.extensions.RepoNames.*
+        import static com.apgsga.gradle.repo.extensions.RepoType.*
+        import static com.apgsga.gradle.repo.extensions.RepoProperties.*
 
         buildscript {
             repositories {
@@ -90,6 +91,15 @@ abstract class AbstractSpecification extends Specification {
     },
     {
       "MAVEN_RELEASE": "release-functionaltest"
+    },
+    {
+      "LOCAL": "local"
+    },
+    {
+      "MAVEN": "maven"
+    },
+    {
+      "JAVA_DIST": "java-dist"
     }
   ],
   "repoUserName": "gradledev-tests-user",
