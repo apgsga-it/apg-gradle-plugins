@@ -19,7 +19,7 @@ public class ApgRepo implements Repo {
 	private String repoName;
 	private String repoBaseUrl;
 
-	// TODO JHE: pass correct parameter ... we probably want to have multiple constructors
+	// TODO JHE: pass correct parameter ... we probably want to have multiple constructors, one without user nad password ?
 	public ApgRepo(String repoBaseUrl, String repoName, String user, String password) {
 		this.repoBaseUrl = repoBaseUrl;
 		this.repoName = repoName;
