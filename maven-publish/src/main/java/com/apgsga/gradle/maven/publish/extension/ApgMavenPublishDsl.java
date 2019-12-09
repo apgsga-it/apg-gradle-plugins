@@ -67,47 +67,40 @@ public class ApgMavenPublishDsl {
 	public void artifactory(RepoType p_rt) {
 		// TODO JHE: mmhh, default Maven? really? Maybe we want another approach to configure where to publish
 		RepoType rt = p_rt != null ? p_rt : RepoType.MAVEN;
+		RepositoryHandler repositories = getPublishingExtension().getRepositories();
+		Repos repos = getRepos();
+		repositories.maven(m -> {
+			m.setName(rt.asString());
+			m.setUrl(repos.get(rt).getRepoBaseUrl() + "/" + (getVersion().endsWith("SNAPSHOT") ? repos.get(RepoType.MAVEN_SNAPSHOT).getRepoName() : repos.get(RepoType.MAVEN_RELEASE).getRepoName()));
+			// In case of LocalRepo, well, we'll just get nulls
+			PasswordCredentials credentials = m.getCredentials();
+			credentials.setUsername(repos.get(rt).getUser());
+			credentials.setPassword(repos.get(rt).getPassword());
+		});
 		configure(rt);
 	}
 
+	private PublishingExtension getPublishingExtension() {
+		return project.getExtensions().getByType(PublishingExtension.class);
+	}
+
+	private Repos getRepos() {
+		return project.getExtensions().findByType(ReposImpl.class);
+	}
+
 	public void local() {
-		createLocalRepoDirectories();
 		configure(RepoType.LOCAL);
 	}
 
 	public void mavenLocal() {
-		PublishingExtension publishingExtension = project.getExtensions().getByType(PublishingExtension.class);
 		project.getRepositories().add(project.getRepositories().mavenLocal());
-		configureMavenPublication("mavenLocal", publishingExtension);
+		configureMavenPublication("mavenLocal", getPublishingExtension());
 	}
 
     private void configure(RepoType rt) {
-        final Logger logger = project.getLogger();
-        PublishingExtension publishingExtension = project.getExtensions().getByType(PublishingExtension.class);
-        Repos repos = project.getExtensions().findByType(ReposImpl.class);
-        // Configure Repository Location
-        logger.info(
-                "Configuring publish repository to be a maven type remote repository hosted at: " + repos.get(rt).getRepoBaseUrl());
-        RepositoryHandler repositories = publishingExtension.getRepositories();
-        repositories.maven(m -> {
-            m.setName(rt.asString());
-            m.setUrl(repos.get(rt).getRepoBaseUrl() + "/" + (getVersion().endsWith("SNAPSHOT") ? repos.get(rt).getDefaultRepoNames().get(RepoType.MAVEN_SNAPSHOT) : repos.get(rt).getDefaultRepoNames().get(RepoType.MAVEN_RELEASE)));
-            // In case of LocalRepo, well, we'll just get nulls
-			PasswordCredentials credentials = m.getCredentials();
-			credentials.setUsername(repos.get(rt).getUser());
-			credentials.setPassword(repos.get(rt).getPassword());
-        });
-        configureMavenPublication(rt.equals(RepoType.LOCAL) ? "LocalJavaMaven" : "RemoteJavaMaven", publishingExtension);
+		project.getLogger().info("Configuring publish repository to be a maven type remote repository hosted at: " + getRepos().get(rt).getRepoBaseUrl());
+        configureMavenPublication(rt.equals(RepoType.LOCAL) ? "LocalJavaMaven" : "RemoteJavaMaven", getPublishingExtension());
     }
-
-	private void createLocalRepoDirectories() {
-		Repos repos = project.getExtensions().findByType(ReposImpl.class);
-		File baseDir = new File(repos.get(RepoType.LOCAL).getRepoBaseUrl());
-		repos.get(RepoType.LOCAL).getDefaultRepoNames().forEach((repoNames, s) -> {
-			File repoDir = new File(baseDir,s);
-			repoDir.mkdirs();
-		});
-	}
 
 	private void configureMavenPublication(String name, PublishingExtension publishingExtension) {
 		// Configure Publications
