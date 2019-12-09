@@ -10,6 +10,7 @@ import org.gradle.api.logging.Logger;
 import org.gradle.api.publish.PublicationContainer;
 import org.gradle.api.publish.PublishingExtension;
 import org.gradle.api.publish.maven.MavenPublication;
+import org.springframework.util.Assert;
 
 import javax.inject.Inject;
 import java.io.File;
@@ -64,9 +65,12 @@ public class ApgMavenPublishDsl {
 		logger.info(toString());
 	}
 
-	public void artifactory(RepoType p_rt) {
-		// TODO JHE: mmhh, default Maven? really? Maybe we want another approach to configure where to publish
-		RepoType rt = p_rt != null ? p_rt : RepoType.MAVEN;
+	public void artifactory() {
+		artifactory(RepoType.MAVEN);
+	}
+
+	public void artifactory(RepoType rt) {
+		Assert.notNull(rt, "Repository Type needs to be provided when configuring an Artifactory Repository");
 		RepositoryHandler repositories = getPublishingExtension().getRepositories();
 		Repos repos = getRepos();
 		repositories.maven(m -> {
