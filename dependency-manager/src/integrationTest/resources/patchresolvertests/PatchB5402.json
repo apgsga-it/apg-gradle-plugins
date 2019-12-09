@@ -6,7 +6,7 @@
 	"dbPatchBranch": "Patch_0900C1_5402",
 	"prodBranch": "HEAD",
 	"patchTag": "Patch_0900C1_5402_2",
-	"tagNr": 2,
+	"tagNr": 1,
 	"installationTarget": "CHEI212",
 	"baseVersionNumber": "XXXX",
 	"revisionMnemoPart": "ADMIN-UIMIG",

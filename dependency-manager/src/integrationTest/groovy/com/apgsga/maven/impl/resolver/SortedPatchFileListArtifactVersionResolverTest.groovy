@@ -12,34 +12,58 @@ class SortedPatchFileListArtifactVersionResolverTest extends Specification {
         given:
         def patchFile = new File(source,"PatchZ5401.json")
         def patchFileList = [patchFile] as Collection<File>
-        def resolver = new SortedPatchFileListArtifactVersionResolver(patchFileList,true)
+        def resolver = new SortedPatchFileListArtifactVersionResolver(patchFileList, SortedPatchFileListArtifactVersionResolver.PatchComparator.PATCHNUMBER_ASC)
         when:
         def version = resolver.getVersion("com.affichage.it21.vk","zentraldispo-dao")
         then:
         version == "AAAAAAAAA"
     }
 
-    def "getVersion from two Patchfiles sorted asc with same Artifact"() {
+    def "getVersion from two Patchfiles sorted asc by Patchnummer with same Artifact"() {
         given:
         def patchFileOne = new File(source,"PatchB5402.json")
         def patchFileTwo = new File(source,"PatchZ5401.json")
         def patchFileList = [patchFileOne,patchFileTwo] as Collection<File>
-        def resolver = new SortedPatchFileListArtifactVersionResolver(patchFileList,true)
+        def resolver = new SortedPatchFileListArtifactVersionResolver(patchFileList, SortedPatchFileListArtifactVersionResolver.PatchComparator.PATCHNUMBER_ASC)
         when:
         def version = resolver.getVersion("com.affichage.it21.vk","zentraldispo-dao")
         then:
         version == "AAAAAAAAA"
     }
 
-    def "getVersion from two Patchfiles sorted desc with same Artifact"() {
+    def "getVersion from two Patchfiles sorted desc Patchnummer with same Artifact"() {
         given:
         def patchFileOne = new File(source,"PatchB5402.json")
         def patchFileTwo = new File(source,"PatchZ5401.json")
         def patchFileList = [patchFileOne,patchFileTwo] as Collection<File>
-        def resolver = new SortedPatchFileListArtifactVersionResolver(patchFileList,false)
+        def resolver = new SortedPatchFileListArtifactVersionResolver(patchFileList,SortedPatchFileListArtifactVersionResolver.PatchComparator.PATCHNUMBER_DESC)
         when:
         def version = resolver.getVersion("com.affichage.it21.vk","zentraldispo-dao")
         then:
         version == "xxxxxxxxxx"
+    }
+
+    def "getVersion from two Patchfiles sorted asc by TagNr with same Artifact"() {
+        given:
+        def patchFileOne = new File(source,"PatchB5402.json")
+        def patchFileTwo = new File(source,"PatchZ5401.json")
+        def patchFileList = [patchFileOne,patchFileTwo] as Collection<File>
+        def resolver = new SortedPatchFileListArtifactVersionResolver(patchFileList, SortedPatchFileListArtifactVersionResolver.PatchComparator.TAGNR_ASC)
+        when:
+        def version = resolver.getVersion("com.affichage.it21.vk","zentraldispo-dao")
+        then:
+        version == "xxxxxxxxxx"
+    }
+
+    def "getVersion from two Patchfiles sorted desc TagNr with same Artifact"() {
+        given:
+        def patchFileOne = new File(source,"PatchB5402.json")
+        def patchFileTwo = new File(source,"PatchZ5401.json")
+        def patchFileList = [patchFileOne,patchFileTwo] as Collection<File>
+        def resolver = new SortedPatchFileListArtifactVersionResolver(patchFileList,SortedPatchFileListArtifactVersionResolver.PatchComparator.TAGNR_DESC)
+        when:
+        def version = resolver.getVersion("com.affichage.it21.vk","zentraldispo-dao")
+        then:
+        version == "AAAAAAAAA"
     }
 }
