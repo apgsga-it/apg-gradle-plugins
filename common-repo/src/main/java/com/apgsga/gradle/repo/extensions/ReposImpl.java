@@ -33,7 +33,7 @@ public class ReposImpl implements  Repos {
         initRepositories();
     }
 
-    //TODO JHE: do that as static init, would be cool, but impossible because of local repo name which comes from project variable.
+    //JHE: do that as static init, would be cool, but impossible because of local repo name which comes from project variable.
     private void initRepositories() {
         Map repoNameAsJson = getRepoNameJsonAsMap();
         List<Map> repos = (List<Map>) repoNameAsJson.get(REPOS_KEY);
@@ -43,7 +43,7 @@ public class ReposImpl implements  Repos {
         String repoPwd = (String) repoNameAsJson.get(REPO_USER_PWD);
         String remoteRepoBaseUrl = (String) repoNameAsJson.get(REPO_BASE_URL);
 
-        Repo localRepo = new ApgRepo(project.getRepositories().mavenLocal().getUrl().getPath(),getRepoName(RepoType.LOCAL,repos),null,null);
+        Repo localRepo = new ApgRepo(project.getRepositories().mavenLocal().getUrl().getPath(),getRepoName(RepoType.LOCAL,repos));
         Repo zipRepo = new ApgRepo(remoteRepoBaseUrl,getRepoName(RepoType.ZIP,repos),repoUser,repoPwd);
         Repo rpmRepo = new ApgRepo(remoteRepoBaseUrl,getRepoName(RepoType.RPM,repos),repoUser,repoPwd);
         Repo mavenRepo = new ApgRepo(remoteRepoBaseUrl,getRepoName(RepoType.MAVEN,repos),repoUser,repoPwd);
@@ -105,7 +105,7 @@ public class ReposImpl implements  Repos {
         return repoName;
     }
 
-    // TODO JHE: should this be exposed at Repos interface level ?
+    // TODO JHE: should this be exposed at Repos interface level ? Don't think so...
     public void setPropertiesFor(RepoType repotype, Map<RepoProperties,String> properties) {
         if(properties.containsKey(RepoProperties.REPO_NAME.name))
             this.repositories.get(repotype).setRepoName(properties.get(RepoProperties.REPO_NAME.name));

@@ -19,12 +19,15 @@ public class ApgRepo implements Repo {
 	private String repoName;
 	private String repoBaseUrl;
 
-	// TODO JHE: pass correct parameter ... we probably want to have multiple constructors, one without user nad password ?
 	public ApgRepo(String repoBaseUrl, String repoName, String user, String password) {
 		this.repoBaseUrl = repoBaseUrl;
 		this.repoName = repoName;
 		this.user = user;
 		this.password = password;
+	}
+
+	public ApgRepo(String repoBaseUrl, String repoName) {
+		new ApgRepo(repoBaseUrl,repoName,null,null);
 	}
 
 	// TODO (che, 9.10 ) : Implement this pattern preferably for all defaults
@@ -64,18 +67,13 @@ public class ApgRepo implements Repo {
 
 	@Override
 	public void log() {
-		// TODO JHE
-		System.out.println("Here you can see log for ApgRepo ... for now we'll get the toString()");
+		System.out.println(getRepoName() + " repo has the below configuration");
 		System.out.println(toString());
 	}
-
 
 	@Override
 	public String toString() {
 		return "[repoBaseUrl=" + getRepoBaseUrl() + ", user=" + getUser() + ", password=xxxxxx"
 				+ ", repoName=" + getRepoName() + "]";
 	}
-
-	
-	
 }
