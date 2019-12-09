@@ -76,8 +76,8 @@ class BuildLogicFunctionalTest extends AbstractSpecification {
 					id 'com.apgsga.common.repo' 
 				}
 				apgReposConfig{
-					setPropertiesFor(LOCAL,[REPO_NAME:"thisIsMyLocalRepo"])
-					setPropertiesFor(MAVEN_RELEASE,[REPO_NAME:"release_2",REPO_USER:"bob"])	
+					set(LOCAL,[REPO_NAME:"thisIsMyLocalRepo"])
+					set(MAVEN_RELEASE,[REPO_NAME:"release_2",REPO_USER:"bob"])	
 				}
 				apgReposConfig.get(LOCAL).log()
 				apgReposConfig.get(ZIP).log()

@@ -111,8 +111,8 @@ class BuildLogicFunctionalTest extends AbstractSpecification {
 	            }
 
 				apgReposConfig {
-					setPropertiesFor(RPM,[REPO_NAME:"thisIsMyGenericTestRepo"])
-					setPropertiesFor(MAVEN_RELEASE,[REPO_NAME:"thisIsMyReleaseTestRepo"])
+					set(RPM,[REPO_NAME:"thisIsMyGenericTestRepo"])
+					set(MAVEN_RELEASE,[REPO_NAME:"thisIsMyReleaseTestRepo"])
 				}
 				apgReposConfig.get(RPM).log()
 				apgReposConfig.get(MAVEN_RELEASE).log()

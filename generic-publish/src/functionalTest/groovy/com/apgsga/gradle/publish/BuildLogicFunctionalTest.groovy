@@ -103,7 +103,7 @@ class BuildLogicFunctionalTest extends AbstractSpecification {
 				}
 	
 				apgReposConfig{
-					setPropertiesFor(LOCAL,[REPO_NAME:"anothertestrepo",REPO_BASE_URL:"build"])
+					set(LOCAL,[REPO_NAME:"anothertestrepo",REPO_BASE_URL:"build"])
 				}
 				apgReposConfig.get(LOCAL).log()
 	

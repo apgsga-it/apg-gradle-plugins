@@ -105,8 +105,7 @@ public class ReposImpl implements  Repos {
         return repoName;
     }
 
-    // TODO JHE: should this be exposed at Repos interface level ? Don't think so...
-    public void setPropertiesFor(RepoType repotype, Map<RepoProperties,String> properties) {
+    public void set(RepoType repotype, Map<RepoProperties,String> properties) {
         if(properties.containsKey(RepoProperties.REPO_NAME.name))
             this.repositories.get(repotype).setRepoName(properties.get(RepoProperties.REPO_NAME.name));
         if(properties.containsKey(RepoProperties.REPO_BASE_URL.name))
