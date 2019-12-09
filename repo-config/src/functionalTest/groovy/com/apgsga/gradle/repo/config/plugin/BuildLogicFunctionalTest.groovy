@@ -55,7 +55,7 @@ class BuildLogicFunctionalTest extends AbstractSpecification {
 	            }
 
 				apgRepository {
-					local()
+					artifactory()
 					mavenCentral()
 				}
 
@@ -74,11 +74,8 @@ class BuildLogicFunctionalTest extends AbstractSpecification {
 			def result = gradleRunnerFactory(['listrepos']).build()
 		then:
 			println "Result output: ${result.output}"
-			result.output.contains('MAVEN_RELEASE=release-functionaltest')
-			result.output.contains('ZIP=release-functionaltest')
-			result.output.contains('MAVEN_SNAPSHOT=snapshot-functionaltest')
-			result.output.contains('RPM=rpm-functionaltest')
-			result.output.contains('MavenLocal')
+			result.output.contains('release-functionaltest')
+			result.output.contains('MavenRepo')
 	}
 	
 	def "Repo Config works with one concrete dependency"() {
@@ -106,17 +103,19 @@ class BuildLogicFunctionalTest extends AbstractSpecification {
 			println "Result output: ${result.output}"
 	}
 	
-	def "Repo Config works with repositories name coming from map"() {
+	def "Repo Config works with repositories name configured with non default"() {
 		given:
 			buildFile << """
 	            plugins {
 	                id 'com.apgsga.gradle.repo.config'
 	            }
 
-				apgArtifactoryRepo {
-					defaultRepoNames[RPM] = "thisIsMyGenericTestRepo"
-					defaultRepoNames[MAVEN_RELEASE] = "thisIsMyReleaseTestRepo"
+				apgReposConfig {
+					setPropertiesFor(RPM,[REPO_NAME:"thisIsMyGenericTestRepo"])
+					setPropertiesFor(MAVEN_RELEASE,[REPO_NAME:"thisIsMyReleaseTestRepo"])
 				}
+				apgReposConfig.get(RPM).log()
+				apgReposConfig.get(MAVEN_RELEASE).log()
 
 				apgRepository {
 					artifactory()
