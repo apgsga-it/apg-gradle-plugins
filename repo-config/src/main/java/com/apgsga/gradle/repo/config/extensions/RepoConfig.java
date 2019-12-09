@@ -2,7 +2,6 @@ package com.apgsga.gradle.repo.config.extensions;
 
 import com.apgsga.gradle.repo.extensions.RepoType;
 import com.apgsga.gradle.repo.extensions.Repos;
-import com.apgsga.gradle.repo.extensions.ReposImpl;
 import org.gradle.api.Project;
 import org.gradle.api.artifacts.dsl.RepositoryHandler;
 import org.gradle.api.artifacts.repositories.MavenArtifactRepository;
@@ -46,11 +45,7 @@ public class RepoConfig {
 	}
 
 	private Repos getReposExtension() {
-/*
-		 TODO JHE: When finding by type, I find it bad having to specify the implementation class here ... Could/should that be configured somewhere?
-					 Other said: should repo-config really know about the implementation class?
-*/
-		return project.getExtensions().findByType(ReposImpl.class);
+		return (Repos) project.getExtensions().findByName("apgReposConfig");
 	}
 	
 	public void mavenLocal() {
