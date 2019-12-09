@@ -13,7 +13,6 @@ import org.gradle.api.publish.maven.MavenPublication;
 import org.springframework.util.Assert;
 
 import javax.inject.Inject;
-import java.io.File;
 
 public class ApgMavenPublishDsl {
 
