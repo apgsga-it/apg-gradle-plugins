@@ -27,7 +27,7 @@ public class ApgRepo implements Repo {
 	}
 
 	public ApgRepo(String repoBaseUrl, String repoName) {
-		new ApgRepo(repoBaseUrl,repoName,null,null);
+		this(repoBaseUrl,repoName,null,null);
 	}
 
 	// TODO (che, 9.10 ) : Implement this pattern preferably for all defaults
