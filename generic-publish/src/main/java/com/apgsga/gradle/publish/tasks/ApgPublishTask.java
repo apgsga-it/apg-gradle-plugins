@@ -58,6 +58,6 @@ public class ApgPublishTask extends DefaultTask {
 	}
 
 	private Repo getMavenRepo(Repos repos, String filename) {
-		return filename.toLowerCase().endsWith("rpm") ? repos.get(RepoType.RPM) : repos.get(RepoType.MAVEN_RELEASE);
+		return filename.toLowerCase().endsWith("rpm") ? repos.get(RepoType.RPM) : filename.toLowerCase().endsWith("zip") ? repos.get(RepoType.ZIP) : repos.get(RepoType.MAVEN_RELEASE);
 	}
 }
