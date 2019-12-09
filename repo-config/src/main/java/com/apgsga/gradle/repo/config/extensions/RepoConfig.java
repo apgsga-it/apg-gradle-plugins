@@ -22,7 +22,6 @@ public class RepoConfig {
 	}
 
 	public void artifactory(RepoType p_rt) {
-		// JHE: Default is our MAVEN repo definition ... really correct?
 		RepoType repoType = p_rt != null ? p_rt : RepoType.MAVEN_RELEASE;
 		Repos repos = getReposExtension();
 		project.getLogger().info("Using Artifactory with the following configuration");
