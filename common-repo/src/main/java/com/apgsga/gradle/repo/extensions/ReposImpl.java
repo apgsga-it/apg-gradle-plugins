@@ -34,6 +34,7 @@ public class ReposImpl implements  Repos {
     }
 
     //JHE: do that as static init, would be cool, but impossible because of local repo name which comes from project variable.
+    // TODO JHE: will be done with IT-35150
     private void initRepositories() {
         Map repoNameAsJson = getRepoNameJsonAsMap();
         List<Map> repos = (List<Map>) repoNameAsJson.get(REPOS_KEY);
@@ -71,8 +72,8 @@ public class ReposImpl implements  Repos {
     }
 
     @Override
-    public Repo getArchiveFor(String archiveName) {
-        return null;
+    public Repo getRepoFor(String archiveName) {
+        return archiveName.toLowerCase().endsWith("rpm") ? get(RepoType.RPM) : archiveName.toLowerCase().endsWith("zip") ? get(RepoType.ZIP) : get(RepoType.MAVEN_RELEASE);
     }
 
     private Resource getRepoNameResource() {
