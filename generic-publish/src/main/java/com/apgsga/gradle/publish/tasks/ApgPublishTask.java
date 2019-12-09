@@ -40,29 +40,25 @@ public class ApgPublishTask extends DefaultTask {
 		logger.info("Starting ApgRpmPublishTask");
 		ApgGenericPublish config = getProject().getExtensions().findByType(ApgGenericPublish.class);
 		assert config != null;
-//		LocalRepo localConfig = getProject().getExtensions().findByType(LocalRepo.class);
-//		RemoteRepo remoteConfig = getProject().getExtensions().findByType(RemoteRepo.class);
 		Repos repos = getProject().getExtensions().findByType(ReposImpl.class);
 		assert repos != null;
 		config.log();
 		File theFile = artefactFile.getAsFile().get();
 		configure(repos.get(RepoType.LOCAL), config.isPublishLocal(), theFile.getName()).upload(theFile.getName(), theFile);
-		// TODO JHE: Well, probably not correct to arbitrary choose the MAVEN Repo ... is anything missing in our interface?
-		configure(repos.get(RepoType.MAVEN), config.isPublishRemote(), theFile.getName()).upload(theFile.getName(), theFile);
+		configure(getMavenRepo(repos, theFile.getName()), config.isPublishRemote(), theFile.getName()).upload(theFile.getName(), theFile);
 		logger.info("ApgRpmPublishTask done.");
-
 	}
 
 	private Repository configure(Repo repo, boolean publish, String filename) {
-		getLogger().info("Are following repo(s) configured for publish:  " + repo.getDefaultRepoNames() + " -> " + publish);
+		getLogger().info("Is following repo configured for publish:  " + repo.getRepoName() + " -> " + publish);
 		RepositoryBuilder builder = RepositoryBuilderFactory.createFor(publish ? repo.getRepoBaseUrl() : null);
-        builder.setTargetRepo(getMavenRepoName(repo,filename));
+        builder.setTargetRepo(repo.getRepoName());
 		builder.setUsername(repo.getUser());
 		builder.setPassword(repo.getPassword());
 		return builder.build();
 	}
 
-	private String getMavenRepoName(Repo repo, String filename) {
-		return filename.toLowerCase().endsWith("rpm") ? repo.getDefaultRepoNames().get(RepoType.RPM) : repo.getDefaultRepoNames().get(RepoType.MAVEN_RELEASE);
+	private Repo getMavenRepo(Repos repos, String filename) {
+		return filename.toLowerCase().endsWith("rpm") ? repos.get(RepoType.RPM) : repos.get(RepoType.MAVEN_RELEASE);
 	}
 }
