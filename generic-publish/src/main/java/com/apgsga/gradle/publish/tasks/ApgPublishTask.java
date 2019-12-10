@@ -44,20 +44,16 @@ public class ApgPublishTask extends DefaultTask {
 		config.log();
 		File theFile = artefactFile.getAsFile().get();
 		configure(repos.get(RepoType.LOCAL), config.isPublishLocal(), theFile.getName()).upload(theFile.getName(), theFile);
-		configure(getMavenRepo(repos, theFile.getName()), config.isPublishRemote(), theFile.getName()).upload(theFile.getName(), theFile);
+		configure(repos.getRepoFor(theFile.getName()), config.isPublishRemote(), theFile.getName()).upload(theFile.getName(), theFile);
 		logger.info("ApgRpmPublishTask done.");
 	}
 
 	private Repository configure(Repo repo, boolean publish, String filename) {
 		getLogger().info("Is following repo configured for publish:  " + repo.getRepoName() + " -> " + publish);
 		RepositoryBuilder builder = RepositoryBuilderFactory.createFor(publish ? repo.getRepoBaseUrl() : null);
-        builder.setTargetRepo(repo.getRepoName());
+		builder.setTargetRepo(repo.getRepoName());
 		builder.setUsername(repo.getUser());
 		builder.setPassword(repo.getPassword());
 		return builder.build();
-	}
-
-	private Repo getMavenRepo(Repos repos, String filename) {
-	    return repos.getRepoFor(filename);
 	}
 }
