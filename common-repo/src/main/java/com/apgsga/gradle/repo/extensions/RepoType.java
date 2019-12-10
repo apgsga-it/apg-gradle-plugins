@@ -1,19 +1,22 @@
 package com.apgsga.gradle.repo.extensions;
 
-public enum RepoNames {
+public enum RepoType {
 
     ZIP("ZIP"),
     RPM("RPM"),
+    MAVEN("MAVEN"),
     MAVEN_SNAPSHOT("MAVEN_SNAPSHOT"),
-    MAVEN_RELEASE("MAVEN_RELEASE");
+    MAVEN_RELEASE("MAVEN_RELEASE"),
+    LOCAL("LOCAL"),
+    JAVA_DIST("JAVA_DIST");
 
     String name;
 
-    RepoNames(String name) {
+    RepoType(String name) {
         this.name = name;
     }
 
-    public String getName() {
+    public String asString() {
         return name;
     }
 }

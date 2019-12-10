@@ -19,17 +19,25 @@ class BuildLogicFunctionalTest extends AbstractSpecification {
 				plugins {
 					id 'com.apgsga.common.repo' 
 				}
-				apgLocalRepo.log()
-				apgArtifactoryRepo.log()
+				apgReposConfig.get(LOCAL).log()
+				apgReposConfig.get(ZIP).log()
+				apgReposConfig.get(RPM).log()
+				apgReposConfig.get(MAVEN).log()
+				apgReposConfig.get(MAVEN_SNAPSHOT).log()
+				apgReposConfig.get(MAVEN_RELEASE).log()
+				apgReposConfig.get(JAVA_DIST).log()
 			"""
 
 		when:
 			def result = gradleRunnerFactory(['init']).build()
 		then:
 			println "Result output: ${result.output}"
-			result.output.contains('release-functionaltest')
-			result.output.contains('rpm-functionaltest')
-			result.output.contains('snapshot-functionaltest')
+			result.output.contains('repoName=release-functionaltest')
+			result.output.contains('repoName=rpm-functionaltest')
+			result.output.contains('repoName=snapshot-functionaltest')
+			result.output.contains('repoName=local')
+			result.output.contains('repoName=maven')
+			result.output.contains('repoName=java-dist')
 	}
 
     def "Common Repo Plugin works explicit with Defaults"() {
@@ -38,20 +46,26 @@ class BuildLogicFunctionalTest extends AbstractSpecification {
 				plugins {
 					id 'com.apgsga.common.repo' 
 				}
-				apgArtifactoryRepo {
+				apgReposConfig{
 				}
-				apgLocalRepo {
-				}
-				apgLocalRepo.log()
-				apgArtifactoryRepo.log()
+				apgReposConfig.get(LOCAL).log()
+				apgReposConfig.get(ZIP).log()
+				apgReposConfig.get(RPM).log()
+				apgReposConfig.get(MAVEN).log()
+				apgReposConfig.get(MAVEN_SNAPSHOT).log()
+				apgReposConfig.get(MAVEN_RELEASE).log()
+				apgReposConfig.get(JAVA_DIST).log()
 			"""
         when:
         	def result = gradleRunnerFactory(['init']).build()
         then:
 			println "Result output: ${result.output}"
-			result.output.contains('release-functionaltest')
-			result.output.contains('rpm-functionaltest')
-			result.output.contains('snapshot-functionaltest')
+			result.output.contains('repoName=release-functionaltest')
+			result.output.contains('repoName=rpm-functionaltest')
+			result.output.contains('repoName=snapshot-functionaltest')
+			result.output.contains('repoName=local')
+			result.output.contains('repoName=maven')
+			result.output.contains('repoName=java-dist')
     }
 	
 	
@@ -61,28 +75,30 @@ class BuildLogicFunctionalTest extends AbstractSpecification {
 				plugins {
 					id 'com.apgsga.common.repo' 
 				}
-				apgArtifactoryRepo {
-					defaultRepoNames[MAVEN_RELEASE] = "YYYYY"
-					defaultRepoNames[MAVEN_SNAPSHOT] = "BBBBB"
-					repoBaseUrl = "xxxx"
-					user = "abc"
-					password = "def"
+				apgReposConfig{
+					set(LOCAL,[REPO_NAME:"thisIsMyLocalRepo"])
+					set(MAVEN_RELEASE,[REPO_NAME:"release_2",REPO_USER:"bob"])	
 				}
-				apgLocalRepo {
-					repoBaseUrl = "otherdirectory"
-					defaultRepoNames[MAVEN_RELEASE] = "testrepo"
-				}
-				apgLocalRepo.log()
-				apgArtifactoryRepo.log()
+				apgReposConfig.get(LOCAL).log()
+				apgReposConfig.get(ZIP).log()
+				apgReposConfig.get(RPM).log()
+				apgReposConfig.get(MAVEN).log()
+				apgReposConfig.get(MAVEN_SNAPSHOT).log()
+				apgReposConfig.get(MAVEN_RELEASE).log()
+				apgReposConfig.get(JAVA_DIST).log()
 	        """
 		when:
 			def result = gradleRunnerFactory(['init']).build()
 		then:
 			println "Result output: ${result.output}"
-			result.output.contains('MAVEN_SNAPSHOT=BBBBB')
-			result.output.contains('MAVEN_RELEASE=YYYYY')
-			result.output.contains('MAVEN_RELEASE=testrepo')
-			result.output.contains('MAVEN_SNAPSHOT=snapshot-functionaltest')
-			!result.output.contains('MAVEN_RELEASE=release-functionaltest')
+			result.output.contains('repoName=release-functionaltest')
+			result.output.contains('repoName=release_2')
+			result.output.contains('user=bob')
+			result.output.contains('repoName=rpm-functionaltest')
+			result.output.contains('repoName=snapshot-functionaltest')
+			!result.output.contains('repoName=local')
+			result.output.contains('repoName=thisIsMyLocalRepo')
+			result.output.contains('repoName=maven')
+			result.output.contains('repoName=java-dist')
 	}
 }
