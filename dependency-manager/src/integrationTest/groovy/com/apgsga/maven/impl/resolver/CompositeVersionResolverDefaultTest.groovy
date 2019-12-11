@@ -76,4 +76,46 @@ class CompositeVersionResolverDefaultTest extends Specification {
         version == "AAAAAAAAA"
 
     }
+
+    def "GetVersion with one Bom Version Resolver and PatchFile Resolver ordered, with same artifact but different versions"() {
+        given:
+        def mavenRecommenderBuilder = ResolverBuilderKt.create(BomVersionResolverBuilder.class)
+                .recursive(true)
+                .bomArtifact('test:test-composite-bom:1.0')
+                .repoBaseUrl(REPO_URL)
+                .repoName(TEST_REPO)
+        def patchFileResolverBuilder = ResolverBuilderKt.create(PatchFileVersionResolverBuilder.class)
+                .parentDir(source)
+                .patchFile("PatchA5791.json")
+        def compositeResolver = ResolverBuilderKt.create(CompositeVersionResolverBuilder.class)
+                .add(2,mavenRecommenderBuilder)
+                .add(1,patchFileResolverBuilder)
+                .build()
+        when:
+        def version = compositeResolver.getVersion("com.affichage.it21.alog","alog-ui")
+        then:
+        version == "12"
+
+    }
+
+    def "GetVersion with one Bom Version Resolver and PatchFile Resolver ordered different with same artifact but different versions"() {
+        given:
+        def mavenRecommenderBuilder = ResolverBuilderKt.create(BomVersionResolverBuilder.class)
+                .recursive(true)
+                .bomArtifact('test:test-composite-bom:1.0')
+                .repoBaseUrl(REPO_URL)
+                .repoName(TEST_REPO)
+        def patchFileResolverBuilder = ResolverBuilderKt.create(PatchFileVersionResolverBuilder.class)
+                .parentDir(source)
+                .patchFile("PatchA5791.json")
+        def compositeResolver = ResolverBuilderKt.create(CompositeVersionResolverBuilder.class)
+                .add(1,mavenRecommenderBuilder)
+                .add(2,patchFileResolverBuilder)
+                .build()
+        when:
+        def version = compositeResolver.getVersion("com.affichage.it21.alog","alog-ui")
+        then:
+        version == "9.0.6.ADMIN-UIMIG-SNAPSHOT"
+
+    }
 }
