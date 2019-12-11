@@ -16,16 +16,6 @@ class ResolverBuilderTest {
     }
 
     @test
-    fun `PatchFileVersionResolverBuilder with Parent Dir and Filename before build`() {
-        val parentDir = File("build/test")
-        val resolverBuilder = PatchFileVersionResolverBuilder().parentDir(parentDir).patchFile("xxxxx")
-        assertEquals(parentDir,resolverBuilder.parentDir)
-        assertEquals("xxxxx", resolverBuilder.patchFileName)
-        assertNull(resolverBuilder.patchFile?.canonicalPath )
-        resolverBuilder.build()
-    }
-
-    @test
     fun `PatchFileVersionResolverBuilder with Parent Dir and Filename after build`() {
         val parentDir = File("build/test1")
         parentDir.mkdirs()
@@ -39,15 +29,29 @@ class ResolverBuilderTest {
     }
 
     @test
-    fun `PatchFileVersionResolverBuilder with Parent Dir Name and Filename after build`() {
+    fun `PatchFileVersionResolverBuilder Filename only after build`() {
         val parentDir = File("build/test2")
         parentDir.mkdirs()
         File(parentDir,"xxxxx").createNewFile()
-        val resolverBuilder = PatchFileVersionResolverBuilder().parentDir("build/test2").patchFile("xxxxx")
+        val resolverBuilder = PatchFileVersionResolverBuilder().patchFile("build/test2/xxxxx")
+        resolverBuilder.build()
+        assertNull(resolverBuilder.parentDir)
+        assertNull(resolverBuilder.parentDirName)
+        assertEquals("build/test2/xxxxx", resolverBuilder.patchFileName)
+        assert(resolverBuilder.patchFile?.canonicalPath!!.endsWith("/build/test2/xxxxx"))
+
+    }
+
+    @test
+    fun `PatchFileVersionResolverBuilder with Parent Dir Name and Filename after build`() {
+        val parentDir = File("build/test3")
+        parentDir.mkdirs()
+        File(parentDir,"xxxxx").createNewFile()
+        val resolverBuilder = PatchFileVersionResolverBuilder().parentDir("build/test3").patchFile("xxxxx")
         resolverBuilder.build()
         assertEquals(parentDir,resolverBuilder.parentDir)
         assertEquals("xxxxx", resolverBuilder.patchFileName)
-        assert(resolverBuilder.patchFile?.canonicalPath!!.endsWith("/build/test2/xxxxx"))
+        assert(resolverBuilder.patchFile?.canonicalPath!!.endsWith("/build/test3/xxxxx"))
     }
 
     @test
@@ -63,10 +67,10 @@ class ResolverBuilderTest {
 
     @test
     fun `PatchFileVersionResolverBuilder with Patch File and Patch File Name`() {
-        val parentDir = File("build/test2")
+        val parentDir = File("build/test4")
         parentDir.mkdirs()
         val patchFile =  File(parentDir,"zzzzz")
-        val resolverBuilder = PatchFileVersionResolverBuilder().parentDir("build/test2").patchFile(patchFile)
+        val resolverBuilder = PatchFileVersionResolverBuilder().parentDir("build/test4").patchFile(patchFile)
         val exception = assertThrows<IllegalArgumentException > {
             resolverBuilder.patchFile("zzzzz")
         }
