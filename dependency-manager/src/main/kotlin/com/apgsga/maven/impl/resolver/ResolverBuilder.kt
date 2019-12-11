@@ -45,15 +45,27 @@ data class BomVersionResolverBuilder (
 }
 
 data class PatchFileVersionResolverBuilder(var patchFile: File? = null, var patchFileName: String? = null, var parentDir: File? = null, var parentDirName: String? = null) : VersionResolverBuilder {
-    fun patchFile(patchFile: File) = apply { this.patchFile = patchFile }
-    fun patchFile(patchFile: String) = apply { this.patchFileName = patchFile }
-    fun parentDir(parentDir: File) = apply { this.parentDir = parentDir }
-    fun parentDir(parentDir: String) = apply { this.parentDirName = parentDir }
+    fun patchFile(theFile: File) = apply {
+        require(this.patchFileName == null) { "Either patchFile or patchFileName" }
+        this.patchFile = theFile
+    }
+    fun patchFile(patchFile: String) = apply {
+        require(this.patchFile == null) { "Either patchFile or patchFileName" }
+        this.patchFileName = patchFile
+    }
+    fun parentDir(parentDir: File) = apply {
+        require(this.parentDirName == null) { "Either parentDirName or parentDir" }
+        this.parentDir = parentDir
+    }
+    fun parentDir(parentDir: String) = apply {
+        require(this.parentDir == null) { "Either parentDirName or parentDir" }
+        this.parentDirName = parentDir
+    }
     override fun build(): VersionResolver {
         require(patchFile != null || patchFileName != null) { "patchFile should'nt be null" }
         // TODO (che, 11.12 ) to be verified
         patchFile = if (parentDirName != null) {
-            val parentDir = File(parentDirName)
+            this.parentDir = File(parentDirName)
             File(parentDir, patchFileName)
         } else if (parentDir != null) {
             File(parentDir,patchFileName)

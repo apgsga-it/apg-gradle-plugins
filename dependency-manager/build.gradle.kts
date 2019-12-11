@@ -20,6 +20,7 @@ dependencies {
     testCompile("org.spockframework:spock-core:1.1-groovy-2.4") {
         exclude("","groovy-all")
     }
+    testCompile("org.junit.jupiter:junit-jupiter:5.5.2")
     compile("com.apgsga.patchframework:apg-patch-service-common:1.3.14") {
         exclude("","groovy-all")
     }
@@ -33,3 +34,9 @@ dependencies {
 
 }
 
+tasks.test {
+    useJUnitPlatform()
+    testLogging {
+        events("passed", "skipped", "failed")
+    }
+}
