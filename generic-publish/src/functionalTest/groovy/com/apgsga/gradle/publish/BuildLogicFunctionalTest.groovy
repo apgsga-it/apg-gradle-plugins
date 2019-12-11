@@ -96,26 +96,30 @@ class BuildLogicFunctionalTest extends AbstractSpecification {
 
 	def "publish tarball to local with explicit repo config"() {
 		given:
-		buildFile << """
-            plugins {
-                id 'com.apgsga.publish' 
-            }
-			apgLocalRepo {
-				repoBaseUrl = "build"
-				defaultRepoNames[MAVEN_RELEASE] = "anothertestrepo"
-			}	
-			apgLocalRepo.log()
-			apgGenericPublishConfig {
-				artefactFile = file("${tarToPublish.absolutePath.replace("\\","\\\\")}")
-				local()
-			}
-        """
+			new File("build/anothertestrepo/app-plugintests-0.1.tar.gz").delete()
+			buildFile << """
+				plugins {
+					id 'com.apgsga.publish' 
+				}
+	
+				apgRepos{
+					config(LOCAL,[REPO_NAME:"anothertestrepo",REPO_BASE_URL:"build"])
+				}
+				apgRepos.get(LOCAL).log()
+	
+				apgGenericPublishConfig {
+					artefactFile = file("${tarToPublish.absolutePath.replace("\\","\\\\")}")
+					local()
+				}
+			"""
 
 		when:
-		def result = gradleRunnerFactory(['apgGenericPublish']).build()
+			def result = gradleRunnerFactory(['apgGenericPublish']).build()
 		then:
-		println "Result output: ${result.output}"
-		result.output.contains('')
+			println "Result output: ${result.output}"
+			result.output.contains('repoName=anothertestrepo')
+			result.output.contains('repoBaseUrl=build')
+			new File("build/anothertestrepo/app-plugintests-0.1.tar.gz").exists()
 	}
 	
 }

@@ -3,14 +3,12 @@
  */
 package com.apgsga.gradle.repo.plugin;
 
+import com.apgsga.gradle.repo.extensions.Repos;
+import com.apgsga.gradle.repo.extensions.ReposImpl;
 import org.gradle.api.NonNullApi;
 import org.gradle.api.Plugin;
 import org.gradle.api.Project;
 import org.gradle.api.plugins.ExtensionContainer;
-
-import com.apgsga.gradle.repo.extensions.LocalRepo;
-import com.apgsga.gradle.repo.extensions.RemoteRepo;
-
 
 @NonNullApi
 public class ApgCommonRepoPlugin implements Plugin<Project> {
@@ -18,7 +16,6 @@ public class ApgCommonRepoPlugin implements Plugin<Project> {
 	@Override
 	public void apply(final Project project) {
 		final ExtensionContainer ext = project.getExtensions();
-		ext.create("apgArtifactoryRepo", RemoteRepo.class, project);
-		ext.create("apgLocalRepo", LocalRepo.class, project);
+		ext.create(Repos.COMMMON_REPO_PLUGIN_NAME, ReposImpl.class, project);
 	}
 }
