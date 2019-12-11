@@ -39,7 +39,7 @@ public class ApgPublishTask extends DefaultTask {
 		logger.info("Starting ApgRpmPublishTask");
 		ApgGenericPublish config = getProject().getExtensions().findByType(ApgGenericPublish.class);
 		assert config != null;
-		Repos repos = (Repos) getProject().getExtensions().findByName("apgReposConfig");
+		Repos repos = (Repos) getProject().getExtensions().findByName(Repos.COMMMON_REPO_PLUGIN_NAME);
 		assert repos != null;
 		config.log();
 		File theFile = artefactFile.getAsFile().get();

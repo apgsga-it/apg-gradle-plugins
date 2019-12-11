@@ -110,12 +110,12 @@ class BuildLogicFunctionalTest extends AbstractSpecification {
 	                id 'com.apgsga.gradle.repo.config'
 	            }
 
-				apgReposConfig {
-					set(RPM,[REPO_NAME:"thisIsMyGenericTestRepo"])
-					set(MAVEN_RELEASE,[REPO_NAME:"thisIsMyReleaseTestRepo"])
+				apgRepos {
+					config(RPM,[REPO_NAME:"thisIsMyGenericTestRepo"])
+					config(MAVEN_RELEASE,[REPO_NAME:"thisIsMyReleaseTestRepo"])
 				}
-				apgReposConfig.get(RPM).log()
-				apgReposConfig.get(MAVEN_RELEASE).log()
+				apgRepos.get(RPM).log()
+				apgRepos.get(MAVEN_RELEASE).log()
 
 				apgRepository {
 					artifactory()

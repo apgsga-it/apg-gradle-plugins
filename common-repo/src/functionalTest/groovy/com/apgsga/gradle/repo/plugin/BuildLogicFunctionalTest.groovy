@@ -19,13 +19,13 @@ class BuildLogicFunctionalTest extends AbstractSpecification {
 				plugins {
 					id 'com.apgsga.common.repo' 
 				}
-				apgReposConfig.get(LOCAL).log()
-				apgReposConfig.get(ZIP).log()
-				apgReposConfig.get(RPM).log()
-				apgReposConfig.get(MAVEN).log()
-				apgReposConfig.get(MAVEN_SNAPSHOT).log()
-				apgReposConfig.get(MAVEN_RELEASE).log()
-				apgReposConfig.get(JAVA_DIST).log()
+				apgRepos.get(LOCAL).log()
+				apgRepos.get(ZIP).log()
+				apgRepos.get(RPM).log()
+				apgRepos.get(MAVEN).log()
+				apgRepos.get(MAVEN_SNAPSHOT).log()
+				apgRepos.get(MAVEN_RELEASE).log()
+				apgRepos.get(JAVA_DIST).log()
 			"""
 
 		when:
@@ -46,15 +46,15 @@ class BuildLogicFunctionalTest extends AbstractSpecification {
 				plugins {
 					id 'com.apgsga.common.repo' 
 				}
-				apgReposConfig{
+				apgRepos{
 				}
-				apgReposConfig.get(LOCAL).log()
-				apgReposConfig.get(ZIP).log()
-				apgReposConfig.get(RPM).log()
-				apgReposConfig.get(MAVEN).log()
-				apgReposConfig.get(MAVEN_SNAPSHOT).log()
-				apgReposConfig.get(MAVEN_RELEASE).log()
-				apgReposConfig.get(JAVA_DIST).log()
+				apgRepos.get(LOCAL).log()
+				apgRepos.get(ZIP).log()
+				apgRepos.get(RPM).log()
+				apgRepos.get(MAVEN).log()
+				apgRepos.get(MAVEN_SNAPSHOT).log()
+				apgRepos.get(MAVEN_RELEASE).log()
+				apgRepos.get(JAVA_DIST).log()
 			"""
         when:
         	def result = gradleRunnerFactory(['init']).build()
@@ -75,17 +75,17 @@ class BuildLogicFunctionalTest extends AbstractSpecification {
 				plugins {
 					id 'com.apgsga.common.repo' 
 				}
-				apgReposConfig{
-					set(LOCAL,[REPO_NAME:"thisIsMyLocalRepo"])
-					set(MAVEN_RELEASE,[REPO_NAME:"release_2",REPO_USER:"bob"])	
+				apgRepos{
+					config(LOCAL,[REPO_NAME:"thisIsMyLocalRepo"])
+					config(MAVEN_RELEASE,[REPO_NAME:"release_2",REPO_USER:"bob"])	
 				}
-				apgReposConfig.get(LOCAL).log()
-				apgReposConfig.get(ZIP).log()
-				apgReposConfig.get(RPM).log()
-				apgReposConfig.get(MAVEN).log()
-				apgReposConfig.get(MAVEN_SNAPSHOT).log()
-				apgReposConfig.get(MAVEN_RELEASE).log()
-				apgReposConfig.get(JAVA_DIST).log()
+				apgRepos.get(LOCAL).log()
+				apgRepos.get(ZIP).log()
+				apgRepos.get(RPM).log()
+				apgRepos.get(MAVEN).log()
+				apgRepos.get(MAVEN_SNAPSHOT).log()
+				apgRepos.get(MAVEN_RELEASE).log()
+				apgRepos.get(JAVA_DIST).log()
 	        """
 		when:
 			def result = gradleRunnerFactory(['init']).build()

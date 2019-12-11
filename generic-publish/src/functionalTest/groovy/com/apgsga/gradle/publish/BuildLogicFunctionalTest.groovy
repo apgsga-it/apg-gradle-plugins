@@ -102,10 +102,10 @@ class BuildLogicFunctionalTest extends AbstractSpecification {
 					id 'com.apgsga.publish' 
 				}
 	
-				apgReposConfig{
-					set(LOCAL,[REPO_NAME:"anothertestrepo",REPO_BASE_URL:"build"])
+				apgRepos{
+					config(LOCAL,[REPO_NAME:"anothertestrepo",REPO_BASE_URL:"build"])
 				}
-				apgReposConfig.get(LOCAL).log()
+				apgRepos.get(LOCAL).log()
 	
 				apgGenericPublishConfig {
 					artefactFile = file("${tarToPublish.absolutePath.replace("\\","\\\\")}")

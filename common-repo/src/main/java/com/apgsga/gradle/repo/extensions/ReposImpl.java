@@ -106,7 +106,7 @@ public class ReposImpl implements  Repos {
         return repoName;
     }
 
-    public void set(RepoType repotype, Map<RepoProperties,String> properties) {
+    public void config(RepoType repotype, Map<RepoProperties,String> properties) {
         if(properties.containsKey(RepoProperties.REPO_NAME.name))
             this.repositories.get(repotype).setRepoName(properties.get(RepoProperties.REPO_NAME.name));
         if(properties.containsKey(RepoProperties.REPO_BASE_URL.name))
