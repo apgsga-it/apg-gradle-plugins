@@ -5,7 +5,7 @@ import com.apgsga.microservice.patch.api.Patch
 import com.fasterxml.jackson.databind.ObjectMapper
 import java.io.File
 
-class PatchFileArtifactVersionResolver(private var patchFile: File) : AbstractVersionResolver() {
+class PatchFileVersionResolver(private var patchFile: File) : AbstractVersionResolver() {
 
     override fun getMavenArtifactList(): Collection<MavenArtifact>? {
         val mapper = ObjectMapper()
