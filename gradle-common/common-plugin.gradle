@@ -11,6 +11,15 @@ repositories {
 	mavenLocal()
 	mavenCentral()
 	jcenter()
+
+	maven {
+		url "${mavenRepoBaseUrl}/${mavenRepoName}"
+		credentials {
+			username mavenRepoUser
+			password mavenRepoPwd
+		}
+	}
+
 }
 
 
