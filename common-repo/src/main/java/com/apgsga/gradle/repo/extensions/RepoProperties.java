@@ -1,6 +1,5 @@
 package com.apgsga.gradle.repo.extensions;
 
-//TODO JHE: Not sure we want this interface, but in a way it serves as interface between build.gradle and our plugin ...
 public enum RepoProperties {
     REPO_BASE_URL("REPO_BASE_URL"),
     REPO_NAME("REPO_NAME"),
