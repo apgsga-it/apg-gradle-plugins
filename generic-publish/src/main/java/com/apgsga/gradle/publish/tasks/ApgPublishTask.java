@@ -4,6 +4,7 @@ import java.io.File;
 
 import com.apgsga.gradle.repo.extensions.RepoType;
 import com.apgsga.gradle.repo.extensions.Repos;
+import com.apgsga.gradle.repo.plugin.ApgCommonRepoPlugin;
 import org.gradle.api.DefaultTask;
 import org.gradle.api.file.RegularFileProperty;
 import org.gradle.api.logging.Logger;
@@ -39,7 +40,7 @@ public class ApgPublishTask extends DefaultTask {
 		logger.info("Starting ApgRpmPublishTask");
 		ApgGenericPublish config = getProject().getExtensions().findByType(ApgGenericPublish.class);
 		assert config != null;
-		Repos repos = (Repos) getProject().getExtensions().findByName(Repos.COMMMON_REPO_PLUGIN_NAME);
+		Repos repos = (Repos) getProject().getExtensions().findByName(ApgCommonRepoPlugin.COMMMON_REPO_PLUGIN_NAME);
 		assert repos != null;
 		config.log();
 		File theFile = artefactFile.getAsFile().get();

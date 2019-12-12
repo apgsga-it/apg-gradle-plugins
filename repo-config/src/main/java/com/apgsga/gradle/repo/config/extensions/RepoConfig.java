@@ -2,6 +2,7 @@ package com.apgsga.gradle.repo.config.extensions;
 
 import com.apgsga.gradle.repo.extensions.RepoType;
 import com.apgsga.gradle.repo.extensions.Repos;
+import com.apgsga.gradle.repo.plugin.ApgCommonRepoPlugin;
 import org.gradle.api.Project;
 import org.gradle.api.artifacts.dsl.RepositoryHandler;
 import org.gradle.api.artifacts.repositories.MavenArtifactRepository;
@@ -45,7 +46,7 @@ public class RepoConfig {
 	}
 
 	private Repos getReposExtension() {
-		return (Repos) project.getExtensions().findByName(Repos.COMMMON_REPO_PLUGIN_NAME);
+		return (Repos) project.getExtensions().findByName(ApgCommonRepoPlugin.COMMMON_REPO_PLUGIN_NAME);
 	}
 	
 	public void mavenLocal() {

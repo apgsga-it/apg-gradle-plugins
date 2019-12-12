@@ -2,6 +2,7 @@ package com.apgsga.gradle.maven.publish.extension;
 
 import com.apgsga.gradle.repo.extensions.RepoType;
 import com.apgsga.gradle.repo.extensions.Repos;
+import com.apgsga.gradle.repo.plugin.ApgCommonRepoPlugin;
 import org.gradle.api.Project;
 import org.gradle.api.artifacts.dsl.RepositoryHandler;
 import org.gradle.api.artifacts.repositories.PasswordCredentials;
@@ -87,7 +88,7 @@ public class ApgMavenPublishDsl {
 	}
 
 	private Repos getRepos() {
-		return (Repos) project.getExtensions().findByName(Repos.COMMMON_REPO_PLUGIN_NAME);
+		return (Repos) project.getExtensions().findByName(ApgCommonRepoPlugin.COMMMON_REPO_PLUGIN_NAME);
 	}
 
 	public void local() {
