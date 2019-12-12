@@ -3,20 +3,59 @@
  */
 package com.apgsga.gradle.repo.plugin;
 
+import com.apgsga.gradle.repo.extensions.ApgRepo;
+import com.apgsga.gradle.repo.extensions.Repo;
+import com.apgsga.gradle.repo.extensions.RepoType;
 import com.apgsga.gradle.repo.extensions.ReposImpl;
+import com.apgsga.gradle.repo.util.RepoNamesPersistenceUtil;
+import com.apgsga.gradle.repo.util.RepoNamesBean;
+import com.google.common.collect.Maps;
 import org.gradle.api.NonNullApi;
 import org.gradle.api.Plugin;
 import org.gradle.api.Project;
 import org.gradle.api.plugins.ExtensionContainer;
+import org.springframework.core.io.FileSystemResourceLoader;
+import org.springframework.core.io.Resource;
+import org.springframework.util.Assert;
+
+import java.io.File;
+import java.util.Map;
 
 @NonNullApi
 public class ApgCommonRepoPlugin implements Plugin<Project> {
 
 	public static final String COMMMON_REPO_PLUGIN_NAME = "apgRepos";
 
+	private static final String REPO_NAMES_JSON_FILENAME = "repoNames.json";
+
+	private Project project;
+
 	@Override
 	public void apply(final Project project) {
+		this.project = project;
 		final ExtensionContainer ext = project.getExtensions();
-		ext.create(COMMMON_REPO_PLUGIN_NAME, ReposImpl.class, project);
+		ext.create(COMMMON_REPO_PLUGIN_NAME, ReposImpl.class, project, getRepositories());
+	}
+
+	private Map<RepoType,Repo> getRepositories() {
+		RepoNamesBean repoTypes = RepoNamesPersistenceUtil.loadRepoNames(getRepoNameResource());
+		Assert.notNull(repoTypes, "Data couldn't be deserialize from " + REPO_NAMES_JSON_FILENAME);
+		Map<RepoType,Repo> repositories = Maps.newHashMap();
+		repoTypes.getRepos().forEach(r -> {
+			r.keySet().forEach(key -> {
+				String remoteRepoBaseUrl = key.equals(RepoType.LOCAL) ? project.getRepositories().mavenLocal().getUrl().getPath() : repoTypes.getRepoBaseUrl();
+				repositories.put(key, new ApgRepo(remoteRepoBaseUrl, r.get(key), repoTypes.getRepoUserName(), repoTypes.getRepoUserPwd()));
+			});
+		});
+		return repositories;
+	}
+
+	private Resource getRepoNameResource() {
+		String gradleHome = project.getGradle().getGradleUserHomeDir().getAbsolutePath();
+		FileSystemResourceLoader loader = new FileSystemResourceLoader();
+		String repoNamesJsonFilePath = gradleHome + File.separator + REPO_NAMES_JSON_FILENAME;
+		Resource repoNamesJsonAsResource = loader.getResource(repoNamesJsonFilePath);
+		Assert.isTrue(repoNamesJsonAsResource.exists(), REPO_NAMES_JSON_FILENAME + " file not found! repoNamesJsonFilePath = " + repoNamesJsonFilePath);
+		return repoNamesJsonAsResource;
 	}
 }

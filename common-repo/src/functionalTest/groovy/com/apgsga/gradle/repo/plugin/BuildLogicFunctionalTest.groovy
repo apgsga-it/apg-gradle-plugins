@@ -12,6 +12,22 @@ import java.nio.file.Files
 import java.nio.file.Path
 
 class BuildLogicFunctionalTest extends AbstractSpecification {
+
+	def "Explicit test that local repo has a local URL"() {
+		given:
+			buildFile << """
+				plugins {
+					id 'com.apgsga.common.repo' 
+				}
+				apgRepos.get(LOCAL).log()				
+			"""
+		when:
+			def result = gradleRunnerFactory(['init']).build()
+		then:
+			println "Result output: ${result.output}"
+			!result.output.contains('repoBaseUrl=https')
+			!result.output.contains('repoBaseUrl=http')
+		}
 	
 	def "Common Repo Plugin works with defaults"() {
 		given:
