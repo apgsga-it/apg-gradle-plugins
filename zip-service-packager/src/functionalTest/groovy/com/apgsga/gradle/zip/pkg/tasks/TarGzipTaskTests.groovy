@@ -16,7 +16,7 @@ class TarGzipTaskTests extends AbstractSpecification {
                 id 'com.apgsga.zip.package'
             }
 
-			apgRepository {
+			apgRepositories {
 				mavenLocal()
 				mavenCentral()
 			}

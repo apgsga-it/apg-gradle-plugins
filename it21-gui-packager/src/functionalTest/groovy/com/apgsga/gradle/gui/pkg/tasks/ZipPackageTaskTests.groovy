@@ -15,7 +15,7 @@ class ZipPackageTaskTests extends AbstractSpecification  {
                 id 'com.apgsga.gui.package'
             }
 
-			apgRepository {
+			apgRepositories {
 				mavenLocal()
 				mavenCentral()
 			}

@@ -58,7 +58,7 @@ if (project.hasProperty("downloadDir")) {
 println("downloadDir = $parDownloadDir")
 
 
-apgRepository {
+apgRepositories {
     mavenLocal()
     mavenCentral()
 }

@@ -23,7 +23,7 @@ class BuildRpmTaskTests extends AbstractSpecification {
             plugins {
                 id 'com.apgsga.rpm.package'
             }
-			apgRepository {
+			apgRepositories {
 				mavenLocal()
 				mavenCentral()
 			}

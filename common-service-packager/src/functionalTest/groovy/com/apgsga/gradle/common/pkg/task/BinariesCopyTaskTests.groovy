@@ -21,7 +21,7 @@ class BinariesCopyTaskTests extends AbstractSpecification {
                 id 'com.apgsga.common.package'
             }
 
-			apgRepository {
+			apgRepositories {
 				mavenLocal()
 				mavenCentral()
 			}

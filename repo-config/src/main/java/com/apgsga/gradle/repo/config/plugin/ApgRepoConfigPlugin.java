@@ -17,6 +17,6 @@ public class ApgRepoConfigPlugin implements Plugin<Project>{
 		final ExtensionContainer ext = project.getExtensions();
 		final PluginContainer plugins = project.getPlugins();
 		plugins.apply(ApgCommonRepoPlugin.class);
-		ext.create("apgRepository", RepoConfig.class, project);	
+		ext.create("apgRepositories", RepoConfig.class, project);
 	}
 }
