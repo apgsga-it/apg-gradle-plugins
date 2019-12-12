@@ -1,12 +1,9 @@
 package com.apgsga.gradle.test.utils
 
 import org.gradle.testkit.runner.GradleRunner
-import org.springframework.core.io.ClassPathResource
 import spock.lang.Specification
 
 import java.nio.file.Files
-import java.nio.file.Paths
-import java.nio.file.StandardCopyOption
 
 abstract class AbstractSpecification extends Specification {
 
@@ -27,23 +24,15 @@ abstract class AbstractSpecification extends Specification {
         buildFile << getDefaultBuildFileContent()
     }
 
-    private def getDefaultBuildFileContent() {
+    private static def getDefaultBuildFileContent() {
         return """
         import static com.apgsga.gradle.repo.extensions.RepoType.*
         import static com.apgsga.gradle.repo.extensions.RepoProperties.*
 
-        buildscript {
-            repositories {
-                mavenLocal()
-            }
-            dependencies {
-                classpath group: 'com.apgsga.gradle', name: 'common-repo', version: '+'
-            }
-        }
         """
     }
 
-    private def deletePreviousTestFolders() {
+    private static def deletePreviousTestFolders() {
         String tempDir = System.getProperty("java.io.tmpdir")
         println tempDir
         def tempDirFile = new File(tempDir)
@@ -75,7 +64,7 @@ abstract class AbstractSpecification extends Specification {
         initTepoNamesJsonContent(repoNamesJson)
     }
 
-    private def initTepoNamesJsonContent(File repoNames) {
+    private static def initTepoNamesJsonContent(File repoNames) {
         repoNames << """
 
     {

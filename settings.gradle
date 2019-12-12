@@ -22,6 +22,4 @@ project(':gradle-common').projectDir = "$rootDir/gradle-common" as File
 project(':repo-config').projectDir = "$rootDir/repo-config" as File
 project(':dependency-manager').projectDir = "$rootDir/dependency-manager" as File
 project(':common-test').projectDir = "$rootDir/common-test" as File
-include 'testapp-service-kotlin'
-findProject(':testapp-service-kotlin')?.name = 'echoservice-kt'
 
