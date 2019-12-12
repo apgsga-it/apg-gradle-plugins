@@ -1,5 +1,6 @@
 package com.apgsga.gradle.repo.extensions;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.common.collect.Maps;
 import groovy.json.JsonSlurper;
 import org.gradle.api.Project;
@@ -16,11 +17,65 @@ public class ReposImpl implements  Repos {
 
     private Project project;
 
-    private Map<RepoType,Repo> repositories;
+    private Map<RepoType,Repo> repositories = Maps.newHashMap();
 
-    public ReposImpl(Project project, Map<RepoType,Repo> repositories) {
+    @JsonProperty
+    private String repoUserName;
+
+    @JsonProperty
+    private String repoUserPwd;
+
+    @JsonProperty
+    private String repoBaseUrl;
+
+    @JsonProperty
+    private List<Map<RepoType,String>> repos;
+
+    public ReposImpl() {
+    }
+
+    public ReposImpl(Project project, ReposImpl repos) {
         this.project = project;
-        this.repositories = repositories;
+        repos.getRepos().forEach(r -> {
+			r.keySet().forEach(key -> {
+				String remoteRepoBaseUrl = key.equals(RepoType.LOCAL) ? project.getRepositories().mavenLocal().getUrl().getPath() : repos.getRepoBaseUrl();
+				repositories.put(key, new ApgRepo(remoteRepoBaseUrl, r.get(key), repos.getRepoUserName(), repos.getRepoUserPwd()));
+			});
+		});
+    }
+
+    // TODO JHE : Verify which getter/setter are really necessary.
+
+    public List<Map<RepoType, String>> getRepos() {
+        return repos;
+    }
+
+    public void setRepos(List<Map<RepoType, String>> repos) {
+        this.repos = repos;
+    }
+
+    public String getRepoUserName() {
+        return repoUserName;
+    }
+
+    public void setRepoUserName(String repoUserName) {
+        this.repoUserName = repoUserName;
+    }
+
+    public String getRepoUserPwd() {
+        return repoUserPwd;
+    }
+
+    public void setRepoUserPwd(String repoUserPwd) {
+        this.repoUserPwd = repoUserPwd;
+    }
+
+    public String getRepoBaseUrl() {
+        return repoBaseUrl;
+    }
+
+    public void setRepoBaseUrl(String repoBaseUrl) {
+        this.repoBaseUrl = repoBaseUrl;
     }
 
     @Override

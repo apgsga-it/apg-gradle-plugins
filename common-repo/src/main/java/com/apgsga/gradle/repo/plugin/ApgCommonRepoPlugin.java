@@ -3,13 +3,8 @@
  */
 package com.apgsga.gradle.repo.plugin;
 
-import com.apgsga.gradle.repo.extensions.ApgRepo;
-import com.apgsga.gradle.repo.extensions.Repo;
-import com.apgsga.gradle.repo.extensions.RepoType;
 import com.apgsga.gradle.repo.extensions.ReposImpl;
-import com.apgsga.gradle.repo.util.RepoNamesPersistenceUtil;
-import com.apgsga.gradle.repo.util.RepoNamesBean;
-import com.google.common.collect.Maps;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.gradle.api.NonNullApi;
 import org.gradle.api.Plugin;
 import org.gradle.api.Project;
@@ -19,7 +14,7 @@ import org.springframework.core.io.Resource;
 import org.springframework.util.Assert;
 
 import java.io.File;
-import java.util.Map;
+import java.io.IOException;
 
 @NonNullApi
 public class ApgCommonRepoPlugin implements Plugin<Project> {
@@ -37,17 +32,15 @@ public class ApgCommonRepoPlugin implements Plugin<Project> {
 		ext.create(COMMMON_REPO_PLUGIN_NAME, ReposImpl.class, project, getRepositories());
 	}
 
-	private Map<RepoType,Repo> getRepositories() {
-		RepoNamesBean repoTypes = RepoNamesPersistenceUtil.loadRepoNames(getRepoNameResource());
-		Assert.notNull(repoTypes, "Data couldn't be deserialize from " + REPO_NAMES_JSON_FILENAME);
-		Map<RepoType,Repo> repositories = Maps.newHashMap();
-		repoTypes.getRepos().forEach(r -> {
-			r.keySet().forEach(key -> {
-				String remoteRepoBaseUrl = key.equals(RepoType.LOCAL) ? project.getRepositories().mavenLocal().getUrl().getPath() : repoTypes.getRepoBaseUrl();
-				repositories.put(key, new ApgRepo(remoteRepoBaseUrl, r.get(key), repoTypes.getRepoUserName(), repoTypes.getRepoUserPwd()));
-			});
-		});
-		return repositories;
+	// TODO JHE: rename method
+	private ReposImpl getRepositories() {
+		ReposImpl r = null;
+		try {
+			r = new ObjectMapper().readerFor(ReposImpl.class).readValue(getRepoNameResource().getInputStream());
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return r;
 	}
 
 	private Resource getRepoNameResource() {
