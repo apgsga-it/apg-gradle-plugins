@@ -11,8 +11,9 @@ class SortedPatchFileListArtifactVersionResolverTest extends Specification {
     def "getVersion from single Patchfile"() {
         given:
         def patchFile = new File(source,"PatchZ5401.json")
-        def patchFileList = [patchFile] as Collection<File>
-        def resolver = new SortedPatchFileListArtifactVersionResolver(patchFileList, SortedPatchFileListArtifactVersionResolver.PatchComparator.PATCHNUMBER_ASC)
+        def resolver = ResolverBuilderKt.create(PatchFileListVersionResolverBuilder.class)
+                .add(patchFile)
+                .build()
         when:
         def version = resolver.getVersion("com.affichage.it21.vk","zentraldispo-dao")
         then:
@@ -21,10 +22,10 @@ class SortedPatchFileListArtifactVersionResolverTest extends Specification {
 
     def "getVersion from two Patchfiles sorted asc by Patchnummer with same Artifact"() {
         given:
-        def patchFileOne = new File(source,"PatchB5402.json")
-        def patchFileTwo = new File(source,"PatchZ5401.json")
-        def patchFileList = [patchFileOne,patchFileTwo] as Collection<File>
-        def resolver = new SortedPatchFileListArtifactVersionResolver(patchFileList, SortedPatchFileListArtifactVersionResolver.PatchComparator.PATCHNUMBER_ASC)
+        def resolver = ResolverBuilderKt.create(PatchFileListVersionResolverBuilder.class).parentDir(source)
+                .add("PatchB5402.json")
+                .add("PatchZ5401.json")
+                .build()
         when:
         def version = resolver.getVersion("com.affichage.it21.vk","zentraldispo-dao")
         then:
@@ -33,10 +34,11 @@ class SortedPatchFileListArtifactVersionResolverTest extends Specification {
 
     def "getVersion from two Patchfiles sorted desc Patchnummer with same Artifact"() {
         given:
-        def patchFileOne = new File(source,"PatchB5402.json")
-        def patchFileTwo = new File(source,"PatchZ5401.json")
-        def patchFileList = [patchFileOne,patchFileTwo] as Collection<File>
-        def resolver = new SortedPatchFileListArtifactVersionResolver(patchFileList,SortedPatchFileListArtifactVersionResolver.PatchComparator.PATCHNUMBER_DESC)
+        def resolver = ResolverBuilderKt.create(PatchFileListVersionResolverBuilder.class).parentDir(source)
+                .add("PatchB5402.json")
+                .add("PatchZ5401.json")
+                .patchComparator(SortedPatchFileListVersionResolver.PatchComparator.PATCHNUMBER_DESC)
+                .build()
         when:
         def version = resolver.getVersion("com.affichage.it21.vk","zentraldispo-dao")
         then:
@@ -45,10 +47,11 @@ class SortedPatchFileListArtifactVersionResolverTest extends Specification {
 
     def "getVersion from two Patchfiles sorted asc by TagNr with same Artifact"() {
         given:
-        def patchFileOne = new File(source,"PatchB5402.json")
-        def patchFileTwo = new File(source,"PatchZ5401.json")
-        def patchFileList = [patchFileOne,patchFileTwo] as Collection<File>
-        def resolver = new SortedPatchFileListArtifactVersionResolver(patchFileList, SortedPatchFileListArtifactVersionResolver.PatchComparator.TAGNR_ASC)
+        def resolver = ResolverBuilderKt.create(PatchFileListVersionResolverBuilder.class).parentDir(source)
+                .add("PatchB5402.json")
+                .add("PatchZ5401.json")
+                .patchComparator(SortedPatchFileListVersionResolver.PatchComparator.TAGNR_ASC)
+                .build()
         when:
         def version = resolver.getVersion("com.affichage.it21.vk","zentraldispo-dao")
         then:
@@ -57,10 +60,11 @@ class SortedPatchFileListArtifactVersionResolverTest extends Specification {
 
     def "getVersion from two Patchfiles sorted desc TagNr with same Artifact"() {
         given:
-        def patchFileOne = new File(source,"PatchB5402.json")
-        def patchFileTwo = new File(source,"PatchZ5401.json")
-        def patchFileList = [patchFileOne,patchFileTwo] as Collection<File>
-        def resolver = new SortedPatchFileListArtifactVersionResolver(patchFileList,SortedPatchFileListArtifactVersionResolver.PatchComparator.TAGNR_DESC)
+        def resolver = ResolverBuilderKt.create(PatchFileListVersionResolverBuilder.class).parentDir(source)
+                .add("PatchB5402.json")
+                .add("PatchZ5401.json")
+                .patchComparator(SortedPatchFileListVersionResolver.PatchComparator.TAGNR_DESC)
+                .build()
         when:
         def version = resolver.getVersion("com.affichage.it21.vk","zentraldispo-dao")
         then:

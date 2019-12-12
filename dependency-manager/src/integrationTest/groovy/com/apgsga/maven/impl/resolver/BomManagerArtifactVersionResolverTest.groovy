@@ -1,7 +1,6 @@
 package com.apgsga.maven.impl.resolver
 
-import com.apgsga.maven.impl.bom.MavenBomManagerDefault
-import com.apgsga.maven.impl.bom.RepositoryFactory
+
 import org.gradle.util.GFileUtils
 import spock.lang.Specification
 
@@ -19,23 +18,29 @@ class BomManagerArtifactVersionResolverTest extends Specification {
 
     def "getVersion Simple Test with nested Bom recursive"() {
         given:
-        def repositoryFactory = RepositoryFactory.createFactory(REPO_URL,TEST_REPO)
-        def bomManager = new MavenBomManagerDefault(repositoryFactory.makeRepo())
-        def mavenRecommender = new BomManagerArtifactVersionResolver('test:test-nested-bom:1.1',true,bomManager )
+        def mavenRecommender = ResolverBuilderKt.create(BomVersionResolverBuilder.class)
+                .recursive(true)
+                .bomArtifact('test:test-nested-bom:1.1')
+                .repoBaseUrl(REPO_URL)
+                .repoName(TEST_REPO)
+                .build()
         when:
-        def version = mavenRecommender.getVersion("org.apache.httpcomponents","httpclient")
+        def version = mavenRecommender.getVersion("org.apache.httpcomponents", "httpclient")
         then:
         version == "4.5.2"
 
     }
 
-    def "getVersion Simple Test with nested Bom no recursive"() {
+    def "getVersion Simple Test with nested Bom not recursive"() {
         given:
-        def repositoryFactory = RepositoryFactory.createFactory(REPO_URL,TEST_REPO)
-        def bomManager = new MavenBomManagerDefault(repositoryFactory.makeRepo())
-        def mavenRecommender = new BomManagerArtifactVersionResolver('test:test-nested-bom:1.1',false,bomManager )
+        def mavenRecommender = ResolverBuilderKt.create(BomVersionResolverBuilder.class)
+                .recursive(false)
+                .bomArtifact('test:test-nested-bom:1.1')
+                .repoBaseUrl(REPO_URL)
+                .repoName(TEST_REPO)
+                .build()
         when:
-        def version = mavenRecommender.getVersion("org.apache.httpcomponents","httpclient")
+        def version = mavenRecommender.getVersion("org.apache.httpcomponents", "httpclient")
         then:
         version == ""
 

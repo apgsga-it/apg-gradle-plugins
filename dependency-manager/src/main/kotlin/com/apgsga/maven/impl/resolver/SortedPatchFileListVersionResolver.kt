@@ -5,7 +5,7 @@ import com.apgsga.microservice.patch.api.Patch
 import com.fasterxml.jackson.databind.ObjectMapper
 import java.io.File
 
-class SortedPatchFileListArtifactVersionResolver(var patchFiles: Collection<File>, var patchComparator: PatchComparator = PatchComparator.PATCHNUMBER_ASC) : AbstractVersionResolver() {
+class SortedPatchFileListVersionResolver(var patchFiles: Collection<File>, var patchComparator: PatchComparator = PatchComparator.PATCHNUMBER_ASC) : AbstractVersionResolver() {
 
     override fun getMavenArtifactList(): Collection<MavenArtifact>? {
         val mapper = ObjectMapper()
@@ -18,6 +18,7 @@ class SortedPatchFileListArtifactVersionResolver(var patchFiles: Collection<File
         return sortedList.flatMap { outter -> outter.mavenArtifacts.map { MavenArtifact(it.groupId, it.artifactId, it.version, "jar") } }
     }
 
+    // TODO (jhe,uge, che, 10.12): determine which Sort Criteria are necessary , idee: should be contained in Patch
     enum class PatchComparator(val patchComparator: Comparator<Patch>) {
         PATCHNUMBER_ASC(compareBy<Patch> { it.patchNummer }),
         PATCHNUMBER_DESC(compareByDescending { it.patchNummer }),

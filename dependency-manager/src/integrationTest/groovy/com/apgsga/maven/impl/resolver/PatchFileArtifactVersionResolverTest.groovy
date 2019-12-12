@@ -13,8 +13,10 @@ class PatchFileArtifactVersionResolverTest extends Specification {
 
     def "getVersion from Patchfile"() {
         given:
-        def patchFile = new File(source,"PatchZ5401.json")
-        def recommender = new PatchFileArtifactVersionResolver(patchFile)
+        def recommender = ResolverBuilderKt.create(PatchFileVersionResolverBuilder.class)
+                .parentDir(source)
+                .patchFile("PatchZ5401.json")
+                .build()
         when:
         def version = recommender.getVersion("com.affichage.it21.vk","zentraldispo-dao")
         then:
@@ -24,8 +26,10 @@ class PatchFileArtifactVersionResolverTest extends Specification {
 
     def "getVersion Simple Test with nested Bom no recursive"() {
         given:
-        def patchFile = new File(source,"PatchZ5401.json")
-        def recommender = new PatchFileArtifactVersionResolver(patchFile)
+        def recommender = ResolverBuilderKt.create(PatchFileVersionResolverBuilder.class)
+                .parentDir(source)
+                .patchFile("PatchZ5401.json")
+                .build()
         when:
         def version = recommender.getVersion("com.affichage.it21.vk","xxxxxx-dao")
         then:

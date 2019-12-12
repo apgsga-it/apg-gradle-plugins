@@ -19,7 +19,7 @@
       "artifactId": "alog-ui",
       "groupId": "com.affichage.it21.alog",
       "name": "com.affichage.it21.alog.ui",
-      "version": "9.1.0.ADMIN-UIMIG-SNAPSHOT",
+      "version": "12",
       "dependencyLevel": 0
     }
   ],
