@@ -19,7 +19,7 @@ class BuildLogicFunctionalTest extends AbstractSpecification {
 	                id 'com.apgsga.gradle.repo.config'
 	            }
 
-				apgRepository {
+				apgRepositories {
 					local()
 					mavenLocal()
 					artifactory()
@@ -54,7 +54,7 @@ class BuildLogicFunctionalTest extends AbstractSpecification {
 	                id 'com.apgsga.gradle.repo.config'
 	            }
 
-				apgRepository {
+				apgRepositories {
 					artifactory()
 					mavenCentral()
 				}
@@ -88,7 +88,7 @@ class BuildLogicFunctionalTest extends AbstractSpecification {
 
 				apply plugin: 'java'
 
-				apgRepository {
+				apgRepositories {
 					local()
 					mavenCentral()
 				}
@@ -117,7 +117,7 @@ class BuildLogicFunctionalTest extends AbstractSpecification {
 				apgRepos.get(RPM).log()
 				apgRepos.get(MAVEN_RELEASE).log()
 
-				apgRepository {
+				apgRepositories {
 					artifactory()
 				}
 	        """

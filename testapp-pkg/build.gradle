@@ -23,7 +23,7 @@ println "serviceVersion = ${project.ext.serviceVersion}"
 println "releaseNr = ${project.ext.releaseNr}"
 println "downloadDir = ${project.ext.downloadDir}"
 
-apgRepository {
+apgRepositories {
 	mavenLocal()
 	mavenCentral()
 }
