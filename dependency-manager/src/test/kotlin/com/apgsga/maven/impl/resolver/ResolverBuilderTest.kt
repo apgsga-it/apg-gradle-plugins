@@ -8,6 +8,8 @@ import org.junit.jupiter.api.Test as test
 
 class ResolverBuilderTest {
 
+    val dirSeperator = File.separator!!
+
     @test
     fun `PatchFileVersionResolverBuilder with File`() {
         val patchFile = File("test")
@@ -24,7 +26,8 @@ class ResolverBuilderTest {
         resolverBuilder.build()
         assertEquals(parentDir,resolverBuilder.parentDir)
         assertEquals("xxxxx", resolverBuilder.patchFileName)
-        assert(resolverBuilder.patchFile?.canonicalPath!!.endsWith("/build/test1/xxxxx"))
+        println("dirSeperator:$dirSeperator")
+        assert(resolverBuilder.patchFile?.canonicalPath!!.endsWith("${dirSeperator}build${dirSeperator}test1${dirSeperator}xxxxx"))
 
     }
 
@@ -38,7 +41,7 @@ class ResolverBuilderTest {
         assertNull(resolverBuilder.parentDir)
         assertNull(resolverBuilder.parentDirName)
         assertEquals("build/test2/xxxxx", resolverBuilder.patchFileName)
-        assert(resolverBuilder.patchFile?.canonicalPath!!.endsWith("/build/test2/xxxxx"))
+        assert(resolverBuilder.patchFile?.canonicalPath!!.endsWith("${dirSeperator}build${dirSeperator}test2${dirSeperator}xxxxx"))
 
     }
 
@@ -51,7 +54,7 @@ class ResolverBuilderTest {
         resolverBuilder.build()
         assertEquals(parentDir,resolverBuilder.parentDir)
         assertEquals("xxxxx", resolverBuilder.patchFileName)
-        assert(resolverBuilder.patchFile?.canonicalPath!!.endsWith("/build/test3/xxxxx"))
+        assert(resolverBuilder.patchFile?.canonicalPath!!.endsWith("${dirSeperator}build${dirSeperator}test3${dirSeperator}xxxxx"))
     }
 
     @test
