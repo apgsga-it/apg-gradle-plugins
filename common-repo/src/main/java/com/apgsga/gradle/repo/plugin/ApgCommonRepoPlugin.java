@@ -3,6 +3,8 @@
  */
 package com.apgsga.gradle.repo.plugin;
 
+import com.apgsga.gradle.repo.extensions.ApgRepo;
+import com.apgsga.gradle.repo.extensions.RepoType;
 import com.apgsga.gradle.repo.extensions.ReposImpl;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.gradle.api.NonNullApi;
@@ -29,18 +31,25 @@ public class ApgCommonRepoPlugin implements Plugin<Project> {
 	public void apply(final Project project) {
 		this.project = project;
 		final ExtensionContainer ext = project.getExtensions();
-		ext.create(COMMMON_REPO_PLUGIN_NAME, ReposImpl.class, project, getRepositories());
+		ReposImpl reposImpl = ext.create(COMMMON_REPO_PLUGIN_NAME, ReposImpl.class, project);
+
+		RepoNamesBean repoNames = loadRepoNames();
+		repoNames.repos.forEach(r -> {
+			r.keySet().forEach(key -> {
+				String remoteRepoBaseUrl = key.equals(RepoType.LOCAL) ? project.getRepositories().mavenLocal().getUrl().getPath() : repoNames.repoBaseUrl;
+				reposImpl.getRepositories().put(key, new ApgRepo(remoteRepoBaseUrl, r.get(key), repoNames.repoUserName, repoNames.repoUserPwd));
+			});
+		});
 	}
 
-	// TODO JHE: rename method
-	private ReposImpl getRepositories() {
-		ReposImpl r = null;
+	private RepoNamesBean loadRepoNames() {
+		RepoNamesBean rnb = null;
 		try {
-			r = new ObjectMapper().readerFor(ReposImpl.class).readValue(getRepoNameResource().getInputStream());
+			rnb = new ObjectMapper().readerFor(RepoNamesBean.class).readValue(getRepoNameResource().getInputStream());
 		} catch (IOException e) {
-			e.printStackTrace();
+			throw new RuntimeException("Problem while deserializing " + REPO_NAMES_JSON_FILENAME + ". Original esxception was: " + e.getMessage());
 		}
-		return r;
+		return rnb;
 	}
 
 	private Resource getRepoNameResource() {
