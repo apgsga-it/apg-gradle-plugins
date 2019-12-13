@@ -54,7 +54,7 @@ public class ApgCommonRepoPlugin implements Plugin<Project> {
 	private Resource getRepoNameResource() {
 		String gradleHome = project.getGradle().getGradleUserHomeDir().getAbsolutePath();
 		FileSystemResourceLoader loader = new FileSystemResourceLoader();
-		String repoNamesJsonFilePath = Paths.get(gradleHome + File.separator + REPO_NAMES_JSON_FILENAME).toAbsolutePath().toString();
+		String repoNamesJsonFilePath = "file://" + gradleHome + File.separator + REPO_NAMES_JSON_FILENAME;
 		Resource repoNamesJsonAsResource = loader.getResource(repoNamesJsonFilePath);
 		Assert.isTrue(repoNamesJsonAsResource.exists(), REPO_NAMES_JSON_FILENAME + " file not found! repoNamesJsonFilePath = " + repoNamesJsonFilePath);
 		return repoNamesJsonAsResource;
