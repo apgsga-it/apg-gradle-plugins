@@ -44,7 +44,7 @@ public class ApgCommonRepoPlugin implements Plugin<Project> {
 	private RepoNamesBean loadRepoNames() {
 		RepoNamesBean rnb = null;
 		try {
-			rnb = new ObjectMapper().readerFor(RepoNamesBean.class).readValue(getRepoNameResource().getInputStream());
+			rnb = new ObjectMapper().readerFor(RepoNamesBean.class).readValue(getRepoNameResource().getFile());
 		} catch (IOException e) {
 			throw new RuntimeException("Problem while deserializing " + REPO_NAMES_JSON_FILENAME + ". Original esxception was: " + e.getMessage());
 		}
@@ -52,12 +52,7 @@ public class ApgCommonRepoPlugin implements Plugin<Project> {
 	}
 
 	private Resource getRepoNameResource() {
-		String gradleHome = null;
-		try {
-			gradleHome = project.getGradle().getGradleUserHomeDir().getCanonicalPath();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+		String gradleHome = project.getGradle().getGradleUserHomeDir().getAbsolutePath();
 		FileSystemResourceLoader loader = new FileSystemResourceLoader();
 		String repoNamesJsonFilePath = Paths.get(gradleHome + File.separator + REPO_NAMES_JSON_FILENAME).toAbsolutePath().toString();
 		Resource repoNamesJsonAsResource = loader.getResource(repoNamesJsonFilePath);
