@@ -14,6 +14,7 @@ import org.springframework.util.Assert;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Paths;
 
 @NonNullApi
 public class ApgCommonRepoPlugin implements Plugin<Project> {
@@ -52,7 +53,7 @@ public class ApgCommonRepoPlugin implements Plugin<Project> {
 	private Resource getRepoNameResource() {
 		String gradleHome = project.getGradle().getGradleUserHomeDir().getAbsolutePath();
 		FileSystemResourceLoader loader = new FileSystemResourceLoader();
-		String repoNamesJsonFilePath = gradleHome + File.separator + REPO_NAMES_JSON_FILENAME;
+		String repoNamesJsonFilePath = Paths.get(gradleHome + File.separator + REPO_NAMES_JSON_FILENAME).toAbsolutePath().toString();
 		Resource repoNamesJsonAsResource = loader.getResource(repoNamesJsonFilePath);
 		Assert.isTrue(repoNamesJsonAsResource.exists(), REPO_NAMES_JSON_FILENAME + " file not found! repoNamesJsonFilePath = " + repoNamesJsonFilePath);
 		return repoNamesJsonAsResource;
