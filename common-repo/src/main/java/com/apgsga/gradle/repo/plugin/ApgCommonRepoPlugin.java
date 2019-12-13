@@ -13,6 +13,7 @@ import org.springframework.core.io.Resource;
 import org.springframework.util.Assert;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.nio.file.Paths;
 
@@ -43,7 +44,7 @@ public class ApgCommonRepoPlugin implements Plugin<Project> {
 	private RepoNamesBean loadRepoNames() {
 		RepoNamesBean rnb = null;
 		try {
-			rnb = new ObjectMapper().readerFor(RepoNamesBean.class).readValue(getRepoNameResource().getInputStream());
+			rnb = new ObjectMapper().readerFor(RepoNamesBean.class).readValue(new FileInputStream(getRepoNameResource().getFile()));
 		} catch (IOException e) {
 			throw new RuntimeException("Problem while deserializing " + REPO_NAMES_JSON_FILENAME + ". Original esxception was: " + e.getMessage());
 		}
