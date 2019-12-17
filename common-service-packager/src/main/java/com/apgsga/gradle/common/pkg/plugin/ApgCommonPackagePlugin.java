@@ -19,8 +19,6 @@ import org.springframework.util.Assert;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 public class ApgCommonPackagePlugin implements Plugin<Project> {
 
@@ -37,7 +35,7 @@ public class ApgCommonPackagePlugin implements Plugin<Project> {
 		final PluginContainer plugins = project.getPlugins();
 		plugins.apply(ApgRepoConfigPlugin.class);
 		ApgCommonPackageExtension apgPackage = ext.create("apgPackage", ApgCommonPackageExtension.class, project);
-		apgPackage.setSupportedServices(Stream.of(loadSupportedServices().supportedServices.split(",")).collect(Collectors.toList()));
+		apgPackage.setSupportedServices(loadSupportedServices().supportedServices);
 		TaskContainer tasks = project.getTasks();
 		TaskProvider<Copy> copyPackagingResourcesTask = tasks.register("copyCommonPackagingResources", Copy.class,
 				new CopyResourcesToBuildDirAction(project));

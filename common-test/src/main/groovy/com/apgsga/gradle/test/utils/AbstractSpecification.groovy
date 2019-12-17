@@ -72,7 +72,7 @@ abstract class AbstractSpecification extends Specification {
     def initSupportedServicesJsonContent(File file) {
         file << """
             {
-                "supportedServices": "jadas,digiflex,vkjadas,interjadas,interweb,testapp"
+                "supportedServices": ["jadas","digiflex","vkjadas","interjadas","interweb","testapp"]
             }
         """
     }
