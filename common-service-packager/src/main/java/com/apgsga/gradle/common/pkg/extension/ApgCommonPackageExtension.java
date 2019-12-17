@@ -52,13 +52,12 @@ public class ApgCommonPackageExtension {
 	private String servicePropertiesDir = SERVICE_PROPERTIES_DIR_DEFAULT; 
 	private final Project project; 
 	
-	public ApgCommonPackageExtension(Project project) {
+	public ApgCommonPackageExtension(Project project, List<String> supportedServices) {
 		super();
 		this.project = project;
+		this.supportedServices = supportedServices;
 	}
 
-	public List<String> getSupportedServices() { return supportedServices; }
-	protected void setSupportedServices(List<String> supportedServices) { this.supportedServices = supportedServices; }
 	public String getServiceName() {
 		return serviceName;
 	}

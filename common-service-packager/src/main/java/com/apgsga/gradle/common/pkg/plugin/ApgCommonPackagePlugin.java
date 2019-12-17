@@ -34,8 +34,7 @@ public class ApgCommonPackagePlugin implements Plugin<Project> {
 		final Logger logger = project.getLogger();
 		final PluginContainer plugins = project.getPlugins();
 		plugins.apply(ApgRepoConfigPlugin.class);
-		ApgCommonPackageExtension apgPackage = ext.create("apgPackage", ApgCommonPackageExtension.class, project);
-		apgPackage.setSupportedServices(loadSupportedServices().supportedServices);
+		ext.create("apgPackage", ApgCommonPackageExtension.class, project, loadSupportedServices().supportedServices);
 		TaskContainer tasks = project.getTasks();
 		TaskProvider<Copy> copyPackagingResourcesTask = tasks.register("copyCommonPackagingResources", Copy.class,
 				new CopyResourcesToBuildDirAction(project));
