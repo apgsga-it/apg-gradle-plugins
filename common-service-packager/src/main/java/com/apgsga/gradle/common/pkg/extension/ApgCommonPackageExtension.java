@@ -58,7 +58,7 @@ public class ApgCommonPackageExtension {
 	}
 
 	public List<String> getSupportedServices() { return supportedServices; }
-	public void setSupportedServices(List<String> supportedServices) { this.supportedServices = supportedServices; }
+	protected void setSupportedServices(List<String> supportedServices) { this.supportedServices = supportedServices; }
 	public String getServiceName() {
 		return serviceName;
 	}
