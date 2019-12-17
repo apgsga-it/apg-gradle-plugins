@@ -16,7 +16,9 @@ abstract class AbstractSpecification extends Specification {
         deletePreviousTestFolders()
         setupTestProjectDir()
         createBuildFile()
+        createGradleHomeDir()
         setupRepoNameJson()
+        setupSupportedServicesJson()
     }
 
     private def createBuildFile() {
@@ -55,12 +57,28 @@ abstract class AbstractSpecification extends Specification {
         println "Project Dir : ${testProjectDir.absolutePath}"
     }
 
-    private def setupRepoNameJson() {
+    def createGradleHomeDir() {
         gradleHomeDirPath = "${testProjectDir}${File.separator}.gradle${File.separator}"
         File gradleHomeDir = new File(gradleHomeDirPath)
         gradleHomeDir.mkdirs()
         println "Gradle Home directory for tests: ${gradleHomeDir.absolutePath}"
-        File repoNamesJson = new File(gradleHomeDir, "repoNames.json")
+    }
+
+    def setupSupportedServicesJson() {
+        File installableServicesJson = new File(gradleHomeDirPath, "supportedServices.json")
+        initSupportedServicesJsonContent(installableServicesJson)
+    }
+
+    def initSupportedServicesJsonContent(File file) {
+        file << """
+            {
+                "supportedServices": "jadas,digiflex,vkjadas,interjadas,interweb,testapp"
+            }
+        """
+    }
+
+    private def setupRepoNameJson() {
+        File repoNamesJson = new File(gradleHomeDirPath, "repoNames.json")
         initTepoNamesJsonContent(repoNamesJson)
     }
 

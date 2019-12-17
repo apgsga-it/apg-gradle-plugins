@@ -1,11 +1,9 @@
 package com.apgsga.gradle.common.pkg.extension;
 
-import java.util.Arrays;
-import java.util.List;
-
 import org.gradle.api.Project;
 
-import com.google.common.collect.Lists;
+import java.util.Arrays;
+import java.util.List;
 
 public class ApgCommonPackageExtension {
 	
@@ -30,10 +28,7 @@ public class ApgCommonPackageExtension {
 	private static final String TARGET_DEFAULT = "CHEI212";
 	private static final String MAIN_PRG_DEFAULT = "com.apgsga.it21.ui.webapp.Webapp";
 	private static final String SERVICE_NAME_DEFAULT = "jadas";
-	// TODO (che, 25.9) : probably not the perfect places 
-	private static final List<String> SUPPORTED_SERVICE_NAMES_DEFAULT = Lists.newArrayList("jadas", "digiflex","vkjadas", "interjadas", "interweb"); 
-	
-	
+
 	private String serviceName =  SERVICE_NAME_DEFAULT; 
 	private String mainProgramName = MAIN_PRG_DEFAULT; 
 	private String installTarget = TARGET_DEFAULT; 
@@ -49,8 +44,8 @@ public class ApgCommonPackageExtension {
 	private String javaDir = JAVADIR_DEFAULT; 
 	private String javaDist = JAVADIST_DEFAULT; 
 	// TODO (che, 25.9) : retrieve baseUrl from common-repo Plugin 
-	private String distRepoUrl = REPO_BASE_URL_DEFAULT + JDK_DIST_REPO_NAME_DEFAULT; 
-	private List<String> supportedServices = SUPPORTED_SERVICE_NAMES_DEFAULT; 
+	private String distRepoUrl = REPO_BASE_URL_DEFAULT + JDK_DIST_REPO_NAME_DEFAULT;
+	private List<String> supportedServices;
 	private String version = VERSION_DEFAULT; 
 	private String releaseNr = RELEASENR_DEFAULT; 
 	private String opsUserGroup = APG_OPSDEFAULT; 
@@ -61,6 +56,9 @@ public class ApgCommonPackageExtension {
 		super();
 		this.project = project;
 	}
+
+	public List<String> getSupportedServices() { return supportedServices; }
+	public void setSupportedServices(List<String> supportedServices) { this.supportedServices = supportedServices; }
 	public String getServiceName() {
 		return serviceName;
 	}
@@ -152,14 +150,7 @@ public class ApgCommonPackageExtension {
 	public void setDistRepoUrl(String distRepoUrl) {
 		this.distRepoUrl = distRepoUrl;
 	}
-	
-	public List<String> getSupportedServices() {
-		return supportedServices;
-	}
-	public void setSupportedServices(List<String> supportedServices) {
-		this.supportedServices = supportedServices;
-	}
-	
+
 	public String getVersion() {
 		return version;
 	}
@@ -211,7 +202,7 @@ public class ApgCommonPackageExtension {
 	}
 	
 	public String getPortNr() {
-		return PortnrConvention.calculate(getSupportedServices(), getInstallTarget(), getServiceName()); 
+		return PortnrConvention.calculate(supportedServices, getInstallTarget(), getServiceName());
 	}
 	
 	public String getEcmTargetSystemInd() {
@@ -226,6 +217,7 @@ public class ApgCommonPackageExtension {
 	public String getArchiveName() {
 		return getTargetServiceName() + "-" + getVersion() + "-" + getReleaseNr()+ ".noarch.rpm"; 
 	}
+
 	@Override
 	public String toString() {
 		return "ApgRpmPackageExtension [serviceName=" + serviceName + ", mainProgramName=" + mainProgramName
@@ -238,8 +230,4 @@ public class ApgCommonPackageExtension {
 				+ ", version=" + version + ", releaseNr=" + releaseNr + ", opsUserGroup=" + opsUserGroup
 				+ ", servicePropertiesDir=" + servicePropertiesDir + "]";
 	}
-	
-	
-	
-
 }
