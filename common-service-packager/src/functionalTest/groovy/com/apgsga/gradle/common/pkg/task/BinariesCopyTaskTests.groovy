@@ -29,7 +29,6 @@ class BinariesCopyTaskTests extends AbstractSpecification {
 		// The guava dependency is only for testing purposes, consider to be likely found in mavenCentral()
         apgPackage {
 			serviceName ="testapp"
-			supportedServices = ["testapp"]
 		    dependencies = ["com.google.guava:guava:+"]
             installTarget = "CHTX211"
 			mainProgramName  = "com.apgsga.test.SomeMain"
