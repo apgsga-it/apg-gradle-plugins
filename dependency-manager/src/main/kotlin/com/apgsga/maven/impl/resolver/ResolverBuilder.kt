@@ -117,7 +117,6 @@ data class PatchFileListVersionResolverBuilder(var parentDir: File? = null, var 
         this.parentDir = File(parentDirName)
     }
 
-    fun add(patchFiles: Collection<File>) = apply { this.patchFiles!!.addAll(patchFiles) }
     fun add(patchFile: File) = apply { this.patchFiles!!.add(patchFile) }
     fun add(patchFile: String) = apply {
         require(this.parentDir != null) { "parentDir must be set" }

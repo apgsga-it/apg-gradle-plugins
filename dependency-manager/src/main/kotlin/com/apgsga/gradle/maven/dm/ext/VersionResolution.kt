@@ -1,46 +1,38 @@
 package com.apgsga.gradle.maven.dm.ext
 
 
-import groovy.lang.Closure
-import org.gradle.api.NamedDomainObjectContainer
+import org.gradle.api.Action
 import org.gradle.api.Project
 
 
-open class VersionResolution(val name: String) {
-    var order: Int = 0
-
+class Boms {
+    var artifactId: String? = null
+    var groupId: String? = null
+    var versions: String? = null
 }
 
-class PomVersionResolution(name: String) : VersionResolution(name) {
-    lateinit var artifact: String
-    var recursive : Boolean =  false
-    override fun toString(): String {
-        return "PatchVersionResolution(name='$name', order='$order', artifact='$artifact', recursive='$recursive')"
-    }
-}
-
-
-class PatchVersionResolution(name: String) : VersionResolution(name) {
-    lateinit var parentDirName: String
-    lateinit var fileName : String
-    override fun toString(): String {
-        return "PatchVersionResolution(name='$name', order='$order', parentDirName='$parentDirName', fileName='$fileName')"
-    }
-
+class Patches {
+    var parentDir: String? = null
+    var fileNames: String? = null
 }
 
 
+open class VersionResolutionExtension(val project: Project) {
+    var configurationName: String = "runtime"
+    val boms: Boms = Boms()
+    val patches: Patches = Patches()
 
-open class VersionResolutionExtension(val project: Project, val poms : NamedDomainObjectContainer<PomVersionResolution>, val patches : NamedDomainObjectContainer<PatchVersionResolution>) {
-    var configurationName : String = "runtime"
-    fun poms(closure: Closure<Any>) {
-        poms.configure(closure)
+    fun boms(action: Action<Boms>) {
+        action.execute(boms)
     }
 
-    fun patches(closure: Closure<Any>) {
-        patches.configure(closure)
+    fun patches(action: Action<Patches>) {
+        action.execute(patches)
     }
+
     fun log() {
-        poms.forEach { project.logger.info(it.toString())}
+        project.logger.info("Logging VersionResolutions: ")
+        project.logger.info(boms.toString())
+        project.logger.info(patches.toString())
     }
 }

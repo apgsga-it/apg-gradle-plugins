@@ -5,26 +5,22 @@ import com.apgsga.gradle.test.utils.AbstractSpecification
 class VersionResolutionDslTests extends AbstractSpecification {
 
 
-    def "version Resolution DSL works"() {
+    def "Version Resolution 1 Bom Version 1 Patch File DSL"() {
         given:
         buildFile << """
             plugins {
                 id("com.apgsga.version.resolver")
             }
-            versionResolver {
-                 poms {
-                   aBom {
-                        order = 1
-                        artifact = "someGroupid:aArtifactid:aBomVersion"
-                    }
+            versionResolvers {
+                 boms {
+                   artifactid = "aArtifactid"
+                   groupdId = "someGroupid" 
+                   versions = "1"
                  }
                  patches {
-                   somePatch {
-                        order = 2
-                        parentDirName = "aParentDir"
-                        fileName = "Patch9999.json"
-                    }
-                  }
+                   parentDir = "aParentDir"
+                   fileNames = "Patch9999.json"
+                 }
             }
         """
 
@@ -45,11 +41,11 @@ class VersionResolutionDslTests extends AbstractSpecification {
             project.ext {
               bomVersion = project.hasProperty('bomVersion') ? project.property('bomVersion') : "XXXXXXXX"
             }
-            versionResolver {
-                 poms {
-                   che211Bom {
-                        artifact = "someGroupid:aArtifactid:" + bomVersion
-                    }
+            versionResolvers {
+                 boms {
+                   artifactid = "aArtifactid"
+                   groupdId = "someGroupid" 
+                   versions = bomVersion
                  }
             }
         """
@@ -62,26 +58,38 @@ class VersionResolutionDslTests extends AbstractSpecification {
     }
 
 
-    def "version Resolution DSL with default Version Parameter and single Bom works"() {
+
+    def "version Resolution DSL with List of boms and list of patch files"() {
         given:
         buildFile << """
             plugins {
                 id("com.apgsga.version.resolver")
             }
             project.ext {
-              bomVersion = project.hasProperty('bomVersion') ? project.property('bomVersion') : "XXXXXXXX"
+              bomArtifactId = project.hasProperty('bomArtifactId') ? project.property('bomArtifactId') : "aId"
+              bomGroupId = project.hasProperty('bomGroupId') ? project.property('bomGroupId') : "aGroupd"
+              bomVersions = project.hasProperty('bomVersions') ? project.property('bomVersions') : "SNAPSHOT"
+              patchParentDir = project.hasProperty('patchParentDir') ? project.property('patchParentDir') : "/"
+              patchFiles = project.hasProperty('patchFiles') ? project.property('patchFiles') : "Patch8765.json:Patch8787.json"
             }
-            versionResolver {
-                 poms {
-                   che211Bom {
-                        artifact = "someGroupid:aArtifactid:" + bomVersion
-                    }
+            versionResolvers {
+                 boms {
+                   artifactId = bomArtifactId
+                   groupId =  bomGroupId 
+                   versions = bomVersions
+                 }
+                 patches {
+                    parentDir = patchParentDir
+                    fileNames = patchFiles
                  }
             }
         """
 
         when:
-        def result = gradleRunnerFactory(['init']).build()
+        def result = gradleRunnerFactory(['init','-PbomArtifactId=someBomArtifactId', '-PbomGroupId=someBomGroupId',
+                                          '-PbomVersions=1234:9999:SNAPSHOT',
+                                          '-PpatchParentDir=build/patches',
+                                          '-PpatchFiles=Patch8765.json:Patch8787.json']).build()
         then:
         println "Result output: ${result.output}"
         result.output.contains('')
