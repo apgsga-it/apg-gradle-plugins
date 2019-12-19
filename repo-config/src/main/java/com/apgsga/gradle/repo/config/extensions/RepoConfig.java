@@ -46,7 +46,7 @@ public class RepoConfig {
 	}
 
 	private Repos getReposExtension() {
-		return (Repos) project.getExtensions().findByName(ApgCommonRepoPlugin.COMMMON_REPO_PLUGIN_NAME);
+		return (Repos) project.getExtensions().findByName(ApgCommonRepoPlugin.COMMMON_REPO_EXTENSION_NAME);
 	}
 	
 	public void mavenLocal() {

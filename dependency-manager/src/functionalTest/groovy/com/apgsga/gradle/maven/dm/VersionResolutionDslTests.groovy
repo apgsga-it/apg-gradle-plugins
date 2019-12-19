@@ -2,7 +2,7 @@ package com.apgsga.gradle.maven.dm
 
 import com.apgsga.gradle.test.utils.AbstractSpecification
 
-class VersionResolutionFunctionalTests extends AbstractSpecification {
+class VersionResolutionDslTests extends AbstractSpecification {
 
 
     def "version Resolution DSL works"() {
