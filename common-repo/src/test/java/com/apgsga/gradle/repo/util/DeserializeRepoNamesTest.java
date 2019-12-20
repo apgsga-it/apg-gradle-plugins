@@ -18,7 +18,7 @@ import java.util.List;
 public class DeserializeRepoNamesTest {
 
     @Test
-    public void testTeadRepoNamesContent() throws IOException {
+    public void testReadRepoNamesContent() throws IOException {
         Resource repoNamesTest = new ClassPathResource("repoNamesTest.json");
         RepoNamesBean r = new ObjectMapper().readerFor(RepoNamesBean.class).readValue(repoNamesTest.getInputStream());
         Assert.assertEquals("Not all repos correctly loaded", 4, r.repos.size());
