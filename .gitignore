@@ -26,5 +26,5 @@ out/
 /dependency-manager/bin/
 /testapp-kotlin-service/build/
 /common-test/bin/main/com/apgsga/gradle/test/utils/
-/ssh-wrapper/build/
 /ssh-common/build/
+/rpm-ssh-deployer/build/

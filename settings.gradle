@@ -10,7 +10,7 @@ include ':gradle-common'
 include ':repo-config'
 include ':dependency-manager'
 include ':common-test'
-include 'ssh-wrapper'
+include 'rpm-ssh-deployer'
 include 'ssh-common'
 
 project(':common-repo').projectDir = "$rootDir/common-repo" as File
@@ -24,6 +24,6 @@ project(':gradle-common').projectDir = "$rootDir/gradle-common" as File
 project(':repo-config').projectDir = "$rootDir/repo-config" as File
 project(':dependency-manager').projectDir = "$rootDir/dependency-manager" as File
 project(':common-test').projectDir = "$rootDir/common-test" as File
-project(':ssh-wrapper').projectDir = "$rootDir/ssh-wrapper" as File
+project(':rpm-ssh-deployer').projectDir = "$rootDir/rpm-ssh-deployer" as File
 project(':ssh-common').projectDir = "$rootDir/ssh-common" as File
 
