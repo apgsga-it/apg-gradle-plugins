@@ -12,7 +12,7 @@ class DeployRpm extends DefaultTask {
 
     @TaskAction
     def taskAction() {
-        def apgSshExtension = project.extensions."${ApgSshPlugin.APG_SSH_PLUGIN_NAME}"
+        def apgSshExtension = project.extensions."${ApgSshPlugin.APG_SSH_EXTENSION_NAME}"
         preConditions(apgSshExtension)
         project.logger.info("${apgSshExtension.rpmFileName} will be deploy on ${apgSshExtension.target} using ${apgSshExtension.username} User")
         // TODO JHE: in the future, do we want different pre-configured remote for our different target ?
@@ -29,11 +29,11 @@ class DeployRpm extends DefaultTask {
     }
 
     private def preConditions(def apgSshExtension) {
-        Assert.notNull(apgSshExtension.username,"${ApgSshPlugin.APG_SSH_PLUGIN_NAME} requires a username to be configured")
-        Assert.notNull(apgSshExtension.userpassword, "${ApgSshPlugin.APG_SSH_PLUGIN_NAME} requires a userpassword to be configured")
-        Assert.notNull(apgSshExtension.target, "${ApgSshPlugin.APG_SSH_PLUGIN_NAME} requires a target to be configured")
-        Assert.notNull(apgSshExtension.rpmFilePath, "${ApgSshPlugin.APG_SSH_PLUGIN_NAME} requires a rpmFilePath to be configured")
-        Assert.notNull(apgSshExtension.rpmFileName, "${ApgSshPlugin.APG_SSH_PLUGIN_NAME} requires a rpmFileName to be configured")
-        Assert.notNull(apgSshExtension.remoteDestFolder, "${ApgSshPlugin.APG_SSH_PLUGIN_NAME} requires a remoteDestFolder to be configured")
+        Assert.notNull(apgSshExtension.username,"${ApgSshPlugin.APG_SSH_EXTENSION_NAME} requires a username to be configured")
+        Assert.notNull(apgSshExtension.userpassword, "${ApgSshPlugin.APG_SSH_EXTENSION_NAME} requires a userpassword to be configured")
+        Assert.notNull(apgSshExtension.target, "${ApgSshPlugin.APG_SSH_EXTENSION_NAME} requires a target to be configured")
+        Assert.notNull(apgSshExtension.rpmFilePath, "${ApgSshPlugin.APG_SSH_EXTENSION_NAME} requires a rpmFilePath to be configured")
+        Assert.notNull(apgSshExtension.rpmFileName, "${ApgSshPlugin.APG_SSH_EXTENSION_NAME} requires a rpmFileName to be configured")
+        Assert.notNull(apgSshExtension.remoteDestFolder, "${ApgSshPlugin.APG_SSH_EXTENSION_NAME} requires a remoteDestFolder to be configured")
     }
 }

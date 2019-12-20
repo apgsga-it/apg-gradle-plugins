@@ -27,3 +27,4 @@ out/
 /testapp-kotlin-service/build/
 /common-test/bin/main/com/apgsga/gradle/test/utils/
 /ssh-wrapper/build/
+/ssh-common/build/
