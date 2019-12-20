@@ -8,7 +8,7 @@ class BuildLogicFunctionalTests extends AbstractSpecification {
         given:
             buildFile << """
                     plugins {
-                        id 'com.apgsga.gradle.ssh' 
+                        id 'com.apgsga.rpm.ssh.deployer' 
                     }
                     apgSsh {
                         username 'bob'
