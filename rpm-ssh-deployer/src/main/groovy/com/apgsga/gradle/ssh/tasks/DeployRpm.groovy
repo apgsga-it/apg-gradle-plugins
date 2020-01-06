@@ -1,6 +1,9 @@
 package com.apgsga.gradle.ssh.tasks
 
-import com.apgsga.gradle.ssh.plugin.ApgSshPlugin
+
+import com.apgsga.gradle.ssh.plugin.ApgRpmSshDeployer
+import com.apgsga.ssh.common.extensions.ApgSshCommon
+import com.apgsga.ssh.common.plugin.ApgSshCommonPlugin
 import org.gradle.api.DefaultTask
 import org.gradle.api.tasks.TaskAction
 import org.hidetake.groovy.ssh.core.Remote
@@ -12,28 +15,35 @@ class DeployRpm extends DefaultTask {
 
     @TaskAction
     def taskAction() {
-        def apgSshExtension = project.extensions."${ApgSshPlugin.APG_SSH_EXTENSION_NAME}"
-        preConditions(apgSshExtension)
-        project.logger.info("${apgSshExtension.rpmFileName} will be deploy on ${apgSshExtension.target} using ${apgSshExtension.username} User")
+        def apgRpmDeployConfigExt = project.extensions."${ApgRpmSshDeployer.APG_RPM_DEPLOY_CONFIG_EXTENSION_NAME}"
+
+        def apgSshCommonExt = getSshConfig();
+
+        preConditions(apgRpmDeployConfigExt,apgSshCommonExt);
+        project.logger.info("${apgRpmDeployConfigExt.rpmFileName} will be deploy on ${apgSshCommonExt.destinationHost} using ${apgSshCommonExt.username} User")
         // TODO JHE: in the future, do we want different pre-configured remote for our different target ?
-        Remote remotes = new Remote(["name":"default", "host":"${apgSshExtension.target}", "user":"${apgSshExtension.username}", "password": "${apgSshExtension.userpassword}"])
+        Remote remotes = new Remote(["name":"default", "host":"${apgSshCommonExt.destinationHost}", "user":"${apgSshCommonExt.username}", "password": "${apgSshCommonExt.userpwd}"])
         project.ssh.run {
                session(remotes) {
-                   put from: new File("${apgSshExtension.rpmFilePath}" + File.separator + apgSshExtension.rpmFileName), into: "${apgSshExtension.remoteDestFolder}"
-                   execute("ls -la ${apgSshExtension.remoteDestFolder}") { result ->
+                   put from: new File("${apgRpmDeployConfigExt.rpmFilePath}" + File.separator + apgRpmDeployConfigExt.rpmFileName), into: "${apgRpmDeployConfigExt.remoteDestFolder}"
+                   execute("ls -la ${apgRpmDeployConfigExt.remoteDestFolder}") { result ->
                        println result
                    }
-                   executeSudo "rpm -Uvh ${apgSshExtension.remoteDestFolder}" + File.separator + apgSshExtension.rpmFileName, pty: true
+                   executeSudo "rpm -Uvh ${apgRpmDeployConfigExt.remoteDestFolder}/${apgRpmDeployConfigExt.rpmFileName}", pty: true
                }
         }
     }
 
-    private def preConditions(def apgSshExtension) {
-        Assert.notNull(apgSshExtension.username,"${ApgSshPlugin.APG_SSH_EXTENSION_NAME} requires a username to be configured")
-        Assert.notNull(apgSshExtension.userpassword, "${ApgSshPlugin.APG_SSH_EXTENSION_NAME} requires a userpassword to be configured")
-        Assert.notNull(apgSshExtension.target, "${ApgSshPlugin.APG_SSH_EXTENSION_NAME} requires a target to be configured")
-        Assert.notNull(apgSshExtension.rpmFilePath, "${ApgSshPlugin.APG_SSH_EXTENSION_NAME} requires a rpmFilePath to be configured")
-        Assert.notNull(apgSshExtension.rpmFileName, "${ApgSshPlugin.APG_SSH_EXTENSION_NAME} requires a rpmFileName to be configured")
-        Assert.notNull(apgSshExtension.remoteDestFolder, "${ApgSshPlugin.APG_SSH_EXTENSION_NAME} requires a remoteDestFolder to be configured")
+    private def getSshConfig() {
+        return (ApgSshCommon) project.getExtensions().findByName(ApgSshCommonPlugin.APG_SSH_COMMON_EXTENSION_NAME);
+    }
+
+    private def preConditions(def apgRpmDeployConfigExt, def apgSshCommonExt) {
+        Assert.notNull(apgSshCommonExt.username,"${ApgRpmSshDeployer.APG_RPM_DEPLOY_PLUGIN_ID} requires a user name to be configured")
+        Assert.notNull(apgSshCommonExt.userpwd, "${ApgRpmSshDeployer.APG_RPM_DEPLOY_PLUGIN_ID} requires a user password to be configured")
+        Assert.notNull(apgSshCommonExt.destinationHost, "${ApgRpmSshDeployer.APG_RPM_DEPLOY_PLUGIN_ID} requires a destination host to be configured")
+        Assert.notNull(apgRpmDeployConfigExt.rpmFilePath, "${ApgRpmSshDeployer.APG_RPM_DEPLOY_CONFIG_EXTENSION_NAME} requires a rpmFilePath to be configured")
+        Assert.notNull(apgRpmDeployConfigExt.rpmFileName, "${ApgRpmSshDeployer.APG_RPM_DEPLOY_CONFIG_EXTENSION_NAME} requires a rpmFileName to be configured")
+        Assert.notNull(apgRpmDeployConfigExt.remoteDestFolder, "${ApgRpmSshDeployer.APG_RPM_DEPLOY_CONFIG_EXTENSION_NAME} requires a remoteDestFolder to be configured")
     }
 }

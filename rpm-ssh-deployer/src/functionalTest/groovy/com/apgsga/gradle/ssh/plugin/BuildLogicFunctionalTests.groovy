@@ -1,35 +1,59 @@
 package com.apgsga.gradle.ssh.plugin
 
 import com.apgsga.gradle.test.utils.AbstractSpecification
+import org.springframework.core.io.ClassPathResource
+import org.springframework.core.io.Resource
 
 class BuildLogicFunctionalTests extends AbstractSpecification {
 
-    def "Basic SSH tasks and configuration works"() {
+    def "Basic SSH configuration works"() {
         given:
             buildFile << """
                     plugins {
                         id 'com.apgsga.rpm.ssh.deployer' 
                     }
-                    apgSsh {
-                        username 'bob'
-                        userpassword 'bobPw'
-                        target 'ourRemoteHost'
+                    apgRpmDeployConfig {
                         rpmFilePath 'build/output'
                         rpmFileName 'fakeRpm.rpm'
                         remoteDestFolder '/etc/installer'
                     }				
-                    apgSsh.log()
+                    apgRpmDeployConfig.log()
                 """
         when:
-            // TODO JHE: at best we should call the deployRpm tasks with either a test server always available or a mock
             def result = gradleRunnerFactory(['init']).build()
         then:
-            // TODO JHE: if we would really call deployRpm task, we could do much better asserts ...
             println "Result output: ${result.output}"
-            result.output.contains("target='ourRemoteHost'")
-            result.output.contains("username='bob'")
             result.output.contains("rpmFilePath='build/output'")
             result.output.contains("rpmFileName='fakeRpm.rpm'")
             result.output.contains("remoteDestFolder='/etc/installer'")
+    }
+
+    def "DeployRpm Tasks works against test environment for dummy RPM"() {
+        given:
+            def rpmResource = new ClassPathResource("apgGradlePluginDummyRpm-1-0.src.rpm")
+            def rpmFileName = rpmResource.getFilename()
+            def rpmParentFolder = rpmResource.getURI().getPath() - rpmFileName
+            buildFile << """
+                        plugins {
+                            id 'com.apgsga.rpm.ssh.deployer' 
+                        }
+                        
+                        apgSshCommon {
+                           username '${System.getProperty("apgGradlePluginTestUsername")}'
+                           userpwd '${System.getProperty("apgGradlePluginTestUserpwd")}'
+                           destinationHost 'jenkins-t.apgsga.ch'
+                        }
+                        
+                        apgRpmDeployConfig {
+                            rpmFilePath '${rpmParentFolder}'
+                            rpmFileName '${rpmFileName}'
+                            remoteDestFolder '/home/apg_install'
+                        }				
+                    """
+        when:
+            def result = gradleRunnerFactory(['init','deployRpm']).build()
+        then:
+            result.output.toString().trim() ==~ /(?ms).*Started command.*apgGradlePluginDummyRpm-1-0.src.rpm.*/
+            result.output.toString().trim() ==~ /(?ms).*Success command.*apgGradlePluginDummyRpm-1-0.src.rpm.*/
     }
 }

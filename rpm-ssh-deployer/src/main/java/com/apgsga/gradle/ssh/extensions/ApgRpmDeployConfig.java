@@ -2,13 +2,10 @@ package com.apgsga.gradle.ssh.extensions;
 
 import org.gradle.api.Project;
 
-public class ApgSsh {
+public class ApgRpmDeployConfig {
 
     private final Project project;
 
-    private String target;
-    private String username;
-    private String userpassword;
     private String rpmFilePath;
     private String rpmFileName;
     private String remoteDestFolder;
@@ -37,32 +34,8 @@ public class ApgSsh {
         this.remoteDestFolder = remoteDestFolder;
     }
 
-    public ApgSsh(Project project) {
+    public ApgRpmDeployConfig(Project project) {
         this.project = project;
-    }
-
-    public String getTarget() {
-        return target;
-    }
-
-    public void setTarget(String target) {
-        this.target = target;
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public String getUserpassword() {
-        return userpassword;
-    }
-
-    public void setUserpassword(String userpassword) {
-        this.userpassword = userpassword;
     }
 
     public void log() {
@@ -72,8 +45,6 @@ public class ApgSsh {
     @Override
     public String toString() {
         return "ApgSsh{" +
-                "target='" + target + '\'' +
-                ", username='" + username + '\'' +
                 ", rpmFilePath='" + rpmFilePath + '\'' +
                 ", rpmFileName='" + rpmFileName + '\'' +
                 ", remoteDestFolder='" + remoteDestFolder + '\'' +
