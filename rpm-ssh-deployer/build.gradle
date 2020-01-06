@@ -15,11 +15,6 @@ sourceSets {
     }
 }
 
-tasks.withType(Test) {
-    systemProperty "apgGradlePluginTestUsername", apgGradlePluginTestUsername
-    systemProperty "apgGradlePluginTestUserpwd", apgGradlePluginTestUserpwd
-}
-
 dependencies {
     testCompile gradleTestKit()
     testCompile project(':common-test')

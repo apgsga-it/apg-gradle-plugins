@@ -34,13 +34,27 @@ class BuildLogicFunctionalTests extends AbstractSpecification {
             def rpmFileName = rpmResource.getFilename()
             def rpmParentFolder = rpmResource.getURI().getPath() - rpmFileName
             buildFile << """
-                        plugins {
-                            id 'com.apgsga.rpm.ssh.deployer' 
-                        }
+                        buildscript {
+                            repositories {
+                                mavenLocal()
+                                mavenCentral()
+                                jcenter()
+                            }
                         
+                            dependencies {
+                                    classpath 'nu.studer:gradle-credentials-plugin:1.0.7'
+                            }
+                        }
+
+                        plugins {
+                            id 'com.apgsga.rpm.ssh.deployer'
+                        }
+
+                        apply plugin: 'nu.studer.credentials'
+
                         apgSshCommon {
-                           username '${System.getProperty("apgGradlePluginTestUsername")}'
-                           userpwd '${System.getProperty("apgGradlePluginTestUserpwd")}'
+                           username 'apg_install'
+                           userpwd credentials.apg_install
                            destinationHost 'jenkins-t.apgsga.ch'
                         }
                         

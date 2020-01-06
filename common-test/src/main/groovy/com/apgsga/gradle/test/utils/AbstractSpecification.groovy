@@ -17,6 +17,7 @@ abstract class AbstractSpecification extends Specification {
         setupTestProjectDir()
         createBuildFile()
         createGradleHomeDir()
+        createGradleEncryptedProperties()
         setupRepoNameJson()
         setupSupportedServicesJson()
     }
@@ -62,6 +63,12 @@ abstract class AbstractSpecification extends Specification {
         File gradleHomeDir = new File(gradleHomeDirPath)
         gradleHomeDir.mkdirs()
         println "Gradle Home directory for tests: ${gradleHomeDir.absolutePath}"
+    }
+
+    def createGradleEncryptedProperties() {
+        File gradleEncyrpytedProperties = new File("${gradleHomeDirPath}/gradle.encrypted.properties")
+        gradleEncyrpytedProperties << "apg_install=tAAMlNlXrCjnphgKtCkHHZLkezTSeM1QwZ4+kfXyMaM\\="
+        println "${gradleEncyrpytedProperties.absolutePath} has been created!"
     }
 
     def setupSupportedServicesJson() {
