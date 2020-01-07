@@ -1,7 +1,6 @@
 package com.apgsga.gradle.maven.dm
 
 import com.apgsga.gradle.test.utils.AbstractSpecification
-import org.gradle.testkit.runner.GradleRunner
 import org.gradle.util.GFileUtils
 
 class BuildLogicFunctionalTest extends AbstractSpecification {
@@ -32,6 +31,22 @@ class BuildLogicFunctionalTest extends AbstractSpecification {
         def result = gradleRunnerFactory(['apgDmBomReport']).build()
         then:
 		println "Result output: ${result.output}" 
+        result.output.contains('')
+    }
+
+    def "version Resolution DSL rpm to local works"() {
+        given:
+        buildFile << """
+            plugins {
+                id("com.apgsga.bom.report")
+            }
+            apgDmBomReport.boms = ["test:test-bom:1.0"]
+        """
+
+        when:
+        def result = gradleRunnerFactory(['apgDmBomReport']).build()
+        then:
+        println "Result output: ${result.output}"
         result.output.contains('')
     }
 	

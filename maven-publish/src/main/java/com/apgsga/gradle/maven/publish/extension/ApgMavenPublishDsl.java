@@ -88,7 +88,7 @@ public class ApgMavenPublishDsl {
 	}
 
 	private Repos getRepos() {
-		return (Repos) project.getExtensions().findByName(ApgCommonRepoPlugin.COMMMON_REPO_PLUGIN_NAME);
+		return (Repos) project.getExtensions().findByName(ApgCommonRepoPlugin.COMMMON_REPO_EXTENSION_NAME);
 	}
 
 	public void local() {
