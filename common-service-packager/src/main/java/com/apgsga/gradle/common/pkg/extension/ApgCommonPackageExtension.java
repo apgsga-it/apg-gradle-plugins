@@ -14,7 +14,6 @@ public class ApgCommonPackageExtension {
 	private static final String RELEASENR_DEFAULT = "1";
 	private static final String VERSION_DEFAULT = "0.1";
 	private static final String JDK_DIST_REPO_NAME_DEFAULT = "apgPlatformDependencies";
-//	private static final String REPO_BASE_URL_DEFAULT = "https://artifactory4t4apgsga.jfrog.io/artifactory4t4apgsga/";
 	private static final String JAVADIST_DEFAULT = "jdk-8u191-linux-x64.tar.gz";
 	private static final String JAVADIR_DEFAULT = "jdk1.8.0_191";
 	private static final boolean WEBEMMEDED_DEFAULT = false;
