@@ -3,7 +3,7 @@ package com.apgsga.gradle.maven.dm
 import com.apgsga.gradle.test.utils.AbstractSpecification
 import org.gradle.util.GFileUtils
 
-class BuildLogicFunctionalTest extends AbstractSpecification {
+class DomAnalizerTests extends AbstractSpecification {
 
     private static final String REPO_URL = "build/repo"
 

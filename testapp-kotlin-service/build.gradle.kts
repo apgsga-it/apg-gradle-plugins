@@ -12,7 +12,7 @@ plugins {
 
 
 group = "com.apgsga"
-version = "0.0.1-SNAPSHOT"
+version = "0.4-SNAPSHOT"
 java.sourceCompatibility = JavaVersion.VERSION_1_8
 
 
@@ -53,13 +53,8 @@ tasks.withType<Test> {
     useJUnitPlatform()
 }
 
-// TODO (che, 2.10) support mavenLocal()
 apgMavenPublish {
-    local()
+    version = "0.4-SNAPSHOT"
+    mavenLocal()
 }
-// TDO (che, 2.10) as soon as apgMavenPublish supports mavenLocal this is not needed anymore
-publishing {
-    repositories {
-        mavenLocal()
-    }
-}
+
