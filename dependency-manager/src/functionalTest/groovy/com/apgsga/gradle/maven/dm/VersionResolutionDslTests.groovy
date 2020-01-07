@@ -13,8 +13,8 @@ class VersionResolutionDslTests extends AbstractSpecification {
             }
             versionResolvers {
                  boms {
-                   artifactid = "aArtifactid"
-                   groupdId = "someGroupid" 
+                   artifactId = "aArtifactid"
+                   groupId = "someGroupid" 
                    versions = "1"
                  }
                  patches {
@@ -43,8 +43,8 @@ class VersionResolutionDslTests extends AbstractSpecification {
             }
             versionResolvers {
                  boms {
-                   artifactid = "aArtifactid"
-                   groupdId = "someGroupid" 
+                   artifactId = "aArtifactid"
+                   groupId = "someGroupid" 
                    versions = bomVersion
                  }
             }
