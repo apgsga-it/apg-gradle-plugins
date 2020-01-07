@@ -1,5 +1,7 @@
 package com.apgsga.gradle.common.pkg.extension;
 
+import com.apgsga.gradle.repo.plugin.ApgCommonRepoPlugin;
+import org.gradle.api.Plugin;
 import org.gradle.api.Project;
 
 import java.util.Arrays;
@@ -12,7 +14,7 @@ public class ApgCommonPackageExtension {
 	private static final String RELEASENR_DEFAULT = "1";
 	private static final String VERSION_DEFAULT = "0.1";
 	private static final String JDK_DIST_REPO_NAME_DEFAULT = "apgPlatformDependencies";
-	private static final String REPO_BASE_URL_DEFAULT = "https://artifactory4t4apgsga.jfrog.io/artifactory4t4apgsga/";
+//	private static final String REPO_BASE_URL_DEFAULT = "https://artifactory4t4apgsga.jfrog.io/artifactory4t4apgsga/";
 	private static final String JAVADIST_DEFAULT = "jdk-8u191-linux-x64.tar.gz";
 	private static final String JAVADIR_DEFAULT = "jdk1.8.0_191";
 	private static final boolean WEBEMMEDED_DEFAULT = false;
@@ -43,8 +45,7 @@ public class ApgCommonPackageExtension {
 	private Boolean webuiEmbedded = WEBEMMEDED_DEFAULT;
 	private String javaDir = JAVADIR_DEFAULT; 
 	private String javaDist = JAVADIST_DEFAULT; 
-	// TODO (che, 25.9) : retrieve baseUrl from common-repo Plugin 
-	private String distRepoUrl = REPO_BASE_URL_DEFAULT + JDK_DIST_REPO_NAME_DEFAULT;
+	private String distRepoUrl;
 	private List<String> supportedServices;
 	private String version = VERSION_DEFAULT; 
 	private String releaseNr = RELEASENR_DEFAULT; 
@@ -56,6 +57,8 @@ public class ApgCommonPackageExtension {
 		super();
 		this.project = project;
 		this.supportedServices = supportedServices;
+		ApgCommonRepoPlugin apgCommonRepoPlugin = (ApgCommonRepoPlugin) project.getPlugins().findPlugin(ApgCommonRepoPlugin.PLUGIN_ID);
+		distRepoUrl = apgCommonRepoPlugin.DEFAULT_REMOTE_REPO_URL + "/" + JDK_DIST_REPO_NAME_DEFAULT;
 	}
 
 	public String getServiceName() {
