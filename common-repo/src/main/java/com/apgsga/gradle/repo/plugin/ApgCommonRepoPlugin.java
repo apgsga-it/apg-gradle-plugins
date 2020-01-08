@@ -22,8 +22,6 @@ public class ApgCommonRepoPlugin implements Plugin<Project> {
 
 	public static final String COMMMON_REPO_EXTENSION_NAME = "apgRepos";
 
-	public static String DEFAULT_REMOTE_REPO_URL = "";
-
 	private static final String REPO_NAMES_JSON_FILENAME = "repoNames.json";
 
 	private Project project;
@@ -35,10 +33,9 @@ public class ApgCommonRepoPlugin implements Plugin<Project> {
 		ReposImpl reposImpl = ext.create(COMMMON_REPO_EXTENSION_NAME, ReposImpl.class, project);
 
 		RepoNamesBean repoNames = loadRepoNames();
-		DEFAULT_REMOTE_REPO_URL = repoNames.repoBaseUrl;
 		// TODO (jhe,stb, che, 18.12) : As discussed the enum's should be serializable via Jackson
 		repoNames.repos.forEach(r -> r.keySet().forEach(key -> {
-			String remoteRepoBaseUrl = key.equals(RepoType.LOCAL) ? project.getRepositories().mavenLocal().getUrl().getPath() : DEFAULT_REMOTE_REPO_URL;
+			String remoteRepoBaseUrl = key.equals(RepoType.LOCAL) ? project.getRepositories().mavenLocal().getUrl().getPath() : repoNames.repoBaseUrl;
 			reposImpl.getRepositories().put(key, new ApgRepo(remoteRepoBaseUrl, r.get(key), repoNames.repoUserName, repoNames.repoUserPwd));
 		}));
 	}
