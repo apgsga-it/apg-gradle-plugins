@@ -2,15 +2,15 @@ plugins {
 	id("com.apgsga.rpm.package")
 	id("com.apgsga.zip.package")
 	id("com.apgsga.publish")
-	id("org.hidetake.ssh") version "2.10.1"
+	id("com.apgsga.rpm.ssh.deployer")
 	id("nu.studer.credentials")  version "1.0.7"
 }
 
 project.ext {
 	serviceName = project.hasProperty('serviceName') ? project.property('serviceName') : "echoservice"
 	targetHost = project.hasProperty('targetHost') ? project.property('targetHost') : "jadas-e.apgsga.ch"
-	sshUser = project.hasProperty('sshUser') ? project.property('sshUser') : credentials.deployUser
-	sshPw = project.hasProperty('sshPw') ? project.property('sshPw') : credentials.deployUserPassword
+	sshUser = project.hasProperty('sshUser') ? project.property('sshUser') : "deployUser"
+	sshPw = project.hasProperty('sshPw') ? project.property('sshPw') : "deployUserPassword"
 	installTarget = project.hasProperty('installTarget') ? project.property('installTarget') : "CHEI212"
     serviceVersion = project.hasProperty('serviceVersion') ? project.property('serviceVersion') : "1.0"
 	releaseNr = project.hasProperty('releaseNr') ? project.property('releaseNr') : "2"
@@ -28,13 +28,18 @@ apgRepositories {
 	mavenCentral()
 }
 
+configurations {
+	serviceRuntime.exclude group: 'log4j', module: 'log4j'
+	serviceRuntime.exclude group: 'org.neo4j' , module: 'neo4j-ogm'
+	serviceRuntime.exclude group: 'org.neo4j' , module: 'neo4j-ogm'
+	serviceRuntime.exclude group: 'org.codehaus.groovy' , module: 'groovy-all'
+}
 
 apgPackage {
 	serviceName = project.ext.serviceName
-	// TODO (che,15.10) jadas-e services, neecs to be discussed how this list is maintained
-	supportedServices = ["jadas", "digiflex-jadas","digiflex-web-it21" , "digiflex-web-sa", "echoservice"]
+	configurationName = "serviceRuntime"
 	dependencies = [
-		"com.apgsga:testapp-service:0.1-SNAPSHOT"
+		"com.apgsga:testapp-service:0.3-SNAPSHOT"
     ]
 	resourceFilters = "serviceport"
 	appConfigFilters = "general"
@@ -47,6 +52,7 @@ apgPackage {
 
 apgPackage.log()
 
+
 apgGenericPublishConfig {
 	artefactFile =  file ("${buildDir}/distributions/${apgPackage.archiveName}")
 	local()
@@ -54,27 +60,15 @@ apgGenericPublishConfig {
 
 apgGenericPublishConfig.log()
 
-remotes {
-	dev {
-	// TODO (che, 15.10) needs to be discussed, ssh policy of jenkins host
-	 //knownHosts = allowAnyHosts
-	  host = project.ext.targetHost
-	  user = project.ext.sshUser
-	  password = project.ext.sshPw
-	}
+apgSshCommon {
+	username credentials."${project.ext.sshUser}"
+	userpwd credentials."${project.ext.sshPw}"
+	destinationHost project.ext.targetHost
 }
 
-task deployRpm {
-	doLast {
-		ssh.run {
-		  session(remotes.dev) {
-			  put from: file("${buildDir}/distributions/${apgPackage.archiveName}"), into: "${project.ext.downloadDir}"
-			  execute("ls -la ${project.ext.downloadDir}") { result ->
-				  println result
-			  }
-			  executeSudo "rpm -Uvh ${project.ext.downloadDir}/${apgPackage.archiveName}" , pty: true
-		  }
-		}
-	}
+apgRpmDeployConfig {
+	rpmFilePath "${buildDir}/distributions/"
+	rpmFileName "${apgPackage.archiveName}"
+	remoteDestFolder "${project.ext.downloadDir}"
 }
 

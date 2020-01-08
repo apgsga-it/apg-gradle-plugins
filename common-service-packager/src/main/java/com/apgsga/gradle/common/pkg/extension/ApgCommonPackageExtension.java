@@ -60,175 +60,228 @@ public class ApgCommonPackageExtension {
 		distRepoUrl = apgCommonRepoPlugin.DEFAULT_REMOTE_REPO_URL + "/" + JDK_DIST_REPO_NAME_DEFAULT;
 	}
 
-	public String getServiceName() {
-		return serviceName;
-	}
-	public void setServiceName(String serviceName) {
-		this.serviceName = serviceName;
-	}
-	public String getMainProgramName() {
-		return mainProgramName;
-	}
-	public void setMainProgramName(String mainProgramName) {
-		this.mainProgramName = mainProgramName;
-	}
-	public String[] getDependencies() {
-		return dependencies;
-	}
-	public void setDependencies(String[] dependencies) {
-		this.dependencies = dependencies;
-	}
-	public String getResourceFilters() {
-		return resourceFilters;
-	}
-	public void setResourceFilters(String resourceFilters) {
-		this.resourceFilters = resourceFilters;
-	}
-	public String getAppConfigFilters() {
-		return appConfigFilters;
-	}
-	public void setAppConfigFilters(String appConfigFilters) {
-		this.appConfigFilters = appConfigFilters;
-	}
-	public String getDataAccessStrategie() {
-		return dataAccessStrategie;
-	}
-	public void setDataAccessStrategie(String dataAccessStrategie) {
-		this.dataAccessStrategie = dataAccessStrategie;
-	}
-	public String getIt21DbDaoLocations() {
-		return it21DbDaoLocations;
-	}
-	public void setIt21DbDaoLocations(String it21DbDaoLocations) {
-		this.it21DbDaoLocations = it21DbDaoLocations;
-	}
-	public String getIbdsDbDaoLocations() {
-		return ibdsDbDaoLocations;
-	}
-	public void setIbdsDbDaoLocations(String ibdsDbDaoLocations) {
-		this.ibdsDbDaoLocations = ibdsDbDaoLocations;
-	}
-	public String getServerContextPath() {
-		return serverContextPath;
-	}
-	public void setServerContextPath(String serverContextPath) {
-		this.serverContextPath = serverContextPath;
-	}
-	public String getSpringProfiles() {
-		return springProfiles;
-	}
-	public void setSpringProfiles(String springProfiles) {
-		this.springProfiles = springProfiles;
-	}
-	public Boolean getWebuiEmbedded() {
-		return webuiEmbedded;
-	}
-	public void setWebuiEmbedded(Boolean webEmbedded) {
-		this.webuiEmbedded = webEmbedded;
-	}
-	public String getInstallTarget() {
-		return installTarget;
-	}
-	public void setInstallTarget(String installTarget) {
-		this.installTarget = installTarget;
-	}
-	
-	public String getJavaDir() {
-		return javaDir;
-	}
-	public void setJavaDir(String javaDir) {
-		this.javaDir = javaDir;
-	}
-	public String getJavaDist() {
-		return javaDist;
-	}
-	public void setJavaDist(String javaDist) {
-		this.javaDist = javaDist;
-	}
-	public String getDistRepoUrl() {
-		return distRepoUrl;
-	}
-	public void setDistRepoUrl(String distRepoUrl) {
-		this.distRepoUrl = distRepoUrl;
-	}
+    public String getServiceName() {
+        return serviceName;
+    }
 
-	public String getVersion() {
-		return version;
-	}
-	public void setVersion(String version) {
-		this.version = version;
-	}
-	public String getReleaseNr() {
-		return releaseNr;
-	}
-	public void setReleaseNr(String releaseNr) {
-		this.releaseNr = releaseNr;
-	}
-	
-	
-	public String getOpsUserGroup() {
-		return opsUserGroup;
-	}
-	public void setOpsUserGroup(String opsUserGroup) {
-		this.opsUserGroup = opsUserGroup;
-	}
-	
-	public String getServicePropertiesDir() {
-		return servicePropertiesDir;
-	}
-	public void setServicePropertiesDir(String servicePropertiesDir) {
-		this.servicePropertiesDir = servicePropertiesDir;
-	}
-	// Logging 
-	public void log() {
-		project.getLogger().info(toString());
-	}
-	
-	// Conventions 
-	
-	public String getTargetServiceName() {
-		return "apg-" + getServiceName() + "-" + getInstallTarget(); 
-	}
-	
-	public String getTargetServiceExecDir() {
-		return "/opt/" + getTargetServiceName();
-	}
-	
-	public String getTargetServiceDataDir() {
-		return "/var/opt/" +  getTargetServiceName();
-	}
-	
-	public String getTargetServiceConfigDir() {
-		return "/etc/opt/" +  getTargetServiceName();
-	}
-	
-	public String getPortNr() {
-		return PortnrConvention.calculate(supportedServices, getInstallTarget(), getServiceName());
-	}
-	
-	public String getEcmTargetSystemInd() {
-		return  getInstallTarget().charAt(2) == 't' ? "t" : "p";
-	}
-	
-	public String getIbdsTargetSystemInd() {
-		return Character.toString(getInstallTarget().charAt(2)).toLowerCase(); 
-	}
-	
-	// TODO (che, 9.10) Avoid redundancy with buildRpm Task of netflix ospackage
-	public String getArchiveName() {
-		return getTargetServiceName() + "-" + getVersion() + "-" + getReleaseNr()+ ".noarch.rpm"; 
-	}
+    public void setServiceName(String serviceName) {
+        this.serviceName = serviceName;
+    }
+
+    public String getConfigurationName() {
+        return configurationName;
+    }
+    public void setConfigurationName(String configurationName) {
+        this.configurationName = configurationName;
+    }
+    public String getMainProgramName() {
+        return mainProgramName;
+    }
+
+    public void setMainProgramName(String mainProgramName) {
+        this.mainProgramName = mainProgramName;
+    }
+
+    public String[] getDependencies() {
+        return dependencies;
+    }
+
+    public void setDependencies(String[] dependencies) {
+        this.dependencies = dependencies;
+    }
+
+    public String getResourceFilters() {
+        return resourceFilters;
+    }
+
+    public void setResourceFilters(String resourceFilters) {
+        this.resourceFilters = resourceFilters;
+    }
+
+    public String getAppConfigFilters() {
+        return appConfigFilters;
+    }
+
+    public void setAppConfigFilters(String appConfigFilters) {
+        this.appConfigFilters = appConfigFilters;
+    }
+
+    public String getDataAccessStrategie() {
+        return dataAccessStrategie;
+    }
+
+    public void setDataAccessStrategie(String dataAccessStrategie) {
+        this.dataAccessStrategie = dataAccessStrategie;
+    }
+
+    public String getIt21DbDaoLocations() {
+        return it21DbDaoLocations;
+    }
+
+    public void setIt21DbDaoLocations(String it21DbDaoLocations) {
+        this.it21DbDaoLocations = it21DbDaoLocations;
+    }
+
+    public String getIbdsDbDaoLocations() {
+        return ibdsDbDaoLocations;
+    }
+
+    public void setIbdsDbDaoLocations(String ibdsDbDaoLocations) {
+        this.ibdsDbDaoLocations = ibdsDbDaoLocations;
+    }
+
+    public String getServerContextPath() {
+        return serverContextPath;
+    }
+
+    public void setServerContextPath(String serverContextPath) {
+        this.serverContextPath = serverContextPath;
+    }
+
+    public String getSpringProfiles() {
+        return springProfiles;
+    }
+
+    public void setSpringProfiles(String springProfiles) {
+        this.springProfiles = springProfiles;
+    }
+
+    public Boolean getWebuiEmbedded() {
+        return webuiEmbedded;
+    }
+
+    public void setWebuiEmbedded(Boolean webEmbedded) {
+        this.webuiEmbedded = webEmbedded;
+    }
+
+    public String getInstallTarget() {
+        return installTarget;
+    }
+
+    public void setInstallTarget(String installTarget) {
+        this.installTarget = installTarget;
+    }
+
+    public String getJavaDir() {
+        return javaDir;
+    }
+
+    public void setJavaDir(String javaDir) {
+        this.javaDir = javaDir;
+    }
+
+    public String getJavaDist() {
+        return javaDist;
+    }
+
+    public void setJavaDist(String javaDist) {
+        this.javaDist = javaDist;
+    }
+
+    public String getDistRepoUrl() {
+        return distRepoUrl;
+    }
+
+    public void setDistRepoUrl(String distRepoUrl) {
+        this.distRepoUrl = distRepoUrl;
+    }
+
+    public String getVersion() {
+        return version;
+    }
+
+    public void setVersion(String version) {
+        this.version = version;
+    }
+
+    public String getReleaseNr() {
+        return releaseNr;
+    }
+
+    public void setReleaseNr(String releaseNr) {
+        this.releaseNr = releaseNr;
+    }
+
+
+    public String getOpsUserGroup() {
+        return opsUserGroup;
+    }
+
+    public void setOpsUserGroup(String opsUserGroup) {
+        this.opsUserGroup = opsUserGroup;
+    }
+
+    public String getServicePropertiesDir() {
+        return servicePropertiesDir;
+    }
+
+    public void setServicePropertiesDir(String servicePropertiesDir) {
+        this.servicePropertiesDir = servicePropertiesDir;
+    }
+
+    // Logging
+    public void log() {
+        project.getLogger().info(toString());
+    }
+
+    // Conventions
+
+    public String getTargetServiceName() {
+        return "apg-" + getServiceName() + "-" + getInstallTarget();
+    }
+
+    public String getTargetServiceExecDir() {
+        return "/opt/" + getTargetServiceName();
+    }
+
+    public String getTargetServiceDataDir() {
+        return "/var/opt/" + getTargetServiceName();
+    }
+
+    public String getTargetServiceConfigDir() {
+        return "/etc/opt/" + getTargetServiceName();
+    }
+
+    public String getPortNr() {
+        return PortnrConvention.calculate(supportedServices, getInstallTarget(), getServiceName());
+    }
+
+    public String getEcmTargetSystemInd() {
+        return getInstallTarget().charAt(2) == 't' ? "t" : "p";
+    }
+
+    public String getIbdsTargetSystemInd() {
+        return Character.toString(getInstallTarget().charAt(2)).toLowerCase();
+    }
+
+    public String getArchiveName() {
+        return getTargetServiceName() + "-" + getVersion() + "-" + getReleaseNr() + ".noarch.rpm";
+    }
 
 	@Override
 	public String toString() {
-		return "ApgRpmPackageExtension [serviceName=" + serviceName + ", mainProgramName=" + mainProgramName
-				+ ", installTarget=" + installTarget + ", dependencies=" + Arrays.toString(dependencies)
-				+ ", resourceFilters=" + resourceFilters + ", appConfigFilters=" + appConfigFilters
-				+ ", dataAccessStrategie=" + dataAccessStrategie + ", it21DbDaoLocations=" + it21DbDaoLocations
-				+ ", ibdsDbDaoLocations=" + ibdsDbDaoLocations + ", serverContextPath=" + serverContextPath
-				+ ", springProfiles=" + springProfiles + ", webuiEmbedded=" + webuiEmbedded + ", javaDir=" + javaDir
-				+ ", javaDist=" + javaDist + ", distRepoUrl=" + distRepoUrl + ", supportedServices=" + supportedServices
-				+ ", version=" + version + ", releaseNr=" + releaseNr + ", opsUserGroup=" + opsUserGroup
-				+ ", servicePropertiesDir=" + servicePropertiesDir + "]";
+		return "ApgCommonPackageExtension{" +
+				"serviceName='" + serviceName + '\'' +
+				", configurationName='" + configurationName + '\'' +
+				", mainProgramName='" + mainProgramName + '\'' +
+				", installTarget='" + installTarget + '\'' +
+				", dependencies=" + Arrays.toString(dependencies) +
+				", resourceFilters='" + resourceFilters + '\'' +
+				", appConfigFilters='" + appConfigFilters + '\'' +
+				", dataAccessStrategie='" + dataAccessStrategie + '\'' +
+				", it21DbDaoLocations='" + it21DbDaoLocations + '\'' +
+				", ibdsDbDaoLocations='" + ibdsDbDaoLocations + '\'' +
+				", serverContextPath='" + serverContextPath + '\'' +
+				", springProfiles='" + springProfiles + '\'' +
+				", webuiEmbedded=" + webuiEmbedded +
+				", javaDir='" + javaDir + '\'' +
+				", javaDist='" + javaDist + '\'' +
+				", distRepoUrl='" + distRepoUrl + '\'' +
+				", supportedServices=" + supportedServices +
+				", version='" + version + '\'' +
+				", releaseNr='" + releaseNr + '\'' +
+				", opsUserGroup='" + opsUserGroup + '\'' +
+				", servicePropertiesDir='" + servicePropertiesDir + '\'' +
+				'}';
 	}
 }

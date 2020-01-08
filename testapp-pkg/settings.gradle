@@ -9,10 +9,13 @@ pluginManagement {
                 useModule("com.apgsga.gradle:generic-publish:0.3-SNAPSHOT")
             } else if (requested.id.id == "com.apgsga.common.repo") {
                 useModule("com.apgsga.gradle:repo-config:0.3-SNAPSHOT")
+            } else if (requested.id.id == "com.apgsga.rpm.ssh.deployer") {
+                useModule("com.apgsga.gradle:rpm-ssh-deployer:0.3-SNAPSHOT")
             }
         }
     }
     repositories {
+
         mavenLocal()
         gradlePluginPortal()
     }

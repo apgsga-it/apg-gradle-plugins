@@ -3,14 +3,12 @@ package com.apgsga.gradle.rpm.pkg.tasks
 import org.gradle.api.DefaultTask
 import org.gradle.api.Task
 import org.gradle.api.plugins.ExtensionContainer
-import org.gradle.api.tasks.OutputDirectory
 import org.gradle.api.tasks.TaskAction
 import org.redline_rpm.header.Architecture
 import org.redline_rpm.header.Os
 import org.redline_rpm.header.RpmType
 import org.redline_rpm.payload.Directive
 
-import groovy.io.FileType
 // TODO (che, 2.10 ) Verfiy Ospackage Extension configuration as Task. Better ways?
 class OsPackageConfigureTask extends DefaultTask {
 	
@@ -18,7 +16,7 @@ class OsPackageConfigureTask extends DefaultTask {
 
 	@TaskAction
 	def taskAction() {
-		final ExtensionContainer ext = project.getExtensions();
+		final ExtensionContainer ext = project.getExtensions()
 		def apgRpmPackage = project.extensions.apgPackage
 		def osPackageExtention = ext.getByName("ospackage")
 		osPackageExtention.packageName = "${apgRpmPackage.targetServiceName}"
@@ -85,11 +83,14 @@ class OsPackageConfigureTask extends DefaultTask {
 		copySpec = {
 			into "${apgRpmPackage.targetServiceConfigDir}/app"
 			user 'root'
+
+
 			permissionGroup 'root'
 			fileMode 0775
 		}
 		osPackageExtention.from("$project.buildDir/app-pkg/app/conf/app",copySpec)
-		Task buildRpmTask = project.tasks.findByName("buildRpm");
+		Task buildRpmTask = project.tasks.findByName("buildRpm")
+		buildRpmTask.archiveName = apgRpmPackage.archiveName
 		buildRpmTask.directory("${apgRpmPackage.targetServiceDataDir}", 0775 )
 		buildRpmTask.directory("${apgRpmPackage.targetServiceDataDir}/log", 0775 )
 	}

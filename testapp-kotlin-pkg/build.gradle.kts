@@ -1,18 +1,17 @@
 import nu.studer.gradle.credentials.domain.CredentialsContainer
-import com.google.common.collect.Lists
 
 plugins {
     id("com.apgsga.rpm.package")
     id("com.apgsga.zip.package")
     id("com.apgsga.publish")
-    id("org.hidetake.ssh") version "2.10.1"
+    id("com.apgsga.rpm.ssh.deployer")
     id("nu.studer.credentials") version "1.0.7"
 }
 // Credentials
 
 val credentials: CredentialsContainer by project.extra
 val defaultUsername = credentials.getProperty("deployUser") as String
-val defaultPassword = credentials.getProperty("deployUserPassword") as String
+val defaultPassword = credentials.getProperty("deployPw") as String
 
 // TODO (che, 6.11 ): Factor out Commandline Handling in Plugin
 
@@ -57,6 +56,14 @@ if (project.hasProperty("downloadDir")) {
 }
 println("downloadDir = $parDownloadDir")
 
+val serviceRuntime: Configuration by configurations.creating
+
+configurations {
+    serviceRuntime.exclude("log4j","log4j")
+    serviceRuntime.exclude("org.neo4j" , "neo4j-ogm")
+    serviceRuntime.exclude("org.neo4j" , "neo4j-ogm")
+    serviceRuntime.exclude("org.codehaus.groovy", "groovy-all")
+}
 
 apgRepositories {
     mavenLocal()
@@ -67,9 +74,7 @@ apgRepositories {
 
 apgPackage {
     serviceName = parServiceName
-    // TODO (che,15.10) jadas-e services, neecs to be discussed how this list is maintained
-    supportedServices = Lists.newArrayList("jadas", "digiflex", "vkjadas", "interjadas", "interweb", parServiceName)
-    dependencies = arrayOf("com.apgsga:testapp-service-kotlin:0.1-SNAPSHOT")
+    dependencies = arrayOf("com.apgsga:testapp-service-kotlin:0.4-SNAPSHOT")
     resourceFilters = "serviceport"
     appConfigFilters = "general"
     servicePropertiesDir = "resources"
@@ -88,3 +93,15 @@ apgGenericPublishConfig {
 }
 
 apgGenericPublishConfig.log()
+
+apgSshCommon {
+    username = credentials.getProperty(parSshUser) as String?
+    userpwd = credentials.getProperty(parSshPw) as String?
+    destinationHost = parTargetHost
+}
+
+apgRpmDeployConfig {
+    rpmFilePath  = "${buildDir}/distributions/"
+    rpmFileName  = apgPackage.archiveName
+    remoteDestFolder = parDownloadDir
+}
