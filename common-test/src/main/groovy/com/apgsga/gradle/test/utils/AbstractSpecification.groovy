@@ -113,7 +113,7 @@ abstract class AbstractSpecification extends Specification {
       "MAVEN": "maven"
     },
     {
-      "JAVA_DIST": "java-dist"
+      "JAVA_DIST": "apgPlatformDependencies-test"
     }
   ],
   "repoUserName": "gradledev-tests-user",

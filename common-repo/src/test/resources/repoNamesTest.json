@@ -11,6 +11,9 @@
     },
     {
       "MAVEN_RELEASE": "release-functionaltest"
+    },
+    {
+      "JAVA_DIST": "apgPlatformDependencies-test"
     }
   ],
   "repoUserName": "gradledev-tests-user",

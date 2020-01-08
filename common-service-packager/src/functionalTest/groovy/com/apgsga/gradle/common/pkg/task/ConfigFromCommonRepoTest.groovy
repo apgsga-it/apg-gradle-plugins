@@ -21,6 +21,6 @@ class ConfigFromCommonRepoTest extends AbstractSpecification {
         then:
         // TODO JHE: well, not a very good test, but it at least ensure the default URL from common-repo has correctly been retrieved.
         println result.output
-        result.output.contains('distRepoUrl=https://artifactory4t4apgsga.jfrog.io/artifactory4t4apgsga/apgPlatformDependencies')
+        result.output.contains("distRepoUrl='https://artifactory4t4apgsga.jfrog.io/artifactory4t4apgsga/apgPlatformDependencies-test'")
     }
 }

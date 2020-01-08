@@ -45,7 +45,7 @@ class BuildLogicFunctionalTest extends AbstractSpecification {
 			result.output.contains('repoName=snapshot-functionaltest')
 			result.output.contains('repoName=local')
 			result.output.contains('repoName=maven')
-			result.output.contains('repoName=java-dist')
+			result.output.contains('repoName=apgPlatformDependencies-test')
 	}
 
     def "Common Repo Plugin works explicit with Defaults"() {
@@ -73,7 +73,7 @@ class BuildLogicFunctionalTest extends AbstractSpecification {
 			result.output.contains('repoName=snapshot-functionaltest')
 			result.output.contains('repoName=local')
 			result.output.contains('repoName=maven')
-			result.output.contains('repoName=java-dist')
+			result.output.contains('repoName=apgPlatformDependencies-test')
     }
 	
 	
@@ -107,6 +107,6 @@ class BuildLogicFunctionalTest extends AbstractSpecification {
 			!result.output.contains('repoName=local')
 			result.output.contains('repoName=thisIsMyLocalRepo')
 			result.output.contains('repoName=maven')
-			result.output.contains('repoName=java-dist')
+			result.output.contains('repoName=apgPlatformDependencies-test')
 	}
 }
