@@ -1,5 +1,10 @@
 package com.apgsga.gradle.common.pkg.extension;
 
+import com.apgsga.gradle.repo.extensions.Repo;
+import com.apgsga.gradle.repo.extensions.RepoType;
+import com.apgsga.gradle.repo.extensions.Repos;
+import com.apgsga.gradle.repo.plugin.ApgCommonRepoPlugin;
+import org.gradle.api.Plugin;
 import org.gradle.api.Project;
 
 import java.util.Arrays;
@@ -8,57 +13,60 @@ import java.util.List;
 public class ApgCommonPackageExtension {
 
     public static final String CONFIGURATION_NAME_DEFAULT = "serviceRuntime";
-    private static final String SERVICE_PROPERTIES_DIR_DEFAULT = "resources";
-    private static final String APG_OPSDEFAULT = "apg_ops";
-    private static final String RELEASENR_DEFAULT = "1";
-    private static final String VERSION_DEFAULT = "0.1";
-    private static final String JDK_DIST_REPO_NAME_DEFAULT = "apgPlatformDependencies";
-    private static final String REPO_BASE_URL_DEFAULT = "https://artifactory4t4apgsga.jfrog.io/artifactory4t4apgsga/";
-    private static final String JAVADIST_DEFAULT = "jdk-8u191-linux-x64.tar.gz";
-    private static final String JAVADIR_DEFAULT = "jdk1.8.0_191";
-    private static final boolean WEBEMMEDED_DEFAULT = false;
-    private static final String SPRING_PROFILES_DEFAULT = "stomprelay";
-    private static final String SERVER_CONTEXT_PATH_DEFAULT = "/";
-    private static final String DS_DAOLOCATIONS_DEFAULTS = "com/affichage/ibds/ds/**";
-    private static final String IT21_DAO_LOCATIONS_DEFAULTS = "com/apgsga/common/** com/affichage/it21/** com/apgsga/it21/** com/affichage/mybatis/** com/affichage/persistence/** com/affichage/testsupport/**";
-    private static final String DATAACCESS_STRATEGIE_DEFAULT = "TRX_PER_OP_WITH_STANDING_USRCRED_CONNECTION";
-    private static final String APP_CONFIG_FILTER_DEFAULT = "webui:general";
-    private static final String RESOURCE_FILTER_DEFAULT = "serviceport:it21db-webui:ibdsdb-jadas:ecmservice";
-    private static final String SEC_DEP_DEFAULT = "com.apgsga.it21.ui.mdt:jadas-framework-starter:9.1.0.DIGIFLEX-SNAPSHOT";
-    private static final String FIRST_DEP_DEFAULT = "com.apgsga.it21.ui.mdt:jadas-app-starter:9.1.0.DIGIFLEX-SNAPSHOT";
-    private static final String TARGET_DEFAULT = "CHEI212";
-    private static final String MAIN_PRG_DEFAULT = "com.apgsga.it21.ui.webapp.Webapp";
-    private static final String SERVICE_NAME_DEFAULT = "jadas";
-
-    private String serviceName = SERVICE_NAME_DEFAULT;
+	private static final String SERVICE_PROPERTIES_DIR_DEFAULT = "resources";
+	private static final String APG_OPSDEFAULT = "apg_ops";
+	private static final String RELEASENR_DEFAULT = "1";
+	private static final String VERSION_DEFAULT = "0.1";
+	private static final String JAVADIST_DEFAULT = "jdk-8u191-linux-x64.tar.gz";
+	private static final String JAVADIR_DEFAULT = "jdk1.8.0_191";
+	private static final boolean WEBEMMEDED_DEFAULT = false;
+	private static final String SPRING_PROFILES_DEFAULT = "stomprelay";
+	private static final String SERVER_CONTEXT_PATH_DEFAULT = "/";
+	private static final String DS_DAOLOCATIONS_DEFAULTS = "com/affichage/ibds/ds/**";
+	private static final String IT21_DAO_LOCATIONS_DEFAULTS = "com/apgsga/common/** com/affichage/it21/** com/apgsga/it21/** com/affichage/mybatis/** com/affichage/persistence/** com/affichage/testsupport/**";
+	private static final String DATAACCESS_STRATEGIE_DEFAULT = "TRX_PER_OP_WITH_STANDING_USRCRED_CONNECTION";
+	private static final String APP_CONFIG_FILTER_DEFAULT = "webui:general";
+	private static final String RESOURCE_FILTER_DEFAULT = "serviceport:it21db-webui:ibdsdb-jadas:ecmservice";
+	private static final String SEC_DEP_DEFAULT = "com.apgsga.it21.ui.mdt:jadas-framework-starter:9.1.0.DIGIFLEX-SNAPSHOT";
+	private static final String FIRST_DEP_DEFAULT = "com.apgsga.it21.ui.mdt:jadas-app-starter:9.1.0.DIGIFLEX-SNAPSHOT";
+	private static final String TARGET_DEFAULT = "CHEI212";
+	private static final String MAIN_PRG_DEFAULT = "com.apgsga.it21.ui.webapp.Webapp";
+	private static final String SERVICE_NAME_DEFAULT = "jadas";
 
     private String configurationName = CONFIGURATION_NAME_DEFAULT;
-    private String mainProgramName = MAIN_PRG_DEFAULT;
-    private String installTarget = TARGET_DEFAULT;
-    private String[] dependencies = new String[]{FIRST_DEP_DEFAULT, SEC_DEP_DEFAULT};
-    private String resourceFilters = RESOURCE_FILTER_DEFAULT;
-    private String appConfigFilters = APP_CONFIG_FILTER_DEFAULT;
-    private String dataAccessStrategie = DATAACCESS_STRATEGIE_DEFAULT;
-    private String it21DbDaoLocations = IT21_DAO_LOCATIONS_DEFAULTS;
-    private String ibdsDbDaoLocations = DS_DAOLOCATIONS_DEFAULTS;
-    private String serverContextPath = SERVER_CONTEXT_PATH_DEFAULT;
-    private String springProfiles = SPRING_PROFILES_DEFAULT;
-    private Boolean webuiEmbedded = WEBEMMEDED_DEFAULT;
-    private String javaDir = JAVADIR_DEFAULT;
-    private String javaDist = JAVADIST_DEFAULT;
-    // TODO (che, 25.9) : retrieve baseUrl from common-repo Plugin
-    private String distRepoUrl = REPO_BASE_URL_DEFAULT + JDK_DIST_REPO_NAME_DEFAULT;
-    private List<String> supportedServices;
-    private String version = VERSION_DEFAULT;
-    private String releaseNr = RELEASENR_DEFAULT;
-    private String opsUserGroup = APG_OPSDEFAULT;
-    private String servicePropertiesDir = SERVICE_PROPERTIES_DIR_DEFAULT;
-    private final Project project;
+	private String serviceName =  SERVICE_NAME_DEFAULT; 
+	private String mainProgramName = MAIN_PRG_DEFAULT; 
+	private String installTarget = TARGET_DEFAULT; 
+	private String[] dependencies = new String[] {FIRST_DEP_DEFAULT,SEC_DEP_DEFAULT};
+	private String resourceFilters = RESOURCE_FILTER_DEFAULT; 
+	private String appConfigFilters = APP_CONFIG_FILTER_DEFAULT; 
+	private String dataAccessStrategie =  DATAACCESS_STRATEGIE_DEFAULT; 
+	private String it21DbDaoLocations = IT21_DAO_LOCATIONS_DEFAULTS;
+	private String ibdsDbDaoLocations = DS_DAOLOCATIONS_DEFAULTS; 
+	private String serverContextPath = SERVER_CONTEXT_PATH_DEFAULT;
+	private String springProfiles =  SPRING_PROFILES_DEFAULT; 
+	private Boolean webuiEmbedded = WEBEMMEDED_DEFAULT;
+	private String javaDir = JAVADIR_DEFAULT; 
+	private String javaDist = JAVADIST_DEFAULT; 
+	private String distRepoUrl;
+	private List<String> supportedServices;
+	private String version = VERSION_DEFAULT; 
+	private String releaseNr = RELEASENR_DEFAULT; 
+	private String opsUserGroup = APG_OPSDEFAULT; 
+	private String servicePropertiesDir = SERVICE_PROPERTIES_DIR_DEFAULT; 
+	private final Project project; 
+	
+	public ApgCommonPackageExtension(Project project, List<String> supportedServices) {
+		super();
+		this.project = project;
+		this.supportedServices = supportedServices;
+		initDistRepoUrl();
+	}
 
-    public ApgCommonPackageExtension(Project project, List<String> supportedServices) {
-        super();
-        this.project = project;
-        this.supportedServices = supportedServices;
+    private void initDistRepoUrl() {
+        Repos repos = (Repos) project.getExtensions().findByName(ApgCommonRepoPlugin.COMMMON_REPO_EXTENSION_NAME);
+        Repo javaDistRepo = repos.get(RepoType.JAVA_DIST);
+        distRepoUrl = javaDistRepo.getRepoBaseUrl() + "/" + javaDistRepo.getRepoName();
     }
 
     public String getServiceName() {

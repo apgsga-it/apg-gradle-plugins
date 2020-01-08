@@ -21,7 +21,7 @@ public class DeserializeRepoNamesTest {
     public void testReadRepoNamesContent() throws IOException {
         Resource repoNamesTest = new ClassPathResource("repoNamesTest.json");
         RepoNamesBean r = new ObjectMapper().readerFor(RepoNamesBean.class).readValue(repoNamesTest.getInputStream());
-        Assert.assertEquals("Not all repos correctly loaded", 4, r.repos.size());
+        Assert.assertEquals("Not all repos correctly loaded", 5, r.repos.size());
         Assert.assertEquals("user name not correctly loaded", "gradledev-tests-user", r.repoUserName);
         Assert.assertEquals("user password not correctly loaded", "gradledev-tests-user", r.repoUserPwd);
         Assert.assertEquals("repo URL not correctly loaded", "https://artifactory4t4apgsga.jfrog.io/artifactory4t4apgsga", r.repoBaseUrl);
@@ -42,6 +42,9 @@ public class DeserializeRepoNamesTest {
                     break;
                 case MAVEN_RELEASE:
                     Assert.assertEquals(rt.asString() + "repo not correctly loaded", "release-functionaltest", m.values().toArray()[0]);
+                    break;
+                case JAVA_DIST:
+                    Assert.assertEquals(rt.asString() + "repo not correctly loaded", "apgPlatformDependencies-test", m.values().toArray()[0]);
                     break;
                 default:
                     Assert.fail(rt.asString() + " has been loaded, but was not in repoNamesTest.json");
