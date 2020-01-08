@@ -8,7 +8,8 @@ import java.util.Arrays;
 import java.util.List;
 
 public class ApgCommonPackageExtension {
-	
+
+    public static final String CONFIGURATION_NAME_DEFAULT = "serviceRuntime";
 	private static final String SERVICE_PROPERTIES_DIR_DEFAULT = "resources";
 	private static final String APG_OPSDEFAULT = "apg_ops";
 	private static final String RELEASENR_DEFAULT = "1";
@@ -30,6 +31,7 @@ public class ApgCommonPackageExtension {
 	private static final String MAIN_PRG_DEFAULT = "com.apgsga.it21.ui.webapp.Webapp";
 	private static final String SERVICE_NAME_DEFAULT = "jadas";
 
+    private String configurationName = CONFIGURATION_NAME_DEFAULT;
 	private String serviceName =  SERVICE_NAME_DEFAULT; 
 	private String mainProgramName = MAIN_PRG_DEFAULT; 
 	private String installTarget = TARGET_DEFAULT; 
