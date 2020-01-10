@@ -1,4 +1,4 @@
-package com.apgsga.maven.dm
+package com.apgsga.maven.dm.tasks
 
 import com.apgsga.gradle.test.utils.AbstractSpecification
 import org.gradle.util.GFileUtils

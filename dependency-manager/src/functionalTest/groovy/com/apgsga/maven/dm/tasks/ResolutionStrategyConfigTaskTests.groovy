@@ -28,6 +28,7 @@ class ResolutionStrategyConfigTaskTests extends AbstractSpecification {
                 id("com.apgsga.version.resolver")
                 id 'java'
             }
+            // Explicit creation of the configuration used
             configurations {
                jadasRuntime
             }
@@ -57,8 +58,12 @@ class ResolutionStrategyConfigTaskTests extends AbstractSpecification {
                 id("com.apgsga.version.resolver")
                 id 'java'
             }
+        // Explicit creation of the configuration left out, doesn't work see expected Exception and comment
+        //    configurations {
+        //       jadasRuntime
+        //    }
             apgRepos{
-				config(MAVEN,[REPO_NAME:"${TEST_REPO}",REPO_BASE_URL:"${REPO_URL}"])	
+                config(MAVEN,[REPO_NAME:"${TEST_REPO}",REPO_BASE_URL:"${REPO_URL}"])	
 			}
             versionResolvers {
                  configurationName = "jadasRuntime"
@@ -89,9 +94,11 @@ class ResolutionStrategyConfigTaskTests extends AbstractSpecification {
             apgRepos{
 				config(MAVEN,[REPO_NAME:"${TEST_REPO}",REPO_BASE_URL:"${REPO_URL}"])	
 			}
+			// Implicit eager creation of default configuration serviceRuntime. works
             versionResolvers {
                  boms = "test:test-nested-bom:1.1"
             }
+       
             dependencies {
                serviceRuntime 'org.apache.httpcomponents:httpclient'
             }
