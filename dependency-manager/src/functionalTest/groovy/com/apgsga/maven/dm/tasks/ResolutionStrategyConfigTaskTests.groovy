@@ -33,8 +33,8 @@ class ResolutionStrategyConfigTaskTests extends AbstractSpecification {
                jadasRuntime
             }
             apgRepos{
-				config(MAVEN,[REPO_NAME:"${TEST_REPO}",REPO_BASE_URL:"${REPO_URL}"])	
-			}
+		config(MAVEN,[REPO_NAME:"${TEST_REPO}",REPO_BASE_URL:"${REPO_URL}"])	
+	    }
             versionResolvers {
                  configurationName = "jadasRuntime"
                  boms = "test:test-nested-bom:1.1"
@@ -64,7 +64,7 @@ class ResolutionStrategyConfigTaskTests extends AbstractSpecification {
         //    }
             apgRepos{
                 config(MAVEN,[REPO_NAME:"${TEST_REPO}",REPO_BASE_URL:"${REPO_URL}"])	
-			}
+	    }
             versionResolvers {
                  configurationName = "jadasRuntime"
                  boms = "test:test-nested-bom:1.1"
@@ -92,9 +92,9 @@ class ResolutionStrategyConfigTaskTests extends AbstractSpecification {
                 id 'java'
             }
             apgRepos{
-				config(MAVEN,[REPO_NAME:"${TEST_REPO}",REPO_BASE_URL:"${REPO_URL}"])	
-			}
-			// Implicit eager creation of default configuration serviceRuntime. works
+		config(MAVEN,[REPO_NAME:"${TEST_REPO}",REPO_BASE_URL:"${REPO_URL}"])	
+	    }
+	    // Implicit eager creation of default configuration serviceRuntime. works
             versionResolvers {
                  boms = "test:test-nested-bom:1.1"
             }
@@ -119,8 +119,8 @@ class ResolutionStrategyConfigTaskTests extends AbstractSpecification {
                 id 'java'
             }
             apgRepos{
-				config(MAVEN,[REPO_NAME:"${TEST_REPO}",REPO_BASE_URL:"${REPO_URL}"])	
-			}
+		config(MAVEN,[REPO_NAME:"${TEST_REPO}",REPO_BASE_URL:"${REPO_URL}"])	
+	    }
             versionResolvers {
                  boms = 'test:test-composite-bom:1.0'
                   patches {
