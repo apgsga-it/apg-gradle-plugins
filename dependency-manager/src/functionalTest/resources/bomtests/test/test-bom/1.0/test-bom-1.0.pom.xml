@@ -44,6 +44,11 @@
                 <artifactId>ppix-dao</artifactId>
                 <version>${branch.version}</version>
             </dependency>
+            <dependency>
+                <groupId>com.affichage.it21.vk</groupId>
+                <artifactId>zentraldispo-dao</artifactId>
+                <version>xxxxxxxxxxx</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 </project>
