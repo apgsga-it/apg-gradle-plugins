@@ -20,6 +20,8 @@
             <option value="$PROJECT_DIR$/maven-publish" />
             <option value="$PROJECT_DIR$/repo-config" />
             <option value="$PROJECT_DIR$/rpm-service-packager" />
+            <option value="$PROJECT_DIR$/rpm-ssh-deployer" />
+            <option value="$PROJECT_DIR$/ssh-common" />
             <option value="$PROJECT_DIR$/zip-service-packager" />
           </set>
         </option>

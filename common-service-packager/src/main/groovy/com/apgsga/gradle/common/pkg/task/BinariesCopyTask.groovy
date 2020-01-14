@@ -15,7 +15,6 @@ class BinariesCopyTask extends DefaultTask {
 	def taskAction() {
 		def ex = project.extensions.apgPackage
 		def configName = ex.configurationName
-		// TODO (che, 1.10.19) : make excludes configurable via extension
 		def config = project.configurations.findByName("${configName}")
 		if (config == null) {
 			config = project.configurations.create("${configName}")
