@@ -1,22 +1,20 @@
 package com.apgsga.revision.manager.domain
 
+import com.apgsga.revision.manager.plugin.RevisionManagerPlugin
 import groovy.json.JsonBuilder
 import groovy.json.JsonOutput
 import groovy.json.JsonSlurper
-import org.gradle.api.Project
 
 import java.util.stream.Collectors
 
 class RevisionManagerImpl implements RevisionManager {
 
-    private Project project;
+    private Properties config;
 
     private revisionFile
 
-    def RevisionManagerImpl(def project) {
-        // TODO JHE: Instead of getting a config, we now get a project, and will read the config from there, assuming properties are in gradle.properties.
-        //           This will certainly be done differently when IT-35189 will be done.
-        this.project = project
+    def RevisionManagerImpl(Properties configuration) {
+        this.config = configuration
         initRevisionFile()
     }
 
@@ -158,7 +156,7 @@ class RevisionManagerImpl implements RevisionManager {
     }
 
     private def initRevisionFile() {
-        revisionFile = new File(project.getProperties().get("revision.file.path"))
+        revisionFile = new File(config.get("revision.file.path"))
         if(!revisionFile.exists()) {
             def builder = new JsonBuilder()
             builder {
@@ -170,9 +168,9 @@ class RevisionManagerImpl implements RevisionManager {
 
     private def isProd(def target) {
         def isProd = false
-        def targetSystemMappingFilePath = "${project.getProperties().get('config.dir')}/${project.getProperties().get('target.system.mapping.file.name')}"
+        def targetSystemMappingFilePath = "${config.get(RevisionManagerPlugin.CONFIG_DIR_PROPERTY)}/${config.get(RevisionManagerPlugin.CONFIG_DIR_PROPERTY)}"
         def targetSystemMappingFile = new File(targetSystemMappingFilePath)
-        assert targetSystemMappingFile.exists() : "${project.getProperties().get('config.dir')}/${project.getProperties().get('target.system.mapping.file.name')} does not exist!"
+        assert targetSystemMappingFile.exists() : "${targetSystemMappingFilePath} does not exist!"
         def targetSystemMappingAsJson = new JsonSlurper().parse(targetSystemMappingFile)
         targetSystemMappingAsJson.stageMappings.each{stageMapping ->
             if(stageMapping.target.equalsIgnoreCase(target)) {
