@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<parent>
+		<artifactId>dao-parentpom</artifactId>
+		<groupId>com.affichage.common.maven</groupId>
+		<version>9.1.0.ADMIN-UIMIG-SNAPSHOT</version>
+	</parent>
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>com.affichage.it21.vk</groupId>
+	<artifactId>zentraldispo-dao</artifactId>
+	<name>com.affichage.it21.vk.zentraldispo.dao</name>
+	<developers>
+		<developer>
+			<id>rma</id>
+			<name>Roger Manser</name>
+			<email>roger.manser@apg.ch</email>
+			<organization>apg.ch</organization>
+			<timezone>0</timezone>
+			<roles>
+				<role>Lead Entwickler</role>
+			</roles>
+		</developer>
+	</developers>
+	<distributionManagement>
+		<site>
+			<id>site</id>
+			<url>
+				file:///var/continuum/mavensites/com.affichage.it21.vk.zentraldispo.dao
+			</url>
+		</site>
+	</distributionManagement>
+	<build>
+		<plugins>
+			<plugin>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<configuration>
+					<skip>true</skip>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+	<dependencies>
+		<!-- che, 24.9 : this dependency to the gui framework , needs to go away -->
+		<dependency>
+			<groupId>com.apgsga</groupId>
+			<artifactId>forms2java</artifactId>
+		</dependency>
+		<!-- che, 24.9 : this dependency to the jgoodies , needs to go away -->
+		<dependency>
+			<groupId>com.jgoodies</groupId>
+			<artifactId>jgoodies-common</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.affichage.it21.adgis</groupId>
+			<artifactId>adgis-common-dao</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.vividsolutions</groupId>
+			<artifactId>jts</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.affichage.it21.gp</groupId>
+			<artifactId>gp-dao</artifactId>
+		</dependency>
+<!--  		<dependency>
+			<groupId>com.affichage.it21.pe</groupId>
+			<artifactId>pe-dao</artifactId>
+		</dependency>
+ -->		<dependency>
+			<groupId>com.affichage.it21.adgis</groupId>
+			<artifactId>adgis-api-dao</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.affichage.persistence</groupId>
+			<artifactId>java-dao-service</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-tx</artifactId>
+			<optional>true</optional>
+		</dependency>
+		<dependency>
+			<groupId>com.affichage</groupId>
+			<artifactId>dao-persistence</artifactId>
+			<exclusions>
+				<exclusion>
+					<artifactId>log4j</artifactId>
+					<groupId>log4j</groupId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		<dependency>
+			<groupId>commons-collections</groupId>
+			<artifactId>commons-collections</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.jgoodies</groupId>
+			<artifactId>jgoodies-application</artifactId>
+		</dependency>
+        <dependency>
+			<groupId>com.affichage.it21.fm</groupId>
+			<artifactId>flaechen-dao</artifactId>
+		</dependency>
+		<!-- TODO CHE, STB , JAVA8MIG: eliminieren Dependency, so bald Dao Generator commons-lang3 kompatiblen Code generiert -->
+        <dependency>
+			<groupId>commons-lang</groupId>
+			<artifactId>commons-lang</artifactId>
+		</dependency>
+	</dependencies>
+
+	<version>9.1.0.ADMIN-UIMIG-${revision}</version>
+</project>
+

@@ -4,7 +4,9 @@ import com.google.common.collect.Maps;
 import org.gradle.api.Project;
 
 import java.util.Map;
-
+// TODO (jhe, che) 10.1.2020 : To discuss and see if using NameDomainObjectContainer not maps easier to Repo Class (DSL and Serialization)
+// TODO (jhe, che) 10.1.2020 : see also https://github.com/liquibase/liquibase-gradle-plugin/blob/master/src/main/groovy/org/liquibase/gradle/LiquibaseExtension.groovy
+// TODO (jhe, che) 10.1.2020 : see also jetbrains://idea/navigate/reference?project=apg-gradle-plugins&path=com/apgsga/maven/dm/ext/VersionResolution.kt
 public class ReposImpl implements  Repos {
 
     private Project project;

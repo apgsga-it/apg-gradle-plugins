@@ -1,0 +1,28 @@
+{
+  "className": "com.apgsga.microservice.patch.api.impl.PatchBean",
+  "patchNummer": "5791",
+  "serviceName": "It21Ui",
+  "microServiceBranch": "it21_release_9_1_0_admin_uimig",
+  "dbPatchBranch": "Patch_0900C1_5791",
+  "prodBranch": "HEAD",
+  "patchTag": "Patch_0900C1_5791_1",
+  "tagNr": 2,
+  "installationTarget": "CHEI212",
+  "baseVersionNumber": "9.1.0",
+  "revisionMnemoPart": "ADMIN-UIMIG",
+  "revisionNumber": null,
+  "lastRevisionNumber": null,
+  "dbObjects": [],
+  "mavenArtifacts": [
+    {
+      "className": "com.apgsga.microservice.patch.api.impl.MavenArtifactBean",
+      "artifactId": "zentraldispo-dao",
+      "groupId": "com.affichage.it21.vk",
+      "name": "com.affichage.it21.vk.zentraldispo-dao",
+      "version": "9.1.0.ADMIN-UIMIG-SNAPSHOT",
+      "dependencyLevel": 0
+    }
+  ],
+  "installOnEmptyModules": false,
+  "dbObjectsAsVcsPath": []
+}
