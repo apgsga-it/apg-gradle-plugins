@@ -21,68 +21,10 @@ class RevisionManagerImpl implements RevisionManager {
     }
 
     @Override
-    def addRevision(def target, def revision, def fullRevisionPrefix) {
-        target = target.toUpperCase()
-        revision = revision.toUpperCase()
-        fullRevisionPrefix = fullRevisionPrefix.toUpperCase()
-        def revFileAsJson = new JsonSlurper().parse(revisionFile)
-        if(revFileAsJson."${target}" == null) {
-            def builder = new JsonBuilder(revFileAsJson)
-            builder{
-                "${target}"{
-                    lastRevision(revision)
-                    revisions(["${fullRevisionPrefix}${revision}"])
-                }
-            }
-            addNewContentToExistingRevisionFile(builder)
-        }
-        else {
-            revFileAsJson."${target}".revisions.add("${fullRevisionPrefix}${revision}")
-            revFileAsJson."${target}".lastRevision = revision
-            revisionFile.write(new JsonBuilder(revFileAsJson).toPrettyString())
-        }
-    }
-
-    private def addNewContentToExistingRevisionFile(JsonBuilder builder) {
-        def revFileAsJson = new JsonSlurper().parse(revisionFile)
-        revisionFile.write(JsonOutput.prettyPrint(JsonOutput.toJson(revFileAsJson + builder.content)))
-    }
-
-    def getInstalledRevisions(def target) {
-        def revFileAsJson = new JsonSlurper().parse(revisionFile)
-        if(revFileAsJson."${target}" != null) {
-            return revFileAsJson."${target}".revisions
-        }
-        else {
-            return null
-        }
-
-    }
-
-    @Override
     def nextRevision() {
         def revFileAsJson = new JsonSlurper().parse(revisionFile)
         println revFileAsJson.nextRev
         incrementNextRev()
-    }
-
-    private def incrementNextRev() {
-        def revFileAsJson = new JsonSlurper().parse(revisionFile)
-        def currentRev = revFileAsJson.nextRev
-        currentRev++
-        revFileAsJson.nextRev = currentRev
-        revisionFile.write(new JsonBuilder(revFileAsJson).toPrettyString())
-    }
-
-    def initRevisionFile() {
-        revisionFile = new File(project.getProperties().get("revision.file.path"))
-        if(!revisionFile.exists()) {
-            def builder = new JsonBuilder()
-            builder {
-                nextRev(1)
-            }
-            revisionFile.write(builder.toPrettyString())
-        }
     }
 
     @Override
@@ -168,16 +110,65 @@ class RevisionManagerImpl implements RevisionManager {
         }
     }
 
-    def deleteRevisionsForTarget(def target) {
-        assert !isProd(target) : "Revisions can't be deleted for production target: ${target}"
+    @Override
+    def addRevision(def target, def revision, def fullRevisionPrefix) {
+        target = target.toUpperCase()
+        revision = revision.toUpperCase()
+        fullRevisionPrefix = fullRevisionPrefix.toUpperCase()
         def revFileAsJson = new JsonSlurper().parse(revisionFile)
-        if(revFileAsJson."${target}" != null) {
-            revFileAsJson."${target}".revisions = []
+        if(revFileAsJson."${target}" == null) {
+            def builder = new JsonBuilder(revFileAsJson)
+            builder{
+                "${target}"{
+                    lastRevision(revision)
+                    revisions(["${fullRevisionPrefix}${revision}"])
+                }
+            }
+            addNewContentToExistingRevisionFile(builder)
+        }
+        else {
+            revFileAsJson."${target}".revisions.add("${fullRevisionPrefix}${revision}")
+            revFileAsJson."${target}".lastRevision = revision
             revisionFile.write(new JsonBuilder(revFileAsJson).toPrettyString())
         }
     }
 
-    def isProd(def target) {
+    private def addNewContentToExistingRevisionFile(JsonBuilder builder) {
+        def revFileAsJson = new JsonSlurper().parse(revisionFile)
+        revisionFile.write(JsonOutput.prettyPrint(JsonOutput.toJson(revFileAsJson + builder.content)))
+    }
+
+    private def getInstalledRevisions(def target) {
+        def revFileAsJson = new JsonSlurper().parse(revisionFile)
+        if(revFileAsJson."${target}" != null) {
+            return revFileAsJson."${target}".revisions
+        }
+        else {
+            return null
+        }
+
+    }
+
+    private def incrementNextRev() {
+        def revFileAsJson = new JsonSlurper().parse(revisionFile)
+        def currentRev = revFileAsJson.nextRev
+        currentRev++
+        revFileAsJson.nextRev = currentRev
+        revisionFile.write(new JsonBuilder(revFileAsJson).toPrettyString())
+    }
+
+    private def initRevisionFile() {
+        revisionFile = new File(project.getProperties().get("revision.file.path"))
+        if(!revisionFile.exists()) {
+            def builder = new JsonBuilder()
+            builder {
+                nextRev(1)
+            }
+            revisionFile.write(builder.toPrettyString())
+        }
+    }
+
+    private def isProd(def target) {
         def isProd = false
         def targetSystemMappingFilePath = "${project.getProperties().get('config.dir')}/${project.getProperties().get('target.system.mapping.file.name')}"
         def targetSystemMappingFile = new File(targetSystemMappingFilePath)
