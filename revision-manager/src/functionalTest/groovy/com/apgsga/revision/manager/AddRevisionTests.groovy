@@ -2,8 +2,26 @@ package com.apgsga.revision.manager
 
 import com.apgsga.gradle.test.utils.AbstractSpecification
 import groovy.json.JsonSlurper
+import org.gradle.api.tasks.TaskExecutionException
 
 class AddRevisionTests extends AbstractSpecification {
+
+    def "Patch Revision Cli validate add revision to target without any parameter"() {
+        given:
+            buildFile << """
+                            plugins {
+                                id 'com.apgsga.revision.manager' 
+                            }
+                        """
+            def revFile = new File("src/functionalTest/resources/Revisions.json")
+        when:
+            def result = gradleRunnerFactory(['init', 'addRevision']).build()
+        then:
+            // JHE: mmhh, a bit generic ;), but really important to test here Exception we get?
+            thrown Exception
+        cleanup:
+            revFile.delete()
+    }
 
     def "Validate add revision to target"() {
         given:
