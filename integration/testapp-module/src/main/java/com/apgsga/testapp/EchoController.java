@@ -1,11 +1,11 @@
 package com.apgsga.testapp;
 
-import java.util.concurrent.atomic.AtomicLong;
-
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.concurrent.atomic.AtomicLong;
 
 @RestController
 @RequestMapping(path = "service")
