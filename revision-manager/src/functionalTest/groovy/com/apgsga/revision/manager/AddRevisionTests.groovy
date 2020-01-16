@@ -6,7 +6,7 @@ import org.gradle.api.tasks.TaskExecutionException
 
 class AddRevisionTests extends AbstractSpecification {
 
-    def "Patch Revision Cli validate add revision to target without any parameter"() {
+    def "Validate add revision to target without any parameter"() {
         given:
             buildFile << """
                             plugins {
@@ -17,7 +17,7 @@ class AddRevisionTests extends AbstractSpecification {
         when:
             def result = gradleRunnerFactory(['init', 'addRevision']).build()
         then:
-            // JHE: mmhh, a bit generic ;), but really important to test here Exception we get?
+            // JHE: mmhh, a bit generic ;), but really important to test here is that we get an Exception
             thrown Exception
         cleanup:
             revFile.delete()

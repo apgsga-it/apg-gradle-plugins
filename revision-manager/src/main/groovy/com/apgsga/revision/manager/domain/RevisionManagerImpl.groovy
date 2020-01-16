@@ -13,7 +13,7 @@ class RevisionManagerImpl implements RevisionManager {
 
     private revisionFile
 
-    def RevisionManagerImpl(Properties configuration) {
+    RevisionManagerImpl(Properties configuration) {
         this.config = configuration
         initRevisionFile()
     }
@@ -26,12 +26,12 @@ class RevisionManagerImpl implements RevisionManager {
     }
 
     @Override
-    def lastRevision(def target) {
+    String lastRevision(def target) {
         def revFileAsJson = new JsonSlurper().parse(revisionFile)
         if(revFileAsJson."${target}" != null)
-            println revFileAsJson."${target}".lastRevision
+            return revFileAsJson."${target}".lastRevision
         else {
-            println "SNAPSHOT"
+            return "SNAPSHOT"
         }
     }
 
