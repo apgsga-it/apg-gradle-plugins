@@ -12,6 +12,8 @@ buildscript {
 apply plugin: 'com.apgsga.maven.publish'
 apply plugin: 'com.apgsga.gradle.repo.config'
 apply plugin: 'java'
+apply plugin: 'maven'
+
 
 apgRepositories {
 	mavenCentral()
