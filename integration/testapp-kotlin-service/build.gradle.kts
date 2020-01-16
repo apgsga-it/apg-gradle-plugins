@@ -13,7 +13,7 @@ plugins {
 
 group = "com.apgsga"
 version = "0.4-SNAPSHOT"
-java.sourceCompatibility = JavaVersion.VERSION_1_8
+java.sourceCompatibility = JavaVersion.VERSION_1_8 
 
 
 apgRepositories {
