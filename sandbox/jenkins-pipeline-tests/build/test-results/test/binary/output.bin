@@ -1,0 +1,6 @@
+    MavenBuildPipelineFile.run()
+?      MavenBuildPipelineFile.node(master, groovy.lang.Closure)
+H         MavenBuildPipelineFile.stage(Maven build, groovy.lang.Closure)
+6            MavenBuildPipelineFile.echo(building in:)
+9            MavenBuildPipelineFile.sh(mvn clean install)
+9            MavenBuildPipelineFile.sh(mvn clean install)
