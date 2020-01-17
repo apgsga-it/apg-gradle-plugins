@@ -26,5 +26,4 @@ project(':dependency-manager').projectDir = "$rootDir/dependency-manager" as Fil
 project(':common-test').projectDir = "$rootDir/common-test" as File
 project(':rpm-ssh-deployer').projectDir = "$rootDir/rpm-ssh-deployer" as File
 project(':ssh-common').projectDir = "$rootDir/ssh-common" as File
-include 'jenkins-pipeline-tests'
 

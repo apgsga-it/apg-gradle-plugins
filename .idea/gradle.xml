@@ -17,7 +17,6 @@
             <option value="$PROJECT_DIR$/generic-publish" />
             <option value="$PROJECT_DIR$/gradle-common" />
             <option value="$PROJECT_DIR$/it21-gui-packager" />
-            <option value="$PROJECT_DIR$/jenkins-pipeline-tests" />
             <option value="$PROJECT_DIR$/maven-publish" />
             <option value="$PROJECT_DIR$/repo-config" />
             <option value="$PROJECT_DIR$/rpm-service-packager" />
