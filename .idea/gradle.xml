@@ -17,12 +17,25 @@
             <option value="$PROJECT_DIR$/generic-publish" />
             <option value="$PROJECT_DIR$/gradle-common" />
             <option value="$PROJECT_DIR$/it21-gui-packager" />
+            <option value="$PROJECT_DIR$/jenkins-pipeline-tests" />
             <option value="$PROJECT_DIR$/maven-publish" />
             <option value="$PROJECT_DIR$/repo-config" />
             <option value="$PROJECT_DIR$/rpm-service-packager" />
             <option value="$PROJECT_DIR$/rpm-ssh-deployer" />
             <option value="$PROJECT_DIR$/ssh-common" />
             <option value="$PROJECT_DIR$/zip-service-packager" />
+          </set>
+        </option>
+        <option name="useAutoImport" value="true" />
+        <option name="useQualifiedModuleNames" value="true" />
+      </GradleProjectSettings>
+      <GradleProjectSettings>
+        <option name="distributionType" value="DEFAULT_WRAPPED" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$/integration/jenkins-pipeline-tests" />
+        <option name="gradleJvm" value="1.8" />
+        <option name="modules">
+          <set>
+            <option value="$PROJECT_DIR$/integration/jenkins-pipeline-tests" />
           </set>
         </option>
         <option name="useAutoImport" value="true" />
