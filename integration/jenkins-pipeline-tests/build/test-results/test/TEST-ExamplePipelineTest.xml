@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="ExamplePipelineTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2020-01-17T15:05:06" hostname="chhexbook.local" time="0.634">
+<testsuite name="ExamplePipelineTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2020-01-17T15:24:38" hostname="chhexbook.local" time="0.527">
   <properties/>
-  <testcase name="should_execute_without_errors" classname="ExamplePipelineTest" time="0.634"/>
+  <testcase name="should_execute_without_errors" classname="ExamplePipelineTest" time="0.527"/>
   <system-out><![CDATA[   ExamplePipelineFile.run()
       ExamplePipelineFile.node(master, groovy.lang.Closure)
          ExamplePipelineFile.stage(Test 1: loop of echo statements, groovy.lang.Closure)
