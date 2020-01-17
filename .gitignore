@@ -28,3 +28,7 @@ out/
 /common-test/bin/main/com/apgsga/gradle/test/utils/
 /ssh-common/build/
 /rpm-ssh-deployer/build/
+/integration/testapp-bom/target/
+/integration/testapp-module/target/
+/integration/testapp-pkg/log.log
+/sandbox/testapp-kotlin-service/build/
