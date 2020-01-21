@@ -1,0 +1,17 @@
+plugins {
+    id 'com.palantir.docker-run' version '0.24.0'
+    id 'java'
+}
+
+repositories {
+    mavenCentral()
+}
+
+dockerRun {
+    name 'testsome'
+    image 'jenkins4eval/jenkinsfile-runner'
+    volumes 'Jenkinsfile': '/workspace/Jenkinsfile'
+    daemonize false
+    clean true
+    command '-a' ,'param1=Hellou' , '-a', 'param2=what ever you want'
+}
