@@ -1,3 +1,5 @@
+import org.gradle.api.file.FileVisitDetails
+
 plugins {
     id 'com.palantir.docker-run' version '0.24.0'
     id 'java'
@@ -10,8 +12,22 @@ repositories {
 dockerRun {
     name 'testsome'
     image 'jenkins4eval/jenkinsfile-runner'
-    volumes 'Jenkinsfile': '/workspace/Jenkinsfile'
+    volumes 'Jenkinsfile': '/workspace/Jenkinsfile', 'jenkinsHome': '/jenkinsHome',  'jenkinsWorkspace': '/jenkinsWorkspace'
     daemonize false
     clean true
-    command '-a' ,'param1=Hellou' , '-a', 'param2=what ever you want'
+    command '--runWorkspace', '/jenkinsWorkspace', '--runHome', '/jenkinsHome', '-a' ,'param1=Hellou' , '-a', 'param2=what ever you want'
 }
+
+task cleanJenkinsHome(type: Delete) {
+    fileTree(dir: 'jenkinsHome').visit { FileVisitDetails details ->
+        delete details.file
+    }
+    fileTree(dir: 'jenkinsWorkspace').visit { FileVisitDetails details ->
+        delete details.file
+    }
+}
+
+
+
+
+clean.dependsOn cleanJenkinsHome

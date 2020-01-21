@@ -5,7 +5,7 @@ pipeline {
         string(name: 'param2', defaultValue: '', description: '2nd parameter')
     }
     stages {
-        stages('Build') {
+        stage('Build') {
             steps {
                 echo 'Hello world!'
                 echo "message: ${params.param1}"
