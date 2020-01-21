@@ -4,9 +4,9 @@ import com.apgsga.gradle.test.utils.AbstractSpecification
 import groovy.json.JsonSlurper
 import org.gradle.api.tasks.TaskExecutionException
 
-class AddRevisionTests extends AbstractSpecification {
+class SaveRevisionTests extends AbstractSpecification {
 
-    def "Patch Revision Cli validate add revision to target without any parameter"() {
+    def "Validate save revision for target without any parameter"() {
         given:
             buildFile << """
                             plugins {
@@ -15,15 +15,15 @@ class AddRevisionTests extends AbstractSpecification {
                         """
             def revFile = new File("src/functionalTest/resources/Revisions.json")
         when:
-            def result = gradleRunnerFactory(['init', 'addRevision']).build()
+            def result = gradleRunnerFactory(['init', 'saveRevision']).build()
         then:
-            // JHE: mmhh, a bit generic ;), but really important to test here Exception we get?
+            // JHE: mmhh, a bit generic ;), but really important to test here is that we get an Exception
             thrown Exception
         cleanup:
             revFile.delete()
     }
 
-    def "Validate add revision to target"() {
+    def "Validate save revision for target"() {
         given:
             buildFile << """
                         plugins {
@@ -32,7 +32,7 @@ class AddRevisionTests extends AbstractSpecification {
                     """
             def revFile = new File("src/functionalTest/resources/Revisions.json")
         when:
-            def result = gradleRunnerFactory(['init', 'addRevision', '-Ptarget=chei212', '-Prevision=123', '-PfullRevisionPrefix=9.1.0.ADMIN-UIMIG-']).build()
+            def result = gradleRunnerFactory(['init', 'saveRevision', '-Ptarget=chei212', '-Prevision=123', '-PfullRevisionPrefix=9.1.0.ADMIN-UIMIG-']).build()
             def chei212Revisions
             def prodRevision
             def lastChei212Revision
@@ -46,7 +46,7 @@ class AddRevisionTests extends AbstractSpecification {
             revAsJson.CHEI212.revisions[0].toString() == "9.1.0.ADMIN-UIMIG-123"
             revAsJson.CHEI212.lastRevision.toString() == "123"
         when:
-            result = gradleRunnerFactory(['init', 'addRevision', '-Ptarget=chei212', '-Prevision=234', '-PfullRevisionPrefix=9.1.0.ADMIN-UIMIG-']).build()
+            result = gradleRunnerFactory(['init', 'saveRevision', '-Ptarget=chei212', '-Prevision=234', '-PfullRevisionPrefix=9.1.0.ADMIN-UIMIG-']).build()
             revAsJson = new JsonSlurper().parse(revFile)
         then:
             revFile.exists()
@@ -57,7 +57,7 @@ class AddRevisionTests extends AbstractSpecification {
             revAsJson.CHEI212.revisions.contains("9.1.0.ADMIN-UIMIG-234")
             revAsJson.CHEI212.lastRevision.toString() == "234"
         when:
-            result = gradleRunnerFactory(['init', 'addRevision', '-Ptarget=chti211', '-Prevision=15', '-PfullRevisionPrefix=9.1.0.ADMIN-UIMIG-']).build()
+            result = gradleRunnerFactory(['init', 'saveRevision', '-Ptarget=chti211', '-Prevision=15', '-PfullRevisionPrefix=9.1.0.ADMIN-UIMIG-']).build()
             revAsJson = new JsonSlurper().parse(revFile)
         then:
             revFile.exists()
@@ -71,8 +71,8 @@ class AddRevisionTests extends AbstractSpecification {
             revAsJson.CHTI211.revisions.contains("9.1.0.ADMIN-UIMIG-15")
             revAsJson.CHTI211.lastRevision.toString() == "15"
         when:
-            result = gradleRunnerFactory(['init', 'addRevision', '-Ptarget=chti211', '-Prevision=18', '-PfullRevisionPrefix=9.1.0.ADMIN-UIMIG-']).build()
-            result = gradleRunnerFactory(['init', 'addRevision', '-Ptarget=chei212', '-Prevision=77', '-PfullRevisionPrefix=9.1.0.ADMIN-UIMIG-']).build()
+            result = gradleRunnerFactory(['init', 'saveRevision', '-Ptarget=chti211', '-Prevision=18', '-PfullRevisionPrefix=9.1.0.ADMIN-UIMIG-']).build()
+            result = gradleRunnerFactory(['init', 'saveRevision', '-Ptarget=chei212', '-Prevision=77', '-PfullRevisionPrefix=9.1.0.ADMIN-UIMIG-']).build()
             revAsJson = new JsonSlurper().parse(revFile)
         then:
             revFile.exists()
