@@ -39,7 +39,7 @@ apgPackage {
 	serviceName = project.ext.serviceName
 	configurationName = "serviceRuntime"
 	dependencies = [
-		"com.apgsga:testapp-service:0.3-SNAPSHOT"
+		"com.apgsga.testapp:testapp-service:0.3-SNAPSHOT"
     ]
 	resourceFilters = "serviceport"
 	appConfigFilters = "general"

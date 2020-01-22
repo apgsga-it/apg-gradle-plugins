@@ -12,21 +12,30 @@ repositories {
 
 task copyModules (type: Copy) {
     from "../.."
-    into "${buildDir}/temp/maven/"
-    include "testapp-bom/**", "testapp-parentpom/**" , "testapp-module/**", "testapp-service/**", "pom.xml"
+    into "${buildDir}/temp/modules/"
+    include "testapp-bom/**", "testapp-parentpom/**" , "testapp-module/**", "testapp-service/**", "testapp-pkg/**"
     exclude "/**/target"
 }
 
 // TODO (che, 22.2) : Better Strategie for replicating Maven repo
+
 task copyRepo (type: Copy) {
-    from "/Users/chhex/maven/testrepo.initial"
+    from "/Users/chhex/maven/testrepo"
     into "${buildDir}/temp/repo/"
     exclude "/**/apgsga", "/**/affichage"
 }
 
+// TODO (che, 22.2) : Better Strategie publishing the Gradle Plugins
+task copyPlugins (type: Copy) {
+    from "/Users/chhex/maven/testrepo"
+    into "${buildDir}/temp/repo/"
+    include "com/apgsga/gradle/**"
+}
+
+
 docker {
     name 'maven-test-image:latest'
-    files tasks.copyModules.outputs , tasks.copyRepo.outputs , "${buildDir}/temp/",  "docker"
+    files tasks.copyModules , tasks.copyRepo , tasks.copyPlugins, "${buildDir}/temp/",  "docker"
     dockerfile file('docker/Dockerfile')
     pull true
     noCache true

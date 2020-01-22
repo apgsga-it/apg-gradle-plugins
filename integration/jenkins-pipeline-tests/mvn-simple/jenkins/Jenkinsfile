@@ -12,6 +12,11 @@ pipeline {
                 maven_build(modules)
               }
           }
+          stage('Package') {
+              steps {
+                 pkg('testapp-pkg')
+              }
+          }
      }
 }
 
@@ -21,5 +26,12 @@ def maven_build(list) {
         dir("${module}") {
             sh "mvn clean install"
          }
+    }
+}
+
+def pkg(packagename) {
+    dir ("${packagename}") {
+        sh "chmod +x gradlew"
+        sh "./gradlew clean buildRpm --info  --stacktrace -Pversion=1.0 -PreleaseNr=12"
     }
 }
