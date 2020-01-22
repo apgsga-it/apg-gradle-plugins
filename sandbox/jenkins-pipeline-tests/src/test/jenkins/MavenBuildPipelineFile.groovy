@@ -4,7 +4,6 @@ modules = ['../testapp-module','../testapp-service']
 
 node('master') {
     stage('Maven build') {
-        echo "building in:"
         maven_build(modules)
     }
 }

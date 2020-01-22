@@ -10,7 +10,7 @@
   <artifactId>testapp-service</artifactId>
   <dependencies>
     <dependency>
-      <groupId>com.apgsga</groupId>
+      <groupId>com.apgsga.testapp</groupId>
       <artifactId>testapp-module</artifactId>
     </dependency>
     <dependency>

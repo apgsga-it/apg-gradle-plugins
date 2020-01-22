@@ -33,3 +33,5 @@ out/
 /integration/testapp-pkg/log.log
 /sandbox/testapp-kotlin-service/build/
 /sandbox/jenkins-pipeline-tests/build/
+/integration/jenkins-pipeline-tests/mvn-simple/build/
+/sandbox/jenkins-pipeline-tests/build/

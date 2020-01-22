@@ -1,0 +1,53 @@
+import org.gradle.api.tasks.Copy
+
+plugins {
+    id 'com.palantir.docker-run' version '0.24.0'
+    id 'com.palantir.docker' version '0.24.0'
+    id 'java'
+}
+
+repositories {
+    mavenCentral()
+}
+
+task copyModules (type: Copy) {
+    from "../.."
+    into "${buildDir}/temp/maven/"
+    include "testapp-bom/**", "testapp-parentpom/**" , "testapp-module/**", "testapp-service/**", "pom.xml"
+    exclude "/**/target"
+}
+
+// TODO (che, 22.2) : Better Strategie for replicating Maven repo
+task copyRepo (type: Copy) {
+    from "/Users/chhex/maven/testrepo.initial"
+    into "${buildDir}/temp/repo/"
+    exclude "/**/apgsga", "/**/affichage"
+}
+
+docker {
+    name 'maven-test-image:latest'
+    files tasks.copyModules.outputs , tasks.copyRepo.outputs , "${buildDir}/temp/",  "docker"
+    dockerfile file('docker/Dockerfile')
+    pull true
+    noCache true
+}
+
+dockerRun {
+    name 'maven-test'
+    image 'maven-test-image:latest'
+    volumes 'jenkins/Jenkinsfile': '/workspace/Jenkinsfile', 'jenkinsHome': '/jenkinsHome',  'jenkinsWorkspace': '/jenkinsWorkspace'
+    daemonize false
+    clean true
+    command '--runWorkspace', '/jenkinsWorkspace', '--runHome', '/jenkinsHome', '-a', 'modules=testapp-bom:testapp-parentpom:testapp-module:testapp-service'
+}
+
+task cleanJenkinsHome(type: Delete) {
+    fileTree(dir: 'jenkinsHome').visit { FileVisitDetails details ->
+        delete details.file
+    }
+    fileTree(dir: 'jenkinsWorkspace').visit { FileVisitDetails details ->
+        delete details.file
+    }
+}
+
+clean.dependsOn cleanJenkinsHome

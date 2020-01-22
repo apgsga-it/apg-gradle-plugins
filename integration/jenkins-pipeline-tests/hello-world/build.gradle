@@ -1,5 +1,3 @@
-import org.gradle.api.file.FileVisitDetails
-
 plugins {
     id 'com.palantir.docker-run' version '0.24.0'
     id 'java'
@@ -10,9 +8,9 @@ repositories {
 }
 
 dockerRun {
-    name 'testsome'
+    name "testsome"
     image 'jenkins4eval/jenkinsfile-runner'
-    volumes 'Jenkinsfile': '/workspace/Jenkinsfile', 'jenkinsHome': '/jenkinsHome',  'jenkinsWorkspace': '/jenkinsWorkspace'
+    volumes 'Jenkinsfile': '/workspace/Jenkinsfile', 'jenkinsHome': '/jenkinsHome',  'jenkinsWorkspace': '/workspace'
     daemonize false
     clean true
     command '--runWorkspace', '/jenkinsWorkspace', '--runHome', '/jenkinsHome', '-a' ,'param1=Hellou' , '-a', 'param2=what ever you want'
