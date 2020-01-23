@@ -1,10 +1,10 @@
 plugins {
     id 'com.palantir.docker-run' version '0.24.0'
-    id 'com.palantir.docker' version '0.24.0'
     id 'java'
 }
 def modulesToTestDir = "../../modules"
 def localMaven
+
 repositories {
     localMaven = mavenLocal()
     mavenCentral()
@@ -12,17 +12,9 @@ repositories {
 
 println "Maven Local Repo : ${localMaven.url.path}"
 
-docker {
-    name 'maven-test-image:latest'
-    files "src/docker"
-    dockerfile file('src/docker/Dockerfile')
-    pull true
-    noCache true
-}
-
 dockerRun {
-    name 'maven-test'
-    image 'maven-test-image:latest'
+    name 'buildpkg-test'
+    image 'apg-jenkinsrunner-image:latest'
     volumes 'src/jenkins/Jenkinsfile': '/workspace/Jenkinsfile',
             'jenkinsHome': '/jenkinsHome',  "${modulesToTestDir}": '/jenkinsWorkspace' ,
             "${localMaven.url.path}":'/mavenLocal', "${gradle.gradleUserHomeDir}":'/gradleUserHome'

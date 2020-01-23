@@ -30,23 +30,22 @@
       </GradleProjectSettings>
       <GradleProjectSettings>
         <option name="distributionType" value="DEFAULT_WRAPPED" />
-        <option name="externalProjectPath" value="$PROJECT_DIR$/integration/jenkins-pipeline-tests/hello-world" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$/integration/jenkins-pipeline-tests/buildpkg-test" />
         <option name="gradleJvm" value="1.8" />
         <option name="modules">
           <set>
-            <option value="$PROJECT_DIR$/integration/jenkins-pipeline-tests/hello-world" />
+            <option value="$PROJECT_DIR$/integration/jenkins-pipeline-tests/buildpkg-test" />
           </set>
         </option>
-        <option name="useAutoImport" value="true" />
         <option name="useQualifiedModuleNames" value="true" />
       </GradleProjectSettings>
       <GradleProjectSettings>
         <option name="distributionType" value="DEFAULT_WRAPPED" />
-        <option name="externalProjectPath" value="$PROJECT_DIR$/integration/jenkins-pipeline-tests/mvn-simple" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$/integration/jenkins-pipeline-tests/create-jenkins-image" />
         <option name="gradleJvm" value="1.8" />
         <option name="modules">
           <set>
-            <option value="$PROJECT_DIR$/integration/jenkins-pipeline-tests/mvn-simple" />
+            <option value="$PROJECT_DIR$/integration/jenkins-pipeline-tests/create-jenkins-image" />
           </set>
         </option>
         <option name="useAutoImport" value="true" />
@@ -59,6 +58,28 @@
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$/integration/modules/testapp-pkg" />
+          </set>
+        </option>
+        <option name="useQualifiedModuleNames" value="true" />
+      </GradleProjectSettings>
+      <GradleProjectSettings>
+        <option name="distributionType" value="DEFAULT_WRAPPED" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$/sandbox/docker-sshd-compose" />
+        <option name="gradleJvm" value="1.8" />
+        <option name="modules">
+          <set>
+            <option value="$PROJECT_DIR$/sandbox/docker-sshd-compose" />
+          </set>
+        </option>
+        <option name="useQualifiedModuleNames" value="true" />
+      </GradleProjectSettings>
+      <GradleProjectSettings>
+        <option name="distributionType" value="DEFAULT_WRAPPED" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$/sandbox/docker-touch-compose" />
+        <option name="gradleJvm" value="1.8" />
+        <option name="modules">
+          <set>
+            <option value="$PROJECT_DIR$/sandbox/docker-touch-compose" />
           </set>
         </option>
         <option name="useQualifiedModuleNames" value="true" />

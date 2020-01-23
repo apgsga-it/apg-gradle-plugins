@@ -1,0 +1,8 @@
+version: "2"
+services:
+  hello:
+      container_name: "helloworld"
+      image: "alpine"
+      command: touch /test/touchtest.txt
+      volumes:
+        - ./test:/test

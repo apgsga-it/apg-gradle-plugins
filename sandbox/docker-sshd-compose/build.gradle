@@ -1,0 +1,13 @@
+plugins {
+    id 'com.palantir.docker-compose' version '0.24.0'
+    id 'com.palantir.docker' version '0.24.0'
+    id 'java'
+}
+
+docker {
+    name 'sshtest:latest'
+    files 'createUser.sh'
+    dockerfile file('Dockerfile')
+    pull true
+    noCache true
+}
