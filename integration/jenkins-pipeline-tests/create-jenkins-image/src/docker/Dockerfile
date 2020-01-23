@@ -49,7 +49,7 @@ ENV GRADLE_VERSION 5.6.3
 ENV GRADLE_HOME /usr/bin/gradle
 ENV GRADLE_USER_HOME /gradleUserHome
 ENV PATH $PATH:$GRADLE_HOME/bin
-
+#
 # Copy Modules to Test and settings.xml
 
 COPY settings.xml "$MAVEN_CONFIG"/settings.xml
@@ -59,3 +59,4 @@ ENTRYPOINT ["/app/bin/jenkinsfile-runner", \
             "-w", "/app/jenkins",\
             "-p", "/usr/share/jenkins/ref/plugins",\
             "-f", "/workspace"]
+CMD ["sleep", "infinity"]

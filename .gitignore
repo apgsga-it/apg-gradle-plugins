@@ -43,3 +43,6 @@ out/
 /integration/jenkins-pipeline-tests/mvn-simple/jenkinsHome/
 /integration/modules/testapp-bom/target/
 /integration/modules/testapp-module/target/
+/integration/jenkins-pipeline-tests/create-jenkins-image/build/docker/
+/sandbox/docker-sshd-compose/build/docker/
+/integration/jenkins-pipeline-tests/buildpkg-test/jenkinsHome/
