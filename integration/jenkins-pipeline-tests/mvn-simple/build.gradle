@@ -1,42 +1,21 @@
-import org.gradle.api.tasks.Copy
-
 plugins {
     id 'com.palantir.docker-run' version '0.24.0'
     id 'com.palantir.docker' version '0.24.0'
     id 'java'
 }
-
+def modulesToTestDir = "../../modules"
+def localMaven
 repositories {
+    localMaven = mavenLocal()
     mavenCentral()
 }
 
-task copyModules (type: Copy) {
-    from "../.."
-    into "${buildDir}/temp/modules/"
-    include "testapp-bom/**", "testapp-parentpom/**" , "testapp-module/**", "testapp-service/**", "testapp-pkg/**"
-    exclude "/**/target"
-}
-
-// TODO (che, 22.2) : Better Strategie for replicating Maven repo
-
-task copyRepo (type: Copy) {
-    from "/Users/chhex/maven/testrepo"
-    into "${buildDir}/temp/repo/"
-    exclude "/**/apgsga", "/**/affichage"
-}
-
-// TODO (che, 22.2) : Better Strategie publishing the Gradle Plugins
-task copyPlugins (type: Copy) {
-    from "/Users/chhex/maven/testrepo"
-    into "${buildDir}/temp/repo/"
-    include "com/apgsga/gradle/**"
-}
-
+println "Maven Local Repo : ${localMaven.url.path}"
 
 docker {
     name 'maven-test-image:latest'
-    files tasks.copyModules , tasks.copyRepo , tasks.copyPlugins, "${buildDir}/temp/",  "docker"
-    dockerfile file('docker/Dockerfile')
+    files "src/docker"
+    dockerfile file('src/docker/Dockerfile')
     pull true
     noCache true
 }
@@ -44,17 +23,18 @@ docker {
 dockerRun {
     name 'maven-test'
     image 'maven-test-image:latest'
-    volumes 'jenkins/Jenkinsfile': '/workspace/Jenkinsfile', 'jenkinsHome': '/jenkinsHome',  'jenkinsWorkspace': '/jenkinsWorkspace'
+    volumes 'src/jenkins/Jenkinsfile': '/workspace/Jenkinsfile',
+            'jenkinsHome': '/jenkinsHome',  "${modulesToTestDir}": '/jenkinsWorkspace' ,
+            "${localMaven.url.path}":'/mavenLocal', "${gradle.gradleUserHomeDir}":'/gradleUserHome'
     daemonize false
     clean true
-    command '--runWorkspace', '/jenkinsWorkspace', '--runHome', '/jenkinsHome', '-a', 'modules=testapp-bom:testapp-parentpom:testapp-module:testapp-service'
+    command '--runWorkspace', '/jenkinsWorkspace', '--runHome', '/jenkinsHome',
+            '-a', 'modules=testapp-bom:testapp-parentpom:testapp-module:testapp-service',
+            '-a', 'versionNr=2.0',  '-a', 'releaseNr=10',   '-a', 'installTarget=CHTI211'
 }
 
 task cleanJenkinsHome(type: Delete) {
     fileTree(dir: 'jenkinsHome').visit { FileVisitDetails details ->
-        delete details.file
-    }
-    fileTree(dir: 'jenkinsWorkspace').visit { FileVisitDetails details ->
         delete details.file
     }
 }

@@ -34,4 +34,12 @@ out/
 /sandbox/testapp-kotlin-service/build/
 /sandbox/jenkins-pipeline-tests/build/
 /integration/jenkins-pipeline-tests/mvn-simple/build/
-/sandbox/jenkins-pipeline-tests/build/
+/integration/modules/Jenkinsfile
+/integration/modules/testapp-service@tmp/
+/integration/modules/testapp-pkg@tmp/
+/integration/modules/testapp-parentpom@tmp/
+/integration/modules/testapp-module@tmp/
+/integration/modules/testapp-bom@tmp/
+/integration/jenkins-pipeline-tests/mvn-simple/jenkinsHome/
+/integration/modules/testapp-bom/target/
+/integration/modules/testapp-module/target/

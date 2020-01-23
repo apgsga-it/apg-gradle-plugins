@@ -22,6 +22,10 @@
         <option value="$USER_HOME$/Projects/testapp-parent-pom/pom.xml" />
         <option value="$PROJECT_DIR$/integration/testapp-bom/pom.xml" />
         <option value="$PROJECT_DIR$/integration/testapp-parentpom/pom.xml" />
+        <option value="$PROJECT_DIR$/integration/modules/testapp-bom/pom.xml" />
+        <option value="$PROJECT_DIR$/integration/modules/testapp-parentpom/pom.xml" />
+        <option value="$PROJECT_DIR$/integration/modules/testapp-module/pom.xml" />
+        <option value="$PROJECT_DIR$/integration/modules/testapp-service/pom.xml" />
       </list>
     </option>
     <option name="ignoredFiles">
