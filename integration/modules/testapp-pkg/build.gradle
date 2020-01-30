@@ -61,12 +61,16 @@ apgGenericPublishConfig {
 apgGenericPublishConfig.log()
 
 apgSshCommon {
-	username credentials."${project.ext.sshUser}"
-	userpwd credentials."${project.ext.sshPw}"
+//	username credentials."${project.ext.sshUser}"
+//	userpwd credentials."${project.ext.sshPw}"
+	username project.ext.sshUser
+	userpwd  project.ext.sshPw
 	destinationHost project.ext.targetHost
+
 }
 
 apgRpmDeployConfig {
+	allowAnyHosts = true
 	rpmFilePath "${buildDir}/distributions/"
 	rpmFileName "${apgPackage.archiveName}"
 	remoteDestFolder "${project.ext.downloadDir}"

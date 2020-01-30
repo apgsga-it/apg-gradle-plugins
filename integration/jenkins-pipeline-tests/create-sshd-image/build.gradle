@@ -1,0 +1,14 @@
+plugins {
+    id 'com.palantir.docker' version '0.24.0'
+    id 'com.palantir.docker-run' version '0.24.0'
+    id 'java'
+}
+
+docker {
+    name 'apg-sshd-image:latest'
+    files "src/docker"
+    dockerfile file('src/docker/Dockerfile')
+    pull true
+    noCache true
+}
+

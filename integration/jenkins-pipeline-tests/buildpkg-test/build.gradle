@@ -1,5 +1,6 @@
 plugins {
     id 'com.palantir.docker-run' version '0.24.0'
+    id 'com.palantir.docker-compose' version '0.24.0'
     id 'java'
 }
 def modulesToTestDir = "../../modules"

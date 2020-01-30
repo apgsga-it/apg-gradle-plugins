@@ -7,6 +7,11 @@ ARG USER_HOME_DIR="/root"
 ARG MAVEN_VERSION=3.5.4
 ARG GRADLE_VERSION=5.6.3
 
+# Ssh Client Install
+
+RUN apt-get update && \
+apt-get install -y openssh-client
+
 # Maven Install
 ARG BASE_URL=https://apache.osuosl.org/maven/maven-3/${MAVEN_VERSION}/binaries
 
@@ -26,7 +31,7 @@ RUN mkdir -p /usr/share/maven /usr/share/maven/ref \
 ENV MAVEN_HOME /usr/share/maven
 ENV MAVEN_CONFIG "$USER_HOME_DIR/.m2"
 # Mavenlocal Volumne
-VOLUME mavenLocal
+VOLUME /mavenLocal
 
 # Gradle Install
 ARG GRADLE_BASE_URL=https://services.gradle.org/distributions
@@ -53,6 +58,9 @@ ENV PATH $PATH:$GRADLE_HOME/bin
 # Copy Modules to Test and settings.xml
 
 COPY settings.xml "$MAVEN_CONFIG"/settings.xml
+
+# Make this cumstomizable at least via Build parameter , better via cmd
+RUN mkdir ~/.ssh && ssh-keyscan -H jadas-server >> ~/.ssh/known_hosts
 
 ENTRYPOINT ["/app/bin/jenkinsfile-runner", \
             "-u", \

@@ -33,7 +33,7 @@ out/
 /integration/testapp-pkg/log.log
 /sandbox/testapp-kotlin-service/build/
 /sandbox/jenkins-pipeline-tests/build/
-/integration/jenkins-pipeline-tests/mvn-simple/build/
+/integration/jenkins-pipeline-tests/mvn-simple/build/x
 /integration/modules/Jenkinsfile
 /integration/modules/testapp-service@tmp/
 /integration/modules/testapp-pkg@tmp/
@@ -46,3 +46,6 @@ out/
 /integration/jenkins-pipeline-tests/create-jenkins-image/build/docker/
 /sandbox/docker-sshd-compose/build/docker/
 /integration/jenkins-pipeline-tests/buildpkg-test/jenkinsHome/
+/sandbox/docker-sshclient-debian/build/docker/
+/integration/jenkins-pipeline-tests/create-sshd-image/build/docker/
+/sandbox/docker-sshd-compose/build/.docker/

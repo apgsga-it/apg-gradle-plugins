@@ -2,7 +2,11 @@ version: '3'
 services:
   server1:
     image: sshtest
+    container_name: jadas-1
     build: .
+    privileged: true
+    volumes:
+      - /sys/fs/cgroup:/sys/fs/cgroup:ro
     networks:
       - sshtest
     ports:
@@ -10,7 +14,11 @@ services:
 
   server2:
     image: sshtest
+    container_name: jadas-2
     build: .
+    privileged: true
+    volumes:
+      - /sys/fs/cgroup:/sys/fs/cgroup:ro
     networks:
       - sshtest
     ports:

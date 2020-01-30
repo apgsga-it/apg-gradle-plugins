@@ -1,0 +1,27 @@
+version: '3'
+services:
+  jadas:
+    container_name: jadas-server
+    image: apg-sshd-image:latest
+    volumes:
+    - /sys/fs/cgroup:/sys/fs/cgroup:ro
+    build: .
+    networks:
+      - deploytests
+    ports:
+      - "2201:22"
+  jenkins:
+    container_name: apg-jenkins-runner
+    image: apg-jenkinsrunner-image:latest
+    command: [--runWorkspace,/jenkinsWorkspace, --runHome, /jenkinsHome , -a, modules=testapp-bom:testapp-parentpom:testapp-module:testapp-service, -a,  versionNr=2.0, -a, releaseNr=10, -a, installTarget=CHTI211]
+    volumes:
+      - ./src/jenkins/Jenkinsfile:/workspace/Jenkinsfile
+      - ./jenkinsHome:/jenkinsHome
+      - ../../modules:/jenkinsWorkspace
+      - /Users/chhex/maven/testrepo:/mavenLocal
+      - /Users/chhex/.gradle:/gradleUserHome
+    build: .
+    networks:
+      - deploytests
+networks:
+  deploytests:

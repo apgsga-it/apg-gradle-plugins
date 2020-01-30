@@ -12,12 +12,12 @@ installTarget  = "${params.installTarget}"
 
 pipeline {
     agent any
-    stages {
-          stage('Maven Builds') {
-              steps {
-                maven_build(modules)
-              }
-          }
+//     stages {
+//           stage('Maven Builds') {
+//               steps {
+//                 maven_build(modules)
+//               }
+//         }
           stage('Package') {
               steps {
                  pkg('testapp-pkg')
@@ -39,7 +39,7 @@ def pkg(packagename) {
     echo "installTarget : ${installTarget}, serviceVersion : ${versionNr}, releaseNr : ${releaseNr}"
     dir ("${packagename}") {
         sh "chmod +x gradlew"
-        sh "./gradlew clean buildRpm --info  --stacktrace -PinstallTarget=${installTarget} -PserviceVersion=${versionNr} -PreleaseNr=${releaseNr}"
+        sh "./gradlew clean buildRpm deployRpm --info  --stacktrace -PinstallTarget=${installTarget} -PserviceVersion=${versionNr} -PreleaseNr=${releaseNr} -PtargetHost=jadas-server  -PsshUser=tu1 -PsshPw=tu1_pass -PdownloadDir=/tmp"
     }
     sh 'ls -l /mavenLocal'
     sh 'ls -l /gradleUserHome'
