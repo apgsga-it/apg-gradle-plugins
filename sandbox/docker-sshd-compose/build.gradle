@@ -1,13 +1,21 @@
+buildscript {
+    repositories {
+        mavenLocal()
+    }
+    dependencies {
+        classpath 'com.apgsga.gradle:docker-client:0.3-SNAPSHOT'
+    }
+}
 plugins {
-
     id 'com.bmuschko.docker-remote-api' version '6.1.3'
     id 'java'
 }
+
 // Import task types
 import com.bmuschko.gradle.docker.tasks.image.*
 import com.bmuschko.gradle.docker.tasks.container.*
 import com.bmuschko.gradle.docker.tasks.network.*
-import com.bmuschko.gradle.docker.tasks.AbstractDockerRemoteApiTask
+import com.apgsga.gradle.docker.tasks.*
 
 // Use task types
 task buildSshdImage(type: DockerBuildImage) {
@@ -22,10 +30,6 @@ task createSshdTestNetwork(type: DockerCreateNetwork) {
     networkId = "sshdtest"
 }
 
-task removeSshdTestNetwork(type: DockerRemoveNetwork) {
-    networkId = "sshdtest"
-}
-
 
 task createSshdServer1(type: DockerCreateContainer) {
     dependsOn createSshdTestNetwork
@@ -35,7 +39,6 @@ task createSshdServer1(type: DockerCreateContainer) {
     hostConfig.autoRemove = true
     hostConfig.network = "sshdtest"
     hostConfig.privileged = true
-
 }
 
 task createSshdServer2(type: DockerCreateContainer) {
@@ -46,7 +49,6 @@ task createSshdServer2(type: DockerCreateContainer) {
     hostConfig.autoRemove = true
     hostConfig.network = "sshdtest"
     hostConfig.privileged = true
-
 }
 
 task startSshdServer1(type: DockerStartContainer) {
@@ -71,38 +73,7 @@ task cleanupDocker(type: DockerCleanup) {
     networkNames = 'sshdtest'
 }
 
-class DockerCleanup extends AbstractDockerRemoteApiTask {
-    @Input
-    final Property<String> containerNames = project.objects.property(String)
 
-    @Input
-    final Property<String> networkNames = project.objects.property(String)
-
-
-    @Override
-    void runRemoteCommand() {
-        def containersList = containerNames.get().split(":") as Collection
-        project.logger.info("Container Filter: ${containersList.toString()}")
-        def containers = dockerClient.listContainersCmd()
-                .withNameFilter(containersList)
-                .exec()
-        for (container in containers) {
-            project.logger.info("Stopping constainer: ${container.toString()} with Id: ${container.getId()} ")
-            dockerClient.stopContainerCmd(container.getId()).exec()
-            project.logger.info("Stopped constainer: ${container.toString()}")
-        }
-        def networksList = networkNames.get().split(":")
-        project.logger.info("Network Filter: ${networksList.toString()}")
-        def networks = dockerClient.listNetworksCmd()
-                .withNameFilter(networksList)
-                .exec()
-        for (network in networks) {
-            project.logger.info("Removing network: ${network.toString()} with Id:  ${network.getId()}")
-            dockerClient.removeNetworkCmd(network.getId()).exec()
-        }
-
-    }
-}
 
 
 

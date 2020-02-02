@@ -4,6 +4,7 @@ parameters {
    string(name: 'versionNr', defaultValue: '1.0', description: 'Version to Package ')
    string(name: 'releaseNr', defaultValue: '1', description: 'Release to Package ')
    string(name: 'installTarget', defaultValue: 'CHEI212', description: 'Target to Package ')
+   string(name: 'installHost', defaultValue: 'jadas-server', description: 'Target Maschine ')
 }
 modules = "${params.modules}".split(':')
 versionNr  = "${params.versionNr}"
@@ -12,12 +13,12 @@ installTarget  = "${params.installTarget}"
 
 pipeline {
     agent any
-//     stages {
-//           stage('Maven Builds') {
-//               steps {
-//                 maven_build(modules)
-//               }
-//         }
+       stages {
+          stage('Maven Builds') {
+              steps {
+                maven_build(modules)
+              }
+        }
           stage('Package') {
               steps {
                  pkg('testapp-pkg')
@@ -39,7 +40,7 @@ def pkg(packagename) {
     echo "installTarget : ${installTarget}, serviceVersion : ${versionNr}, releaseNr : ${releaseNr}"
     dir ("${packagename}") {
         sh "chmod +x gradlew"
-        sh "./gradlew clean buildRpm deployRpm --info  --stacktrace -PinstallTarget=${installTarget} -PserviceVersion=${versionNr} -PreleaseNr=${releaseNr} -PtargetHost=jadas-server  -PsshUser=tu1 -PsshPw=tu1_pass -PdownloadDir=/tmp"
+        sh "./gradlew clean buildRpm deployRpm --info  --stacktrace -PinstallTarget=${installTarget} -PserviceVersion=${versionNr} -PreleaseNr=${releaseNr} -PtargetHost=${installHost}  -PsshUser=tu1 -PsshPw=tu1_pass -PdownloadDir=/tmp"
     }
     sh 'ls -l /mavenLocal'
     sh 'ls -l /gradleUserHome'

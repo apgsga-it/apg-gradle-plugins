@@ -1,0 +1,16 @@
+apply from: "${projectDir}/../gradle-common/common-plugin.gradle"
+apply from: "${projectDir}/../gradle-common/integration-test.gradle"
+apply from: "${projectDir}/../gradle-common/functional-test.gradle"
+
+description 'Provides a set of customized Task using the Docker Plugin of bmuschko'
+
+
+dependencies {
+	testCompile gradleTestKit()
+	testCompile project(':common-test')
+	compile group: 'com.bmuschko', name: 'gradle-docker-plugin', version: '6.1.3'
+}
+
+
+
+
