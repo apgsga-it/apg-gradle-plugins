@@ -17,6 +17,9 @@ abstract class AbstractSpecification extends Specification {
         setupTestProjectDir()
         createBuildFile()
         createGradleHomeDir()
+        // TODO JHE: Might not be needed anymore with IT-35189
+        createGradleProperties()
+        // TODO JHE: Might not be needed anymore with IT-35189
         createGradleEncryptedProperties()
         setupRepoNameJson()
         setupSupportedServicesJson()
@@ -63,6 +66,16 @@ abstract class AbstractSpecification extends Specification {
         File gradleHomeDir = new File(gradleHomeDirPath)
         gradleHomeDir.mkdirs()
         println "Gradle Home directory for tests: ${gradleHomeDir.absolutePath}"
+    }
+
+    def createGradleProperties() {
+        File gradleProperties = new File("${gradleHomeDirPath}/gradle.properties")
+        gradleProperties << "revision.file.path=src/functionalTest/resources/Revisions.json"
+        gradleProperties << System.getProperty("line.separator")
+        gradleProperties << "config.dir=src/functionalTest/resources/config"
+        gradleProperties << System.getProperty("line.separator")
+        gradleProperties << "target.system.mapping.file.name=TargetSystemMappings.json"
+        println "${gradleProperties.absolutePath} has been created!"
     }
 
     def createGradleEncryptedProperties() {
@@ -113,7 +126,7 @@ abstract class AbstractSpecification extends Specification {
       "MAVEN": "maven"
     },
     {
-      "JAVA_DIST": "java-dist"
+      "JAVA_DIST": "apgPlatformDependencies-test"
     }
   ],
   "repoUserName": "gradledev-tests-user",
@@ -133,6 +146,7 @@ abstract class AbstractSpecification extends Specification {
                 .withArguments(specificTestArguments)
                 .withPluginClasspath()
                 .withProjectDir(testProjectDir)
+                .withDebug(true)
     }
 
     private List<String> getDefaultArguments() {

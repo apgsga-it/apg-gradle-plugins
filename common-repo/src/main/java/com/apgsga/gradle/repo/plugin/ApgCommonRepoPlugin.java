@@ -18,6 +18,8 @@ import java.io.IOException;
 @NonNullApi
 public class ApgCommonRepoPlugin implements Plugin<Project> {
 
+	public static final String PLUGIN_ID = "com.apgsga.common.repo";
+
 	public static final String COMMMON_REPO_EXTENSION_NAME = "apgRepos";
 
 	private static final String REPO_NAMES_JSON_FILENAME = "repoNames.json";
