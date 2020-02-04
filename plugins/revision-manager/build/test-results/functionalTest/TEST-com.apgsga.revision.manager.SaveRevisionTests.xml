@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.apgsga.revision.manager.SaveRevisionTests" tests="2" skipped="0" failures="0" errors="0" timestamp="2020-02-04T14:08:17" hostname="chhexbook.affichage-p.ch" time="6.689">
+  <properties/>
+  <testcase name="Validate save revision for target without any parameter" classname="com.apgsga.revision.manager.SaveRevisionTests" time="5.942"/>
+  <testcase name="Validate save revision for target" classname="com.apgsga.revision.manager.SaveRevisionTests" time="0.747"/>
+  <system-out><![CDATA[Running setup
+/var/folders/m7/jql3p30h8xl46m001s7q50mh0000gp/T/
+About to delete /var/folders/m7/jql3p30h8xl46m001s7q50mh0000gp/T/gradletestproject4227148591373609497
+Project Dir : /var/folders/m7/jql3p30h8xl46m001s7q50mh0000gp/T/gradletestproject8484913824098653769
+Gradle Home directory for tests: /var/folders/m7/jql3p30h8xl46m001s7q50mh0000gp/T/gradletestproject8484913824098653769/.gradle
+/var/folders/m7/jql3p30h8xl46m001s7q50mh0000gp/T/gradletestproject8484913824098653769/.gradle/gradle.properties has been created!
+/var/folders/m7/jql3p30h8xl46m001s7q50mh0000gp/T/gradletestproject8484913824098653769/.gradle/gradle.encrypted.properties has been created!
+Running setup
+/var/folders/m7/jql3p30h8xl46m001s7q50mh0000gp/T/
+About to delete /var/folders/m7/jql3p30h8xl46m001s7q50mh0000gp/T/gradletestproject8484913824098653769
+Project Dir : /var/folders/m7/jql3p30h8xl46m001s7q50mh0000gp/T/gradletestproject4665694999847869786
+Gradle Home directory for tests: /var/folders/m7/jql3p30h8xl46m001s7q50mh0000gp/T/gradletestproject4665694999847869786/.gradle
+/var/folders/m7/jql3p30h8xl46m001s7q50mh0000gp/T/gradletestproject4665694999847869786/.gradle/gradle.properties has been created!
+/var/folders/m7/jql3p30h8xl46m001s7q50mh0000gp/T/gradletestproject4665694999847869786/.gradle/gradle.encrypted.properties has been created!
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

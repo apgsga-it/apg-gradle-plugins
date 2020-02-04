@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.apgsga.maven.impl.resolver.CompositeVersionResolverDefaultTest" tests="7" skipped="0" failures="0" errors="0" timestamp="2020-02-04T14:06:00" hostname="chhexbook.affichage-p.ch" time="0.258">
+  <properties/>
+  <testcase name="GetVersion with one Bom Version Resolver, with nested Bom recursive" classname="com.apgsga.maven.impl.resolver.CompositeVersionResolverDefaultTest" time="0.041"/>
+  <testcase name="GetVersion with one Bom Version Resolver and PatchFile Resolver with Artifact from Bom" classname="com.apgsga.maven.impl.resolver.CompositeVersionResolverDefaultTest" time="0.035"/>
+  <testcase name="GetVersion with one Bom Version Resolver and PatchFile Resolver, with artifact from Patch" classname="com.apgsga.maven.impl.resolver.CompositeVersionResolverDefaultTest" time="0.036"/>
+  <testcase name="GetVersion with one Bom Version Resolver and PatchFile Resolver ordered, with same artifact but different versions" classname="com.apgsga.maven.impl.resolver.CompositeVersionResolverDefaultTest" time="0.032"/>
+  <testcase name="GetVersion with one Bom Version Resolver and PatchFile Resolver ordered different with same artifact but different versions" classname="com.apgsga.maven.impl.resolver.CompositeVersionResolverDefaultTest" time="0.026"/>
+  <testcase name="GetVersion with two different Bom  and a List of PatchFiles Version Resolver " classname="com.apgsga.maven.impl.resolver.CompositeVersionResolverDefaultTest" time="0.039"/>
+  <testcase name="GetVersion with two different Bom with a BomListResolver and a List of PatchFiles Version Resolver " classname="com.apgsga.maven.impl.resolver.CompositeVersionResolverDefaultTest" time="0.048"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[[Test worker] INFO com.apgsga.maven.impl.bom.MavenBomManagerDefault - Loading Maven Model
+[Test worker] INFO com.apgsga.maven.impl.bom.MavenBomManagerDefault - Loading Maven Model
+[Test worker] INFO com.apgsga.maven.impl.bom.MavenBomManagerDefault - Loading Maven Model done.
+[Test worker] INFO com.apgsga.maven.impl.bom.MavenBomManagerDefault - Loading Maven Model done.
+[Test worker] INFO com.apgsga.maven.impl.bom.MavenBomManagerDefault - Loading Maven Model
+[Test worker] INFO com.apgsga.maven.impl.bom.MavenBomManagerDefault - Loading Maven Model
+[Test worker] INFO com.apgsga.maven.impl.bom.MavenBomManagerDefault - Loading Maven Model done.
+[Test worker] INFO com.apgsga.maven.impl.bom.MavenBomManagerDefault - Loading Maven Model done.
+[Test worker] INFO com.apgsga.maven.impl.bom.MavenBomManagerDefault - Loading Maven Model
+[Test worker] INFO com.apgsga.maven.impl.bom.MavenBomManagerDefault - Loading Maven Model done.
+]]></system-err>
+</testsuite>

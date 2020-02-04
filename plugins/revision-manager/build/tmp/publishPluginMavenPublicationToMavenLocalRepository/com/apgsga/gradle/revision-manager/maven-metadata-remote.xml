@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<metadata>
+  <groupId>com.apgsga.gradle</groupId>
+  <artifactId>revision-manager</artifactId>
+  <versioning>
+    <versions>
+      <version>0.3-SNAPSHOT</version>
+    </versions>
+    <lastUpdated>20200204140911</lastUpdated>
+  </versioning>
+</metadata>

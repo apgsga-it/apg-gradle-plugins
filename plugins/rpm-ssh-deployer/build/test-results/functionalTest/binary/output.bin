@@ -1,0 +1,37 @@
+Running setup
+2/var/folders/m7/jql3p30h8xl46m001s7q50mh0000gp/T/
+fAbout to delete /var/folders/m7/jql3p30h8xl46m001s7q50mh0000gp/T/gradletestproject6708957307214044852
+cProject Dir : /var/folders/m7/jql3p30h8xl46m001s7q50mh0000gp/T/gradletestproject116143526008647311
+~Gradle Home directory for tests: /var/folders/m7/jql3p30h8xl46m001s7q50mh0000gp/T/gradletestproject116143526008647311/.gradle
+/var/folders/m7/jql3p30h8xl46m001s7q50mh0000gp/T/gradletestproject116143526008647311/.gradle/gradle.properties has been created!
+‹/var/folders/m7/jql3p30h8xl46m001s7q50mh0000gp/T/gradletestproject116143526008647311/.gradle/gradle.encrypted.properties has been created!
+&Result output: Using 4 worker leases.
+Starting Build
+—Settings evaluated using settings file '/private/var/folders/m7/jql3p30h8xl46m001s7q50mh0000gp/T/gradletestproject116143526008647311/settings.gradle'.
+œProjects loaded. Root project using build file '/private/var/folders/m7/jql3p30h8xl46m001s7q50mh0000gp/T/gradletestproject116143526008647311/build.gradle'.
+HIncluded projects: [root project 'gradletestproject116143526008647311']
+
+> Configure project :
+¼Evaluating root project 'gradletestproject116143526008647311' using build file '/private/var/folders/m7/jql3p30h8xl46m001s7q50mh0000gp/T/gradletestproject116143526008647311/build.gradle'.
+ Compiling build file '/private/var/folders/m7/jql3p30h8xl46m001s7q50mh0000gp/T/gradletestproject116143526008647311/build.gradle' using SubsetScriptTransformer.
+ŸCompiling build file '/private/var/folders/m7/jql3p30h8xl46m001s7q50mh0000gp/T/gradletestproject116143526008647311/build.gradle' using BuildScriptTransformer.
+¾ApgRpmDeployConfig{project=root project 'gradletestproject116143526008647311', rpmFilePath='build/output', rpmFileName='fakeRpm.rpm', remoteDestFolder='/etc/installer', allowAnyHosts=false}
+All projects evaluated.
+,Selected primary task 'init' from project :
+%Tasks to be executed: [task ':init']
+9:init (Thread[Execution worker for ':',5,main]) started.
+
+> Task :init SKIPPED
+MThe build file 'build.gradle' already exists. Skipping build initialization.
+/Skipping task ':init' as task onlyIf is false.
+L:init (Thread[Execution worker for ':',5,main]) completed. Took 0.121 secs.
+
+BUILD SUCCESSFUL in 3s
+
+Running setup
+2/var/folders/m7/jql3p30h8xl46m001s7q50mh0000gp/T/
+eAbout to delete /var/folders/m7/jql3p30h8xl46m001s7q50mh0000gp/T/gradletestproject116143526008647311
+dProject Dir : /var/folders/m7/jql3p30h8xl46m001s7q50mh0000gp/T/gradletestproject1314884183356533736
+Gradle Home directory for tests: /var/folders/m7/jql3p30h8xl46m001s7q50mh0000gp/T/gradletestproject1314884183356533736/.gradle
+‚/var/folders/m7/jql3p30h8xl46m001s7q50mh0000gp/T/gradletestproject1314884183356533736/.gradle/gradle.properties has been created!
+Œ/var/folders/m7/jql3p30h8xl46m001s7q50mh0000gp/T/gradletestproject1314884183356533736/.gradle/gradle.encrypted.properties has been created!

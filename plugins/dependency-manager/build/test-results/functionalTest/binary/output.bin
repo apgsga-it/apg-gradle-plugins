@@ -1,0 +1,350 @@
+Running setup
+2/var/folders/m7/jql3p30h8xl46m001s7q50mh0000gp/T/
+fAbout to delete /var/folders/m7/jql3p30h8xl46m001s7q50mh0000gp/T/gradletestproject1784340796235933657
+dProject Dir : /var/folders/m7/jql3p30h8xl46m001s7q50mh0000gp/T/gradletestproject6627109558157350205
+Gradle Home directory for tests: /var/folders/m7/jql3p30h8xl46m001s7q50mh0000gp/T/gradletestproject6627109558157350205/.gradle
+‚/var/folders/m7/jql3p30h8xl46m001s7q50mh0000gp/T/gradletestproject6627109558157350205/.gradle/gradle.properties has been created!
+Œ/var/folders/m7/jql3p30h8xl46m001s7q50mh0000gp/T/gradletestproject6627109558157350205/.gradle/gradle.encrypted.properties has been created!
+&Result output: Using 4 worker leases.
+Starting Build
+˜Settings evaluated using settings file '/private/var/folders/m7/jql3p30h8xl46m001s7q50mh0000gp/T/gradletestproject6627109558157350205/settings.gradle'.
+Projects loaded. Root project using build file '/private/var/folders/m7/jql3p30h8xl46m001s7q50mh0000gp/T/gradletestproject6627109558157350205/build.gradle'.
+IIncluded projects: [root project 'gradletestproject6627109558157350205']
+
+> Configure project :
+¾Evaluating root project 'gradletestproject6627109558157350205' using build file '/private/var/folders/m7/jql3p30h8xl46m001s7q50mh0000gp/T/gradletestproject6627109558157350205/build.gradle'.
+¡Compiling build file '/private/var/folders/m7/jql3p30h8xl46m001s7q50mh0000gp/T/gradletestproject6627109558157350205/build.gradle' using SubsetScriptTransformer.
+ Compiling build file '/private/var/folders/m7/jql3p30h8xl46m001s7q50mh0000gp/T/gradletestproject6627109558157350205/build.gradle' using BuildScriptTransformer.
+All projects evaluated.
+6Selected primary task 'apgDmBomReport' from project :
+/Tasks to be executed: [task ':apgDmBomReport']
+C:apgDmBomReport (Thread[Execution worker for ':',5,main]) started.
+
+> Task :apgDmBomReport
+2Task ':apgDmBomReport' is not up-to-date because:
+?  Task has not declared any outputs despite executing actions.
+Reporting started
+,Reporting for artifactid: test:test-bom:1.0
+Loading Maven Model
+Loading Maven Model done.
+‚Result: [MavenArtifact(groupId=org.apache.httpcomponents, artifactid=httpclient, version=4.5.2, type=jar), MavenArtifact(groupId=com.google.code.guice, artifactid=guice, version=4.1, type=jar), MavenArtifact(groupId=com.affichage.ui.utils, artifactid=jgoodies-utils, version=1.9.6, type=jar), MavenArtifact(groupId=com.affichage.it21.ppix, artifactid=ppix-dao, version=9.0.6.ADMIN-UIMIG-SNAPSHOT, type=jar), MavenArtifact(groupId=com.affichage.it21.vk, artifactid=zentraldispo-dao, version=xxxxxxxxxxx, type=jar)]
+Reporting done.
+V:apgDmBomReport (Thread[Execution worker for ':',5,main]) completed. Took 0.197 secs.
+
+BUILD SUCCESSFUL in 3s
+1 actionable task: 1 executed
+
+Running setup
+2/var/folders/m7/jql3p30h8xl46m001s7q50mh0000gp/T/
+fAbout to delete /var/folders/m7/jql3p30h8xl46m001s7q50mh0000gp/T/gradletestproject6627109558157350205
+dProject Dir : /var/folders/m7/jql3p30h8xl46m001s7q50mh0000gp/T/gradletestproject3563385516322434399
+Gradle Home directory for tests: /var/folders/m7/jql3p30h8xl46m001s7q50mh0000gp/T/gradletestproject3563385516322434399/.gradle
+‚/var/folders/m7/jql3p30h8xl46m001s7q50mh0000gp/T/gradletestproject3563385516322434399/.gradle/gradle.properties has been created!
+Œ/var/folders/m7/jql3p30h8xl46m001s7q50mh0000gp/T/gradletestproject3563385516322434399/.gradle/gradle.encrypted.properties has been created!
+&Result output: Using 4 worker leases.
+Starting Build
+˜Settings evaluated using settings file '/private/var/folders/m7/jql3p30h8xl46m001s7q50mh0000gp/T/gradletestproject3563385516322434399/settings.gradle'.
+Projects loaded. Root project using build file '/private/var/folders/m7/jql3p30h8xl46m001s7q50mh0000gp/T/gradletestproject3563385516322434399/build.gradle'.
+IIncluded projects: [root project 'gradletestproject3563385516322434399']
+
+> Configure project :
+¾Evaluating root project 'gradletestproject3563385516322434399' using build file '/private/var/folders/m7/jql3p30h8xl46m001s7q50mh0000gp/T/gradletestproject3563385516322434399/build.gradle'.
+¡Compiling build file '/private/var/folders/m7/jql3p30h8xl46m001s7q50mh0000gp/T/gradletestproject3563385516322434399/build.gradle' using SubsetScriptTransformer.
+ Compiling build file '/private/var/folders/m7/jql3p30h8xl46m001s7q50mh0000gp/T/gradletestproject3563385516322434399/build.gradle' using BuildScriptTransformer.
+All projects evaluated.
+6Selected primary task 'apgDmBomReport' from project :
+/Tasks to be executed: [task ':apgDmBomReport']
+C:apgDmBomReport (Thread[Execution worker for ':',5,main]) started.
+
+> Task :apgDmBomReport
+2Task ':apgDmBomReport' is not up-to-date because:
+?  Task has not declared any outputs despite executing actions.
+Reporting started
+,Reporting for artifactid: test:test-bom:1.0
+Loading Maven Model
+Loading Maven Model done.
+‚Result: [MavenArtifact(groupId=org.apache.httpcomponents, artifactid=httpclient, version=4.5.2, type=jar), MavenArtifact(groupId=com.google.code.guice, artifactid=guice, version=4.1, type=jar), MavenArtifact(groupId=com.affichage.ui.utils, artifactid=jgoodies-utils, version=1.9.6, type=jar), MavenArtifact(groupId=com.affichage.it21.ppix, artifactid=ppix-dao, version=9.0.6.ADMIN-UIMIG-SNAPSHOT, type=jar), MavenArtifact(groupId=com.affichage.it21.vk, artifactid=zentraldispo-dao, version=xxxxxxxxxxx, type=jar)]
+Reporting done.
+U:apgDmBomReport (Thread[Execution worker for ':',5,main]) completed. Took 0.05 secs.
+
+BUILD SUCCESSFUL in 0s
+1 actionable task: 1 executed
+
+Running setup
+2/var/folders/m7/jql3p30h8xl46m001s7q50mh0000gp/T/
+fAbout to delete /var/folders/m7/jql3p30h8xl46m001s7q50mh0000gp/T/gradletestproject3563385516322434399
+dProject Dir : /var/folders/m7/jql3p30h8xl46m001s7q50mh0000gp/T/gradletestproject6699418379992486083
+Gradle Home directory for tests: /var/folders/m7/jql3p30h8xl46m001s7q50mh0000gp/T/gradletestproject6699418379992486083/.gradle
+‚/var/folders/m7/jql3p30h8xl46m001s7q50mh0000gp/T/gradletestproject6699418379992486083/.gradle/gradle.properties has been created!
+Œ/var/folders/m7/jql3p30h8xl46m001s7q50mh0000gp/T/gradletestproject6699418379992486083/.gradle/gradle.encrypted.properties has been created!
+&Result output: Using 4 worker leases.
+Starting Build
+˜Settings evaluated using settings file '/private/var/folders/m7/jql3p30h8xl46m001s7q50mh0000gp/T/gradletestproject6699418379992486083/settings.gradle'.
+Projects loaded. Root project using build file '/private/var/folders/m7/jql3p30h8xl46m001s7q50mh0000gp/T/gradletestproject6699418379992486083/build.gradle'.
+IIncluded projects: [root project 'gradletestproject6699418379992486083']
+
+> Configure project :
+¾Evaluating root project 'gradletestproject6699418379992486083' using build file '/private/var/folders/m7/jql3p30h8xl46m001s7q50mh0000gp/T/gradletestproject6699418379992486083/build.gradle'.
+¡Compiling build file '/private/var/folders/m7/jql3p30h8xl46m001s7q50mh0000gp/T/gradletestproject6699418379992486083/build.gradle' using SubsetScriptTransformer.
+ Compiling build file '/private/var/folders/m7/jql3p30h8xl46m001s7q50mh0000gp/T/gradletestproject6699418379992486083/build.gradle' using BuildScriptTransformer.
+All projects evaluated.
+CSelected primary task 'configureResolutionStrategy' from project :
+<Tasks to be executed: [task ':configureResolutionStrategy']
+P:configureResolutionStrategy (Thread[Execution worker for ':',5,main]) started.
+
+$> Task :configureResolutionStrategy
+?Task ':configureResolutionStrategy' is not up-to-date because:
+?  Task has not declared any outputs despite executing actions.
+"Creating Dependency configuration
+Version: 1.1.toString()
+c:configureResolutionStrategy (Thread[Execution worker for ':',5,main]) completed. Took 0.035 secs.
+
+BUILD SUCCESSFUL in 1s
+1 actionable task: 1 executed
+
+Running setup
+2/var/folders/m7/jql3p30h8xl46m001s7q50mh0000gp/T/
+fAbout to delete /var/folders/m7/jql3p30h8xl46m001s7q50mh0000gp/T/gradletestproject6699418379992486083
+dProject Dir : /var/folders/m7/jql3p30h8xl46m001s7q50mh0000gp/T/gradletestproject4030170310656944319
+Gradle Home directory for tests: /var/folders/m7/jql3p30h8xl46m001s7q50mh0000gp/T/gradletestproject4030170310656944319/.gradle
+‚/var/folders/m7/jql3p30h8xl46m001s7q50mh0000gp/T/gradletestproject4030170310656944319/.gradle/gradle.properties has been created!
+Œ/var/folders/m7/jql3p30h8xl46m001s7q50mh0000gp/T/gradletestproject4030170310656944319/.gradle/gradle.encrypted.properties has been created!
+Running setup
+2/var/folders/m7/jql3p30h8xl46m001s7q50mh0000gp/T/
+fAbout to delete /var/folders/m7/jql3p30h8xl46m001s7q50mh0000gp/T/gradletestproject4030170310656944319
+dProject Dir : /var/folders/m7/jql3p30h8xl46m001s7q50mh0000gp/T/gradletestproject1789427562190283224
+Gradle Home directory for tests: /var/folders/m7/jql3p30h8xl46m001s7q50mh0000gp/T/gradletestproject1789427562190283224/.gradle
+‚/var/folders/m7/jql3p30h8xl46m001s7q50mh0000gp/T/gradletestproject1789427562190283224/.gradle/gradle.properties has been created!
+Œ/var/folders/m7/jql3p30h8xl46m001s7q50mh0000gp/T/gradletestproject1789427562190283224/.gradle/gradle.encrypted.properties has been created!
+&Result output: Using 4 worker leases.
+Starting Build
+˜Settings evaluated using settings file '/private/var/folders/m7/jql3p30h8xl46m001s7q50mh0000gp/T/gradletestproject1789427562190283224/settings.gradle'.
+Projects loaded. Root project using build file '/private/var/folders/m7/jql3p30h8xl46m001s7q50mh0000gp/T/gradletestproject1789427562190283224/build.gradle'.
+IIncluded projects: [root project 'gradletestproject1789427562190283224']
+
+> Configure project :
+¾Evaluating root project 'gradletestproject1789427562190283224' using build file '/private/var/folders/m7/jql3p30h8xl46m001s7q50mh0000gp/T/gradletestproject1789427562190283224/build.gradle'.
+¡Compiling build file '/private/var/folders/m7/jql3p30h8xl46m001s7q50mh0000gp/T/gradletestproject1789427562190283224/build.gradle' using SubsetScriptTransformer.
+ Compiling build file '/private/var/folders/m7/jql3p30h8xl46m001s7q50mh0000gp/T/gradletestproject1789427562190283224/build.gradle' using BuildScriptTransformer.
+All projects evaluated.
+CSelected primary task 'configureResolutionStrategy' from project :
+<Tasks to be executed: [task ':configureResolutionStrategy']
+P:configureResolutionStrategy (Thread[Execution worker for ':',5,main]) started.
+
+$> Task :configureResolutionStrategy
+?Task ':configureResolutionStrategy' is not up-to-date because:
+?  Task has not declared any outputs despite executing actions.
+"Creating Dependency configuration
+Version: 1.1.toString()
+c:configureResolutionStrategy (Thread[Execution worker for ':',5,main]) completed. Took 0.021 secs.
+
+BUILD SUCCESSFUL in 1s
+1 actionable task: 1 executed
+
+Running setup
+2/var/folders/m7/jql3p30h8xl46m001s7q50mh0000gp/T/
+fAbout to delete /var/folders/m7/jql3p30h8xl46m001s7q50mh0000gp/T/gradletestproject1789427562190283224
+dProject Dir : /var/folders/m7/jql3p30h8xl46m001s7q50mh0000gp/T/gradletestproject3601261829950663198
+Gradle Home directory for tests: /var/folders/m7/jql3p30h8xl46m001s7q50mh0000gp/T/gradletestproject3601261829950663198/.gradle
+‚/var/folders/m7/jql3p30h8xl46m001s7q50mh0000gp/T/gradletestproject3601261829950663198/.gradle/gradle.properties has been created!
+Œ/var/folders/m7/jql3p30h8xl46m001s7q50mh0000gp/T/gradletestproject3601261829950663198/.gradle/gradle.encrypted.properties has been created!
+&Result output: Using 4 worker leases.
+Starting Build
+˜Settings evaluated using settings file '/private/var/folders/m7/jql3p30h8xl46m001s7q50mh0000gp/T/gradletestproject3601261829950663198/settings.gradle'.
+Projects loaded. Root project using build file '/private/var/folders/m7/jql3p30h8xl46m001s7q50mh0000gp/T/gradletestproject3601261829950663198/build.gradle'.
+IIncluded projects: [root project 'gradletestproject3601261829950663198']
+
+> Configure project :
+¾Evaluating root project 'gradletestproject3601261829950663198' using build file '/private/var/folders/m7/jql3p30h8xl46m001s7q50mh0000gp/T/gradletestproject3601261829950663198/build.gradle'.
+¡Compiling build file '/private/var/folders/m7/jql3p30h8xl46m001s7q50mh0000gp/T/gradletestproject3601261829950663198/build.gradle' using SubsetScriptTransformer.
+ Compiling build file '/private/var/folders/m7/jql3p30h8xl46m001s7q50mh0000gp/T/gradletestproject3601261829950663198/build.gradle' using BuildScriptTransformer.
+All projects evaluated.
+CSelected primary task 'configureResolutionStrategy' from project :
+<Tasks to be executed: [task ':configureResolutionStrategy']
+P:configureResolutionStrategy (Thread[Execution worker for ':',5,main]) started.
+
+$> Task :configureResolutionStrategy
+?Task ':configureResolutionStrategy' is not up-to-date because:
+?  Task has not declared any outputs despite executing actions.
+"Creating Dependency configuration
+'Patchfile : PatchA5791.json.toString()
+Version: 1.0.toString()
+c:configureResolutionStrategy (Thread[Execution worker for ':',5,main]) completed. Took 0.024 secs.
+
+BUILD SUCCESSFUL in 1s
+1 actionable task: 1 executed
+
+
+	Running setup
+
+	2/var/folders/m7/jql3p30h8xl46m001s7q50mh0000gp/T/
+
+	fAbout to delete /var/folders/m7/jql3p30h8xl46m001s7q50mh0000gp/T/gradletestproject3601261829950663198
+
+	dProject Dir : /var/folders/m7/jql3p30h8xl46m001s7q50mh0000gp/T/gradletestproject3883512685119791890
+
+	Gradle Home directory for tests: /var/folders/m7/jql3p30h8xl46m001s7q50mh0000gp/T/gradletestproject3883512685119791890/.gradle
+
+	‚/var/folders/m7/jql3p30h8xl46m001s7q50mh0000gp/T/gradletestproject3883512685119791890/.gradle/gradle.properties has been created!
+
+	Œ/var/folders/m7/jql3p30h8xl46m001s7q50mh0000gp/T/gradletestproject3883512685119791890/.gradle/gradle.encrypted.properties has been created!
+
+	&Result output: Using 4 worker leases.
+
+	Starting Build
+
+	˜Settings evaluated using settings file '/private/var/folders/m7/jql3p30h8xl46m001s7q50mh0000gp/T/gradletestproject3883512685119791890/settings.gradle'.
+
+	Projects loaded. Root project using build file '/private/var/folders/m7/jql3p30h8xl46m001s7q50mh0000gp/T/gradletestproject3883512685119791890/build.gradle'.
+
+	IIncluded projects: [root project 'gradletestproject3883512685119791890']
+
+	
+
+	> Configure project :
+
+	¾Evaluating root project 'gradletestproject3883512685119791890' using build file '/private/var/folders/m7/jql3p30h8xl46m001s7q50mh0000gp/T/gradletestproject3883512685119791890/build.gradle'.
+
+	¡Compiling build file '/private/var/folders/m7/jql3p30h8xl46m001s7q50mh0000gp/T/gradletestproject3883512685119791890/build.gradle' using SubsetScriptTransformer.
+
+	 Compiling build file '/private/var/folders/m7/jql3p30h8xl46m001s7q50mh0000gp/T/gradletestproject3883512685119791890/build.gradle' using BuildScriptTransformer.
+
+	All projects evaluated.
+
+	,Selected primary task 'init' from project :
+
+	%Tasks to be executed: [task ':init']
+
+	9:init (Thread[Execution worker for ':',5,main]) started.
+
+	
+
+	> Task :init SKIPPED
+
+	MThe build file 'build.gradle' already exists. Skipping build initialization.
+
+	/Skipping task ':init' as task onlyIf is false.
+
+	L:init (Thread[Execution worker for ':',5,main]) completed. Took 0.003 secs.
+
+	
+
+	BUILD SUCCESSFUL in 1s
+
+	
+
+Running setup
+
+2/var/folders/m7/jql3p30h8xl46m001s7q50mh0000gp/T/
+
+fAbout to delete /var/folders/m7/jql3p30h8xl46m001s7q50mh0000gp/T/gradletestproject3883512685119791890
+
+dProject Dir : /var/folders/m7/jql3p30h8xl46m001s7q50mh0000gp/T/gradletestproject5314574520815640663
+
+Gradle Home directory for tests: /var/folders/m7/jql3p30h8xl46m001s7q50mh0000gp/T/gradletestproject5314574520815640663/.gradle
+
+‚/var/folders/m7/jql3p30h8xl46m001s7q50mh0000gp/T/gradletestproject5314574520815640663/.gradle/gradle.properties has been created!
+
+Œ/var/folders/m7/jql3p30h8xl46m001s7q50mh0000gp/T/gradletestproject5314574520815640663/.gradle/gradle.encrypted.properties has been created!
+
+&Result output: Using 4 worker leases.
+
+Starting Build
+
+˜Settings evaluated using settings file '/private/var/folders/m7/jql3p30h8xl46m001s7q50mh0000gp/T/gradletestproject5314574520815640663/settings.gradle'.
+
+Projects loaded. Root project using build file '/private/var/folders/m7/jql3p30h8xl46m001s7q50mh0000gp/T/gradletestproject5314574520815640663/build.gradle'.
+
+IIncluded projects: [root project 'gradletestproject5314574520815640663']
+
+
+
+> Configure project :
+
+¾Evaluating root project 'gradletestproject5314574520815640663' using build file '/private/var/folders/m7/jql3p30h8xl46m001s7q50mh0000gp/T/gradletestproject5314574520815640663/build.gradle'.
+
+¡Compiling build file '/private/var/folders/m7/jql3p30h8xl46m001s7q50mh0000gp/T/gradletestproject5314574520815640663/build.gradle' using SubsetScriptTransformer.
+
+ Compiling build file '/private/var/folders/m7/jql3p30h8xl46m001s7q50mh0000gp/T/gradletestproject5314574520815640663/build.gradle' using BuildScriptTransformer.
+
+All projects evaluated.
+
+,Selected primary task 'init' from project :
+
+%Tasks to be executed: [task ':init']
+
+9:init (Thread[Execution worker for ':',5,main]) started.
+
+
+
+> Task :init SKIPPED
+
+MThe build file 'build.gradle' already exists. Skipping build initialization.
+
+/Skipping task ':init' as task onlyIf is false.
+
+L:init (Thread[Execution worker for ':',5,main]) completed. Took 0.002 secs.
+
+
+
+BUILD SUCCESSFUL in 1s
+
+
+
+Running setup
+
+2/var/folders/m7/jql3p30h8xl46m001s7q50mh0000gp/T/
+
+fAbout to delete /var/folders/m7/jql3p30h8xl46m001s7q50mh0000gp/T/gradletestproject5314574520815640663
+
+dProject Dir : /var/folders/m7/jql3p30h8xl46m001s7q50mh0000gp/T/gradletestproject6917593660438715657
+
+Gradle Home directory for tests: /var/folders/m7/jql3p30h8xl46m001s7q50mh0000gp/T/gradletestproject6917593660438715657/.gradle
+
+‚/var/folders/m7/jql3p30h8xl46m001s7q50mh0000gp/T/gradletestproject6917593660438715657/.gradle/gradle.properties has been created!
+
+Œ/var/folders/m7/jql3p30h8xl46m001s7q50mh0000gp/T/gradletestproject6917593660438715657/.gradle/gradle.encrypted.properties has been created!
+
+&Result output: Using 4 worker leases.
+
+Starting Build
+
+˜Settings evaluated using settings file '/private/var/folders/m7/jql3p30h8xl46m001s7q50mh0000gp/T/gradletestproject6917593660438715657/settings.gradle'.
+
+Projects loaded. Root project using build file '/private/var/folders/m7/jql3p30h8xl46m001s7q50mh0000gp/T/gradletestproject6917593660438715657/build.gradle'.
+
+IIncluded projects: [root project 'gradletestproject6917593660438715657']
+
+
+
+> Configure project :
+
+¾Evaluating root project 'gradletestproject6917593660438715657' using build file '/private/var/folders/m7/jql3p30h8xl46m001s7q50mh0000gp/T/gradletestproject6917593660438715657/build.gradle'.
+
+¡Compiling build file '/private/var/folders/m7/jql3p30h8xl46m001s7q50mh0000gp/T/gradletestproject6917593660438715657/build.gradle' using SubsetScriptTransformer.
+
+ Compiling build file '/private/var/folders/m7/jql3p30h8xl46m001s7q50mh0000gp/T/gradletestproject6917593660438715657/build.gradle' using BuildScriptTransformer.
+
+All projects evaluated.
+
+,Selected primary task 'init' from project :
+
+%Tasks to be executed: [task ':init']
+
+9:init (Thread[Execution worker for ':',5,main]) started.
+
+
+
+> Task :init SKIPPED
+
+MThe build file 'build.gradle' already exists. Skipping build initialization.
+
+/Skipping task ':init' as task onlyIf is false.
+
+L:init (Thread[Execution worker for ':',5,main]) completed. Took 0.002 secs.
+
+
+
+BUILD SUCCESSFUL in 1s
+
+

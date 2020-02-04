@@ -1,0 +1,66 @@
+{
+	"className": "com.apgsga.microservice.patch.api.impl.PatchBean",
+	"patchNummer": "5401",
+	"serviceName": "It21Ui",
+	"microServiceBranch": "it21_release_9_1_0_admin_uimig",
+	"dbPatchBranch": "Patch_0900C1_5401",
+	"prodBranch": "HEAD",
+	"patchTag": "Patch_0900C1_5401_1",
+	"tagNr": 2,
+	"installationTarget": "CHEI212",
+	"baseVersionNumber": null,
+	"revisionMnemoPart": null,
+	"revision": null,
+	"lastRevision": null,
+	"runningNr": null,
+	"dbObjects": [
+		{
+			"className": "com.apgsga.microservice.patch.api.impl.DbObjectBean",
+			"fileName": "apgops_lib.apg_db_outage_planned.syn.sql",
+			"filePath": "testdbmodule/database/sql/",
+			"moduleName": "testdbmodule"
+		},
+		{
+			"className": "com.apgsga.microservice.patch.api.impl.DbObjectBean",
+			"fileName": "sys.apg_install_utility.pks.cleanup.sql",
+			"filePath": "testdbmodule/database/sql/",
+			"moduleName": "testdbmodule"
+		},
+		{
+			"className": "com.apgsga.microservice.patch.api.impl.DbObjectBean",
+			"fileName": "test.sys.apg_install_utility.pks.cleanup.sql",
+			"filePath": "testdbAnotherdbModule/database/sql/",
+			"moduleName": "testdbAnotherdbModule"
+		}
+	],
+	"mavenArtifacts": [
+		{
+			"className": "com.apgsga.microservice.patch.api.impl.MavenArtifactBean",
+			"artifactId": "zentraldispo-dao",
+			"groupId": "com.affichage.it21.vk",
+			"name": null,
+			"version": "AAAAAAAAA",
+			"dependencyLevel": 0
+		}
+	],
+	"installOnEmptyModules": false,
+	"dbObjectsAsVcsPath": [
+		"testdbmodule/database/sql//apgops_lib.apg_db_outage_planned.syn.sql",
+		"testdbmodule/database/sql//sys.apg_install_utility.pks.cleanup.sql",
+		"testdbAnotherdbModule/database/sql//test.sys.apg_install_utility.pks.cleanup.sql"
+	],
+	"installJadasAndGui": true,
+	"mavenArtifactsAsVcsPath": [
+		null
+	],
+	"mavenArtifactsToBuild": [
+		{
+			"className": "com.apgsga.microservice.patch.api.impl.MavenArtifactBean",
+			"artifactId": "zentraldispo-dao",
+			"groupId": "com.affichage.it21.vk",
+			"name": null,
+			"version": "AAAAAAAAA",
+			"dependencyLevel": 0
+		}
+	]
+}

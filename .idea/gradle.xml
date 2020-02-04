@@ -5,32 +5,6 @@
     <option name="linkedExternalProjectsSettings">
       <GradleProjectSettings>
         <option name="distributionType" value="DEFAULT_WRAPPED" />
-        <option name="externalProjectPath" value="$PROJECT_DIR$" />
-        <option name="gradleJvm" value="1.8" />
-        <option name="modules">
-          <set>
-            <option value="$PROJECT_DIR$" />
-            <option value="$PROJECT_DIR$/common-repo" />
-            <option value="$PROJECT_DIR$/common-service-packager" />
-            <option value="$PROJECT_DIR$/common-test" />
-            <option value="$PROJECT_DIR$/dependency-manager" />
-            <option value="$PROJECT_DIR$/docker-client" />
-            <option value="$PROJECT_DIR$/generic-publish" />
-            <option value="$PROJECT_DIR$/gradle-common" />
-            <option value="$PROJECT_DIR$/it21-gui-packager" />
-            <option value="$PROJECT_DIR$/maven-publish" />
-            <option value="$PROJECT_DIR$/repo-config" />
-            <option value="$PROJECT_DIR$/rpm-service-packager" />
-            <option value="$PROJECT_DIR$/rpm-ssh-deployer" />
-            <option value="$PROJECT_DIR$/ssh-common" />
-            <option value="$PROJECT_DIR$/zip-service-packager" />
-          </set>
-        </option>
-        <option name="useAutoImport" value="true" />
-        <option name="useQualifiedModuleNames" value="true" />
-      </GradleProjectSettings>
-      <GradleProjectSettings>
-        <option name="distributionType" value="DEFAULT_WRAPPED" />
         <option name="externalProjectPath" value="$PROJECT_DIR$/integration/jenkins-pipeline-tests" />
         <option name="gradleJvm" value="1.8" />
         <option name="modules">
@@ -86,6 +60,32 @@
           </set>
         </option>
         <option name="useAutoImport" value="true" />
+        <option name="useQualifiedModuleNames" value="true" />
+      </GradleProjectSettings>
+      <GradleProjectSettings>
+        <option name="distributionType" value="DEFAULT_WRAPPED" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$/plugins" />
+        <option name="gradleJvm" value="1.8" />
+        <option name="modules">
+          <set>
+            <option value="$PROJECT_DIR$/plugins" />
+            <option value="$PROJECT_DIR$/plugins/common-repo" />
+            <option value="$PROJECT_DIR$/plugins/common-service-packager" />
+            <option value="$PROJECT_DIR$/plugins/common-test" />
+            <option value="$PROJECT_DIR$/plugins/dependency-manager" />
+            <option value="$PROJECT_DIR$/plugins/docker-client" />
+            <option value="$PROJECT_DIR$/plugins/generic-publish" />
+            <option value="$PROJECT_DIR$/plugins/gradle-common" />
+            <option value="$PROJECT_DIR$/plugins/it21-gui-packager" />
+            <option value="$PROJECT_DIR$/plugins/maven-publish" />
+            <option value="$PROJECT_DIR$/plugins/repo-config" />
+            <option value="$PROJECT_DIR$/plugins/revision-manager" />
+            <option value="$PROJECT_DIR$/plugins/rpm-service-packager" />
+            <option value="$PROJECT_DIR$/plugins/rpm-ssh-deployer" />
+            <option value="$PROJECT_DIR$/plugins/ssh-common" />
+            <option value="$PROJECT_DIR$/plugins/zip-service-packager" />
+          </set>
+        </option>
         <option name="useQualifiedModuleNames" value="true" />
       </GradleProjectSettings>
       <GradleProjectSettings>

@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.apgsga.maven.dm.ext.VersionResolutionDslTests" tests="3" skipped="0" failures="0" errors="0" timestamp="2020-02-04T14:06:15" hostname="chhexbook.affichage-p.ch" time="3.222">
+  <properties/>
+  <testcase name="Version Resolution 1 Bom Version 1 Patch File DSL" classname="com.apgsga.maven.dm.ext.VersionResolutionDslTests" time="1.045"/>
+  <testcase name="version Resolution DSL with Version Parameter and single Bom works" classname="com.apgsga.maven.dm.ext.VersionResolutionDslTests" time="1.04"/>
+  <testcase name="version Resolution DSL with List of boms and list of patch files" classname="com.apgsga.maven.dm.ext.VersionResolutionDslTests" time="1.136"/>
+  <system-out><![CDATA[Running setup
+/var/folders/m7/jql3p30h8xl46m001s7q50mh0000gp/T/
+About to delete /var/folders/m7/jql3p30h8xl46m001s7q50mh0000gp/T/gradletestproject3601261829950663198
+Project Dir : /var/folders/m7/jql3p30h8xl46m001s7q50mh0000gp/T/gradletestproject3883512685119791890
+Gradle Home directory for tests: /var/folders/m7/jql3p30h8xl46m001s7q50mh0000gp/T/gradletestproject3883512685119791890/.gradle
+/var/folders/m7/jql3p30h8xl46m001s7q50mh0000gp/T/gradletestproject3883512685119791890/.gradle/gradle.properties has been created!
+/var/folders/m7/jql3p30h8xl46m001s7q50mh0000gp/T/gradletestproject3883512685119791890/.gradle/gradle.encrypted.properties has been created!
+Result output: Using 4 worker leases.
+Starting Build
+Settings evaluated using settings file '/private/var/folders/m7/jql3p30h8xl46m001s7q50mh0000gp/T/gradletestproject3883512685119791890/settings.gradle'.
+Projects loaded. Root project using build file '/private/var/folders/m7/jql3p30h8xl46m001s7q50mh0000gp/T/gradletestproject3883512685119791890/build.gradle'.
+Included projects: [root project 'gradletestproject3883512685119791890']
+
+> Configure project :
+Evaluating root project 'gradletestproject3883512685119791890' using build file '/private/var/folders/m7/jql3p30h8xl46m001s7q50mh0000gp/T/gradletestproject3883512685119791890/build.gradle'.
+Compiling build file '/private/var/folders/m7/jql3p30h8xl46m001s7q50mh0000gp/T/gradletestproject3883512685119791890/build.gradle' using SubsetScriptTransformer.
+Compiling build file '/private/var/folders/m7/jql3p30h8xl46m001s7q50mh0000gp/T/gradletestproject3883512685119791890/build.gradle' using BuildScriptTransformer.
+All projects evaluated.
+Selected primary task 'init' from project :
+Tasks to be executed: [task ':init']
+:init (Thread[Execution worker for ':',5,main]) started.
+
+> Task :init SKIPPED
+The build file 'build.gradle' already exists. Skipping build initialization.
+Skipping task ':init' as task onlyIf is false.
+:init (Thread[Execution worker for ':',5,main]) completed. Took 0.003 secs.
+
+BUILD SUCCESSFUL in 1s
+
+Running setup
+/var/folders/m7/jql3p30h8xl46m001s7q50mh0000gp/T/
+About to delete /var/folders/m7/jql3p30h8xl46m001s7q50mh0000gp/T/gradletestproject3883512685119791890
+Project Dir : /var/folders/m7/jql3p30h8xl46m001s7q50mh0000gp/T/gradletestproject5314574520815640663
+Gradle Home directory for tests: /var/folders/m7/jql3p30h8xl46m001s7q50mh0000gp/T/gradletestproject5314574520815640663/.gradle
+/var/folders/m7/jql3p30h8xl46m001s7q50mh0000gp/T/gradletestproject5314574520815640663/.gradle/gradle.properties has been created!
+/var/folders/m7/jql3p30h8xl46m001s7q50mh0000gp/T/gradletestproject5314574520815640663/.gradle/gradle.encrypted.properties has been created!
+Result output: Using 4 worker leases.
+Starting Build
+Settings evaluated using settings file '/private/var/folders/m7/jql3p30h8xl46m001s7q50mh0000gp/T/gradletestproject5314574520815640663/settings.gradle'.
+Projects loaded. Root project using build file '/private/var/folders/m7/jql3p30h8xl46m001s7q50mh0000gp/T/gradletestproject5314574520815640663/build.gradle'.
+Included projects: [root project 'gradletestproject5314574520815640663']
+
+> Configure project :
+Evaluating root project 'gradletestproject5314574520815640663' using build file '/private/var/folders/m7/jql3p30h8xl46m001s7q50mh0000gp/T/gradletestproject5314574520815640663/build.gradle'.
+Compiling build file '/private/var/folders/m7/jql3p30h8xl46m001s7q50mh0000gp/T/gradletestproject5314574520815640663/build.gradle' using SubsetScriptTransformer.
+Compiling build file '/private/var/folders/m7/jql3p30h8xl46m001s7q50mh0000gp/T/gradletestproject5314574520815640663/build.gradle' using BuildScriptTransformer.
+All projects evaluated.
+Selected primary task 'init' from project :
+Tasks to be executed: [task ':init']
+:init (Thread[Execution worker for ':',5,main]) started.
+
+> Task :init SKIPPED
+The build file 'build.gradle' already exists. Skipping build initialization.
+Skipping task ':init' as task onlyIf is false.
+:init (Thread[Execution worker for ':',5,main]) completed. Took 0.002 secs.
+
+BUILD SUCCESSFUL in 1s
+
+Running setup
+/var/folders/m7/jql3p30h8xl46m001s7q50mh0000gp/T/
+About to delete /var/folders/m7/jql3p30h8xl46m001s7q50mh0000gp/T/gradletestproject5314574520815640663
+Project Dir : /var/folders/m7/jql3p30h8xl46m001s7q50mh0000gp/T/gradletestproject6917593660438715657
+Gradle Home directory for tests: /var/folders/m7/jql3p30h8xl46m001s7q50mh0000gp/T/gradletestproject6917593660438715657/.gradle
+/var/folders/m7/jql3p30h8xl46m001s7q50mh0000gp/T/gradletestproject6917593660438715657/.gradle/gradle.properties has been created!
+/var/folders/m7/jql3p30h8xl46m001s7q50mh0000gp/T/gradletestproject6917593660438715657/.gradle/gradle.encrypted.properties has been created!
+Result output: Using 4 worker leases.
+Starting Build
+Settings evaluated using settings file '/private/var/folders/m7/jql3p30h8xl46m001s7q50mh0000gp/T/gradletestproject6917593660438715657/settings.gradle'.
+Projects loaded. Root project using build file '/private/var/folders/m7/jql3p30h8xl46m001s7q50mh0000gp/T/gradletestproject6917593660438715657/build.gradle'.
+Included projects: [root project 'gradletestproject6917593660438715657']
+
+> Configure project :
+Evaluating root project 'gradletestproject6917593660438715657' using build file '/private/var/folders/m7/jql3p30h8xl46m001s7q50mh0000gp/T/gradletestproject6917593660438715657/build.gradle'.
+Compiling build file '/private/var/folders/m7/jql3p30h8xl46m001s7q50mh0000gp/T/gradletestproject6917593660438715657/build.gradle' using SubsetScriptTransformer.
+Compiling build file '/private/var/folders/m7/jql3p30h8xl46m001s7q50mh0000gp/T/gradletestproject6917593660438715657/build.gradle' using BuildScriptTransformer.
+All projects evaluated.
+Selected primary task 'init' from project :
+Tasks to be executed: [task ':init']
+:init (Thread[Execution worker for ':',5,main]) started.
+
+> Task :init SKIPPED
+The build file 'build.gradle' already exists. Skipping build initialization.
+Skipping task ':init' as task onlyIf is false.
+:init (Thread[Execution worker for ':',5,main]) completed. Took 0.002 secs.
+
+BUILD SUCCESSFUL in 1s
+
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

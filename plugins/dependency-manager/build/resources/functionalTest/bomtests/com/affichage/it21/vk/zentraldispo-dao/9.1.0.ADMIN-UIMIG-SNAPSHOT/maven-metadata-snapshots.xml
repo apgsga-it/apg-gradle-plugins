@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<metadata modelVersion="1.1.0">
+  <groupId>com.affichage.it21.vk</groupId>
+  <artifactId>zentraldispo-dao</artifactId>
+  <version>9.1.0.ADMIN-SNAPSHOT</version>
+  <versioning>
+    <snapshot>
+      <timestamp>20200107.151250</timestamp>
+      <buildNumber>225</buildNumber>
+    </snapshot>
+    <lastUpdated>20200107151252</lastUpdated>
+    <snapshotVersions>
+      <snapshotVersion>
+        <classifier>sources</classifier>
+        <extension>jar</extension>
+        <value>9.1.0.ADMIN-UIMIG-20200107.151250-225</value>
+        <updated>20200107151250</updated>
+      </snapshotVersion>
+      <snapshotVersion>
+        <extension>jar</extension>
+        <value>9.1.0.ADMIN-UIMIG-20200107.151250-225</value>
+        <updated>20200107151250</updated>
+      </snapshotVersion>
+      <snapshotVersion>
+        <extension>pom</extension>
+        <value>9.1.0.ADMIN-UIMIG-20200107.151250-225</value>
+        <updated>20200107151250</updated>
+      </snapshotVersion>
+    </snapshotVersions>
+  </versioning>
+</metadata>

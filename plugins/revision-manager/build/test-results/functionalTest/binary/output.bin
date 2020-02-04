@@ -1,0 +1,188 @@
+Running setup
+2/var/folders/m7/jql3p30h8xl46m001s7q50mh0000gp/T/
+fAbout to delete /var/folders/m7/jql3p30h8xl46m001s7q50mh0000gp/T/gradletestproject4227148591373609497
+dProject Dir : /var/folders/m7/jql3p30h8xl46m001s7q50mh0000gp/T/gradletestproject8484913824098653769
+Gradle Home directory for tests: /var/folders/m7/jql3p30h8xl46m001s7q50mh0000gp/T/gradletestproject8484913824098653769/.gradle
+‚/var/folders/m7/jql3p30h8xl46m001s7q50mh0000gp/T/gradletestproject8484913824098653769/.gradle/gradle.properties has been created!
+Œ/var/folders/m7/jql3p30h8xl46m001s7q50mh0000gp/T/gradletestproject8484913824098653769/.gradle/gradle.encrypted.properties has been created!
+Running setup
+2/var/folders/m7/jql3p30h8xl46m001s7q50mh0000gp/T/
+fAbout to delete /var/folders/m7/jql3p30h8xl46m001s7q50mh0000gp/T/gradletestproject8484913824098653769
+dProject Dir : /var/folders/m7/jql3p30h8xl46m001s7q50mh0000gp/T/gradletestproject4665694999847869786
+Gradle Home directory for tests: /var/folders/m7/jql3p30h8xl46m001s7q50mh0000gp/T/gradletestproject4665694999847869786/.gradle
+‚/var/folders/m7/jql3p30h8xl46m001s7q50mh0000gp/T/gradletestproject4665694999847869786/.gradle/gradle.properties has been created!
+Œ/var/folders/m7/jql3p30h8xl46m001s7q50mh0000gp/T/gradletestproject4665694999847869786/.gradle/gradle.encrypted.properties has been created!
+Running setup
+2/var/folders/m7/jql3p30h8xl46m001s7q50mh0000gp/T/
+fAbout to delete /var/folders/m7/jql3p30h8xl46m001s7q50mh0000gp/T/gradletestproject4665694999847869786
+dProject Dir : /var/folders/m7/jql3p30h8xl46m001s7q50mh0000gp/T/gradletestproject7781142683098300915
+Gradle Home directory for tests: /var/folders/m7/jql3p30h8xl46m001s7q50mh0000gp/T/gradletestproject7781142683098300915/.gradle
+‚/var/folders/m7/jql3p30h8xl46m001s7q50mh0000gp/T/gradletestproject7781142683098300915/.gradle/gradle.properties has been created!
+Œ/var/folders/m7/jql3p30h8xl46m001s7q50mh0000gp/T/gradletestproject7781142683098300915/.gradle/gradle.encrypted.properties has been created!
+Running setup
+2/var/folders/m7/jql3p30h8xl46m001s7q50mh0000gp/T/
+fAbout to delete /var/folders/m7/jql3p30h8xl46m001s7q50mh0000gp/T/gradletestproject7781142683098300915
+dProject Dir : /var/folders/m7/jql3p30h8xl46m001s7q50mh0000gp/T/gradletestproject3481502746911737593
+Gradle Home directory for tests: /var/folders/m7/jql3p30h8xl46m001s7q50mh0000gp/T/gradletestproject3481502746911737593/.gradle
+‚/var/folders/m7/jql3p30h8xl46m001s7q50mh0000gp/T/gradletestproject3481502746911737593/.gradle/gradle.properties has been created!
+Œ/var/folders/m7/jql3p30h8xl46m001s7q50mh0000gp/T/gradletestproject3481502746911737593/.gradle/gradle.encrypted.properties has been created!
+Using 4 worker leases.
+Starting Build
+˜Settings evaluated using settings file '/private/var/folders/m7/jql3p30h8xl46m001s7q50mh0000gp/T/gradletestproject3481502746911737593/settings.gradle'.
+Projects loaded. Root project using build file '/private/var/folders/m7/jql3p30h8xl46m001s7q50mh0000gp/T/gradletestproject3481502746911737593/build.gradle'.
+IIncluded projects: [root project 'gradletestproject3481502746911737593']
+
+> Configure project :
+¾Evaluating root project 'gradletestproject3481502746911737593' using build file '/private/var/folders/m7/jql3p30h8xl46m001s7q50mh0000gp/T/gradletestproject3481502746911737593/build.gradle'.
+¡Compiling build file '/private/var/folders/m7/jql3p30h8xl46m001s7q50mh0000gp/T/gradletestproject3481502746911737593/build.gradle' using SubsetScriptTransformer.
+ Compiling build file '/private/var/folders/m7/jql3p30h8xl46m001s7q50mh0000gp/T/gradletestproject3481502746911737593/build.gradle' using BuildScriptTransformer.
+All projects evaluated.
+,Selected primary task 'init' from project :
+2Selected primary task 'getNextRev' from project :
+OTasks to be executed: [task ':init', task ':nextRevision', task ':getNextRev']
+9:init (Thread[Execution worker for ':',5,main]) started.
+
+> Task :init SKIPPED
+MThe build file 'build.gradle' already exists. Skipping build initialization.
+/Skipping task ':init' as task onlyIf is false.
+L:init (Thread[Execution worker for ':',5,main]) completed. Took 0.002 secs.
+A:nextRevision (Thread[Execution worker for ':',5,main]) started.
+
+> Task :nextRevision
+0Task ':nextRevision' is not up-to-date because:
+?  Task has not declared any outputs despite executing actions.
+T:nextRevision (Thread[Execution worker for ':',5,main]) completed. Took 0.022 secs.
+?:getNextRev (Thread[Execution worker for ':',5,main]) started.
+
+> Task :getNextRev
+.Task ':getNextRev' is not up-to-date because:
+?  Task has not declared any outputs despite executing actions.
+3Custom actions are attached to task ':getNextRev'.
+lastRev=SNAPSHOT
+
+nextRev=1
+R:getNextRev (Thread[Execution worker for ':',5,main]) completed. Took 0.037 secs.
+
+BUILD SUCCESSFUL in 0s
+2 actionable tasks: 2 executed
+
+Running setup
+2/var/folders/m7/jql3p30h8xl46m001s7q50mh0000gp/T/
+fAbout to delete /var/folders/m7/jql3p30h8xl46m001s7q50mh0000gp/T/gradletestproject3481502746911737593
+dProject Dir : /var/folders/m7/jql3p30h8xl46m001s7q50mh0000gp/T/gradletestproject8087491217211583345
+Gradle Home directory for tests: /var/folders/m7/jql3p30h8xl46m001s7q50mh0000gp/T/gradletestproject8087491217211583345/.gradle
+‚/var/folders/m7/jql3p30h8xl46m001s7q50mh0000gp/T/gradletestproject8087491217211583345/.gradle/gradle.properties has been created!
+Œ/var/folders/m7/jql3p30h8xl46m001s7q50mh0000gp/T/gradletestproject8087491217211583345/.gradle/gradle.encrypted.properties has been created!
+Using 4 worker leases.
+Starting Build
+˜Settings evaluated using settings file '/private/var/folders/m7/jql3p30h8xl46m001s7q50mh0000gp/T/gradletestproject8087491217211583345/settings.gradle'.
+Projects loaded. Root project using build file '/private/var/folders/m7/jql3p30h8xl46m001s7q50mh0000gp/T/gradletestproject8087491217211583345/build.gradle'.
+IIncluded projects: [root project 'gradletestproject8087491217211583345']
+
+> Configure project :
+¾Evaluating root project 'gradletestproject8087491217211583345' using build file '/private/var/folders/m7/jql3p30h8xl46m001s7q50mh0000gp/T/gradletestproject8087491217211583345/build.gradle'.
+¡Compiling build file '/private/var/folders/m7/jql3p30h8xl46m001s7q50mh0000gp/T/gradletestproject8087491217211583345/build.gradle' using SubsetScriptTransformer.
+ Compiling build file '/private/var/folders/m7/jql3p30h8xl46m001s7q50mh0000gp/T/gradletestproject8087491217211583345/build.gradle' using BuildScriptTransformer.
+All projects evaluated.
+,Selected primary task 'init' from project :
+2Selected primary task 'getNextRev' from project :
+OTasks to be executed: [task ':init', task ':nextRevision', task ':getNextRev']
+9:init (Thread[Execution worker for ':',5,main]) started.
+
+> Task :init SKIPPED
+MThe build file 'build.gradle' already exists. Skipping build initialization.
+/Skipping task ':init' as task onlyIf is false.
+L:init (Thread[Execution worker for ':',5,main]) completed. Took 0.004 secs.
+A:nextRevision (Thread[Execution worker for ':',5,main]) started.
+
+> Task :nextRevision
+0Task ':nextRevision' is not up-to-date because:
+?  Task has not declared any outputs despite executing actions.
+S:nextRevision (Thread[Execution worker for ':',5,main]) completed. Took 0.02 secs.
+?:getNextRev (Thread[Execution worker for ':',5,main]) started.
+
+> Task :getNextRev
+.Task ':getNextRev' is not up-to-date because:
+?  Task has not declared any outputs despite executing actions.
+3Custom actions are attached to task ':getNextRev'.
+lastRevForTarget=SNAPSHOT
+nextRevForTarget=1
+R:getNextRev (Thread[Execution worker for ':',5,main]) completed. Took 0.001 secs.
+
+BUILD SUCCESSFUL in 0s
+2 actionable tasks: 2 executed
+
+Using 4 worker leases.
+Starting Build
+˜Settings evaluated using settings file '/private/var/folders/m7/jql3p30h8xl46m001s7q50mh0000gp/T/gradletestproject8087491217211583345/settings.gradle'.
+Projects loaded. Root project using build file '/private/var/folders/m7/jql3p30h8xl46m001s7q50mh0000gp/T/gradletestproject8087491217211583345/build.gradle'.
+IIncluded projects: [root project 'gradletestproject8087491217211583345']
+
+> Configure project :
+¾Evaluating root project 'gradletestproject8087491217211583345' using build file '/private/var/folders/m7/jql3p30h8xl46m001s7q50mh0000gp/T/gradletestproject8087491217211583345/build.gradle'.
+All projects evaluated.
+,Selected primary task 'init' from project :
+2Selected primary task 'getNextRev' from project :
+OTasks to be executed: [task ':init', task ':nextRevision', task ':getNextRev']
+9:init (Thread[Execution worker for ':',5,main]) started.
+
+> Task :init SKIPPED
+MThe build file 'build.gradle' already exists. Skipping build initialization.
+/Skipping task ':init' as task onlyIf is false.
+L:init (Thread[Execution worker for ':',5,main]) completed. Took 0.002 secs.
+A:nextRevision (Thread[Execution worker for ':',5,main]) started.
+
+> Task :nextRevision
+0Task ':nextRevision' is not up-to-date because:
+?  Task has not declared any outputs despite executing actions.
+T:nextRevision (Thread[Execution worker for ':',5,main]) completed. Took 0.005 secs.
+?:getNextRev (Thread[Execution worker for ':',5,main]) started.
+
+> Task :getNextRev
+.Task ':getNextRev' is not up-to-date because:
+?  Task has not declared any outputs despite executing actions.
+3Custom actions are attached to task ':getNextRev'.
+lastRevForTarget=1
+nextRevForTarget=2
+R:getNextRev (Thread[Execution worker for ':',5,main]) completed. Took 0.001 secs.
+
+BUILD SUCCESSFUL in 0s
+2 actionable tasks: 2 executed
+
+Using 4 worker leases.
+Starting Build
+˜Settings evaluated using settings file '/private/var/folders/m7/jql3p30h8xl46m001s7q50mh0000gp/T/gradletestproject8087491217211583345/settings.gradle'.
+Projects loaded. Root project using build file '/private/var/folders/m7/jql3p30h8xl46m001s7q50mh0000gp/T/gradletestproject8087491217211583345/build.gradle'.
+IIncluded projects: [root project 'gradletestproject8087491217211583345']
+
+> Configure project :
+¾Evaluating root project 'gradletestproject8087491217211583345' using build file '/private/var/folders/m7/jql3p30h8xl46m001s7q50mh0000gp/T/gradletestproject8087491217211583345/build.gradle'.
+All projects evaluated.
+,Selected primary task 'init' from project :
+2Selected primary task 'getNextRev' from project :
+OTasks to be executed: [task ':init', task ':nextRevision', task ':getNextRev']
+9:init (Thread[Execution worker for ':',5,main]) started.
+
+> Task :init SKIPPED
+MThe build file 'build.gradle' already exists. Skipping build initialization.
+/Skipping task ':init' as task onlyIf is false.
+L:init (Thread[Execution worker for ':',5,main]) completed. Took 0.001 secs.
+A:nextRevision (Thread[Execution worker for ':',5,main]) started.
+
+> Task :nextRevision
+0Task ':nextRevision' is not up-to-date because:
+?  Task has not declared any outputs despite executing actions.
+T:nextRevision (Thread[Execution worker for ':',5,main]) completed. Took 0.007 secs.
+?:getNextRev (Thread[Execution worker for ':',5,main]) started.
+
+> Task :getNextRev
+.Task ':getNextRev' is not up-to-date because:
+?  Task has not declared any outputs despite executing actions.
+3Custom actions are attached to task ':getNextRev'.
+lastRevForTarget=SNAPSHOT
+nextRevForTarget=3
+R:getNextRev (Thread[Execution worker for ':',5,main]) completed. Took 0.001 secs.
+
+BUILD SUCCESSFUL in 0s
+2 actionable tasks: 2 executed
+

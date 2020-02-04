@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.apgsga.maven.impl.resolver.PatchFileArtifactVersionResolverTest" tests="2" skipped="0" failures="0" errors="0" timestamp="2020-02-04T14:06:00" hostname="chhexbook.affichage-p.ch" time="0.32">
+  <properties/>
+  <testcase name="getVersion from Patchfile" classname="com.apgsga.maven.impl.resolver.PatchFileArtifactVersionResolverTest" time="0.304"/>
+  <testcase name="getVersion Simple Test with nested Bom no recursive" classname="com.apgsga.maven.impl.resolver.PatchFileArtifactVersionResolverTest" time="0.016"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

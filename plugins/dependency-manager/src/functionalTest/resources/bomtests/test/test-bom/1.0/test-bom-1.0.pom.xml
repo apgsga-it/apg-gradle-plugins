@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <artifactId>x</artifactId>
+        <groupId>y</groupId>
+        <version>1.0</version>
+    </parent>
+    <artifactId>test-bom</artifactId>
+    <packaging>pom</packaging>
+    <name>whatever</name>
+
+    <properties>
+        <!-- General Version Properties relevent for in-house development -->
+        <branch.version>9.0.6.ADMIN-UIMIG-SNAPSHOT</branch.version>
+        <apg-forms2java-framework.version>1.9.6</apg-forms2java-framework.version>
+
+        <!-- External Libraries Version Properties -->
+
+        <httpclient.version>4.5.2</httpclient.version>
+        <guice.version>4.1</guice.version>
+    </properties>
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.apache.httpcomponents</groupId>
+                <artifactId>httpclient</artifactId>
+                <version>${httpclient.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.google.code.guice</groupId>
+                <artifactId>guice</artifactId>
+                <version>${guice.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.affichage.ui.utils</groupId>
+                <artifactId>jgoodies-utils</artifactId>
+                <version>${apg-forms2java-framework.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.affichage.it21.ppix</groupId>
+                <artifactId>ppix-dao</artifactId>
+                <version>${branch.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.affichage.it21.vk</groupId>
+                <artifactId>zentraldispo-dao</artifactId>
+                <version>xxxxxxxxxxx</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+</project>
