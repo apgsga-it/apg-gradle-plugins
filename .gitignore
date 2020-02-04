@@ -51,3 +51,4 @@ out/
 /sandbox/docker-sshd-compose/build/.docker/
 /integration/jenkins-pipeline-tests/build/.docker/
 /modules/Jenkinsfile
+/integration/jenkins-pipeline-tests/jenkinsHome/
