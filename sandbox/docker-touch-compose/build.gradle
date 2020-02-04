@@ -1,0 +1,15 @@
+import org.gradle.api.file.FileVisitDetails
+import org.gradle.api.tasks.Delete
+
+plugins {
+    id 'com.palantir.docker-compose' version '0.24.0'
+    id 'java'
+}
+
+task cleanTest(type: Delete) {
+    fileTree(dir: 'test').visit { FileVisitDetails details ->
+        delete details.file
+    }
+}
+
+clean.dependsOn cleanTest

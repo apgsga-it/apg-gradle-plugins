@@ -9,6 +9,11 @@ public class ApgRpmDeployConfig {
     private String rpmFilePath;
     private String rpmFileName;
     private String remoteDestFolder;
+    private Boolean allowAnyHosts = false;
+
+    public ApgRpmDeployConfig(Project project) {
+        this.project = project;
+    }
 
     public String getRpmFileName() {
         return rpmFileName;
@@ -34,8 +39,12 @@ public class ApgRpmDeployConfig {
         this.remoteDestFolder = remoteDestFolder;
     }
 
-    public ApgRpmDeployConfig(Project project) {
-        this.project = project;
+    public Boolean getAllowAnyHosts() {
+        return allowAnyHosts;
+    }
+
+    public void setAllowAnyHosts(Boolean allowAnyHosts) {
+        this.allowAnyHosts = allowAnyHosts;
     }
 
     public void log() {
@@ -44,10 +53,12 @@ public class ApgRpmDeployConfig {
 
     @Override
     public String toString() {
-        return "ApgSsh{" +
+        return "ApgRpmDeployConfig{" +
+                "project=" + project +
                 ", rpmFilePath='" + rpmFilePath + '\'' +
                 ", rpmFileName='" + rpmFileName + '\'' +
                 ", remoteDestFolder='" + remoteDestFolder + '\'' +
+                ", allowAnyHosts=" + allowAnyHosts +
                 '}';
     }
 }

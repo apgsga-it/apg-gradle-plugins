@@ -14,6 +14,7 @@
             <option value="$PROJECT_DIR$/common-service-packager" />
             <option value="$PROJECT_DIR$/common-test" />
             <option value="$PROJECT_DIR$/dependency-manager" />
+            <option value="$PROJECT_DIR$/docker-client" />
             <option value="$PROJECT_DIR$/generic-publish" />
             <option value="$PROJECT_DIR$/gradle-common" />
             <option value="$PROJECT_DIR$/it21-gui-packager" />
@@ -30,11 +31,11 @@
       </GradleProjectSettings>
       <GradleProjectSettings>
         <option name="distributionType" value="DEFAULT_WRAPPED" />
-        <option name="externalProjectPath" value="$PROJECT_DIR$/testapp-kotlin-pkg" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$/integration/jenkins-pipeline-tests" />
         <option name="gradleJvm" value="1.8" />
         <option name="modules">
           <set>
-            <option value="$PROJECT_DIR$/testapp-kotlin-pkg" />
+            <option value="$PROJECT_DIR$/integration/jenkins-pipeline-tests" />
           </set>
         </option>
         <option name="useAutoImport" value="true" />
@@ -42,11 +43,11 @@
       </GradleProjectSettings>
       <GradleProjectSettings>
         <option name="distributionType" value="DEFAULT_WRAPPED" />
-        <option name="externalProjectPath" value="$PROJECT_DIR$/testapp-kotlin-service" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$/integration/jenkins-pipeline-tests/buildpkg-test" />
         <option name="gradleJvm" value="1.8" />
         <option name="modules">
           <set>
-            <option value="$PROJECT_DIR$/testapp-kotlin-service" />
+            <option value="$PROJECT_DIR$/integration/jenkins-pipeline-tests/buildpkg-test" />
           </set>
         </option>
         <option name="useAutoImport" value="true" />
@@ -54,11 +55,11 @@
       </GradleProjectSettings>
       <GradleProjectSettings>
         <option name="distributionType" value="DEFAULT_WRAPPED" />
-        <option name="externalProjectPath" value="$PROJECT_DIR$/testapp-pkg" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$/integration/jenkins-pipeline-tests/create-jenkins-image" />
         <option name="gradleJvm" value="1.8" />
         <option name="modules">
           <set>
-            <option value="$PROJECT_DIR$/testapp-pkg" />
+            <option value="$PROJECT_DIR$/integration/jenkins-pipeline-tests/create-jenkins-image" />
           </set>
         </option>
         <option name="useAutoImport" value="true" />
@@ -66,11 +67,58 @@
       </GradleProjectSettings>
       <GradleProjectSettings>
         <option name="distributionType" value="DEFAULT_WRAPPED" />
-        <option name="externalProjectPath" value="$PROJECT_DIR$/testapp-service" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$/integration/jenkins-pipeline-tests/create-sshd-image" />
         <option name="gradleJvm" value="1.8" />
         <option name="modules">
           <set>
-            <option value="$PROJECT_DIR$/testapp-service" />
+            <option value="$PROJECT_DIR$/integration/jenkins-pipeline-tests/create-sshd-image" />
+          </set>
+        </option>
+        <option name="useQualifiedModuleNames" value="true" />
+      </GradleProjectSettings>
+      <GradleProjectSettings>
+        <option name="distributionType" value="DEFAULT_WRAPPED" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$/integration/modules/testapp-pkg" />
+        <option name="gradleJvm" value="1.8" />
+        <option name="modules">
+          <set>
+            <option value="$PROJECT_DIR$/integration/modules/testapp-pkg" />
+          </set>
+        </option>
+        <option name="useAutoImport" value="true" />
+        <option name="useQualifiedModuleNames" value="true" />
+      </GradleProjectSettings>
+      <GradleProjectSettings>
+        <option name="distributionType" value="DEFAULT_WRAPPED" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$/sandbox/docker-sshd-compose" />
+        <option name="gradleJvm" value="1.8" />
+        <option name="modules">
+          <set>
+            <option value="$PROJECT_DIR$/sandbox/docker-sshd-compose" />
+          </set>
+        </option>
+        <option name="useAutoImport" value="true" />
+        <option name="useQualifiedModuleNames" value="true" />
+      </GradleProjectSettings>
+      <GradleProjectSettings>
+        <option name="distributionType" value="DEFAULT_WRAPPED" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$/sandbox/testapp-kotlin-pkg" />
+        <option name="gradleJvm" value="1.8" />
+        <option name="modules">
+          <set>
+            <option value="$PROJECT_DIR$/sandbox/testapp-kotlin-pkg" />
+          </set>
+        </option>
+        <option name="useAutoImport" value="true" />
+        <option name="useQualifiedModuleNames" value="true" />
+      </GradleProjectSettings>
+      <GradleProjectSettings>
+        <option name="distributionType" value="DEFAULT_WRAPPED" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$/sandbox/testapp-kotlin-service" />
+        <option name="gradleJvm" value="1.8" />
+        <option name="modules">
+          <set>
+            <option value="$PROJECT_DIR$/sandbox/testapp-kotlin-service" />
           </set>
         </option>
         <option name="useAutoImport" value="true" />

@@ -12,6 +12,7 @@ include ':dependency-manager'
 include ':common-test'
 include 'rpm-ssh-deployer'
 include 'ssh-common'
+include 'docker-client'
 include 'revision-manager'
 
 project(':common-repo').projectDir = "$rootDir/common-repo" as File
@@ -27,6 +28,7 @@ project(':dependency-manager').projectDir = "$rootDir/dependency-manager" as Fil
 project(':common-test').projectDir = "$rootDir/common-test" as File
 project(':rpm-ssh-deployer').projectDir = "$rootDir/rpm-ssh-deployer" as File
 project(':ssh-common').projectDir = "$rootDir/ssh-common" as File
+project(':docker-client').projectDir = "$rootDir/docker-client" as File
 project(':revision-manager').projectDir = "$rootDir/revision-manager" as File
 
 

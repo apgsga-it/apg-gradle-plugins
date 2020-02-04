@@ -1,0 +1,79 @@
+buildscript {
+    repositories {
+        mavenLocal()
+    }
+    dependencies {
+        classpath 'com.apgsga.gradle:docker-client:0.3-SNAPSHOT'
+    }
+}
+plugins {
+    id 'com.bmuschko.docker-remote-api' version '6.1.3'
+    id 'java'
+}
+
+// Import task types
+import com.bmuschko.gradle.docker.tasks.image.*
+import com.bmuschko.gradle.docker.tasks.container.*
+import com.bmuschko.gradle.docker.tasks.network.*
+import com.apgsga.gradle.docker.tasks.*
+
+// Use task types
+task buildSshdImage(type: DockerBuildImage) {
+    inputDir = file('./')
+    images.add('sshtest:latest')
+    noCache = false
+    pull = false
+}
+
+task createSshdTestNetwork(type: DockerCreateNetwork) {
+    dependsOn buildSshdImage
+    networkId = "sshdtest"
+}
+
+
+task createSshdServer1(type: DockerCreateContainer) {
+    dependsOn createSshdTestNetwork
+    containerName = "sshdServer1"
+    targetImageId buildSshdImage.getImageId()
+    hostConfig.portBindings = ['2201:22']
+    hostConfig.autoRemove = true
+    hostConfig.network = "sshdtest"
+    hostConfig.privileged = true
+}
+
+task createSshdServer2(type: DockerCreateContainer) {
+    dependsOn createSshdTestNetwork
+    containerName = "sshdServer2"
+    targetImageId buildSshdImage.getImageId()
+    hostConfig.portBindings = ['2202:22']
+    hostConfig.autoRemove = true
+    hostConfig.network = "sshdtest"
+    hostConfig.privileged = true
+}
+
+task startSshdServer1(type: DockerStartContainer) {
+    dependsOn createSshdServer1
+    targetContainerId createSshdServer1.getContainerId()
+
+}
+
+task startSshdServer2(type: DockerStartContainer) {
+    dependsOn createSshdServer2
+    targetContainerId createSshdServer2.getContainerId()
+
+}
+
+task runSshdServers {
+    dependsOn startSshdServer1
+    dependsOn startSshdServer2
+}
+
+task cleanupDocker(type: DockerCleanup) {
+    containerNames = 'sshdServer1:sshdServer2'
+    networkNames = 'sshdtest'
+}
+
+
+
+
+
