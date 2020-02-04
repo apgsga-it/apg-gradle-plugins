@@ -50,3 +50,4 @@ out/
 /integration/jenkins-pipeline-tests/create-sshd-image/build/docker/
 /sandbox/docker-sshd-compose/build/.docker/
 /integration/jenkins-pipeline-tests/build/.docker/
+/modules/Jenkinsfile
