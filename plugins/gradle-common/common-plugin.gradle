@@ -24,8 +24,22 @@ repositories {
 
 
 publishing {
+	def repoName = version.endsWith("SNAPSHOT") ? gradlePluginSnapshotsRepo : gradlePluginReleasesRepo
+
+	publications {
+		maven(MavenPublication) {
+		}
+	}
+
 	repositories {
-		mavenLocal()
+		maven {
+			name ='apgGradlePluginRepo'
+			url  "${mavenRepoBaseUrl}/${repoName}"
+			credentials {
+				username = mavenRepoUser
+				password = mavenRepoPwd
+			}
+		}
 	}
 }
 
