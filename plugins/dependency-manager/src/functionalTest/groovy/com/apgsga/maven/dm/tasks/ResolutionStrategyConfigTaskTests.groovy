@@ -124,7 +124,7 @@ class ResolutionStrategyConfigTaskTests extends AbstractSpecification {
             versionResolvers {
                  boms = 'test:test-composite-bom:1.0'
                   patches {
-                    parentDir = "${source.getAbsoluteFile()}"
+                    parentDir = new File("${source.getAbsoluteFile().getPath().replace("\\","/")}")
                     fileNames = "PatchA5791.json"
                  }
             }
