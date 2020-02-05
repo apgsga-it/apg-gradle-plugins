@@ -52,3 +52,4 @@ out/
 /modules/Jenkinsfile
 /integration/jenkins-pipeline-tests/jenkinsHome/
 /plugins/dependency-manager/build/
+/plugins/build/
