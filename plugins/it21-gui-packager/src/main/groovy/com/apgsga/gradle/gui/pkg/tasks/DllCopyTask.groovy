@@ -17,12 +17,13 @@ class DllCopyTask extends DefaultTask {
 	@TaskAction
 	def taskAction() {
 		def ex = project.extensions.apgPackage
+		def configName = ex.configurationName
 		project.copy {
 			into "${project.buildDir}/${ex.pkgName}/dll"
-			from project.configurations.uiRuntime
+			from configName
 			// In lib we only want jars files to go in lib folder (no dll, exe, bat, etc...)
 			include "*.dll"
-			project.configurations.uiRuntime.allDependencies.each {rename "-${it.version}", ""} // Remove version information
+			project.configurations."${configName}".allDependencies.each {rename "-${it.version}", ""} // Remove version information
 		}
 		
 	}
