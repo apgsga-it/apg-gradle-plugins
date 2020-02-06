@@ -22,6 +22,7 @@ class ZipPackageTaskTests extends AbstractSpecification  {
 		// The guava dependency is only for testing purposes, consider to be likely found in mavenCentral()
         apgPackage {
 			pkgName ="testuiapp"
+			configurationName = "testRuntime"
 		    dependencies = ["com.google.guava:guava:+"]
 			version = "2.1-SNAPSHOT"
          }
