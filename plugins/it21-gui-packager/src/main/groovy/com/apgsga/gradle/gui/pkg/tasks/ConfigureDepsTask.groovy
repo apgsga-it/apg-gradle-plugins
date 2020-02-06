@@ -9,14 +9,18 @@ class ConfigureDepsTask extends DefaultTask {
 	@TaskAction
 	def taskAction() {
 		def ex = project.extensions.apgPackage
-		// TODO (che, 1.10.19) : make excludes configurable via extension
+		def configName = ex.configurationName
+		def config = project.configurations.findByName(configName)
+		if(config == null) {
+			config = project.configurations.create(configName)
+		}
 		project.configurations {
-			uiRuntime
+			config
 		}
 
 		project.dependencies {  
-			ex.dependencies.each {  
-				uiRuntime it
+			ex.dependencies.each {
+				"${configName}" it
 			}
 		}
 		

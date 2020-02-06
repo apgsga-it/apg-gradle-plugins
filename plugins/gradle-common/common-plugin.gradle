@@ -4,7 +4,7 @@ apply plugin: 'maven-publish'
 apply plugin: 'eclipse'
 
 group = 'com.apgsga.gradle'
-version = '0.3-SNAPSHOT'
+version = '0.4-SNAPSHOT'
 
 
 repositories {
@@ -21,6 +21,7 @@ repositories {
 	}
 
 }
+
 
 
 publishing {
@@ -42,6 +43,7 @@ publishing {
 		}
 	}
 }
+
 
 eclipse {
 	classpath {
