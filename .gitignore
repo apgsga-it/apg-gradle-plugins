@@ -41,10 +41,9 @@
 ### Intellij+iml Patch ###
 # Reason: https://github.com/joeblau/gitignore.io/issues/186#issuecomment-249601023
 
-*.iml
 modules.xml
 .idea/misc.xml
-*.ipr
+
 
 ### Linux ###
 *~
@@ -168,3 +167,9 @@ buildNumber.properties
 .mvn/timing.properties
 .mvn/wrapper/maven-wrapper.jar
 .flattened-pom.xml
+
+### Jenkins ###
+
+jenkinsHome/*
+!jenkinsHome/keep.txt
+Jenkinfile
