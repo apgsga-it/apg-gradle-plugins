@@ -1,3 +1,12 @@
+import com.apgsga.gradle.docker.tasks.DockerCleanup
+import com.bmuschko.gradle.docker.tasks.container.DockerCreateContainer
+import com.bmuschko.gradle.docker.tasks.container.DockerLogsContainer
+import com.bmuschko.gradle.docker.tasks.container.DockerStartContainer
+import com.bmuschko.gradle.docker.tasks.container.DockerStopContainer
+import com.bmuschko.gradle.docker.tasks.image.DockerBuildImage
+import com.bmuschko.gradle.docker.tasks.network.DockerCreateNetwork
+import com.bmuschko.gradle.docker.tasks.network.DockerRemoveNetwork
+
 buildscript {
     repositories {
         mavenLocal()
@@ -11,122 +20,119 @@ plugins {
     id 'java'
 }
 
-// Import task types
-import com.bmuschko.gradle.docker.tasks.image.*
-import com.bmuschko.gradle.docker.tasks.container.*
-import com.bmuschko.gradle.docker.tasks.network.*
-import com.apgsga.gradle.docker.tasks.*
+project.ext {
+    jenkinsHomeDir = "jenkinsHome"
+    jenkinsContainerName = 'jenkinsRunner'
+    installTargetContainerName = 'installTarget'
+    networkName = "jenkinstestnet"
+    localMaven = project.ext.localMaven = repositories.mavenLocal().url.path
+    bindsDefault = [ "${rootDir}/${rootProject.ext.jenkinsHomeDir}":"/jenkinsHome" ,
+                    "${rootProject.ext.localMaven}":"/mavenLocal", "${gradle.gradleUserHomeDir}":"/gradleUserHome"]
+    cmdDefault = ['--runWorkspace', '/jenkinsWorkspace', '--runHome', '/jenkinsHome']
 
-def modulesToTestDir = "${projectDir}/../modules"
-def localMaven
-
-def TEST_NETWORK_NAME = "jenkinstestnet"
-
-
-repositories {
-    localMaven = mavenLocal()
-    mavenCentral()
 }
 
-println "Maven Local Repo : ${localMaven.url.path}"
+subprojects {
 
-// Clean up leftovers
-task cleanupDocker(type: DockerCleanup) {
-    containerNames = 'installTarget:jenkinsRunner'
-    networkNames = "$TEST_NETWORK_NAME"
-}
-// Build Images and create Network
+    apply plugin: "com.bmuschko.docker-remote-api"
 
-task buildSshdTestNetwork(type: DockerCreateNetwork) {
-    networkId = TEST_NETWORK_NAME
-}
+    repositories {
+        mavenLocal()
+        mavenCentral()
 
-task buildSshdImage(type: DockerBuildImage) {
-    dependsOn buildSshdTestNetwork
-    inputDir = file('./src/docker/sshd')
-    images.add('apg-sshd-image:latest')
-    noCache = false
-    pull = false
-}
+    }
 
-task buildJenkinsImage(type: DockerBuildImage) {
-    dependsOn buildSshdTestNetwork
-    inputDir = file('./src/docker/jenkins')
-    images.add('apg-jenkinsrunner-image:latest')
-    noCache = false
-    pull = false
-}
+    println "Maven Local Repo : ${rootProject.ext.localMaven}"
 
+
+    task buildSshdImage(type: DockerBuildImage) {
+        inputDir = file("$rootDir/src/docker/sshd")
+        images.add('apg-sshd-image:latest')
+        noCache = false
+        pull = false
+    }
 
 // Create and start the Install Target , the systemd sshd server
-task createInstallTarget(type: DockerCreateContainer) {
-    dependsOn buildSshdImage
-    containerName = "installTarget"
-    targetImageId buildSshdImage.getImageId()
-    hostConfig.portBindings = ['2202:22']
-    hostConfig.autoRemove = true
-    hostConfig.network = TEST_NETWORK_NAME
-    hostConfig.privileged = true
-}
+    task createInstallTarget(type: DockerCreateContainer) {
+        containerName = "installTarget"
+        targetImageId buildSshdImage.getImageId()
+        hostConfig.portBindings = ['2202:22']
+        hostConfig.autoRemove = true
+        hostConfig.network = rootProject.ext.networkName
+        hostConfig.privileged = true
+    }
 
-task startInstallTarget(type: DockerStartContainer) {
-    dependsOn createInstallTarget
-    targetContainerId createInstallTarget.getContainerId()
+    task startInstallTarget(type: DockerStartContainer) {
+        targetContainerId createInstallTarget.getContainerId()
 
-}
+    }
+
+
+// Jenkins Runner Tasks
+
+    task buildJenkinsImage(type: DockerBuildImage) {
+        inputDir = file("$rootDir/src/docker/jenkins")
+        images.add('apg-jenkinsrunner-image:latest')
+        noCache = false
+        pull = false
+    }
 
 // Create , parametrize and start Jenkinsrunner
 // We attach the Standard Output and Log
-task createJenkinsRunnerContainer(type: DockerCreateContainer) {
-    containerName = "jenkinsRunner"
-    targetImageId 'apg-jenkinsrunner-image:latest'
-    hostConfig.autoRemove = true
-    hostConfig.network = TEST_NETWORK_NAME
-    hostConfig.binds = ["${projectDir}/src/jenkins/Jenkinsfile":"/workspace/Jenkinsfile",
-            "${projectDir}/jenkinsHome":"/jenkinsHome",  "${modulesToTestDir}":"/jenkinsWorkspace" ,
-            "${localMaven.url.path}":"/mavenLocal", "${gradle.gradleUserHomeDir}":"/gradleUserHome"]
-    attachStdout = true
-    attachStderr = true
-    cmd =  ['--runWorkspace', '/jenkinsWorkspace', '--runHome', '/jenkinsHome',
-    '-a', 'modules=testapp-bom:testapp-parentpom:testapp-module:testapp-service',
-    '-a', 'versionNr=2.0',  '-a', 'releaseNr=10',   '-a', 'installTarget=CHTI211',  '-a', "installHost=installTarget"]
-}
-
-
-task startJenkinsRunnerContainer(type: DockerStartContainer) {
-    dependsOn createJenkinsRunnerContainer
-    dependsOn startInstallTarget
-    targetContainerId createJenkinsRunnerContainer.getContainerId()
-}
-
-
-task logJenkinsRunnerContainer(type: DockerLogsContainer) {
-    dependsOn startJenkinsRunnerContainer
-    targetContainerId startJenkinsRunnerContainer.getContainerId()
-    follow = true
-    tailAll = true
-    onNext { message ->
-        // Each log message from the container will be passed as it's made available
-        logger.info message.toString()
+    task createJenkinsRunnerContainer(type: DockerCreateContainer) {
+        containerName = "jenkinsRunner"
+        targetImageId 'apg-jenkinsrunner-image:latest'
+        hostConfig.autoRemove = true
+        hostConfig.network =  rootProject.ext.networkName
+        attachStdout = true
+        attachStderr = true
     }
-}
 
-task stopInstallTarget(type: DockerStopContainer) {
-    dependsOn logJenkinsRunnerContainer
-    dependsOn startInstallTarget
-    targetContainerId startInstallTarget.getContainerId()
-}
-
-
-task cleanJenkinsHome(type: Delete) {
-    fileTree(dir: 'jenkinsHome').visit { FileVisitDetails details ->
-        delete details.file
+    task startJenkinsRunnerContainer(type: DockerStartContainer) {
+        targetContainerId createJenkinsRunnerContainer.getContainerId()
     }
+
+
+    task logJenkinsRunnerContainer(type: DockerLogsContainer) {
+        targetContainerId startJenkinsRunnerContainer.getContainerId()
+        follow = true
+        tailAll = true
+        onNext { message ->
+            // Each log message from the container will be passed as it's made available
+            logger.info message.toString()
+        }
+    }
+
+    task stopInstallTarget(type: DockerStopContainer) {
+        targetContainerId startInstallTarget.getContainerId()
+    }
+
+// Cleanup Tasks
+
+    println "Jenkinshome : ${rootDir}/${rootProject.ext.jenkinsHomeDir}"
+    task cleanJenkinsHome(type: Delete) {
+        outputs.upToDateWhen { false }
+        doLast {
+            fileTree(dir: "${rootDir}/${rootProject.ext.jenkinsHomeDir}").visit { FileVisitDetails details ->
+                println details.file.name
+                delete details.file
+            }
+        }
+    }
+
 }
 
-task run {
-    dependsOn stopInstallTarget
+// create Network
+
+task createTestNetwork(type: DockerCreateNetwork) {
+    networkId = rootProject.ext.networkName
 }
 
-clean.dependsOn cleanJenkinsHome
-clean.dependsOn cleanupDocker
+
+
+task removeNetWork (type: DockerRemoveNetwork) {
+    outputs.upToDateWhen { false }
+    networkId = createTestNetwork.networkId
+}
+
+

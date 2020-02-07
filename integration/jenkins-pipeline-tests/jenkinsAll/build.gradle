@@ -1,0 +1,32 @@
+
+description "Pipeline with Build, Assemble Rpm and Deploy Rpm to Targethost"
+
+def modulesToTestDir = "${rootDir}/../modules"
+def jenkinsPipelineTestArgs = [ '-a', 'modules=testapp-service', '-a', 'versionNr=2.0',  '-a', 'releaseNr=10',   '-a', 'installTarget=CHTI211',  '-a', "installHost=installTarget"]
+println "description: $description"
+println "modulesToTestDir : $modulesToTestDir"
+println "jenkinsPipelineTestArgs : $jenkinsPipelineTestArgs"
+
+createJenkinsRunnerContainer.cmd = rootProject.ext.cmdDefault + jenkinsPipelineTestArgs
+createJenkinsRunnerContainer.hostConfig.binds = rootProject.ext.bindsDefault +  ["${modulesToTestDir}":"/jenkinsWorkspace", "${projectDir}/Jenkinsfile":"/workspace/Jenkinsfile",]
+
+// Task dependencies
+
+
+startJenkinsRunnerContainer.dependsOn startInstallTarget
+startJenkinsRunnerContainer.dependsOn createJenkinsRunnerContainer
+createInstallTarget.dependsOn buildSshdImage
+startInstallTarget.dependsOn createInstallTarget
+buildJenkinsImage.dependsOn buildSshdImage
+createJenkinsRunnerContainer.dependsOn buildJenkinsImage
+logJenkinsRunnerContainer.dependsOn startJenkinsRunnerContainer
+stopInstallTarget.dependsOn logJenkinsRunnerContainer
+stopInstallTarget.dependsOn startInstallTarget
+
+
+task run {
+    dependsOn stopInstallTarget
+    dependsOn cleanJenkinsHome
+}
+
+

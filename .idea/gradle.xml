@@ -12,6 +12,9 @@
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$/integration/jenkins-pipeline-tests" />
+            <option value="$PROJECT_DIR$/integration/jenkins-pipeline-tests/jenkinsAll" />
+            <option value="$PROJECT_DIR$/integration/jenkins-pipeline-tests/jenkinsBuild" />
+            <option value="$PROJECT_DIR$/integration/jenkins-pipeline-tests/jenkinsPkgAndDeploy" />
           </set>
         </option>
         <option name="useAutoImport" value="true" />
