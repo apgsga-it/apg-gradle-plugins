@@ -1,8 +1,3 @@
-apply from: "${projectDir}/../gradle-common/common-plugin.gradle"
-apply from: "${projectDir}/../gradle-common/integration-test.gradle"
-apply from: "${projectDir}/../gradle-common/functional-test.gradle"
-
-
 description 'Common Apg Packaging Plugin, which provides the basis for specific packaging requirements like: rpm, zip, docker etc'
 
 sourceSets {

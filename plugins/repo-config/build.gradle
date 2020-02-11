@@ -1,7 +1,3 @@
-apply from: "${projectDir}/../gradle-common/common-plugin.gradle"
-apply from: "${projectDir}/../gradle-common/integration-test.gradle"
-apply from: "${projectDir}/../gradle-common/functional-test.gradle"
-
 description 'Provides default Repositories configuration'
 
 dependencies {	 

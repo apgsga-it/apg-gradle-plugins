@@ -1,9 +1,4 @@
-apply from: "${projectDir}/../gradle-common/common-plugin.gradle"
-apply from: "${projectDir}/../gradle-common/integration-test.gradle"
-apply from: "${projectDir}/../gradle-common/functional-test.gradle"
-
 description 'Apg Maven Publish Plugin'
-
 
 dependencies {	 
     testCompile gradleTestKit()

@@ -1,9 +1,4 @@
-apply from: "${projectDir}/../gradle-common/common-plugin.gradle"
-apply from: "${projectDir}/../gradle-common/integration-test.gradle"
-apply from: "${projectDir}/../gradle-common/functional-test.gradle"
-
 description 'Provides a opinated configuration and application for publishing artifacts like rpm, tar.gz'
-
 
 dependencies {
 	testCompile gradleTestKit()

@@ -1,7 +1,3 @@
-apply from: "${projectDir}/../gradle-common/common-plugin.gradle"
-apply from: "${projectDir}/../gradle-common/integration-test.gradle"
-apply from: "${projectDir}/../gradle-common/functional-test.gradle"
-
 description 'Provides standardized configurations for Artefact Repos (local, artefactory)'
 
 // JHE: Task useful for developer only in order to get the GRADLE_HOME folder path where repoNames.json file has to be put
