@@ -5,7 +5,7 @@ plugins {
     id("com.apgsga.zip.package")
     id("com.apgsga.publish")
     id("com.apgsga.rpm.ssh.deployer")
-    id("nu.studer.credentials") version "1.0.7"
+//    id("nu.studer.credentials") version "1.0.7"
 }
 // Credentials
 
@@ -74,7 +74,7 @@ apgRepositories {
 
 apgPackage {
     serviceName = parServiceName
-    dependencies = arrayOf("com.apgsga:testapp-service-kotlin:0.4-SNAPSHOT")
+    dependencies = arrayOf("com.apgsga:testapp-service-kotlin:1.0-SNAPSHOT")
     resourceFilters = "serviceport"
     appConfigFilters = "general"
     servicePropertiesDir = "resources"
