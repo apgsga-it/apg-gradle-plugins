@@ -4,13 +4,13 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.apgsga.testapp</groupId>
     <artifactId>parent-pom</artifactId>
-    <version>0.3-SNAPSHOT</version>
+    <version>1.0-SNAPSHOT</version>
     <packaging>pom</packaging>
     <name>testapp-parentpom</name>
     <description>Parent Pom and the the "container" for the dependency Management for Apg builds.
         It imports the relevant "Bill of Material" Poms in the Dependency Management Section </description>
     <properties>
-        <bomVersion>0.3-SNAPSHOT</bomVersion>
+        <bomVersion>1.0-SNAPSHOT</bomVersion>
         <revision>SNAPSHOT</revision>
         <buildTag></buildTag>
         <scmFilePath>scm:cvs:local:/var/local/cvs/root:</scmFilePath>
