@@ -5,6 +5,15 @@ import org.gradle.api.provider.Property
 import org.gradle.api.tasks.Input
 
 class DockerCleanup extends AbstractDockerRemoteApiTask {
+    static void convert(Map<String,String> volumes) {
+        volumes.collectEntries { k, v ->
+            if (k.contains('\\')) {
+                k = "//${k.replaceAll('\\\\', '/')}"
+                k = k.replaceAll(':', '')
+            }
+            [(k): v]
+        }
+    }
     @Input
     final Property<String> containerNames = project.objects.property(String)
 
