@@ -27,7 +27,7 @@ class BuildLogicFunctionalTests extends AbstractSpecification {
             result.output.contains("remoteDestFolder='/etc/installer'")
     }
 
-    def "DeployRpm Tasks works against test environment for dummy RPM"() {
+    def "Deploy and Install Tasks works against test environment for dummy RPM"() {
         given:
             def rpmResource = new ClassPathResource("apgGradlePluginDummyRpm-1-0.src.rpm")
             def rpmFileName = rpmResource.getFilename()
@@ -64,9 +64,10 @@ class BuildLogicFunctionalTests extends AbstractSpecification {
                         }				
                     """
         when:
-            def result = gradleRunnerFactory(['init','deployRpm']).build()
+            def result = gradleRunnerFactory(['init','deployRpm', 'installRpm']).build()
         then:
-            result.output.toString().trim() ==~ /(?ms).*Started command.*apgGradlePluginDummyRpm-1-0.src.rpm.*/
-            result.output.toString().trim() ==~ /(?ms).*Success command.*apgGradlePluginDummyRpm-1-0.src.rpm.*/
+            println result.output
+            result.output.toString().trim() ==~ /(?ms).*Started command.*rpm -Uvh.*apgGradlePluginDummyRpm-1-0.src.rpm.*/
+            result.output.toString().trim() ==~ /(?ms).*Success command.*rpm -Uvh.*apgGradlePluginDummyRpm-1-0.src.rpm.*/
     }
 }
