@@ -12,7 +12,7 @@ buildscript {
         mavenLocal()
     }
     dependencies {
-        classpath 'com.apgsga.gradle:docker-client:0.4-SNAPSHOT'
+        classpath 'com.apgsga.gradle:docker-client:1.0-SNAPSHOT'
     }
 }
 plugins {

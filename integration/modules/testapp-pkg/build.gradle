@@ -3,7 +3,6 @@ plugins {
 	id("com.apgsga.zip.package")
 	id("com.apgsga.publish")
 	id("com.apgsga.rpm.ssh.deployer")
-	id("nu.studer.credentials")  version "1.0.7"
 }
 
 project.ext {
@@ -39,7 +38,7 @@ apgPackage {
 	serviceName = project.ext.serviceName
 	configurationName = "serviceRuntime"
 	dependencies = [
-		"com.apgsga.testapp:testapp-service:0.3-SNAPSHOT"
+		"com.apgsga.testapp:testapp-service:1.0-SNAPSHOT"
     ]
 	resourceFilters = "serviceport"
 	appConfigFilters = "general"
@@ -61,8 +60,6 @@ apgGenericPublishConfig {
 apgGenericPublishConfig.log()
 
 apgSshCommon {
-//	username credentials."${project.ext.sshUser}"
-//	userpwd credentials."${project.ext.sshPw}"
 	username project.ext.sshUser
 	userpwd  project.ext.sshPw
 	destinationHost project.ext.targetHost

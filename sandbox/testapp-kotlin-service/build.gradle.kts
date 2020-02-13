@@ -12,7 +12,7 @@ plugins {
 
 
 group = "com.apgsga"
-version = "0.4-SNAPSHOT"
+version = "1.0-SNAPSHOT"
 java.sourceCompatibility = JavaVersion.VERSION_1_8 
 
 
@@ -54,7 +54,7 @@ tasks.withType<Test> {
 }
 
 apgMavenPublish {
-    version = "0.4-SNAPSHOT"
+    version = "1.0-SNAPSHOT"
     mavenLocal()
 }
 

@@ -4,7 +4,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.apgsga.testapp</groupId>
     <artifactId>dm-bom</artifactId>
-    <version>0.3-SNAPSHOT</version>
+    <version>1.0-SNAPSHOT</version>
     <properties>
         <junit-jupiter.version>5.5.2</junit-jupiter.version>
         <spring-boot.version>2.2.1.RELEASE</spring-boot.version>
