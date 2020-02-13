@@ -12,3 +12,6 @@ runJenkinsDocker {
 runJenkinsDocker.log()
 println "description: $description"
 
+task run {
+    dependsOn runAll
+}

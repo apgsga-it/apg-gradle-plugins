@@ -7,6 +7,8 @@ import com.bmuschko.gradle.docker.tasks.container.DockerLogsContainer
 import com.bmuschko.gradle.docker.tasks.container.DockerStartContainer
 import com.bmuschko.gradle.docker.tasks.container.DockerStopContainer
 import com.bmuschko.gradle.docker.tasks.image.DockerBuildImage
+import com.bmuschko.gradle.docker.tasks.network.DockerCreateNetwork
+import com.bmuschko.gradle.docker.tasks.network.DockerRemoveNetwork
 import org.gradle.api.DefaultTask
 import org.gradle.api.Plugin
 import org.gradle.api.Project
@@ -106,6 +108,14 @@ class JenkinsDockerRun : Plugin<Project> {
             targetContainerId(createInstallTarget.get().containerId)
             dependsOn(startInstallTarget)
         }
+        project.tasks.register<DockerCreateNetwork>("createNetwork") {
+            networkId.set(extension.networkName)
+        }
+        project.tasks.register<DockerRemoveNetwork>("removeNetwork") {
+            networkId.set(extension.networkName)
+        }
+
+
 
         val cleanJenkinsHome = project.tasks.register<DefaultTask>("cleanJenkinsHome") {
             outputs.upToDateWhen { false }
@@ -125,7 +135,7 @@ class JenkinsDockerRun : Plugin<Project> {
             dependsOn(stopInstallTarget, cleanJenkinsHome)
         }
 
-        tasks.register<DefaultTask>("run") {
+        tasks.register<DefaultTask>("runJenkins") {
             dependsOn(logJenkinsRunnerContainer, cleanJenkinsHome)
         }
     }

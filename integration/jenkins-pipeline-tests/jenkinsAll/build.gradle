@@ -13,5 +13,8 @@ description "Pipeline with Build, Assemble Rpm and Deploy Rpm to Targethost "
 println "description: $description"
 runJenkinsDocker.log()
 
+task run {
+    dependsOn runAll
+}
 
 
