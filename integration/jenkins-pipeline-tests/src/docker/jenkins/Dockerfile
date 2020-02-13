@@ -67,4 +67,3 @@ ENTRYPOINT ["/app/bin/jenkinsfile-runner", \
             "-w", "/app/jenkins",\
             "-p", "/usr/share/jenkins/ref/plugins",\
             "-f", "/workspace"]
-CMD ["sleep", "infinity"]

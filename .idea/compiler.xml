@@ -5,6 +5,10 @@
       <profile default="true" name="Default" enabled="true" />
     </annotationProcessing>
     <bytecodeTargetLevel>
+      <module name="apg-gradle-plugins.docker-client.functionalTest" target="1.8" />
+      <module name="apg-gradle-plugins.docker-client.integrationTest" target="1.8" />
+      <module name="apg-gradle-plugins.docker-client.main" target="1.8" />
+      <module name="apg-gradle-plugins.docker-client.test" target="1.8" />
       <module name="apg-gradle-plugins.main" target="1.8" />
       <module name="apg-gradle-plugins.test" target="1.8" />
       <module name="docker-sshd-compose.main" target="1.8" />

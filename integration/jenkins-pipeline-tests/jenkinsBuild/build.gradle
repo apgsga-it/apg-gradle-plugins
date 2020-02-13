@@ -1,26 +1,17 @@
-
+plugins {
+    id "com.dorongold.task-tree" version "1.5"
+}
+apply plugin: com.apgsga.gradle.docker.JenkinsDockerRun
 description "Pipeline with only Module Builds" +
         "\n Open Points: " +
         "\n    - Concurrent Builds" +
         "\n    - Revision Handling "
 
-def modulesToTestDir = "${rootDir}/../modules"
-def jenkinsPipelineTestArgs = [ '-a', 'modules=testapp-bom:testapp-parentpom:testapp-module:testapp-service']
-
-println "description: $description"
-println "modulesToTestDir : $modulesToTestDir"
-println "jenkinsPipelineTestArgs : $jenkinsPipelineTestArgs"
-
-
-createJenkinsRunnerContainer.cmd = rootProject.ext.cmdDefault + jenkinsPipelineTestArgs
-createJenkinsRunnerContainer.hostConfig.binds = rootProject.ext.bindsDefault +  ["${modulesToTestDir}":"/jenkinsWorkspace", "${projectDir}/Jenkinsfile":"/workspace/Jenkinsfile",]
-
-// Task dependencies
-startJenkinsRunnerContainer.dependsOn createJenkinsRunnerContainer
-createJenkinsRunnerContainer.dependsOn buildJenkinsImage
-logJenkinsRunnerContainer.dependsOn startJenkinsRunnerContainer
-
-task run {
-    dependsOn logJenkinsRunnerContainer
-    dependsOn cleanJenkinsHome
+runJenkinsDocker {
+    testCmd =  [  '-a', 'modules=testapp-bom:testapp-parentpom:testapp-module:testapp-service']
 }
+
+runJenkinsDocker.log()
+println "description: $description"
+
+
