@@ -2,8 +2,14 @@ package com.apgsga.gradle.ssh.plugin
 
 import com.apgsga.gradle.test.utils.AbstractSpecification
 import org.springframework.core.io.ClassPathResource
+import spock.lang.Ignore
 
+// TODO (jhe, che, 14.2) These tests are because of che's reequest.
+// TODO  But, need to be rethought on the background of integration tests with jenkins docker
+// TODO They introduce a dependency to jenkins-t
+@Ignore
 class BuildLogicFunctionalTests extends AbstractSpecification {
+
 
     def "Basic SSH configuration works"() {
         given:
