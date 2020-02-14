@@ -11,4 +11,8 @@ class Volumes {
             [(k): v]
         }
     }
+
+    static void hello(text) {
+        println "************************ ${text}"
+    }
 }

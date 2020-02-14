@@ -141,12 +141,12 @@ class JenkinsDockerRun : Plugin<Project> {
     }
 
     private fun patchVolumesForWindows(project: Project, defaultVolumes: MutableMap<String, String>): MutableMap<String, String> {
-        val transformedVolumes = mutableMapOf<String, String>()
+        Volumes.hello("Hi there")
         defaultVolumes.forEach { (key, value) ->
             project.logger.info("Host binds, key: ${key} , value : ${value}")
         }
         if (!Os.isFamily(Os.FAMILY_WINDOWS)) return defaultVolumes
-        // Volumes.convert(defaultVolumes)
+        Volumes.convert(defaultVolumes)
         return defaultVolumes
     }
 
