@@ -59,9 +59,6 @@ ENV PATH $PATH:$GRADLE_HOME/bin
 
 COPY settings.xml "$MAVEN_CONFIG"/settings.xml
 
-# Make this cumstomizable at least via Build parameter , better via cmd
-RUN mkdir ~/.ssh && ssh-keyscan -H jadas-server >> ~/.ssh/known_hosts
-
 ENTRYPOINT ["/app/bin/jenkinsfile-runner", \
             "-u", \
             "-w", "/app/jenkins",\

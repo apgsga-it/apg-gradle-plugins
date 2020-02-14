@@ -78,8 +78,8 @@ class JenkinsDockerRun : Plugin<Project> {
         val buildJenkinsRunnerImage = project.tasks.register<DockerBuildImage>("jenkinsBuildImage") {
             inputDir.set(file("$rootDir/src/docker/jenkins"))
             images.set(listOf("apg-jenkinsrunner-image:latest"))
-            noCache.set(false)
-            pull.set(false)
+            noCache.set(true)
+            pull.set(true)
         }
 
         val createJenkinsRunnerContainer = project.tasks.register<DockerCreateContainer>("createJenkinsRunnerContainer") {
@@ -141,12 +141,16 @@ class JenkinsDockerRun : Plugin<Project> {
     }
 
     private fun patchVolumesForWindows(project: Project, defaultVolumes: MutableMap<String, String>): MutableMap<String, String> {
-        Volumes.hello("Hi there")
+        Volumes.hello("Binds before")
         defaultVolumes.forEach { (key, value) ->
             project.logger.info("Host binds, key: ${key} , value : ${value}")
         }
         if (!Os.isFamily(Os.FAMILY_WINDOWS)) return defaultVolumes
         Volumes.convert(defaultVolumes)
+        project.logger.info("Windows OS Family, after")
+        defaultVolumes.forEach { (key, value) ->
+            project.logger.info("Host binds, key: ${key} , value : ${value}")
+        }
         return defaultVolumes
     }
 

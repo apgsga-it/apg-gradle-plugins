@@ -1,5 +1,4 @@
 #!/bin/bash
-
 __create_user() {
   # Create a user to SSH into as.
   useradd tu1
