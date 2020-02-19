@@ -78,8 +78,8 @@ class JenkinsDockerRun : Plugin<Project> {
         val buildJenkinsRunnerImage = project.tasks.register<DockerBuildImage>("jenkinsBuildImage") {
             inputDir.set(file("$rootDir/src/docker/jenkins"))
             images.set(listOf("apg-jenkinsrunner-image:latest"))
-            noCache.set(true)
-            pull.set(true)
+            noCache.set(false)
+            pull.set(false)
         }
 
         val createJenkinsRunnerContainer = project.tasks.register<DockerCreateContainer>("createJenkinsRunnerContainer") {
