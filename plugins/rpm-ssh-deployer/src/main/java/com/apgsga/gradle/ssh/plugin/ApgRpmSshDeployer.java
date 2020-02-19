@@ -2,6 +2,7 @@ package com.apgsga.gradle.ssh.plugin;
 
 import com.apgsga.gradle.ssh.extensions.ApgRpmDeployConfig;
 import com.apgsga.gradle.ssh.tasks.DeployRpm;
+import com.apgsga.gradle.ssh.tasks.InstallRpm;
 import com.apgsga.ssh.common.plugin.ApgSshCommonPlugin;
 import org.gradle.api.NonNullApi;
 import org.gradle.api.Plugin;
@@ -25,6 +26,7 @@ public class ApgRpmSshDeployer implements Plugin<Project> {
         project.getPlugins().apply("org.hidetake.ssh");
         project.getPlugins().apply(ApgSshCommonPlugin.APG_SSH_COMMON_PLUGIN_ID);
         TaskContainer tasks = project.getTasks();
-        TaskProvider<DeployRpm> deployRpmTask = tasks.register(DeployRpm.DEPLOY_RPM_TASK_NAME,DeployRpm.class);
+        tasks.register(DeployRpm.DEPLOY_RPM_TASK_NAME,DeployRpm.class);
+        tasks.register(InstallRpm.INSTALL_RPM_TASK_NAME,InstallRpm.class);
     }
 }

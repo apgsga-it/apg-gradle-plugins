@@ -14,6 +14,7 @@ include 'rpm-ssh-deployer'
 include 'ssh-common'
 include 'docker-client'
 include 'revision-manager'
+include 'zip-ssh-deployer'
 
 project(':common-repo').projectDir = "$rootDir/common-repo" as File
 project(':generic-publish').projectDir = "$rootDir/generic-publish" as File
@@ -30,5 +31,6 @@ project(':rpm-ssh-deployer').projectDir = "$rootDir/rpm-ssh-deployer" as File
 project(':ssh-common').projectDir = "$rootDir/ssh-common" as File
 project(':docker-client').projectDir = "$rootDir/docker-client" as File
 project(':revision-manager').projectDir = "$rootDir/revision-manager" as File
+project(':zip-ssh-deployer').projectDir = "$rootDir/zip-ssh-deployer" as File
 
 
