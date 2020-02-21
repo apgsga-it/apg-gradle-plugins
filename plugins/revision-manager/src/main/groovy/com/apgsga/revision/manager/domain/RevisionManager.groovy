@@ -1,15 +1,15 @@
 package com.apgsga.revision.manager.domain
 
+// TODO (jhe, che , 21.2 ) The interface should have explicitly defined types
 interface RevisionManager {
 
     /**
-     *
      * @param target
      * @param revision
      * @param fullRevisionPrefix
      * @return void
      */
-    def saveRevision(def target, def revision, def fullRevisionPrefix)
+    void saveRevision(def target, def revision, def fullRevisionPrefix)
 
     /**
      *
@@ -20,8 +20,7 @@ interface RevisionManager {
 
     /**
      * Fetch the next global revision and set lastRevForTarget and nextRevForTarget of NextRevision task
-     * @param : target, which is a Gradle Project properties
-     * @return void
+     * @return revision
      */
     def nextRevision()
 }

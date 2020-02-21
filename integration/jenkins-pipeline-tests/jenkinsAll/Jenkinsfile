@@ -35,6 +35,7 @@ pipeline {
 def maven_build(list) {
     list.each { module ->
         dir("${module}") {
+            check_
             sh "mvn clean install"
          }
     }
