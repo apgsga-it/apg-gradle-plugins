@@ -1,6 +1,5 @@
 apply from: "${projectDir}/../gradle-common/common-plugin.gradle"
 apply from: "${projectDir}/../gradle-common/integration-test.gradle"
-apply from: "${projectDir}/../gradle-common/functional-test.gradle"
 
 description 'Provides tasks in order to manage the tracking of Artifacts revision number.'
 
@@ -16,11 +15,7 @@ sourceSets {
 }
 
 dependencies {
-    testCompile gradleTestKit()
-    testCompile project(':common-test')
-    compile group: 'com.google.guava', name: 'guava', version: '11.0.2'
-    // TODO JHE: common-repo needed here because of our test which by default include ENUM coming from common-repo
-    //           BUT: in worse case, testCompile should be enough, doesn't seem to be the case
-    //                best case, this dependency should be resolved within common-test or within gradle-common (functionalTest.gradle)
-    compile project(':common-repo')
+    testCompile ("org.spockframework:spock-core:1.1-groovy-2.4") {
+        exclude module: 'groovy-all'
+    }
 }
