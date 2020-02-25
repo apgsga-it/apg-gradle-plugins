@@ -18,7 +18,8 @@ class RevisionManagerLocalPersistenceTests extends Specification {
     def setup() {
         rm = RevisionManagerBuilder.create()
                 .revisionRootPath(revisionRootPath)
-                .typ(RevisionManagerBuilder.Typ.TEST_LOCAL)
+                .algorithm(RevisionManagerBuilder.AlgorithmTyp.PATCH)
+                .persistence(RevisionManagerBuilder.PersistenceTyp.TEST_LOCAL)
                 .build()
     }
 
@@ -46,7 +47,8 @@ class RevisionManagerLocalPersistenceTests extends Specification {
         when:
         RevisionManager rm2 =  RevisionManagerBuilder.create()
                 .revisionRootPath(revisionRootPath)
-                .typ(RevisionManagerBuilder.Typ.TEST_LOCAL)
+                .algorithm(RevisionManagerBuilder.AlgorithmTyp.PATCH)
+                .persistence(RevisionManagerBuilder.PersistenceTyp.TEST_LOCAL)
                 .build()
         nextRev = rm2.nextRevision()
         then:

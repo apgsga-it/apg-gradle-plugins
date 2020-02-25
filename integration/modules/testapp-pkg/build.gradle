@@ -1,3 +1,4 @@
+import static com.apgsga.gradle.repo.extensions.RepoType.*
 plugins {
 	id("com.apgsga.rpm.package")
 	id("com.apgsga.publish")
@@ -20,10 +21,8 @@ println "serviceVersion = ${project.ext.serviceVersion}"
 println "releaseNr = ${project.ext.releaseNr}"
 println "downloadDir = ${project.ext.downloadDir}"
 
-apgRepositories {
-	mavenLocal()
-	mavenCentral()
-}
+
+
 
 configurations {
 	serviceRuntime.exclude group: 'log4j', module: 'log4j'
@@ -32,27 +31,20 @@ configurations {
 	serviceRuntime.exclude group: 'org.codehaus.groovy' , module: 'groovy-all'
 }
 
+apgRepos {
+	// TODO (che, 23.10) : decide on this and determine naming schema
+	config(MAVEN,[REPO_NAME:"testrepo",REPO_BASE_URL:"/Users/chhex/maven"])
+}
+
 apgVersionResolver {
-	bomArtifactId = 'test-composite-bom'
-	bomGroupId = 'test'
-	bomBaseVersion = '9.1.0.ADMIN-UIMIG'
-	revisionAlogrithm = project.ext.revisionAlogrithm
+	bomArtifactId = 'dm-bom'
+	bomGroupId = 'com/apgsga/testapp'
+	bomBaseVersion = '1.0'
+	bomLastRevision = 'SNAPSHOT'
 	installTarget = project.ext.installTarget
-	patches {
-		parentDir = project.ext.patchParentDir
-		fileNames = project.ext.patchFiles
-	}
 }
 
 
-apgMavenPublish {
-	artefactId = versionResolvers.bomArtifactId
-	version = versionResolvers.targetBomVersion
-	groupId =  versionResolvers.bomGroupId
-	local()
-	artifactory()
-
-}
 
 apgPackage {
 	serviceName = 'echoservice'

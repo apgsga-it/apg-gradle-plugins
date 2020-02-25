@@ -67,7 +67,7 @@ class MavenBomManagerDefault(private val repository: Repository) : MavenBomManag
     }
 
     private fun buildPath(groupId: String, artifactid: String, version: String): String {
-        return "$groupId/$artifactid/$version/$artifactid-$version.pom.xml"
+        return "$groupId/$artifactid/$version/$artifactid-$version.pom"
     }
 
     private fun loadModelFromPath(repoPathBom: String, artList: Collection<MavenArtifact>, recursive: Boolean): Collection<MavenArtifact> {

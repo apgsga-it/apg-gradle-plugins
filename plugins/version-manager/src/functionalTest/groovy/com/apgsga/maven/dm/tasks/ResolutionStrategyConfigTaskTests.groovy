@@ -33,11 +33,14 @@ class ResolutionStrategyConfigTaskTests extends AbstractSpecification {
                jadasRuntime
             }
             apgRepos{
-		config(MAVEN,[REPO_NAME:"${TEST_REPO}",REPO_BASE_URL:"${REPO_URL}"])	
-	    }
-            versionResolvers {
-                 configurationName = "jadasRuntime"
-                 boms = "test:test-nested-bom:1.1"
+		        config(MAVEN,[REPO_NAME:"${TEST_REPO}",REPO_BASE_URL:"${REPO_URL}"])	
+	        }
+            apgVersionResolver {
+                configurationName = "jadasRuntime"
+	            bomArtifactId = 'test-nested-bom'
+	            bomGroupId = 'test'
+	            bomBaseVersion = '1'
+	            bomLastRevision = '1'
             }
             dependencies {
                jadasRuntime 'org.apache.httpcomponents:httpclient'
@@ -64,10 +67,13 @@ class ResolutionStrategyConfigTaskTests extends AbstractSpecification {
         //    }
             apgRepos{
                 config(MAVEN,[REPO_NAME:"${TEST_REPO}",REPO_BASE_URL:"${REPO_URL}"])	
-	    }
-            versionResolvers {
-                 configurationName = "jadasRuntime"
-                 boms = "test:test-nested-bom:1.1"
+	        }
+            apgVersionResolver {
+                configurationName = "jadasRuntime"
+	            bomArtifactId = 'test-nested-bom'
+	            bomGroupId = 'test'
+	            bomBaseVersion = '1'
+	            bomLastRevision = '1'
             }
             dependencies {
                jadasRuntime 'org.apache.httpcomponents:httpclient'
@@ -92,13 +98,16 @@ class ResolutionStrategyConfigTaskTests extends AbstractSpecification {
                 id 'java'
             }
             apgRepos{
-		config(MAVEN,[REPO_NAME:"${TEST_REPO}",REPO_BASE_URL:"${REPO_URL}"])	
-	    }
+		        config(MAVEN,[REPO_NAME:"${TEST_REPO}",REPO_BASE_URL:"${REPO_URL}"])	
+	        }
 	    // Implicit eager creation of default configuration serviceRuntime. works
-            versionResolvers {
-                 boms = "test:test-nested-bom:1.1"
+            apgVersionResolver {
+                configurationName = "jadasRuntime"
+	            bomArtifactId = 'test-nested-bom'
+	            bomGroupId = 'test'
+	            bomBaseVersion = '1'
+	            bomLastRevision = '1'
             }
-       
             dependencies {
                serviceRuntime 'org.apache.httpcomponents:httpclient'
             }
@@ -119,14 +128,52 @@ class ResolutionStrategyConfigTaskTests extends AbstractSpecification {
                 id 'java'
             }
             apgRepos{
-		config(MAVEN,[REPO_NAME:"${TEST_REPO}",REPO_BASE_URL:"${REPO_URL}"])	
-	    }
-            versionResolvers {
-                 boms = 'test:test-composite-bom:1.0'
-                  patches {
-                    parentDir = new File("${source.getAbsoluteFile().getPath().replace("\\","/")}")
+		        config(MAVEN,[REPO_NAME:"${TEST_REPO}",REPO_BASE_URL:"${REPO_URL}"])	
+	        }
+             apgVersionResolver {
+                configurationName = "jadasRuntime"
+	            bomArtifactId = 'test-nested-bom'
+	            bomGroupId = 'test'
+	            bomBaseVersion = '1'
+	            bomLastRevision = '0'
+	            patches {
+                    parentDir = new File("${source.getAbsoluteFile().getPath().replace("\\\\", "/")}")
                     fileNames = "PatchA5791.json"
-                 }
+                }
+            }
+            dependencies {
+               serviceRuntime "com.affichage.it21.vk:zentraldispo-dao"
+            }
+        """
+
+        when:
+        def result = gradleRunnerFactory(['configureResolutionStrategy']).build()
+        then:
+        // Will Resolve zentraldispo-dao via PatchA5791.json
+        println "Result output: ${result.output}"
+        result.output.contains('')
+    }
+
+    def "configureResolutionStrategy and dependencyResolution Bom Snapshot Version and Patchfile with default Configuration creation"() {
+        given:
+        buildFile << """
+            plugins {
+                id("com.apgsga.version.resolver")
+                id 'java'
+            }
+            apgRepos{
+		        config(MAVEN,[REPO_NAME:"${TEST_REPO}",REPO_BASE_URL:"${REPO_URL}"])	
+	        }
+             apgVersionResolver {
+                configurationName = "jadasRuntime"
+	            bomArtifactId = 'test-nested-snapshot-bom'
+	            bomGroupId = 'test'
+	            bomBaseVersion = '1.1-TEST'
+	            bomLastRevision = 'SNAPSHOT'
+	            patches {
+                    parentDir = new File("${source.getAbsoluteFile().getPath().replace("\\\\", "/")}")
+                    fileNames = "PatchA5791.json"
+                }
             }
             dependencies {
                serviceRuntime "com.affichage.it21.vk:zentraldispo-dao"

@@ -8,50 +8,66 @@ import com.apgsga.revision.manager.persistence.RevisionJsonFilePersistence
 class RevisionManagerBuilder {
 
     // TODO (jhe, che , 21,2 ) : Tentative selection
+    private static String REVISION_FILENAME = "Revisions.json"
 
-
-    static enum Typ {
+    static enum PersistenceTyp {
         PATCH, TEST_LOCAL
     }
 
-    static Map<Typ,Class<? extends RevisionPersistence>> implemtationMap = new HashMap<Typ ,Class<? extends RevisionPersistence>>()
+    static enum AlgorithmTyp {
+        PATCH, SNAPSHOT
+    }
+
+    static Map<PersistenceTyp,Class<? extends RevisionPersistence>> persistenceImplMap = new HashMap<PersistenceTyp ,Class<? extends RevisionPersistence>>()
+    static {
+        persistenceImplMap.put(PersistenceTyp.PATCH, RevisionJsonFilePersistence.class)
+        persistenceImplMap.put(PersistenceTyp.TEST_LOCAL, RevisionBeanBackedPersistence.class)
+    }
 
     static RevisionManagerBuilder create() {
         new RevisionManagerBuilder()
     }
 
-    static {
-        implemtationMap.put(Typ.PATCH, RevisionJsonFilePersistence.class)
-        implemtationMap.put(Typ.TEST_LOCAL, RevisionBeanBackedPersistence.class)
-    }
 
-    private Typ typ = Typ.PATCH
+    private PersistenceTyp persistenceTyp = PersistenceTyp.PATCH
+    private AlgorithmTyp algorithmTyp = AlgorithmTyp.PATCH
     private String revisionRootPath;
-    private String revisionFileName = "Revision.json"
 
     RevisionManager build() {
-        validate(revisionRootPath != null, "Revision File Path may not be null")
-        File revisionFileRoot = new File(revisionRootPath);
-        validate(revisionFileRoot.exists(), "Parent Directory ${revisionRootPath} of ${revisionFileName} must exist")
-        validate(revisionFileRoot.isDirectory(), "Parent Path ${revisionRootPath} of ${revisionFileName}  must be directory")
-        def clx = implemtationMap.get(typ)
-        println("Building Revision Manager with : ${this.toString()}")
-        final def persistence = clx.newInstance(typ == Typ.PATCH ? new File(revisionRootPath, revisionFileName) : new File(revisionRootPath))
-        new RevisionManagerImpl(persistence)
+        if (algorithmTyp == AlgorithmTyp.PATCH) {
+            return buildPatchRevisionManager()
+        } else {
+            return buildSnapshotRevisionManager()
+        }
     }
 
-    def revisionRootPath(def revisionRootPath) {
+    private RevisionManager buildPatchRevisionManager() {
+        validate(revisionRootPath != null, "Revision File Path may not be null")
+        File revisionFileRoot = new File(revisionRootPath);
+        validate(revisionFileRoot.exists(), "Parent Directory ${revisionRootPath} of ${REVISION_FILENAME} must exist")
+        validate(revisionFileRoot.isDirectory(), "Parent Path ${revisionRootPath} of ${REVISION_FILENAME}  must be directory")
+        def clx = persistenceImplMap.get(persistenceTyp)
+        println("Building Revision Manager with : ${this.toString()}")
+        final def persistence = clx.newInstance(persistenceTyp == PersistenceTyp.PATCH ? new File(revisionRootPath, REVISION_FILENAME) : new File(revisionRootPath))
+        new RevisionManagerPatchImpl(persistence)
+    }
+    private RevisionManager buildSnapshotRevisionManager() {
+        println("Building Snapshot Revision Manager")
+        new RevisionManagerSnapshotImpl()
+    }
+
+    RevisionManagerBuilder revisionRootPath(String revisionRootPath) {
         this.revisionRootPath = revisionRootPath
         this
     }
 
-    def revisionFileName(def revisionFileName) {
-        this.revisionFileName = revisionFileName
+    RevisionManagerBuilder persistence(PersistenceTyp persistenceTyp) {
+        this.persistenceTyp = persistenceTyp
         this
     }
 
-    def typ(Typ typ) {
-        this.typ = typ
+    RevisionManagerBuilder algorithm(AlgorithmTyp algorithmTyp) {
+        this.algorithmTyp = algorithmTyp
         this
     }
 
@@ -62,11 +78,12 @@ class RevisionManagerBuilder {
     }
 
     @Override
-    public String toString() {
+    String toString() {
         return "RevisionManagerBuilder{" +
-                "typ=" + typ +
+                "persistenceTyp=" + persistenceTyp +
+                ", algorithmTyp=" + algorithmTyp +
                 ", revisionRootPath='" + revisionRootPath + '\'' +
-                ", revisionFileName='" + revisionFileName + '\'' +
                 '}';
     }
+
 }

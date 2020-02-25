@@ -14,7 +14,7 @@ abstract class RepositoryFactory(val baseUrl: String? = null, val repoName: Stri
         @JvmOverloads
         fun createFactory(baseUrl: String?, repoName: String? ="", user: String? = "", password: String? = ""): RepositoryFactory = when {
             baseUrl == null -> NopRepositoryFactory()
-            baseUrl.startsWith("http:") -> RemoteRepositoryFactory(baseUrl, repoName
+            baseUrl.startsWith("http") -> RemoteRepositoryFactory(baseUrl, repoName
                     ?: "", user ?: "", password ?: "")
             else -> FileRepositoryFactory(baseUrl, repoName ?: "")
         }

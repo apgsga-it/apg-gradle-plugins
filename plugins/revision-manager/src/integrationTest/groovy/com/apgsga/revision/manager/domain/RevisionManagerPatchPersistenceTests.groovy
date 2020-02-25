@@ -17,8 +17,7 @@ class RevisionManagerPatchPersistenceTests extends Specification {
     def setup() {
         rm = RevisionManagerBuilder.create()
                 .revisionRootPath(revisionRootPath)
-                .revisionFileName(revisionFileName)
-                .typ(RevisionManagerBuilder.Typ.PATCH)
+                .algorithm(RevisionManagerBuilder.AlgorithmTyp.PATCH)
                 .build()
     }
 
@@ -43,8 +42,7 @@ class RevisionManagerPatchPersistenceTests extends Specification {
         when:
         RevisionManager rm2 =  RevisionManagerBuilder.create()
                 .revisionRootPath(revisionRootPath)
-                .revisionFileName(revisionFileName)
-                .typ(RevisionManagerBuilder.Typ.PATCH)
+                .algorithm(RevisionManagerBuilder.AlgorithmTyp.PATCH)
                 .build()
         nextRev = rm2.nextRevision()
         then:

@@ -22,8 +22,8 @@ open class ResolutionStrategyConfigTask : DefaultTask() {
         assert(resolutionExtension.bomArtifactId != null) { "bomArtifactId should not be null" }
         assert(resolutionExtension.bomGroupId != null) { "bomGroupId should not be null" }
         assert(resolutionExtension.bomBaseVersion != null) { "bomBaseVersion should not be null" }
-        assert(resolutionExtension.lastRevision() != null) { "lastRevision should not be null" }
-        val bom = Bom(resolutionExtension.bomArtifactId, resolutionExtension.bomGroupId, resolutionExtension.bomBaseVersion, resolutionExtension.lastRevision())
+        assert(resolutionExtension.bomLastRevision != null) { "lastRevision should not be null" }
+        val bom = Bom(resolutionExtension.bomArtifactId, resolutionExtension.bomGroupId, resolutionExtension.bomBaseVersion, resolutionExtension.bomLastRevision)
         val config = project.configurations.findByName(resolutionExtension.configurationName)
         val versionResolver = buildVersionResolver(project,resolutionExtension.patches, bom)
         config?.resolutionStrategy?.eachDependency {

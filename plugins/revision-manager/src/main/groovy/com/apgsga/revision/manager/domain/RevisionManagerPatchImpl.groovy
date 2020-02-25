@@ -2,11 +2,11 @@ package com.apgsga.revision.manager.domain
 
 import com.apgsga.revision.manager.persistence.RevisionPersistence
 
-class RevisionManagerImpl implements RevisionManager {
+class RevisionManagerPatchImpl implements RevisionManager {
 
     private RevisionPersistence revisionPersistence
 
-    RevisionManagerImpl(RevisionPersistence revisionPersistence) {
+    RevisionManagerPatchImpl(RevisionPersistence revisionPersistence) {
         this.revisionPersistence = revisionPersistence
     }
 

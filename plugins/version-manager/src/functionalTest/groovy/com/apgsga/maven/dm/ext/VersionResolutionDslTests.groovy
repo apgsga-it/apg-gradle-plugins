@@ -11,12 +11,16 @@ class VersionResolutionDslTests extends AbstractSpecification {
             plugins {
                 id("com.apgsga.version.resolver")
             }
-            versionResolvers {
-                 boms = "aArtifactid:someGroupid:1:1-SNAPSHOT"
-                 patches {
-                   parentDir = "aParentDir"
+            apgVersionResolver {
+	            bomArtifactId = 'aArtifactid'
+	            bomGroupId = 'someGroupid'
+	            bomBaseVersion = '9.1.0.ADMIN-UIMIG'
+	            installTarget = 'CHEI212'
+	            revisionRootPath = 'aRevisionParentDir'
+                patches {
+                   parentDir = "aPatchParentDir"
                    fileNames = "Patch9999.json"
-                 }
+                }
             }
         """
 
@@ -35,15 +39,23 @@ class VersionResolutionDslTests extends AbstractSpecification {
                 id("com.apgsga.version.resolver")
             }
             project.ext {
-              bomVersion = project.hasProperty('bomVersion') ? project.property('bomVersion') : "XXXXXXXX"
+              bomBaseVersion = project.hasProperty('bomBaseVersion') ? project.property('bomBaseVersion') : "XXXXXXXX"
             }
-            versionResolvers {
-                 boms = "aArtifactid:someGroupid:\\\$\\\\{bomVersion\\\\}"
+             apgVersionResolver {
+	            bomArtifactId = 'aArtifactid'
+	            bomGroupId = 'someGroupid'
+	            bomBaseVersion = "\\\$\\\\{bomBaseVersion\\\\}"
+	            installTarget = 'CHEI212'
+	            revisionRootPath = '.'
+                patches {
+                   parentDir = "aParentDir"
+                   fileNames = "Patch9999.json"
+                }
             }
         """
 
         when:
-        def result = gradleRunnerFactory(['init','-PbomVersion=1234']).build()
+        def result = gradleRunnerFactory(['init','-PbomBaseVersion=1.1.0.XXXX-YYYY']).build()
         then:
         println "Result output: ${result.output}"
         result.output.contains('')
@@ -60,22 +72,27 @@ class VersionResolutionDslTests extends AbstractSpecification {
             project.ext {
               bomArtifactId = project.hasProperty('bomArtifactId') ? project.property('bomArtifactId') : "aId"
               bomGroupId = project.hasProperty('bomGroupId') ? project.property('bomGroupId') : "aGroupd"
-              bomVersions = project.hasProperty('bomVersions') ? project.property('bomVersions') : "1-SNAPSHOT"
+              bomBaseVersion = project.hasProperty('bomBaseVersion') ? project.property('bomBaseVersion') : "1"
               patchParentDir = project.hasProperty('patchParentDir') ? project.property('patchParentDir') : "/"
               patchFiles = project.hasProperty('patchFiles') ? project.property('patchFiles') : "Patch8765.json:Patch8787.json"
+            }  
+            apgVersionResolver {
+	            bomArtifactId = "\\\$\\\\{bomArtifactId\\\\}"
+	            bomGroupId = "\\\$\\\\{bomGroupId\\\\}"
+	            bomBaseVersion = "\\\$\\\\{bomVersion\\\\}"
+	            installTarget = 'CHEI212'
+	            revisionRootPath = '.'
+                patches {
+                   parentDir = patchParentDir
+                   fileNames = patchFiles
+                }
             }
-            versionResolvers {
-                 boms = "\\\$\\\\{bomArtifactId\\\\}:\\\$\\\\{bomGroupId\\\\}:\\\$\\\\{bomVersions\\\\}"
-                 patches {
-                    parentDir = patchParentDir
-                    fileNames = patchFiles
-                 }
-            }
+
         """
 
         when:
         def result = gradleRunnerFactory(['init','-PbomArtifactId=someBomArtifactId', '-PbomGroupId=someBomGroupId',
-                                          '-PbomVersions=1234:9999:SNAPSHOT',
+                                          '-PbomBaseVersion=9.1.0.ADMIN-UIMIG',
                                           '-PpatchParentDir=build/patches',
                                           '-PpatchFiles=Patch8765.json:Patch8787.json']).build()
         then:
