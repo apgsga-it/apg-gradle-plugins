@@ -9,7 +9,7 @@
         <junit-jupiter.version>5.5.2</junit-jupiter.version>
         <spring-boot.version>2.2.1.RELEASE</spring-boot.version>
         <lombok.version>1.16.18</lombok.version>
-        <application.version>${project.version}</application.version>
+        <application.version>1.0-SNAPSHOT</application.version>
     </properties>
     <dependencyManagement>
         <dependencies>

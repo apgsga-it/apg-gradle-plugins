@@ -43,7 +43,7 @@ class MavenBomManagerDefault(private val repository: Repository) : MavenBomManag
         val dependencies = mavenModel.dependencyManagement.dependencies
         val artifactList = list(dependencies, mavenModel, artList, resursive)
         logger.info("Loading Maven Model done.")
-        logger.debug("Resolved the following artifacts from pom $mavenModel.groupId, ${mavenModel.artifactId} : $artifactList")
+        logger.info("Resolved the following artifacts from pom $mavenModel.groupId, ${mavenModel.artifactId} : $artifactList")
         return artifactList
     }
 
@@ -67,10 +67,13 @@ class MavenBomManagerDefault(private val repository: Repository) : MavenBomManag
     }
 
     private fun buildPath(groupId: String, artifactid: String, version: String): String {
-        return "$groupId/$artifactid/$version/$artifactid-$version.pom"
+        // TODO (che, 27.2 ) : make this platform independent, necessary?
+        val groupPath = groupId.replace(".","/")
+        return "$groupPath/$artifactid/$version/$artifactid-$version.pom"
     }
 
     private fun loadModelFromPath(repoPathBom: String, artList: Collection<MavenArtifact>, recursive: Boolean): Collection<MavenArtifact> {
+        logger.info("Loading Model from RepositoryPath: ${repoPathBom}")
         val stream = repository.download(repoPathBom)
         return loadModel(stream, artList, recursive)
     }

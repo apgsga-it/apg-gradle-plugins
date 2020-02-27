@@ -7,11 +7,10 @@ import com.apgsga.revision.manager.persistence.RevisionJsonFilePersistence
 
 class RevisionManagerBuilder {
 
-    // TODO (jhe, che , 21,2 ) : Tentative selection
     private static String REVISION_FILENAME = "Revisions.json"
 
     static enum PersistenceTyp {
-        PATCH, TEST_LOCAL
+        PATCH, BEANS
     }
 
     static enum AlgorithmTyp {
@@ -21,7 +20,7 @@ class RevisionManagerBuilder {
     static Map<PersistenceTyp,Class<? extends RevisionPersistence>> persistenceImplMap = new HashMap<PersistenceTyp ,Class<? extends RevisionPersistence>>()
     static {
         persistenceImplMap.put(PersistenceTyp.PATCH, RevisionJsonFilePersistence.class)
-        persistenceImplMap.put(PersistenceTyp.TEST_LOCAL, RevisionBeanBackedPersistence.class)
+        persistenceImplMap.put(PersistenceTyp.BEANS, RevisionBeanBackedPersistence.class)
     }
 
     static RevisionManagerBuilder create() {
@@ -31,7 +30,7 @@ class RevisionManagerBuilder {
 
     private PersistenceTyp persistenceTyp = PersistenceTyp.PATCH
     private AlgorithmTyp algorithmTyp = AlgorithmTyp.PATCH
-    private String revisionRootPath;
+    private String revisionRootPath
 
     RevisionManager build() {
         if (algorithmTyp == AlgorithmTyp.PATCH) {
@@ -43,7 +42,7 @@ class RevisionManagerBuilder {
 
     private RevisionManager buildPatchRevisionManager() {
         validate(revisionRootPath != null, "Revision File Path may not be null")
-        File revisionFileRoot = new File(revisionRootPath);
+        File revisionFileRoot = new File(revisionRootPath)
         validate(revisionFileRoot.exists(), "Parent Directory ${revisionRootPath} of ${REVISION_FILENAME} must exist")
         validate(revisionFileRoot.isDirectory(), "Parent Path ${revisionRootPath} of ${REVISION_FILENAME}  must be directory")
         def clx = persistenceImplMap.get(persistenceTyp)
@@ -51,7 +50,7 @@ class RevisionManagerBuilder {
         final def persistence = clx.newInstance(persistenceTyp == PersistenceTyp.PATCH ? new File(revisionRootPath, REVISION_FILENAME) : new File(revisionRootPath))
         new RevisionManagerPatchImpl(persistence)
     }
-    private RevisionManager buildSnapshotRevisionManager() {
+    private static RevisionManager buildSnapshotRevisionManager() {
         println("Building Snapshot Revision Manager")
         new RevisionManagerSnapshotImpl()
     }
@@ -71,7 +70,7 @@ class RevisionManagerBuilder {
         this
     }
 
-    private validate(def valid , def message) {
+    private static validate(def valid, def message) {
         if (!valid) {
             throw new IllegalArgumentException(message)
         }
@@ -83,7 +82,7 @@ class RevisionManagerBuilder {
                 "persistenceTyp=" + persistenceTyp +
                 ", algorithmTyp=" + algorithmTyp +
                 ", revisionRootPath='" + revisionRootPath + '\'' +
-                '}';
+                '}'
     }
 
 }

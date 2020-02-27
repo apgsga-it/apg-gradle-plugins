@@ -1,4 +1,4 @@
-import static com.apgsga.gradle.repo.extensions.RepoType.*
+import com.apgsga.gradle.repo.extensions.RepoType
 plugins {
 	id("com.apgsga.rpm.package")
 	id("com.apgsga.publish")
@@ -11,16 +11,17 @@ project.ext {
 	sshUser = project.hasProperty('sshUser') ? project.property('sshUser') : "deployUser"
 	sshPw = project.hasProperty('sshPw') ? project.property('sshPw') : "deployUserPassword"
 	installTarget = project.hasProperty('installTarget') ? project.property('installTarget') : "CHEI212"
-    serviceVersion = project.hasProperty('serviceVersion') ? project.property('serviceVersion') : "1.0"
-	releaseNr = project.hasProperty('releaseNr') ? project.property('releaseNr') : "2"
+	baseVersion = project.hasProperty('baseVersion') ? project.property('baseVersion') : "1.0"
+	bomLastRevision = project.hasProperty('bomLastRevision') ? project.property('bomLastRevision') : "SNAPSHOT"
+	rpmReleaseNr = project.hasProperty('rpmReleaseNr') ? project.property('rpmReleaseNr') : "2"
 	downloadDir = project.hasProperty('downloadDir') ? project.property('downloadDir') : "downloads"
 }
 println "targetHost = ${project.ext.targetHost}"
 println "installTarget = ${project.ext.installTarget}"
-println "serviceVersion = ${project.ext.serviceVersion}"
-println "releaseNr = ${project.ext.releaseNr}"
+println "baseVersion = ${project.ext.baseVersion}"
+println "bomLastRevision = ${project.ext.bomLastRevision}"
+println "rpmReleaseNr = ${project.ext.rpmReleaseNr}"
 println "downloadDir = ${project.ext.downloadDir}"
-
 
 
 
@@ -32,18 +33,25 @@ configurations {
 }
 
 apgRepos {
-	// TODO (che, 23.10) : decide on this and determine naming schema
-	config(MAVEN,[REPO_NAME:"testrepo",REPO_BASE_URL:"/Users/chhex/maven"])
+	// TODO (che, 27.2) : Profiles needed
+	config(RepoType.MAVEN,[REPO_NAME:"testrepo",REPO_BASE_URL:"/Users/chhex/maven"])
+	config(RepoType.MAVEN_RELEASE,[REPO_NAME:"repo", REPO_BASE_URL:"https://artifactory4t4apgsga.jfrog.io/artifactory4t4apgsga",REPO_USER:"dev",REPO_PASSWORD:credentials.devPw])
+	config(RepoType.MAVEN_SNAPSHOT,[REPO_NAME:"snapshot", REPO_BASE_URL:"https://artifactory4t4apgsga.jfrog.io/artifactory4t4apgsga",REPO_USER:"dev",REPO_PASSWORD:credentials.devPw])
 }
+
+apgRepositories {
+	mavenLocal()
+	artifactory()
+}
+
 
 apgVersionResolver {
 	bomArtifactId = 'dm-bom'
-	bomGroupId = 'com/apgsga/testapp'
-	bomBaseVersion = '1.0'
-	bomLastRevision = 'SNAPSHOT'
+	bomGroupId = 'com.apgsga.testapp'
+	bomBaseVersion = project.ext.baseVersion
+	bomLastRevision =  project.ext.bomLastRevision
 	installTarget = project.ext.installTarget
 }
-
 
 
 apgPackage {
@@ -56,9 +64,8 @@ apgPackage {
 	appConfigFilters = "general"
   	servicePropertiesDir = "resources"
 	installTarget = project.ext.installTarget
-	mainProgramName  = "com.apgsga.testapp.TestappApplication"
-	version = project.ext.serviceVersion 
-	releaseNr = project.ext.releaseNr
+	mainProgramName  = "com.apgsga.testa	pp.TestappApplication"
+	releaseNr = project.ext.rpmReleaseNr
 }
 
 apgPackage.log()

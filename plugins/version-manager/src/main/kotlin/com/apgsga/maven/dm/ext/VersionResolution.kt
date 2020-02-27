@@ -39,8 +39,8 @@ open class VersionResolutionExtension(val project: Project, private val revision
     var bomGroupId: String? = null
     var bomBaseVersion: String? = null
     var revisionRootPath: String = project.gradle.gradleUserHomeDir.absolutePath
-    var persistence: RevisionManagerBuilder.PersistenceTyp = RevisionManagerBuilder.PersistenceTyp.TEST_LOCAL
-    var algorithm : RevisionManagerBuilder.AlgorithmTyp = RevisionManagerBuilder.AlgorithmTyp.SNAPSHOT;
+    var persistence: RevisionManagerBuilder.PersistenceTyp = RevisionManagerBuilder.PersistenceTyp.BEANS
+    var algorithm : RevisionManagerBuilder.AlgorithmTyp = RevisionManagerBuilder.AlgorithmTyp.SNAPSHOT
     var installTarget: String? = null
 
     // Revision Manager and Revision Initialization

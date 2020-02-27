@@ -1,12 +1,13 @@
 package com.apgsga.revision.manager.persistence
 
-class TargetHistory {
+class RevisionTargetHistory {
     Map<String,List<String>> revisions
 
-    TargetHistory(Map<String,List<String>> revisions) {
+    RevisionTargetHistory(Map<String,List<String>> revisions) {
         this.revisions = revisions
     }
-    TargetHistory() {
+
+    RevisionTargetHistory() {
     }
 
     def add(String target, versionPrefix, revision) {

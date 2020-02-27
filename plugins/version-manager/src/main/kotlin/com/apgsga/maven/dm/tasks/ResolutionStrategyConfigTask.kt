@@ -27,7 +27,10 @@ open class ResolutionStrategyConfigTask : DefaultTask() {
         val config = project.configurations.findByName(resolutionExtension.configurationName)
         val versionResolver = buildVersionResolver(project,resolutionExtension.patches, bom)
         config?.resolutionStrategy?.eachDependency {
-            this.useVersion(versionResolver.getVersion(requested.group, requested.name))
+            // TODO (che, jhe , 27.9 ) : Needs to be discussed, basically apg version resolution takes precedence over specified version
+            var versionUsed = versionResolver.getVersion(requested.group, requested.name)
+            if (versionUsed.isEmpty() && !requested.version.isNullOrEmpty() ) versionUsed = requested.version!!
+            this.useVersion(versionUsed)
             this.because("Apg Version Resolver ")
         }
     }

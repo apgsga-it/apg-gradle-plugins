@@ -1,7 +1,5 @@
 package com.apgsga.revision.manager.domain
 
-import com.apgsga.revision.manager.persistence.RevisionPersistence
-
 class RevisionManagerSnapshotImpl implements RevisionManager {
 
 

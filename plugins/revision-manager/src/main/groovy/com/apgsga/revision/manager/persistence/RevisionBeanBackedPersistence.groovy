@@ -9,7 +9,7 @@ class RevisionBeanBackedPersistence implements RevisionPersistence {
     RevisionBeanBackedPersistence(File revisionRootDir) {
         this.revisionRootDir = revisionRootDir
         init(Revisions.class, 0, new HashMap<String, String>())
-        init(TargetHistory.class, new HashMap<String, List<String>>())
+        init(RevisionTargetHistory.class, new HashMap<String, List<String>>())
     }
 
     @Override
@@ -37,7 +37,7 @@ class RevisionBeanBackedPersistence implements RevisionPersistence {
     }
 
     private void saveRevisionHistory(String target, versionPrefix, revision) {
-        def targetsHistory = read(TargetHistory.class)
+        def targetsHistory = read(RevisionTargetHistory.class)
         targetsHistory.add(target,versionPrefix,revision)
         write(targetsHistory)
     }
@@ -55,7 +55,7 @@ class RevisionBeanBackedPersistence implements RevisionPersistence {
         mapper.readValue(file, clx)
     }
 
-    private <T> T exits(Class<T> clx) {
+    private <T> boolean exits(Class<T> clx) {
         String fileName = "${clx.simpleName}.json"
         File file = new File(revisionRootDir, fileName)
         file.exists()

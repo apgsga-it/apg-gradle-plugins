@@ -1,7 +1,7 @@
 package com.apgsga.revision.manager.domain
 
 import com.apgsga.revision.manager.persistence.Revisions
-import com.apgsga.revision.manager.persistence.TargetHistory
+import com.apgsga.revision.manager.persistence.RevisionTargetHistory
 import spock.lang.Specification
 
 import java.nio.file.Files
@@ -11,7 +11,7 @@ class RevisionManagerLocalPersistenceTests extends Specification {
 
     def static revisionRootPath = System.getProperty('java.io.tmpdir')
     def static revisionFilePath = "${revisionRootPath}/${Revisions.class.simpleName}.json"
-    def static historyFilePath = "${revisionRootPath}/${TargetHistory.class.simpleName}.json"
+    def static historyFilePath = "${revisionRootPath}/${RevisionTargetHistory.class.simpleName}.json"
 
     RevisionManager rm
 
@@ -19,7 +19,7 @@ class RevisionManagerLocalPersistenceTests extends Specification {
         rm = RevisionManagerBuilder.create()
                 .revisionRootPath(revisionRootPath)
                 .algorithm(RevisionManagerBuilder.AlgorithmTyp.PATCH)
-                .persistence(RevisionManagerBuilder.PersistenceTyp.TEST_LOCAL)
+                .persistence(RevisionManagerBuilder.PersistenceTyp.BEANS)
                 .build()
     }
 
@@ -48,7 +48,7 @@ class RevisionManagerLocalPersistenceTests extends Specification {
         RevisionManager rm2 =  RevisionManagerBuilder.create()
                 .revisionRootPath(revisionRootPath)
                 .algorithm(RevisionManagerBuilder.AlgorithmTyp.PATCH)
-                .persistence(RevisionManagerBuilder.PersistenceTyp.TEST_LOCAL)
+                .persistence(RevisionManagerBuilder.PersistenceTyp.BEANS)
                 .build()
         nextRev = rm2.nextRevision()
         then:
