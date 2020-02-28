@@ -1,5 +1,6 @@
 package com.apgsga.maven
 
+import org.apache.maven.model.Dependency
 import java.util.*
 
 data class MavenArtifact(val groupId: String, val artifactid: String, val version: String, val type: String)
@@ -19,14 +20,14 @@ interface MavenBomManager {
      * @param recursive if to resolve pom's recursively
      * @return List of [MavenArtifact]
      */
-    fun retrieve(bomGroupId: String, bomArtifactid: String, bomVersion: String, recursive: Boolean = true): Collection<MavenArtifact>
+    fun retrieve(bomGroupId: String, bomArtifactid: String, bomVersion: String, recursive: Boolean = true): Collection<Dependency>
 
     /**
      * @see [retrieve]
      * @param bomArtifact the following format groupId:artifactId:version
      * @return List of [MavenArtifact]
      */
-    fun retrieve(bomArtifact: String, recursive: Boolean = true): Collection<MavenArtifact>
+    fun retrieve(bomArtifact: String, recursive: Boolean = true): Collection<Dependency>
 
 
     /**
@@ -42,7 +43,7 @@ interface MavenBomManager {
      * @param recursive
      * @return Intersection of [MavenArtifact] as List
      */
-    fun intersect(firstBomArtifact: String, secondBomArtifact: String, recursive: Boolean = false): Collection<MavenArtifact>
+    fun intersect(firstBomArtifact: String, secondBomArtifact: String, recursive: Boolean = false): Collection<Dependency>
 
 }
 

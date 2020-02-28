@@ -144,24 +144,4 @@ class CompositeVersionResolverDefaultTest extends Specification {
         version == "yyyyyyyyyy"
     }
 
-    def "GetVersion with two different Bom with a BomListResolver and a List of PatchFiles Version Resolver "() {
-        given:
-        def mavenBomlistResolver = ResolverBuilderKt.create(BomListVersionResolverBuilder.class)
-                .add(1,'test:test-composite-bom:1.0')
-                .add(2,'test:test-bom-independent:1.0')
-                .repoBaseUrl(REPO_URL)
-                .repoName(TEST_REPO)
-        def patchFileListResolver = ResolverBuilderKt.create(PatchFileListVersionResolverBuilder.class).parentDir(source)
-                .add("PatchB5402.json")
-                .add("PatchA5791.json")
-                .patchComparator(SortedPatchFileListVersionResolver.PatchComparator.TAGNR_DESC)
-        def compositeResolver = ResolverBuilderKt.create(CompositeVersionResolverBuilder.class)
-                .add(1,patchFileListResolver)
-                .add(2,mavenBomlistResolver)
-                .build()
-        when:
-        def version = compositeResolver.getVersion("com.affichage.it21.vk","zentraldispo-ui")
-        then:
-        version == "yyyyyyyyyy"
-    }
 }

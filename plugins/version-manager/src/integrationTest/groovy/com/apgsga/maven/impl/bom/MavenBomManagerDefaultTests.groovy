@@ -1,8 +1,7 @@
 package com.apgsga.maven.impl.bom
 
-import com.apgsga.maven.MavenArtifact
-import com.apgsga.maven.impl.bom.MavenBomManagerDefault
-import com.apgsga.maven.impl.bom.RepositoryFactory
+
+import org.apache.maven.model.Dependency
 import org.gradle.util.GFileUtils
 import spock.lang.Specification
 
@@ -141,9 +140,9 @@ class MavenBomManagerDefaultTests extends Specification {
 
 
 
-    private static boolean expectedResult(Collection<MavenArtifact> result, expectedArtifacts) {
+    private static boolean expectedResult(Collection<Dependency> result, expectedArtifacts) {
         result.each {
-            def artString = "${it.groupId}:${it.artifactid}:${it.version}:${it.type}".toString()
+            def artString = "${it.groupId}:${it.artifactId}:${it.version}:${it.type}".toString()
             expectedArtifacts.remove(artString)
         }
         expectedArtifacts.size() == 0

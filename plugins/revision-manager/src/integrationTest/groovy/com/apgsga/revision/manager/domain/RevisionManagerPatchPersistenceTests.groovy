@@ -8,21 +8,25 @@ import java.nio.file.Paths
 
 class RevisionManagerPatchPersistenceTests extends Specification {
 
-    def static revisionRootPath = System.getProperty('java.io.tmpdir')
     def static revisionFileName = "Revisions.json"
-    def static revisionFilePath = "${revisionRootPath}/${revisionFileName}"
 
     RevisionManager rm
+    File parentDir
+    def revisionFilePath
 
     def setup() {
+        parentDir = File.createTempDir()
+        revisionFilePath = "${parentDir.absolutePath}/${revisionFileName}"
+        println("Created Revision Parent Dir ${parentDir.absolutePath}")
         rm = RevisionManagerBuilder.create()
-                .revisionRootPath(revisionRootPath)
+                .revisionRootPath(parentDir.absolutePath)
                 .algorithm(RevisionManagerBuilder.AlgorithmTyp.PATCH)
                 .build()
+
     }
 
     def cleanup() {
-       Files.delete(Paths.get(revisionFilePath))
+   //    parentDir.deleteDir()
     }
 
     def "Get next global Revision for first time"() {
@@ -41,7 +45,7 @@ class RevisionManagerPatchPersistenceTests extends Specification {
         nextRev == 1
         when:
         RevisionManager rm2 =  RevisionManagerBuilder.create()
-                .revisionRootPath(revisionRootPath)
+                .revisionRootPath(parentDir.absolutePath)
                 .algorithm(RevisionManagerBuilder.AlgorithmTyp.PATCH)
                 .build()
         nextRev = rm2.nextRevision()

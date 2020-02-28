@@ -36,34 +36,6 @@ data class BomVersionResolverBuilder(
 
 }
 
-data class BomListVersionResolverBuilder(
-        var bomArtifacts: MutableCollection<Pair<Int, String>>? = mutableListOf(),
-        var recursive: Boolean? = false,
-        var repoBaseUrl: String? = null,
-        var repoName: String? = null,
-        var userName: String? = null,
-        var password: String? = null) : VersionResolverBuilder {
-
-    fun add(order: Int, bomArtifact: String) = apply { bomArtifacts!!.add(Pair(order, bomArtifact)) }
-    fun recursive(recursive: Boolean?) = apply { this.recursive = recursive }
-    fun repoBaseUrl(repoBaseUrl: String) = apply { this.repoBaseUrl = repoBaseUrl }
-    fun repoName(repoName: String) = apply { this.repoName = repoName }
-    fun userName(userName: String) = apply { this.userName = userName }
-    fun password(password: String) = apply { this.password = password }
-
-
-    override fun build(): VersionResolver {
-        val bomManager = mavenBomManagerDefault(repoBaseUrl, repoName, userName, password)
-        val resolver = BomListVersionResolver(recursive, bomManager)
-        bomArtifacts!!.forEach {
-            resolver.add(it.first, it.second)
-        }
-        return resolver
-    }
-
-}
-
-
 data class PatchFileVersionResolverBuilder(var patchFile: File? = null, var patchFileName: String? = null, var parentDir: File? = null, var parentDirName: String? = null) : VersionResolverBuilder {
     fun patchFile(theFile: File) = apply {
         require(this.patchFileName == null) { "Either patchFile or patchFileName" }
@@ -98,7 +70,9 @@ data class PatchFileVersionResolverBuilder(var patchFile: File? = null, var patc
         } else {
             throw IllegalArgumentException()
         }
-        return PatchFileVersionResolver(patchFile!!)
+        val patchFiles = mutableListOf<File>()
+        patchFiles.add(patchFile!!)
+        return SortedPatchFileListVersionResolver(patchFiles)
     }
 
 }

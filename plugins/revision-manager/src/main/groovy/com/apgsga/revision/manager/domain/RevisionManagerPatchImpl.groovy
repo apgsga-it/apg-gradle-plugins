@@ -20,6 +20,7 @@ class RevisionManagerPatchImpl implements RevisionManager {
 
     @Override
     def lastRevision(def target) {
+        assert target != null , "Target must be set, cannot be null"
         String lastRevision = revisionPersistence.lastRevision(target.toUpperCase())
         if(lastRevision != null)
             return lastRevision

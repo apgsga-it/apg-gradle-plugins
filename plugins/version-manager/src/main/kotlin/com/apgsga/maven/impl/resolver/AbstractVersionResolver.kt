@@ -16,5 +16,4 @@ abstract class AbstractVersionResolver : VersionResolver {
         return recommender.getVersion(groupId, artifactId)
     }
 
-    abstract fun getMavenArtifactList() : Collection<MavenArtifact>?
 }
