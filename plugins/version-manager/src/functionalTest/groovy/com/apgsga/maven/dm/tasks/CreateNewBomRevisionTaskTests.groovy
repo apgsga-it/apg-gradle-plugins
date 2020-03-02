@@ -36,9 +36,9 @@ class CreateNewBomRevisionTaskTests extends AbstractSpecification {
 	            bomArtifactId = 'test-nested-snapshot-bom'
 	            bomGroupId = 'test'
 	            bomBaseVersion = '1.1-TEST'
-	            installTarget = "CHEI212"
+	            installTarget = "CHEI212"   
 	            persistence =  RevisionManagerBuilder.PersistenceTyp.BEANS
-	            algorithm =  RevisionManagerBuilder.AlgorithmTyp.PATCH
+                algorithm =  RevisionManagerBuilder.AlgorithmTyp.PATCH
 	            patches {
                     parentDir = new File("${source.getAbsoluteFile().getPath().replace("\\\\", "/")}")
                     fileNames = "PatchA5791.json"

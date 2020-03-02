@@ -25,23 +25,25 @@ abstract class AbstractVersionResolutionTask : DefaultTask() {
         assert(resolutionExtension.bomBaseVersion != null) { "bomBaseVersion should not be null" }
         assert(resolutionExtension.bomLastRevision != null) { "lastRevision should not be null" }
         val bom = Bom(resolutionExtension.bomArtifactId, resolutionExtension.bomGroupId, resolutionExtension.bomBaseVersion, resolutionExtension.bomLastRevision)
-        val versionResolver = buildVersionResolver(project,resolutionExtension.patches, bom)
-        doResolutionAction(versionResolver,resolutionExtension,bom)
+        val versionResolver = buildVersionResolver(project, resolutionExtension.patches, bom)
+        doResolutionAction(versionResolver, resolutionExtension, bom)
     }
 
-    abstract fun doResolutionAction(versionResolver : VersionResolver, resolutionExtension: VersionResolutionExtension, bom: Bom)
+    abstract fun doResolutionAction(versionResolver: VersionResolver, resolutionExtension: VersionResolutionExtension, bom: Bom)
 
-    private fun buildVersionResolver(project: Project, patches: Patches, bom: Bom) : VersionResolver {
+    private fun buildVersionResolver(project: Project, patches: Patches, bom: Bom): VersionResolver {
         val commonRepos = project.extensions.getByName<Repos>(ApgCommonRepoPlugin.COMMMON_REPO_EXTENSION_NAME)
         val repo = commonRepos[RepoType.MAVEN]
         val compositeResolverBuilder = CompositeVersionResolverBuilder()
         project.logger.info("Creating Dependency configuration")
         var cnt = 0
-        patches.fileNames?.split(':')?.forEach {
-            project.logger.info("Patchfile : $it.toString()")
-            compositeResolverBuilder.add(++cnt, PatchFileVersionResolverBuilder()
-                    .parentDir(patches.parentDir!!)
-                    .patchFile(it))
+        if (!patches.fileNames.isNullOrEmpty()) {
+            patches.fileNames?.split(':')?.forEach {
+                project.logger.info("Patchfile : $it.toString()")
+                compositeResolverBuilder.add(++cnt, PatchFileVersionResolverBuilder()
+                        .parentDir(patches.parentDir!!)
+                        .patchFile(it))
+            }
         }
         project.logger.info("Version: ${bom.version()}")
         compositeResolverBuilder.add(++cnt, BomVersionResolverBuilder()

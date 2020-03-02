@@ -1,4 +1,5 @@
 import com.apgsga.gradle.repo.extensions.RepoType
+import com.apgsga.revision.manager.domain.RevisionManagerBuilder
 plugins {
 	id("com.apgsga.rpm.package")
 	id("com.apgsga.publish")
@@ -13,6 +14,9 @@ project.ext {
 	installTarget = project.hasProperty('installTarget') ? project.property('installTarget') : "CHEI212"
 	baseVersion = project.hasProperty('baseVersion') ? project.property('baseVersion') : "1.0"
 	bomLastRevision = project.hasProperty('bomLastRevision') ? project.property('bomLastRevision') : "SNAPSHOT"
+	patchParentDir = project.hasProperty('patchParentDir') ? project.property('patchParentDir') : project.buildDir.absolutePath
+	patchFileNames = project.hasProperty('patchFileNames') ? project.property('patchFileNames') : ""
+	revisionRootPath = project.hasProperty('revisionRootPath') ? project.property('revisionRootPath') : project.buildDir.absolutePath
 	rpmReleaseNr = project.hasProperty('rpmReleaseNr') ? project.property('rpmReleaseNr') : "2"
 	downloadDir = project.hasProperty('downloadDir') ? project.property('downloadDir') : "downloads"
 }
@@ -51,6 +55,13 @@ apgVersionResolver {
 	bomBaseVersion = project.ext.baseVersion
 	bomLastRevision =  project.ext.bomLastRevision
 	installTarget = project.ext.installTarget
+	persistence =  RevisionManagerBuilder.PersistenceTyp.BEANS
+	algorithm =  RevisionManagerBuilder.AlgorithmTyp.SNAPSHOT
+	patches {
+		parentDir = project.ext.patchParentDir
+		fileNames = project.ext.patchFileNames
+	}
+	revisionRootPath = project.buildDir.absolutePath
 }
 
 
@@ -64,7 +75,7 @@ apgPackage {
 	appConfigFilters = "general"
   	servicePropertiesDir = "resources"
 	installTarget = project.ext.installTarget
-	mainProgramName  = "com.apgsga.testa	pp.TestappApplication"
+	mainProgramName  = "com.apgsga.testapp.TestappApplication"
 	releaseNr = project.ext.rpmReleaseNr
 }
 

@@ -94,7 +94,9 @@ data class PatchFileListVersionResolverBuilder(var parentDir: File? = null, var 
     fun add(patchFile: File) = apply { this.patchFiles!!.add(patchFile) }
     fun add(patchFile: String) = apply {
         require(this.parentDir != null) { "parentDir must be set" }
-        this.patchFiles!!.add(File(parentDir, patchFile))
+        if (!patchFile.isNullOrEmpty()) {
+            this.patchFiles!!.add(File(parentDir, patchFile))
+        }
     }
 
     fun patchComparator(patchComparator: SortedPatchFileListVersionResolver.PatchComparator) = apply { this.patchComparator = patchComparator }
