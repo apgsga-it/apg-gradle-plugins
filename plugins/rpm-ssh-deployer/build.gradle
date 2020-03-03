@@ -15,6 +15,7 @@ sourceSets {
     }
 }
 
+
 dependencies {
     testCompile gradleTestKit()
     testCompile project(':common-test')
