@@ -1,31 +1,33 @@
+import com.apgsga.gradle.repo.extensions.RepoType
+import com.apgsga.revision.manager.domain.RevisionManagerBuilder
 plugins {
 	id("com.apgsga.rpm.package")
-	id("com.apgsga.zip.package")
 	id("com.apgsga.publish")
 	id("com.apgsga.rpm.ssh.deployer")
+	id("com.apgsga.version.resolver")
 }
 
 project.ext {
-	serviceName = project.hasProperty('serviceName') ? project.property('serviceName') : "echoservice"
 	targetHost = project.hasProperty('targetHost') ? project.property('targetHost') : "jadas-e.apgsga.ch"
 	sshUser = project.hasProperty('sshUser') ? project.property('sshUser') : "deployUser"
 	sshPw = project.hasProperty('sshPw') ? project.property('sshPw') : "deployUserPassword"
 	installTarget = project.hasProperty('installTarget') ? project.property('installTarget') : "CHEI212"
-    serviceVersion = project.hasProperty('serviceVersion') ? project.property('serviceVersion') : "1.0"
-	releaseNr = project.hasProperty('releaseNr') ? project.property('releaseNr') : "2"
+	baseVersion = project.hasProperty('baseVersion') ? project.property('baseVersion') : "1.0"
+	bomLastRevision = project.hasProperty('bomLastRevision') ? project.property('bomLastRevision') : "SNAPSHOT"
+	patchParentDir = project.hasProperty('patchParentDir') ? project.property('patchParentDir') : project.buildDir.absolutePath
+	patchFileNames = project.hasProperty('patchFileNames') ? project.property('patchFileNames') : ""
+	revisionRootPath = project.hasProperty('revisionRootPath') ? project.property('revisionRootPath') : project.buildDir.absolutePath
+	rpmReleaseNr = project.hasProperty('rpmReleaseNr') ? project.property('rpmReleaseNr') : "2"
 	downloadDir = project.hasProperty('downloadDir') ? project.property('downloadDir') : "downloads"
 }
-println "serviceName = ${project.ext.serviceName}"
 println "targetHost = ${project.ext.targetHost}"
 println "installTarget = ${project.ext.installTarget}"
-println "serviceVersion = ${project.ext.serviceVersion}"
-println "releaseNr = ${project.ext.releaseNr}"
+println "baseVersion = ${project.ext.baseVersion}"
+println "bomLastRevision = ${project.ext.bomLastRevision}"
+println "rpmReleaseNr = ${project.ext.rpmReleaseNr}"
 println "downloadDir = ${project.ext.downloadDir}"
 
-apgRepositories {
-	mavenLocal()
-	mavenCentral()
-}
+
 
 configurations {
 	serviceRuntime.exclude group: 'log4j', module: 'log4j'
@@ -34,19 +36,47 @@ configurations {
 	serviceRuntime.exclude group: 'org.codehaus.groovy' , module: 'groovy-all'
 }
 
+apgRepos {
+	// TODO (che, 27.2) : Profiles needed
+	config(RepoType.MAVEN,[REPO_NAME:"testrepo",REPO_BASE_URL:"/Users/chhex/maven"])
+	config(RepoType.MAVEN_RELEASE,[REPO_NAME:"repo", REPO_BASE_URL:"https://artifactory4t4apgsga.jfrog.io/artifactory4t4apgsga",REPO_USER:"dev",REPO_PASSWORD:credentials.devPw])
+	config(RepoType.MAVEN_SNAPSHOT,[REPO_NAME:"snapshot", REPO_BASE_URL:"https://artifactory4t4apgsga.jfrog.io/artifactory4t4apgsga",REPO_USER:"dev",REPO_PASSWORD:credentials.devPw])
+}
+
+apgRepositories {
+	mavenLocal()
+	artifactory()
+}
+
+
+apgVersionResolver {
+	bomArtifactId = 'dm-bom'
+	bomGroupId = 'com.apgsga.testapp'
+	bomBaseVersion = project.ext.baseVersion
+	bomLastRevision =  project.ext.bomLastRevision
+	installTarget = project.ext.installTarget
+	persistence =  RevisionManagerBuilder.PersistenceTyp.BEANS
+	algorithm =  RevisionManagerBuilder.AlgorithmTyp.SNAPSHOT
+	patches {
+		parentDir = project.ext.patchParentDir
+		fileNames = project.ext.patchFileNames
+	}
+	revisionRootPath = project.buildDir.absolutePath
+}
+
+
 apgPackage {
-	serviceName = project.ext.serviceName
+	serviceName = 'echoservice'
 	configurationName = "serviceRuntime"
 	dependencies = [
-		"com.apgsga.testapp:testapp-service:1.0-SNAPSHOT"
+		"com.apgsga.testapp:testapp-service"
     ]
 	resourceFilters = "serviceport"
 	appConfigFilters = "general"
   	servicePropertiesDir = "resources"
 	installTarget = project.ext.installTarget
 	mainProgramName  = "com.apgsga.testapp.TestappApplication"
-	version = project.ext.serviceVersion 
-	releaseNr = project.ext.releaseNr
+	releaseNr = project.ext.rpmReleaseNr
 }
 
 apgPackage.log()
@@ -57,13 +87,13 @@ apgGenericPublishConfig {
 	local()
 }
 
+
+
 apgGenericPublishConfig.log()
 
 apgSshCommon {
-//	username credentials."${project.ext.sshUser}"
-//	userpwd credentials."${project.ext.sshPw}"
-	username project.ext.sshUser
-	userpwd  project.ext.sshPw
+	username credentials."${project.ext.sshUser}"
+	userpwd credentials."${project.ext.sshPw}"
 	destinationHost project.ext.targetHost
 
 }
