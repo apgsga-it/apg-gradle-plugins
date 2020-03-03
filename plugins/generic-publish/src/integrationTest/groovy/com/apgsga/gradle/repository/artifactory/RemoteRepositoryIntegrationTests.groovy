@@ -7,7 +7,7 @@ import spock.lang.Specification
 
 class RemoteRepositoryIntegrationTests extends Specification {
 
-	private static final String ARTIFACTORY_URL = "https://artifactory4t4apgsga.jfrog.io/artifactory4t4apgsga"
+	private static final String ARTIFACTORY_URL = "https://artifactory4t4apgsga.jfrog.io/artifactory"
 
 	private static final String TEST_RPM_REPO = "rpm-functionaltest"
 

@@ -8,7 +8,7 @@ include ':zip-service-packager'
 include ':it21-gui-packager'
 include ':gradle-common'
 include ':repo-config'
-include ':dependency-manager'
+include ':version-manager'
 include ':common-test'
 include 'rpm-ssh-deployer'
 include 'ssh-common'
@@ -25,7 +25,7 @@ project(':zip-service-packager').projectDir = "$rootDir/zip-service-packager" as
 project(':rpm-service-packager').projectDir = "$rootDir/rpm-service-packager" as File
 project(':gradle-common').projectDir = "$rootDir/gradle-common" as File
 project(':repo-config').projectDir = "$rootDir/repo-config" as File
-project(':dependency-manager').projectDir = "$rootDir/dependency-manager" as File
+project(':version-manager').projectDir = "$rootDir/version-manager" as File
 project(':common-test').projectDir = "$rootDir/common-test" as File
 project(':rpm-ssh-deployer').projectDir = "$rootDir/rpm-ssh-deployer" as File
 project(':ssh-common').projectDir = "$rootDir/ssh-common" as File
