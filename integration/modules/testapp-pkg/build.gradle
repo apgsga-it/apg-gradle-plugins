@@ -27,7 +27,7 @@ println "bomLastRevision = ${project.ext.bomLastRevision}"
 println "rpmReleaseNr = ${project.ext.rpmReleaseNr}"
 println "downloadDir = ${project.ext.downloadDir}"
 
-
+apply from : "${project.gradle.gradleUserHomeDir}/../git/apg-gradle-properties/common/portnr.gradle"
 
 configurations {
 	serviceRuntime.exclude group: 'log4j', module: 'log4j'
@@ -65,6 +65,8 @@ apgVersionResolver {
 }
 
 
+
+
 apgPackage {
 	serviceName = 'echoservice'
 	configurationName = "serviceRuntime"
@@ -81,6 +83,7 @@ apgPackage {
 
 apgPackage.log()
 
+apgPackage.listPortNumbers()
 
 apgGenericPublishConfig {
 	artefactFile =  file ("${buildDir}/distributions/${apgPackage.archiveName}")
@@ -105,3 +108,4 @@ apgRpmDeployConfig {
 	remoteDestFolder "${project.ext.downloadDir}"
 }
 
+ 

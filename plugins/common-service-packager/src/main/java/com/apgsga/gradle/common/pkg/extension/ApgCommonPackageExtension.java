@@ -33,9 +33,9 @@ public class ApgCommonPackageExtension {
 	private static final String SERVICE_NAME_DEFAULT = "jadas";
 
     private String configurationName = CONFIGURATION_NAME_DEFAULT;
-	private String serviceName =  SERVICE_NAME_DEFAULT; 
-	private String mainProgramName = MAIN_PRG_DEFAULT; 
-	private String installTarget = TARGET_DEFAULT; 
+	private String serviceName =  SERVICE_NAME_DEFAULT;
+	private String mainProgramName = MAIN_PRG_DEFAULT;
+	private String installTarget = TARGET_DEFAULT;
 	private String[] dependencies = new String[] {FIRST_DEP_DEFAULT,SEC_DEP_DEFAULT};
 	private String resourceFilters = RESOURCE_FILTER_DEFAULT; 
 	private String appConfigFilters = APP_CONFIG_FILTER_DEFAULT; 
@@ -251,8 +251,13 @@ public class ApgCommonPackageExtension {
     }
 
     public String getPortNr() {
-        return PortnrConvention.calculate(supportedServices, getInstallTarget(), getServiceName());
+        return PortnrConvention.calculate(project, getInstallTarget(), getServiceName()).toString();
     }
+
+    public void listPortNumbers() {
+        PortnrConvention.list(project);
+    }
+
 
     public String getEcmTargetSystemInd() {
         return getInstallTarget().charAt(2) == 't' ? "t" : "p";
@@ -261,6 +266,7 @@ public class ApgCommonPackageExtension {
     public String getIbdsTargetSystemInd() {
         return Character.toString(getInstallTarget().charAt(2)).toLowerCase();
     }
+
 
     public String getArchiveName() {
         return getTargetServiceName() + "-" + getVersion() + "-" + getReleaseNr() + ".noarch.rpm";
