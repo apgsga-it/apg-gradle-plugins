@@ -132,11 +132,11 @@ class JenkinsDockerRun : Plugin<Project> {
             buildJenkinsRunnerImage.get().dependsOn.add(buildSshdImage)
             startJenkinsRunnerContainer.get().dependsOn.add(startInstallTarget)
             stopInstallTarget.get().dependsOn.add(logJenkinsRunnerContainer)
-            dependsOn(stopInstallTarget, cleanJenkinsHome)
+            dependsOn(stopInstallTarget.get(), cleanJenkinsHome.get())
         }
 
         tasks.register<DefaultTask>("runJenkins") {
-            dependsOn(logJenkinsRunnerContainer, cleanJenkinsHome)
+            dependsOn(buildJenkinsRunnerImage.get(), logJenkinsRunnerContainer.get(), cleanJenkinsHome.get())
         }
     }
 

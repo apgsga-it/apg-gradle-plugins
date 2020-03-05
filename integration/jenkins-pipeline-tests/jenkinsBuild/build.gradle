@@ -12,6 +12,8 @@ runJenkinsDocker {
 }
 
 runJenkinsDocker.log()
+
+
 println "description: $description"
 
 task run {
