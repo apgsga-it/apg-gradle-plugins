@@ -12,10 +12,7 @@ pipeline {
        stages {
           stage('Maven Builds') {
               steps {
-                check_out_service(servicename, "xyz")
-                newrevision&publishBom(servicename,  "xyz")
                 maven_build(modules)
-                saverevision()
               }
         }
      }
