@@ -173,3 +173,4 @@ buildNumber.properties
 jenkinsHome/*
 !jenkinsHome/keep.txt
 Jenkinsfile
+/integration/jenkins-pipeline-tests/mavenTestLocalRepo/
