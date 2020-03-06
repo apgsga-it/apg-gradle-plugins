@@ -34,14 +34,12 @@ open class JenkinsDockerRunExt(private val project: Project) {
         // Default Bind Volumes
         defaultVolumes[project.rootDir.absolutePath + "/jenkinsHome"] = jenkinsHome
         defaultVolumes[project.repositories.mavenLocal().url.path] = "/mavenLocal"
-        defaultVolumes[project.gradle.gradleUserHomeDir.absolutePath] = "/gradleUserHome"
+        defaultVolumes[project.rootDir.absolutePath + "/gradleTestUserHome"] = "/gradleUserHome"
         defaultVolumes[project.projectDir.absolutePath + "/Jenkinsfile"] = "/workspace/Jenkinsfile"
         defaultVolumes[project.rootDir.absolutePath + testModulesDir] = "/workspace"
         // Default Cmd
         defaultCmd.add("--runWorkspace")
         defaultCmd.add("/jenkinsWorkspace")
-        defaultCmd.add("--runHome")
-        defaultCmd.add("/jenkinsHome")
     }
 
     fun log() {
