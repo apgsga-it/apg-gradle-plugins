@@ -1,0 +1,28 @@
+{
+  "repos": [
+    {
+      "ZIP": "release-functionaltest"
+    },
+    {
+      "RPM": "rpm-functionaltest"
+    },
+    {
+      "MAVEN_SNAPSHOT": "snapshot-functionaltest"
+    },
+    {
+      "MAVEN_RELEASE": "release-functionaltest"
+    },
+    {
+      "LOCAL": "local"
+    },
+    {
+      "MAVEN": "maven"
+    },
+    {
+      "JAVA_DIST": "apgPlatformDependencies"
+    }
+  ],
+  "repoUserName": "gradledev-tests-user",
+  "repoUserPwd": "xxxxx",
+  "repoBaseUrl": "https://artifactory4t4apgsga.jfrog.io/artifactory"
+}
