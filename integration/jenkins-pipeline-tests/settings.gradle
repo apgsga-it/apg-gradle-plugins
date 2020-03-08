@@ -1,7 +1,1 @@
 rootProject.name = 'jenkins-pipeline-tests'
-include ":jenkinsAll"
-project(':jenkinsAll').projectDir = "$rootDir/jenkinsAll" as File
-include ":jenkinsBuild"
-project(':jenkinsBuild').projectDir = "$rootDir/jenkinsBuild" as File
-include ":jenkinsPkgAndDeploy"
-project(':jenkinsPkgAndDeploy').projectDir = "$rootDir/jenkinsPkgAndDeploy" as File

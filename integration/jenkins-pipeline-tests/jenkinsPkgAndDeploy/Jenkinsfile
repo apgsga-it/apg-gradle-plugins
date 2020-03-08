@@ -1,13 +1,21 @@
 parameters {
-    string(name: 'versionNr', defaultValue: '1.0', description: 'Version to Package ')
-    string(name: 'releaseNr', defaultValue: '1', description: 'Release to Package ')
+    string(name: 'baseVersion', defaultValue: '1.0', description: 'Version to Package ')
+    string(name: 'bomLastRevision', defaultValue: '1.0', description: 'Version to Package ')
+    string(name: 'rpmReleaseNr', defaultValue: '1', description: 'Release to Package ')
     string(name: 'installTarget', defaultValue: 'CHEI212', description: 'Target to Package ')
-    string(name: 'installHost', defaultValue: 'jadas-server', description: 'Target Maschine ')
+    string(name: 'targetHost', defaultValue: 'jadas-server', description: 'Target Maschine ')
+    string(name: 'sshUser', defaultValue: '', description: 'Ssh User Key')
+    string(name: 'sshPw', defaultValue: '', description: 'Ssh Pw Key')
+    string(name: 'downLoadDir', defaultValue: '/download', description: 'Download Dir on Target Host')
 }
-versionNr  = "${params.versionNr}"
-releaseNr  = "${params.releaseNr}"
+baseVersion  = "${params.baseVersion}"
+bomLastRevision  = "${params.bomLastRevision}"
+rpmReleaseNr  = "${params.rpmReleaseNr}"
 installTarget  = "${params.installTarget}"
-
+targetHost  = "${params.targetHost}"
+sshUser  = "${params.sshUser}"
+sshPw  = "${params.sshPw}"
+downLoadDir = "${params.downLoadDir}"
 
 pipeline {
     agent any
@@ -22,11 +30,9 @@ pipeline {
 
 
 def pkg(packagename) {
-    echo "installTarget : ${installTarget}, serviceVersion : ${versionNr}, releaseNr : ${releaseNr}"
+    echo "installTarget : ${installTarget}, serviceVersion : ${baseVersion}, rpmReleaseNr : ${rpmReleaseNr}"
     dir ("${packagename}") {
         sh "chmod +x gradlew"
-        sh "./gradlew clean buildRpm deployRpm --info  --stacktrace -PinstallTarget=${installTarget} -PserviceVersion=${versionNr} -PreleaseNr=${releaseNr} -PtargetHost=${installHost}  -PsshUser=tu1 -PsshPw=tu1_pass -PdownloadDir=/tmp"
+        sh "./gradlew clean configureResolutionStrategy buildRpm deployRpm installRpm --info  --stacktrace -PbaseVersion=${baseVersion} -PbomLastRevision=${bomLastRevision}  -PinstallTarget=${installTarget}  -PrpmReleaseNr=${rpmReleaseNr} -PtargetHost=${targetHost}  -PsshUser=${sshUser} -PsshPw=${sshPw} -PdownloadDir=${downLoadDir}"
     }
-    sh 'ls -l /mavenLocal'
-    sh 'ls -l /gradleUserHome'
 }

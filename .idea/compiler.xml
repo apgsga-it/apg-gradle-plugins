@@ -20,8 +20,12 @@
       <module name="docker-sshd-compose.test" target="1.8" />
       <module name="jenkins-.main" target="1.8" />
       <module name="jenkins-.test" target="1.8" />
-      <module name="jenkins-pipeline-tests.main" target="1.8" />
-      <module name="jenkins-pipeline-tests.test" target="1.8" />
+      <module name="jenkins-pipeline-tests.jenkinsAll.main" target="1.8" />
+      <module name="jenkins-pipeline-tests.jenkinsAll.test" target="1.8" />
+      <module name="jenkins-pipeline-tests.jenkinsBuild.main" target="1.8" />
+      <module name="jenkins-pipeline-tests.jenkinsBuild.test" target="1.8" />
+      <module name="jenkins-pipeline-tests.jenkinsPkgAndDeploy.main" target="1.8" />
+      <module name="jenkins-pipeline-tests.jenkinsPkgAndDeploy.test" target="1.8" />
       <module name="jenkins-pipeline.main" target="1.8" />
       <module name="jenkins-pipeline.test" target="1.8" />
       <module name="testapp-service-kotlin.main" target="1.8" />
