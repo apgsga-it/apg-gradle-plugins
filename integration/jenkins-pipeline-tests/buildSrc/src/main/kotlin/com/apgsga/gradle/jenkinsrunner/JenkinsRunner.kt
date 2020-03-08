@@ -2,8 +2,10 @@ package com.apgsga.gradle.jenkinsrunner
 
 
 import org.apache.tools.ant.taskdefs.condition.Os
+import org.gradle.api.Action
 import org.gradle.api.Plugin
 import org.gradle.api.Project
+import org.gradle.api.Task
 import org.gradle.api.logging.LogLevel
 import org.gradle.api.plugins.JavaPlugin
 import org.gradle.api.tasks.Exec
@@ -11,7 +13,7 @@ import org.gradle.api.tasks.Input
 import org.gradle.kotlin.dsl.apply
 import org.gradle.kotlin.dsl.create
 import org.gradle.kotlin.dsl.get
-
+import java.io.ByteArrayOutputStream
 
 
 open class JenkinsRunnerExt(private val project: Project) {
@@ -44,20 +46,29 @@ open class JenkinsRunnerExec : Exec() {
     @Input
     var jenkinsFilePath : String = ""
 
+
     override fun exec() {
         val parameters = project.extensions["jenkinsRunnerConfig"] as JenkinsRunnerExt
-        val command = if (!Os.isFamily(Os.FAMILY_WINDOWS)) {
+        val command = if (Os.isFamily(Os.FAMILY_WINDOWS)) {
             "${parameters.jenkinsDirPath}/filerunner/bin/jenkinsfile-runner.bat"
         } else if (Os.isFamily(Os.FAMILY_MAC) || Os.isFamily(Os.FAMILY_UNIX)) {
             "${parameters.jenkinsDirPath}/filerunner/bin/jenkinsfile-runner"
         } else {
             throw IllegalArgumentException("Unkown OS Family")
         }
-        commandLine = arrayListOf(command)
-        commandLine.addAll(parameters.runnerDefaultParameter())
-        commandLine.add(arrayListOf("-f", jenkinsFilePath))
-        commandLine.addAll(testParameters)
+        val cmd = mutableListOf<String>()
+        cmd.add(command)
+        cmd.addAll(parameters.runnerDefaultParameter())
+        cmd.add("-f")
+        cmd.add(jenkinsFilePath)
+        cmd.addAll(testParameters)
+        commandLine = cmd
         workingDir(project.projectDir)
+        logger.info("Command : ${commandLine.toString()}")
         super.exec()
+    }
+
+    override fun doLast(action: Action<*>): Task {
+        return super.doLast(action)
     }
 }

@@ -40,9 +40,15 @@ task testPkgAndDeploy(type: JenkinsRunnerExec) {
                        "-a", "sshPw=chePw" ,
                        "-a",  "downLoadDir=downloads"]
     jenkinsFilePath = "${project.projectDir}/jenkinsPkgAndDeploy/JenkinsFile"
+    logging.captureStandardOutput LogLevel.INFO
+    logging.captureStandardError  LogLevel.ERROR
+
 }
 
 task testBuild(type: JenkinsRunnerExec) {
     testParameters = [ "-a","modules=testapp-bom:testapp-parentpom:testapp-module:testapp-service"]
     jenkinsFilePath = "${project.projectDir}/jenkinsBuild/JenkinsFile"
+    logging.captureStandardOutput LogLevel.INFO
+    logging.captureStandardError  LogLevel.ERROR
+
 }
