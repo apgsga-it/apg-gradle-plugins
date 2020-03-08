@@ -50,9 +50,9 @@ open class JenkinsRunnerExec : Exec() {
     override fun exec() {
         val parameters = project.extensions["jenkinsRunnerConfig"] as JenkinsRunnerExt
         val command = if (Os.isFamily(Os.FAMILY_WINDOWS)) {
-            "${parameters.jenkinsDirPath}/filerunner/bin/jenkinsfile-runner.bat"
+            "${parameters.jenkinsDirPath}/runner/bin/jenkinsfile-runner.bat"
         } else if (Os.isFamily(Os.FAMILY_MAC) || Os.isFamily(Os.FAMILY_UNIX)) {
-            "${parameters.jenkinsDirPath}/filerunner/bin/jenkinsfile-runner"
+            "${parameters.jenkinsDirPath}/runner/bin/jenkinsfile-runner"
         } else {
             throw IllegalArgumentException("Unkown OS Family")
         }
