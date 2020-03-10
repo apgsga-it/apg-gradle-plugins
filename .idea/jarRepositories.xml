@@ -46,5 +46,10 @@
       <option name="name" value="MAVEN_RELEASE" />
       <option name="url" value="https://artifactory4t4apgsga.jfrog.io/artifactory4t4apgsga/release" />
     </remote-repository>
+    <remote-repository>
+      <option name="id" value="MAVEN_RELEASE" />
+      <option name="name" value="MAVEN_RELEASE" />
+      <option name="url" value="https://artifactory4t4apgsga.jfrog.io/artifactory/repo" />
+    </remote-repository>
   </component>
 </project>
