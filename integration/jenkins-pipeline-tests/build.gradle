@@ -30,8 +30,24 @@ task jenkinsPluginsCopyTask(type: SshGetTask) {
     into ="${jenkinsRunnerConfig.jenkinsDirPath}/jenkins"
 }
 
+task cleanJenkins  {
+    doLast {
+        File jenkinsTargetDir = new File("${jenkinsRunnerConfig.jenkinsDirPath}/jenkins");
+        if (!jenkinsTargetDir.exists()) {
+            jenkinsTargetDir.mkdir()
+        }
+        fileTree(jenkinsTargetDir).visit {
+            logger.info("About to delete: ${it.file.name}")
+            def deleted = delete(it.file)
+            logger.info("File deleted ${deleted}")
+        }
+        File jenkinsWarDir = new File(jenkinsTargetDir,"lib")
+        jenkinsWarDir.mkdir()
+    }
+}
+
 task jenkinsClone() {
-    dependsOn (jenkinsWarCopyTask,jenkinsPluginsCopyTask)
+    dependsOn (cleanJenkins,jenkinsWarCopyTask,jenkinsPluginsCopyTask)
 }
 
 
