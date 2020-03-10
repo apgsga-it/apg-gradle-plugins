@@ -15,19 +15,25 @@ apgSshCommon {
 }
 
 jenkinsRunnerConfig {
-    jenkinsDirPath = "${project.projectDir}/jenkins"
     jenkinsWorkspaceDirPath = "${project.projectDir}/../modules"
 }
 
+
+
 task jenkinsWarCopyTask(type: SshGetTask) {
     from = "/usr/lib/jenkins/jenkins.war"
-    into ="${jenkinsRunnerConfig.jenkinsDirPath}/lib"
+    into ="${jenkinsRunnerConfig.jenkinsDirPath}/jenkins/lib/jenkins.war"
 }
 
 task jenkinsPluginsCopyTask(type: SshGetTask) {
     from = "/var/jenkins/plugins"
-    into ="${jenkinsRunnerConfig.jenkinsDirPath}"
+    into ="${jenkinsRunnerConfig.jenkinsDirPath}/jenkins"
 }
+
+task jenkinsClone() {
+    dependsOn (jenkinsWarCopyTask,jenkinsPluginsCopyTask)
+}
+
 
 
 task testPkgAndDeploy(type: JenkinsRunnerExec) {

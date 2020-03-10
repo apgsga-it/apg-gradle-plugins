@@ -17,10 +17,10 @@ import java.io.ByteArrayOutputStream
 
 
 open class JenkinsRunnerExt(private val project: Project) {
-    var jenkinsDirPath : String = "${project.projectDir.absolutePath}/jenkins"
+    var jenkinsDirPath : String = "${project.projectDir.absolutePath}/runner"
     var jenkinsWorkspaceDirPath : String = "${project.projectDir.absolutePath}/../modules"
     fun runnerDefaultParameter() : List<String> {
-        return listOf("-w" , "${jenkinsDirPath}/lib/jenkins.war", "-p" , "${jenkinsDirPath}/plugins", "--runWorkspace", jenkinsWorkspaceDirPath)
+        return listOf("-w" , "${jenkinsDirPath}/jenkins/lib/jenkins.war", "-p" , "${jenkinsDirPath}/jenkins/plugins", "--runWorkspace", jenkinsWorkspaceDirPath)
     }
     fun log() {
         project.logger.log(LogLevel.INFO, toString())
@@ -50,9 +50,9 @@ open class JenkinsRunnerExec : Exec() {
     override fun exec() {
         val parameters = project.extensions["jenkinsRunnerConfig"] as JenkinsRunnerExt
         val command = if (Os.isFamily(Os.FAMILY_WINDOWS)) {
-            "${parameters.jenkinsDirPath}/runner/bin/jenkinsfile-runner.bat"
+            "${parameters.jenkinsDirPath}/bin/jenkinsfile-runner.bat"
         } else if (Os.isFamily(Os.FAMILY_MAC) || Os.isFamily(Os.FAMILY_UNIX)) {
-            "${parameters.jenkinsDirPath}/runner/bin/jenkinsfile-runner"
+            "${parameters.jenkinsDirPath}/bin/jenkinsfile-runner"
         } else {
             throw IllegalArgumentException("Unkown OS Family")
         }
