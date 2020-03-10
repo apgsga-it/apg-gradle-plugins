@@ -40,7 +40,7 @@ class CreateNewBomRevisionTaskTests extends AbstractSpecification {
 	            persistence =  RevisionManagerBuilder.PersistenceTyp.BEANS
                 algorithm =  RevisionManagerBuilder.AlgorithmTyp.PATCH
 	            patches {
-                    parentDir = new File("${source.getAbsoluteFile().getPath().replace("\\\\", "/")}")
+                    parentDir = new File("${source.getAbsoluteFile().getPath().replace("\\", "/")}")
                     fileNames = "PatchA5791.json"
                 }
                 revisionRootPath = project.buildDir.absolutePath

@@ -137,7 +137,7 @@ class ResolutionStrategyConfigTaskTests extends AbstractSpecification {
 	            bomBaseVersion = '1'
 	            bomLastRevision = '0'
 	            patches {
-                    parentDir = new File("${source.getAbsoluteFile().getPath().replace("\\\\", "/")}")
+                    parentDir = new File("${source.getAbsoluteFile().getPath().replace("\\", "/")}")
                     fileNames = "PatchA5791.json"
                 }
             }
@@ -171,7 +171,7 @@ class ResolutionStrategyConfigTaskTests extends AbstractSpecification {
 	            bomBaseVersion = '1.1-TEST'
 	            bomLastRevision = 'SNAPSHOT'
 	            patches {
-                    parentDir = new File("${source.getAbsoluteFile().getPath().replace("\\\\", "/")}")
+                    parentDir = new File("${source.getAbsoluteFile().getPath().replace("\\", "/")}")
                     fileNames = "PatchA5791.json"
                 }
             }
