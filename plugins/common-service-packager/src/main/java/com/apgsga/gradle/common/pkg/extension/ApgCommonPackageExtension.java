@@ -48,17 +48,15 @@ public class ApgCommonPackageExtension {
 	private String javaDir = JAVADIR_DEFAULT; 
 	private String javaDist = JAVADIST_DEFAULT; 
 	private String distRepoUrl;
-	private List<String> supportedServices;
-	private String version = VERSION_DEFAULT; 
+	private String version = VERSION_DEFAULT;
 	private String releaseNr = RELEASENR_DEFAULT; 
 	private String opsUserGroup = APG_OPSDEFAULT; 
 	private String servicePropertiesDir = SERVICE_PROPERTIES_DIR_DEFAULT; 
 	private final Project project; 
 	
-	public ApgCommonPackageExtension(Project project, List<String> supportedServices) {
+	public ApgCommonPackageExtension(Project project) {
 		super();
 		this.project = project;
-		this.supportedServices = supportedServices;
 		initDistRepoUrl();
 	}
 
@@ -291,7 +289,6 @@ public class ApgCommonPackageExtension {
 				", javaDir='" + javaDir + '\'' +
 				", javaDist='" + javaDist + '\'' +
 				", distRepoUrl='" + distRepoUrl + '\'' +
-				", supportedServices=" + supportedServices +
 				", version='" + version + '\'' +
 				", releaseNr='" + releaseNr + '\'' +
 				", opsUserGroup='" + opsUserGroup + '\'' +

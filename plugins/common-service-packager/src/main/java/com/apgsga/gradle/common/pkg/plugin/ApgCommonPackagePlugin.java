@@ -34,7 +34,7 @@ public class ApgCommonPackagePlugin implements Plugin<Project> {
 		final Logger logger = project.getLogger();
 		final PluginContainer plugins = project.getPlugins();
 		plugins.apply(ApgRepoConfigPlugin.class);
-		ext.create("apgPackage", ApgCommonPackageExtension.class, project, loadSupportedServices().supportedServices);
+		ext.create("apgPackage", ApgCommonPackageExtension.class, project);
 		TaskContainer tasks = project.getTasks();
 		TaskProvider<Copy> copyPackagingResourcesTask = tasks.register("copyCommonPackagingResources", Copy.class,
 				new CopyResourcesToBuildDirAction(project));
@@ -54,23 +54,5 @@ public class ApgCommonPackagePlugin implements Plugin<Project> {
 
 	}
 
-	private SupportedServicesBean loadSupportedServices() {
-		SupportedServicesBean ssb = null;
-		try {
-			ssb = new ObjectMapper().readerFor(SupportedServicesBean.class).readValue(getSupportedServicesAsResource().getFile());
-		} catch (IOException e) {
-			throw new RuntimeException("Problem while deserializing " + INSTALLABLE_SERVICES_JSON_FILENAME + ". Original   exception was: " + e.getMessage());
-		}
-		return ssb;
-	}
-
-	private Resource getSupportedServicesAsResource() {
-		String gradleHome = project.getGradle().getGradleUserHomeDir().getAbsolutePath();
-		FileSystemResourceLoader loader = new FileSystemResourceLoader();
-		String installableServicesJsonFilePath = "file://" + gradleHome + File.separator + INSTALLABLE_SERVICES_JSON_FILENAME;
-		Resource installableServicesJsonAsResource = loader.getResource(installableServicesJsonFilePath);
-		Assert.isTrue(installableServicesJsonAsResource.exists(), "installableServices.json file not found! installableServicesJsonFilePath = " + installableServicesJsonFilePath);
-		return installableServicesJsonAsResource;
-	}
 
 }
