@@ -98,7 +98,6 @@ apgSshCommon {
 	username credentials."${project.ext.sshUser}"
 	userpwd credentials."${project.ext.sshPw}"
 	destinationHost project.ext.targetHost
-
 }
 
 apgRpmDeployConfig {

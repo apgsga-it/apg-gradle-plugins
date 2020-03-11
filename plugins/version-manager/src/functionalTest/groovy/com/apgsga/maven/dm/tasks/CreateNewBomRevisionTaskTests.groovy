@@ -11,8 +11,17 @@ class CreateNewBomRevisionTaskTests extends AbstractSpecification {
     private static final String TEST_REPO = 'bom-test'
 
     @Shared
-    def source = new File("src/functionalTest/resources/patchresolvertests")
+    def sourcePath
 
+    def setupSpec() {
+    	String workingDirectory = System.getProperty("user.dir");
+        println "WorkingDirectory: ${workingDirectory}"
+        String fileSeperator = System.getProperty("file.separator")
+        println "File Seperator ${fileSeperator}"
+        sourcePath = "${workingDirectory}${fileSeperator}src${fileSeperator}functionalTest${fileSeperator}resources${fileSeperator}patchresolvertests"
+        println "Sourcepath: ${sourcePath}"
+    }
+    
     def setup() {
         def source = new File("src/functionalTest/resources/bomtests")
         def destination = new File("$REPO_URL/$TEST_REPO")
@@ -40,7 +49,7 @@ class CreateNewBomRevisionTaskTests extends AbstractSpecification {
 	            persistence =  RevisionManagerBuilder.PersistenceTyp.BEANS
                 algorithm =  RevisionManagerBuilder.AlgorithmTyp.PATCH
 	            patches {
-                    parentDir = new File("${source.getAbsoluteFile().getPath().replace("\\", "/")}")
+                    parentDir = "${sourcePath.replace("\\", "\\\\")}"
                     fileNames = "PatchA5791.json"
                 }
                 revisionRootPath = project.buildDir.absolutePath

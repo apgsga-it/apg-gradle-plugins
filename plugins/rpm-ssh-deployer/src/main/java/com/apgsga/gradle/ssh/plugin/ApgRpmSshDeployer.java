@@ -8,7 +8,6 @@ import org.gradle.api.NonNullApi;
 import org.gradle.api.Plugin;
 import org.gradle.api.Project;
 import org.gradle.api.tasks.TaskContainer;
-import org.gradle.api.tasks.TaskProvider;
 
 @NonNullApi
 public class ApgRpmSshDeployer implements Plugin<Project> {

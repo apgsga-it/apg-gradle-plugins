@@ -1,2 +1,75 @@
+import com.apgsga.gradle.jenkinsrunner.JenkinsRunner
+import com.apgsga.gradle.ssh.tasks.SshGetTask
+import com.apgsga.gradle.jenkinsrunner.JenkinsRunnerExec
+
+plugins {
+    id("com.apgsga.rpm.ssh.deployer")
+}
+apply plugin: JenkinsRunner
+
+apgSshCommon {
+    username = credentials.cheUser
+    userpwd =  credentials.apgChePw
+    destinationHost =  "jenkins.apgsga.ch"
+
+}
+
+jenkinsRunnerConfig {
+    jenkinsWorkspaceDirPath = "${project.projectDir}/../modules"
+}
 
 
+
+task jenkinsWarCopyTask(type: SshGetTask) {
+    from = "/usr/lib/jenkins/jenkins.war"
+    into ="${jenkinsRunnerConfig.jenkinsDirPath}/jenkins/lib/jenkins.war"
+}
+
+task jenkinsPluginsCopyTask(type: SshGetTask) {
+    from = "/var/jenkins/plugins"
+    into ="${jenkinsRunnerConfig.jenkinsDirPath}/jenkins"
+}
+
+task cleanJenkins  {
+    doLast {
+        File jenkinsTargetDir = new File("${jenkinsRunnerConfig.jenkinsDirPath}/jenkins");
+        if (!jenkinsTargetDir.exists()) {
+            jenkinsTargetDir.mkdir()
+        }
+        fileTree(jenkinsTargetDir).visit {
+            logger.info("About to delete: ${it.file.name}")
+            def deleted = delete(it.file)
+            logger.info("File deleted ${deleted}")
+        }
+        File jenkinsWarDir = new File(jenkinsTargetDir,"lib")
+        jenkinsWarDir.mkdir()
+    }
+}
+
+task jenkinsClone() {
+    dependsOn (cleanJenkins,jenkinsWarCopyTask,jenkinsPluginsCopyTask)
+}
+
+
+
+task testPkgAndDeploy(type: JenkinsRunnerExec) {
+    testParameters = [ "-a", "baseVersion=1.0" ,
+                       "-a","rpmReleaseNr=51" ,
+                       "-a", "bomLastRevision=SNAPSHOT" ,
+                       "-a", "installTarget=CHTI211" ,
+                       "-a", "targetHost=172.16.92.139" ,
+                       "-a", "sshUser=che" ,
+                       "-a", "sshPw=chePw" ,
+                       "-a",  "downLoadDir=downloads"]
+    jenkinsFilePath = "${project.projectDir}/jenkinsPkgAndDeploy/Jenkinsfile"
+    logging.captureStandardOutput LogLevel.INFO
+    logging.captureStandardError  LogLevel.ERROR
+
+}
+
+task testBuild(type: JenkinsRunnerExec) {
+    testParameters = [ "-a","modules=testapp-bom:testapp-parentpom:testapp-module:testapp-service"]
+    jenkinsFilePath = "${project.projectDir}/jenkinsBuild/Jenkinsfile"
+    logging.captureStandardOutput LogLevel.INFO
+    logging.captureStandardError  LogLevel.ERROR
+}

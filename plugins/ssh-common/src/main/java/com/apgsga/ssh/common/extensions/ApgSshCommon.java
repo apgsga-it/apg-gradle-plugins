@@ -10,6 +10,7 @@ public class ApgSshCommon {
     private String username;
     private String userpwd;
     private String destinationHost;
+    private Boolean allowAnyHosts = false;
 
     public ApgSshCommon(Project project) {
         this.project = project;
@@ -39,6 +40,14 @@ public class ApgSshCommon {
         this.destinationHost = destinationHost;
     }
 
+    public Boolean getAllowAnyHosts() {
+        return allowAnyHosts;
+    }
+
+    public void setAllowAnyHosts(Boolean allowAnyHosts) {
+        this.allowAnyHosts = allowAnyHosts;
+    }
+
     public void log() {
         System.out.println(toString());
     }
@@ -46,9 +55,10 @@ public class ApgSshCommon {
     @Override
     public String toString() {
         return "ApgSshCommon{" +
-                ", username='" + username + '\'' +
-                ", userpwd='xxxx'" + '\'' +
+                "username='" + username + '\'' +
+                ", userpwd='xxxx'" +
                 ", destinationHost='" + destinationHost + '\'' +
+                ", allowAnyHosts=" + allowAnyHosts +
                 '}';
     }
 }
