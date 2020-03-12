@@ -50,10 +50,9 @@ Here additional service specific properties file can be put. Only appconfig.prop
 
 Example appconfig.properties: 
 
-```java 
-# Some service specific app properities
+`# Some service specific app properities
 message=hello
-```
+`
 
 
 ## Jenkinsfile

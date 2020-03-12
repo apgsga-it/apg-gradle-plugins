@@ -1,22 +1,20 @@
 package com.apgsga.maven.impl.bom
 
-import com.apgsga.gradle.repository.Repository
+import com.apgsga.maven.BomLoader
 import com.apgsga.maven.LoggerDelegate
 import com.apgsga.maven.MavenBomManager
+import com.apgsga.maven.dm.ext.version
 import org.apache.maven.model.Dependency
 import org.apache.maven.model.Model
 import org.apache.maven.model.io.xpp3.MavenXpp3Reader
 import java.io.InputStream
-import java.util.*
-import java.util.function.Predicate
-import java.util.stream.Collectors
 
 /**
  *  Default implementation
  *  @author che
  *
  */
-class MavenBomManagerDefault(private val repository: Repository) : MavenBomManager {
+class MavenBomManagerDefault(private val bomLoader: BomLoader) : MavenBomManager {
 
     private val logger by LoggerDelegate()
 
@@ -54,7 +52,8 @@ class MavenBomManagerDefault(private val repository: Repository) : MavenBomManag
             if (resolvedVersion != null && dependency.type == "pom") {
                 if (recursive) {
                     // recursively resolve bom
-                    artifactList = loadModelFromPath(buildPath(dependency.groupId, dependency.artifactId, dependency.version), artifactList, recursive = true)
+                    val stream = bomLoader.load(dependency.groupId, dependency.artifactId, dependency.version)
+                    artifactList = loadModel(stream, artifactList, true)
                 }
             } else if (resolvedVersion != null) {
                 val copy =  dependency.clone()
@@ -68,53 +67,18 @@ class MavenBomManagerDefault(private val repository: Repository) : MavenBomManag
         return artifactList
     }
 
-    private fun buildPath(groupId: String, artifactid: String, version: String): String {
-        // TODO (che, 27.2 ) : make this platform independent, necessary?
-        val groupPath = groupId.replace(".","/")
-        return "$groupPath/$artifactid/$version/$artifactid-$version.pom"
-    }
-
-    private fun loadModelFromPath(repoPathBom: String, artList: Collection<Dependency>, recursive: Boolean): Collection<Dependency> {
-        logger.info("Loading Model from RepositoryPath: ${repoPathBom}")
-        val stream = repository.download(repoPathBom)
-        return loadModel(stream, artList, recursive)
-    }
 
     override fun retrieve(bomArtifact: String, recursive: Boolean): Collection<Dependency> {
         val artifactList = emptyList<Dependency>()
-        val (groupId, artifactId, version) = bomArtifact.split(':')
-        return loadModelFromPath(buildPath(groupId, artifactId, version), artifactList, recursive)
+        val stream = bomLoader.load(bomArtifact)
+        return loadModel(stream, artifactList, recursive)
     }
 
     override fun retrieve(bomGroupId: String, bomArtifactid: String, bomVersion: String, recursive: Boolean): Collection<Dependency> {
-        return retrieve("$bomGroupId:$bomArtifactid:$bomVersion", recursive)
+        val artifactList = emptyList<Dependency>()
+        val stream = bomLoader.load(bomGroupId,bomArtifactid, bomVersion)
+        return loadModel(stream,artifactList,recursive)
     }
-
-    override fun intersect(firstBomArtifact: String, secondBomArtifact: String, recursive: Boolean): Collection<Dependency> {
-        val firstDependencyList = retrieve(firstBomArtifact, recursive)
-        val secDepList = retrieve(secondBomArtifact, recursive)
-        return firstDependencyList.stream().filter(Predicate {
-            secDepList.forEach{secIt ->
-                if (it.artifactId == secIt.artifactId && it.groupId == secIt.groupId) {
-                    return@Predicate true
-                }
-            }
-            return@Predicate false
-        }).collect(Collectors.toList())
-    }
-
-    override fun retrieveAsProperties(bomArtifact: String, recursive: Boolean): Properties {
-        val result = retrieve(bomArtifact, recursive)
-        val props = Properties()
-        result.forEach {
-            val key = it.groupId + ":" + it.artifactId
-            props[key] = it.version
-        }
-        return props
-    }
-
-
-
 
 
 }

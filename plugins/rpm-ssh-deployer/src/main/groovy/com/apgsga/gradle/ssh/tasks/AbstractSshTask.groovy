@@ -14,11 +14,11 @@ abstract class AbstractSshTask extends DefaultTask {
     @TaskAction
     def taskAction() {
         project.logger.info("Running ${this.toString()}")
-        ApgSshCommon ext = project.getExtensions().findByName(ApgSshCommonPlugin.APG_SSH_COMMON_EXTENSION_NAME)
+        ApgSshCommon ext = project.getExtensions().findByName(ApgSshCommonPlugin.APG_SSH_COMMON_EXTENSION_NAME) as ApgSshCommon
         Assert.notNull(ext.username, "${ApgRpmSshDeployer.APG_RPM_DEPLOY_PLUGIN_ID} requires a user name to be configured")
         Assert.notNull(ext.userpwd, "${ApgRpmSshDeployer.APG_RPM_DEPLOY_PLUGIN_ID} requires a user password to be configured")
         Assert.notNull(ext.destinationHost, "${ApgRpmSshDeployer.APG_RPM_DEPLOY_PLUGIN_ID} requires a destination host to be configured")
-        Remote remote = new Remote(["name": "default", "host": "${ext.destinationHost}", "user": "${ext.username}", "password": "${ext.userpwd}"]);
+        Remote remote = new Remote(["name": "default", "host": "${ext.destinationHost}", "user": "${ext.username}", "password": "${ext.userpwd}"])
         doRun(remote,ext.allowAnyHosts)
         project.logger.info("Running ${this.toString()} finished")
     }

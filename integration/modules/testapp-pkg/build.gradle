@@ -1,11 +1,14 @@
 import com.apgsga.gradle.repo.extensions.RepoType
 import com.apgsga.revision.manager.domain.RevisionManagerBuilder
+
 plugins {
 	id("com.apgsga.rpm.package")
 	id("com.apgsga.publish")
 	id("com.apgsga.rpm.ssh.deployer")
 	id("com.apgsga.version.resolver")
 }
+
+apply plugin: 'maven-publish'
 
 project.ext {
 	targetHost = project.hasProperty('targetHost') ? project.property('targetHost') : "jadas-e.apgsga.ch"
@@ -56,7 +59,7 @@ apgVersionResolver {
 	bomLastRevision =  project.ext.bomLastRevision
 	installTarget = project.ext.installTarget
 	persistence =  RevisionManagerBuilder.PersistenceTyp.BEANS
-	algorithm =  RevisionManagerBuilder.AlgorithmTyp.SNAPSHOT
+	algorithm =  RevisionManagerBuilder.AlgorithmTyp.PATCH
 	patches {
 		parentDir = project.ext.patchParentDir
 		fileNames = project.ext.patchFileNames
@@ -105,6 +108,19 @@ apgRpmDeployConfig {
 	rpmFilePath "${buildDir}/distributions/"
 	rpmFileName "${apgPackage.archiveName}"
 	remoteDestFolder "${project.ext.downloadDir}"
+}
+
+publishing {
+	publications {
+		bom(MavenPublication) {
+			apgVersionResolver.generateBom { }
+		}
+	}
+	repositories {
+		maven {
+			url "${new File(buildDir, 'local-repo').toURL()}"
+		}
+	}
 }
 
  

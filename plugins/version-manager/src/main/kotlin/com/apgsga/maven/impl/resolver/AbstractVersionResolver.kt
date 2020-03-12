@@ -1,7 +1,6 @@
 package com.apgsga.maven.impl.resolver
 
 import com.apgsga.maven.LoggerDelegate
-import com.apgsga.maven.MavenArtifact
 import com.apgsga.maven.VersionResolver
 
 abstract class AbstractVersionResolver : VersionResolver {
