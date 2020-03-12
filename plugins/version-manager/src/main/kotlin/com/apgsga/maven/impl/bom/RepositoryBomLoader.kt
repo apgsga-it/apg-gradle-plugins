@@ -5,6 +5,7 @@ import com.apgsga.maven.BomLoader
 import com.apgsga.maven.LoggerDelegate
 import java.io.InputStream
 
+@Deprecated("GradleDependencyLoader to be used instead")
 class RepositoryBomLoader (private val repository: Repository) : BomLoader {
     protected val logger by LoggerDelegate()
     override fun load(bomGroupId: String, bomArtifactid: String, bomVersion: String): InputStream {

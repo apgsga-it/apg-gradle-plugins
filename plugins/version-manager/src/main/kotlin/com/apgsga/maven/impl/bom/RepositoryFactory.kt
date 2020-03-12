@@ -5,7 +5,7 @@ import com.apgsga.gradle.repository.artifactory.RemoteRepositoryBuilder
 import com.apgsga.gradle.repository.local.FileRepositoryBuilder
 import com.apgsga.gradle.repository.nop.NopRepository
 
-
+@Deprecated("GradleDependencyLoader to be used instead")
 abstract class RepositoryFactory(val baseUrl: String? = null, val repoName: String? = "", val user: String? = "", val password: String? = "") {
     abstract fun makeRepo(): Repository
 
@@ -22,6 +22,7 @@ abstract class RepositoryFactory(val baseUrl: String? = null, val repoName: Stri
     }
 }
 
+@Deprecated("GradleDependencyLoader to be used instead")
 class FileRepositoryFactory(baseUrl: String, repoName: String) : RepositoryFactory(baseUrl, repoName) {
 
     override fun makeRepo(): Repository {
@@ -31,6 +32,7 @@ class FileRepositoryFactory(baseUrl: String, repoName: String) : RepositoryFacto
 
 }
 
+@Deprecated("GradleDependencyLoader to be used instead")
 class RemoteRepositoryFactory(baseUrl: String, repoName: String, user: String, password: String) : RepositoryFactory(baseUrl, repoName, user, password) {
 
     override fun makeRepo(): Repository {
@@ -42,7 +44,7 @@ class RemoteRepositoryFactory(baseUrl: String, repoName: String, user: String, p
 
 }
 
-
+@Deprecated("GradleDependencyLoader to be used instead")
 class NopRepositoryFactory : RepositoryFactory() {
 
     override fun makeRepo(): Repository {
