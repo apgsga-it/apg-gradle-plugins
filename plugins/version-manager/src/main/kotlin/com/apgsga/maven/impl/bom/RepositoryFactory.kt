@@ -43,7 +43,6 @@ class RemoteRepositoryFactory(baseUrl: String, repoName: String, user: String, p
     }
 
 }
-
 @Deprecated("GradleDependencyLoader to be used instead")
 class NopRepositoryFactory : RepositoryFactory() {
 
