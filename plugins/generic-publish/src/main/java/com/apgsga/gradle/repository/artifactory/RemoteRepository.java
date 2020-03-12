@@ -64,7 +64,7 @@ public class RemoteRepository implements Repository {
 		return repositoryHandle.folder(path);
 	}
 
-	public boolean isFolder(String path) {
+	public boolean isFolder(String path) throws IOException {
 		return repositoryHandle.isFolder(path);
 	}
 
