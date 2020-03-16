@@ -1,4 +1,4 @@
-package com.apgsga.ssh.rpm.tasks
+package com.apgsga.ssh.common
 
 import org.gradle.api.tasks.Input
 // TODO (che, jhe , 8.3) : we should better

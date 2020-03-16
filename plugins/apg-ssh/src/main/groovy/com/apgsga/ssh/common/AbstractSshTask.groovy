@@ -1,4 +1,4 @@
-package com.apgsga.ssh.rpm.tasks
+package com.apgsga.ssh.common
 
 import com.apgsga.ssh.extensions.ApgSshConfiguration
 import com.apgsga.ssh.plugins.ApgSsh
@@ -13,9 +13,9 @@ abstract class AbstractSshTask extends DefaultTask {
     def taskAction() {
         project.logger.info("Running ${this.toString()}")
         ApgSshConfiguration ext = project.getExtensions().findByName(ApgSsh.APG_SSH_CONFIGURATION_EXTENSION_NAME)
-        Assert.notNull(ext.username, "${ApgRpmSshDeployer.APG_RPM_DEPLOY_PLUGIN_ID} requires a user name to be configured")
-        Assert.notNull(ext.userpwd, "${ApgRpmSshDeployer.APG_RPM_DEPLOY_PLUGIN_ID} requires a user password to be configured")
-        Assert.notNull(ext.destinationHost, "${ApgRpmSshDeployer.APG_RPM_DEPLOY_PLUGIN_ID} requires a destination host to be configured")
+        Assert.notNull(ext.username, "${ApgSsh.PLUGIN_ID} requires a user name to be configured")
+        Assert.notNull(ext.userpwd, "${ApgSsh.PLUGIN_ID} requires a user password to be configured")
+        Assert.notNull(ext.destinationHost, "${ApgSsh.PLUGIN_ID} requires a destination host to be configured")
         Remote remote = new Remote(["name": "default", "host": "${ext.destinationHost}", "user": "${ext.username}", "password": "${ext.userpwd}"]);
         doRun(remote,ext.allowAnyHosts)
         project.logger.info("Running ${this.toString()} finished")
