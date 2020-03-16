@@ -1,5 +1,6 @@
-package com.apgsga.ssh.common
+package com.apgsga.ssh.general.tasks
 
+import com.apgsga.ssh.common.AbstractSshTask
 import org.gradle.api.tasks.Input
 // TODO (che, jhe , 8.3) : we should better
 class SshGetTask extends AbstractSshTask {
