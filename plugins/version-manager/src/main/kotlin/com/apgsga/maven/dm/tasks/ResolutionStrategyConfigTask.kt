@@ -1,12 +1,11 @@
 package com.apgsga.maven.dm.tasks
 
 import com.apgsga.maven.VersionResolver
-import com.apgsga.maven.dm.ext.Bom
 import com.apgsga.maven.dm.ext.VersionResolutionExtension
 
 open class ResolutionStrategyConfigTask : AbstractVersionResolutionTask() {
 
-    override fun doResolutionAction(versionResolver: VersionResolver,resolutionExtension: VersionResolutionExtension,bom: Bom) {
+    override fun doResolutionAction(versionResolver: VersionResolver,resolutionExtension: VersionResolutionExtension) {
         val config = project.configurations.findByName(resolutionExtension.configurationName)
         config?.resolutionStrategy?.eachDependency {
             // TODO (che, jhe , 27.9 ) : Needs to be discussed, basically apg version resolution takes precedence over specified version

@@ -64,11 +64,8 @@ open class JenkinsRunnerExec : Exec() {
         cmd.addAll(testParameters)
         commandLine = cmd
         workingDir(project.projectDir)
-        logger.info("Command : ${commandLine.toString()}")
+        logger.info("Command : $commandLine")
         super.exec()
     }
 
-    override fun doLast(action: Action<*>): Task {
-        return super.doLast(action)
-    }
 }

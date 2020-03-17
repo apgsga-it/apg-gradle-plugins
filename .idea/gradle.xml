@@ -4,33 +4,6 @@
   <component name="GradleSettings">
     <option name="linkedExternalProjectsSettings">
       <GradleProjectSettings>
-        <option name="distributionType" value="DEFAULT_WRAPPED" />
-        <option name="externalProjectPath" value="$USER_HOME$/cvs/digiflex/digiflex-it21-ui-pkg" />
-        <option name="gradleJvm" value="1.8" />
-        <option name="modules">
-          <set>
-            <option value="$USER_HOME$/cvs/digiflex/digiflex-it21-ui-pkg" />
-          </set>
-        </option>
-        <option name="useAutoImport" value="true" />
-        <option name="useQualifiedModuleNames" value="true" />
-      </GradleProjectSettings>
-      <GradleProjectSettings>
-        <option name="distributionType" value="DEFAULT_WRAPPED" />
-        <option name="externalProjectPath" value="$USER_HOME$/cvs/it21-ui-bundle" />
-        <option name="gradleJvm" value="1.8" />
-        <option name="modules">
-          <set>
-            <option value="$USER_HOME$/cvs/it21-ui-bundle" />
-            <option value="$USER_HOME$/cvs/it21-ui-bundle/it21-ui-dm-version-manager" />
-            <option value="$USER_HOME$/cvs/it21-ui-bundle/it21-ui-pkg-client" />
-            <option value="$USER_HOME$/cvs/it21-ui-bundle/it21-ui-pkg-server" />
-          </set>
-        </option>
-        <option name="useAutoImport" value="true" />
-        <option name="useQualifiedModuleNames" value="true" />
-      </GradleProjectSettings>
-      <GradleProjectSettings>
         <option name="delegatedBuild" value="true" />
         <option name="testRunner" value="GRADLE" />
         <option name="distributionType" value="DEFAULT_WRAPPED" />
@@ -84,18 +57,6 @@
             <option value="$PROJECT_DIR$/plugins/version-manager" />
             <option value="$PROJECT_DIR$/plugins/zip-service-packager" />
             <option value="$PROJECT_DIR$/plugins/zip-ssh-deployer" />
-          </set>
-        </option>
-        <option name="useAutoImport" value="true" />
-        <option name="useQualifiedModuleNames" value="true" />
-      </GradleProjectSettings>
-      <GradleProjectSettings>
-        <option name="distributionType" value="DEFAULT_WRAPPED" />
-        <option name="externalProjectPath" value="$PROJECT_DIR$/../jenkins-patch-scripts" />
-        <option name="gradleJvm" value="1.8" />
-        <option name="modules">
-          <set>
-            <option value="$PROJECT_DIR$/../jenkins-patch-scripts" />
           </set>
         </option>
         <option name="useAutoImport" value="true" />

@@ -14,10 +14,9 @@ abstract class CommonPropertyFileMergerTask extends DefaultTask {
 		  
 		  LOGGER.info "Running with config: resources: ${filters}, sourceRootDir ${from} and targetDir ${to}"
 		  
-		  def resourceFilterParms = filters.split(':')
+		  def resourceFilterParms = filters.split(":")
 		  
 		  def includeFilters = []
-		  def first = true
 		  resourceFilterParms.each {
 			  includeFilters << '**/' + it.toString() + '/' + propertyFile + '.properties'
 		  }
@@ -29,7 +28,7 @@ abstract class CommonPropertyFileMergerTask extends DefaultTask {
 		  mergeResourcePropertiesFile.write "# Generated , TODO write some conclusive information"
 		  mergeResourcePropertiesFile.append "\n"
 		  mergeResourcePropertiesFile.append "\n"
-		  def files =  project.fileTree(dir: "${from}", includes: includeFilters).filter { it.isFile() }.files.forEach {
+		  project.fileTree(dir: "${from}", includes: includeFilters).filter { it.isFile() }.files.forEach {
 			   LOGGER.info "Processing ${propertyFile} file ${it.path}"
 			  
 			   project.file(it.path).withInputStream {
@@ -41,7 +40,7 @@ abstract class CommonPropertyFileMergerTask extends DefaultTask {
 		  }
 		  LOGGER.info("Merge Done with includeFilters: ${includeFilters}, merging ${propertyFile}.properties")
 		  LOGGER.info("Merging Service specific properties from : ${servicePropertiesDir}, into ${propertyFile}.properties")
-		  files = project.fileTree(dir : "${servicePropertiesDir}", includes: ["**/${propertyFile}.properties"] ).filter { it.isFile() }.files.forEach {
+		  project.fileTree(dir : "${servicePropertiesDir}", includes: ["**/${propertyFile}.properties"] ).filter { it.isFile() }.files.forEach {
 			   LOGGER.info "Processing ${propertyFile} file ${it.path}"
 			  
 			   project.file(it.path).withInputStream {
