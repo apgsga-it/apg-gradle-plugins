@@ -1,27 +1,21 @@
 package com.apgsga.ssh.rpm.tasks
 
+import com.apgsga.ssh.general.tasks.SshPutTask
+
+// JHE (17.03.2020): Not sure we want to keep this task, one could simply directly call SshPutTask.
+//                   However, we might want to deployRpm somewhere else in the future? Might be good to keep this "wrapper"
+
 class DeployRpm extends AbstractRpm {
 
-    public static final String DEPLOY_RPM_TASK_NAME = "deployRpm"
+    public static final String TASK_NAME = "deployRpm"
 
     @Override
     def doRun(Object remote, Object allowAnyHosts) {
         preConditions()
         def apgRpmDeployConfigExt = getDeployConfig()
-        project.logger.info("${apgRpmDeployConfigExt.rpmFileName} will be deploy on ${remote.getProperty('host')} using ${remote.getProperty('user')} User")
-        project.ssh.run {
-            if (apgRpmDeployConfigExt.allowAnyHosts) {
-                project.logger.info("Allowing SSH Anyhosts ")
-                settings {
-                    knownHosts = allowAnyHosts
-                }
-            }
-            session(remote) {
-                put from: new File("${apgRpmDeployConfigExt.rpmFilePath}" + File.separator + apgRpmDeployConfigExt.rpmFileName), into: "${apgRpmDeployConfigExt.remoteDestFolder}"
-                execute("ls -la ${apgRpmDeployConfigExt.remoteDestFolder}") { result ->
-                    println result
-                }
-            }
-        }
+        SshPutTask put = project.tasks.findByName(SshPutTask.TASK_NAME)
+        put.from = new File("${apgRpmDeployConfigExt.rpmFilePath}" + File.separator + apgRpmDeployConfigExt.rpmFileName)
+        put.into = "${apgRpmDeployConfigExt.remoteDestFolder}"
+        put.doRun(remote,allowAnyHosts)
     }
 }

@@ -2,18 +2,19 @@ package com.apgsga.ssh.general.tasks
 
 import com.apgsga.ssh.common.AbstractSshTask
 import org.gradle.api.tasks.Input
-// TODO (che, jhe , 8.3) : we should better
-class SshGetTask extends AbstractSshTask {
 
-    public static String TASK_NAME = "sshGet"
+class SshPutTask extends AbstractSshTask {
+
+    public static String TASK_NAME = "sshPut"
 
     @Input
     def from
+
     @Input
     def into
 
     @Override
-    def doRun(remotes,allowAnyHosts) {
+    def doRun(Object remote, Object allowAnyHosts) {
         project.ssh.run {
             if (allowAnyHosts) {
                 project.logger.info("Allowing SSH Anyhosts ")
@@ -21,10 +22,9 @@ class SshGetTask extends AbstractSshTask {
                     knownHosts = allowAnyHosts
                 }
             }
-            session(remotes) {
-                get from: from,  into: into
+            session(remote) {
+                put from: from,  into: into
             }
         }
     }
-
 }

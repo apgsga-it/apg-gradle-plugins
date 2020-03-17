@@ -23,5 +23,4 @@ abstract class AbstractSshTask extends DefaultTask {
 
     def abstract doRun(remote,allowAnyHosts)
 
-
 }

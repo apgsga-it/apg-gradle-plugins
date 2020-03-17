@@ -1,10 +1,11 @@
 package com.apgsga.ssh.zip.tasks
 
 import com.apgsga.ssh.extensions.ApgZipDeployConfig
+import com.apgsga.ssh.common.SshGenericTask
 
 class InstallZip extends AbstractZip {
 
-    public static final String INTALL_ZIP_TASK_NAME = "installZip"
+    public static final String TASK_NAME = "installZip"
 
     @Override
     def doRun(Object remote, Object allowAnyHosts) {
@@ -12,19 +13,19 @@ class InstallZip extends AbstractZip {
         def apgZipDeployConfigExt = getDeployConfig()
         project.logger.info("${apgZipDeployConfigExt.zipFileName} will be install on ${remote.getProperty('host')} using ${remote.getProperty('user')} User")
         def unzipCmd = getUnzipCmd(apgZipDeployConfigExt)
-        project.ssh.run {
-            if (apgZipDeployConfigExt.allowAnyHosts) {
-                project.logger.info("Allowing SSH Anyhosts ")
-                settings {
-                    knownHosts = allowAnyHosts
-                }
-            }
-            session(remote) {
-                executeSudo unzipCmd, pty: true
-                // JHE: it probably won't sty like that, we might not want to delete ZIP which were built for production
-                execute "rm -f ${apgZipDeployConfigExt.remoteDeployDestFolder}/${apgZipDeployConfigExt.zipFileName}", pty: true
-            }
-        }
+
+        def sshTask = SshGenericTask.create()
+                .project(project)
+                .remote(remote)
+                .allowAnyHost(apgZipDeployConfigExt.allowAnyHosts)
+
+        sshTask.isSudo(true)
+                .sshCmd(unzipCmd)
+                .doRun()
+
+        sshTask.isSudo(false)
+                .sshCmd("rm -f ${apgZipDeployConfigExt.remoteDeployDestFolder}/${apgZipDeployConfigExt.zipFileName}")
+                .doRun()
     }
 
     private def getUnzipCmd(ApgZipDeployConfig config) {
