@@ -50,26 +50,26 @@ class RevisionBeanBackedPersistence implements RevisionPersistence {
 
     private  <T> T read(Class<T> clx) {
         String fileName = "${clx.simpleName}.json"
-        File file = new File(revisionRootDir, fileName)
+        File file = new File(revisionRootDir as File, fileName)
         ObjectMapper mapper = new ObjectMapper()
         mapper.readValue(file, clx)
     }
 
-    private <T> boolean exits(Class<T> clx) {
+    private <T> boolean exists(Class<T> clx) {
         String fileName = "${clx.simpleName}.json"
-        File file = new File(revisionRootDir, fileName)
+        File file = new File(revisionRootDir as File, fileName)
         file.exists()
     }
 
     private write(Object value) {
         String fileName = "${value.class.simpleName}.json"
-        File file = new File(revisionRootDir, fileName)
+        File file = new File(revisionRootDir as File, fileName)
         ObjectMapper mapper = new ObjectMapper()
         mapper.writeValue(file, value)
     }
 
     def <T> void init(Class<T> clx, Object[] constArgs) {
-        if (exits(clx)) return
+        if (exists(clx)) return
         def obj = clx.newInstance(constArgs)
         write(obj)
     }
