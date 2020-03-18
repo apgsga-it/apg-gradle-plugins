@@ -1,31 +1,28 @@
 package com.apgsga.ssh.zip.tasks
 
+import com.apgsga.ssh.common.AbstractSshTask
+import com.apgsga.ssh.common.Cmd
 import com.apgsga.ssh.extensions.ApgZipDeployConfig
 import com.apgsga.ssh.common.SshGenericTask
+import com.apgsga.ssh.plugins.ApgSsh
 
-class InstallZip extends AbstractZip {
+class InstallZip extends AbstractSshTask {
 
     public static final String TASK_NAME = "installZip"
 
     @Override
     def doRun(Object remote, Object allowAnyHosts) {
-        preConditions()
-        def apgZipDeployConfigExt = getDeployConfig()
+        def apgZipDeployConfigExt = project.extensions."${ApgSsh.APG_ZIP_DEPLOY_CONFIG_EXTENSION_NAME}"
+        AbstractZipUtil.preConditions(apgZipDeployConfigExt)
         project.logger.info("${apgZipDeployConfigExt.zipFileName} will be install on ${remote.getProperty('host')} using ${remote.getProperty('user')} User")
-        def unzipCmd = getUnzipCmd(apgZipDeployConfigExt)
 
-        def sshTask = SshGenericTask.create()
-                .project(project)
-                .remote(remote)
-                .allowAnyHost(apgZipDeployConfigExt.allowAnyHosts)
-
-        sshTask.isSudo(true)
-                .sshCmd(unzipCmd)
-                .doRun()
-
-        sshTask.isSudo(false)
-                .sshCmd("rm -f ${apgZipDeployConfigExt.remoteDeployDestFolder}/${apgZipDeployConfigExt.zipFileName}")
-                .doRun()
+        SshGenericTask sshTask = project.tasks.findByName(SshGenericTask.TASK_NAME)
+        Cmd unzipCmd = Cmd.create().sshCmd(getUnzipCmd(apgZipDeployConfigExt)).isSudo(true)
+        Cmd rmCmd = Cmd.create().sshCmd("rm -f ${apgZipDeployConfigExt.remoteDeployDestFolder}/${apgZipDeployConfigExt.zipFileName}")
+        sshTask.cmd = unzipCmd
+        sshTask.doRun(remote,allowAnyHosts)
+        sshTask.cmd = rmCmd
+        sshTask.doRun(remote,allowAnyHosts)
     }
 
     private def getUnzipCmd(ApgZipDeployConfig config) {

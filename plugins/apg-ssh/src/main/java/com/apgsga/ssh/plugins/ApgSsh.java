@@ -1,5 +1,6 @@
 package com.apgsga.ssh.plugins;
 
+import com.apgsga.ssh.common.SshGenericTask;
 import com.apgsga.ssh.extensions.ApgRpmDeployConfig;
 import com.apgsga.ssh.extensions.ApgSshConfiguration;
 import com.apgsga.ssh.extensions.ApgZipDeployConfig;
@@ -38,7 +39,7 @@ public class ApgSsh implements Plugin<Project> {
         // RPM
         project.getExtensions().create(APG_RPM_DEPLOY_CONFIG_EXTENSION_NAME, ApgRpmDeployConfig.class, project);
         tasks.register(DeployRpm.TASK_NAME,DeployRpm.class);
-        tasks.register(InstallRpm.TASK_NAME,InstallRpm.class);
+        tasks.register(InstallRpm.TASK_NAME, InstallRpm.class);
 
         // ZIP
         project.getExtensions().create(APG_ZIP_DEPLOY_CONFIG_EXTENSION_NAME, ApgZipDeployConfig.class, project);
@@ -50,5 +51,8 @@ public class ApgSsh implements Plugin<Project> {
 
         // Get
         tasks.register(SshGetTask.TASK_NAME, SshGetTask.class);
+
+        // Generic
+        tasks.register(SshGenericTask.TASK_NAME, SshGenericTask.class);
     }
 }
