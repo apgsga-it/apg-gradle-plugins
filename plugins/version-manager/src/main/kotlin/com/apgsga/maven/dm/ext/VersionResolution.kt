@@ -48,7 +48,6 @@ open class VersionResolutionExtension(val project: Project, private val revision
     var bomArtifactId: String? = null
     var bomGroupId: String? = null
     var bomBaseVersion: String? = null
-    var persistence: RevisionManagerBuilder.PersistenceTyp = RevisionManagerBuilder.PersistenceTyp.BEANS
     var algorithm: RevisionManagerBuilder.AlgorithmTyp = RevisionManagerBuilder.AlgorithmTyp.SNAPSHOT
     var installTarget: String? = null
     var bomDestDirPath: String = "${project.buildDir}/generatedBom"
@@ -90,7 +89,7 @@ open class VersionResolutionExtension(val project: Project, private val revision
 
     private fun initRevisionManager(): RevisionManager {
         // TODO (jhe, che) : consider current revision file and bootstrapping
-        return revisionManagerBuilder.revisionRootPath(revisionRootPath).algorithm(algorithm).persistence(persistence).build()
+        return revisionManagerBuilder.revisionRootPath(revisionRootPath).algorithm(algorithm).build()
 
     }
 
@@ -178,7 +177,7 @@ open class VersionResolutionExtension(val project: Project, private val revision
     }
 
     override fun toString(): String {
-        return "VersionResolutionExtension(configurationName='$configurationName', bomArtifactId=$bomArtifactId, bomGroupId=$bomGroupId, bomBaseVersion=$bomBaseVersion, revisionTyp=$persistence, installTarget=$installTarget, patches=$patches)"
+        return "VersionResolutionExtension(configurationName='$configurationName', bomArtifactId=$bomArtifactId, bomGroupId=$bomGroupId, bomBaseVersion=$bomBaseVersion, installTarget=$installTarget, patches=$patches)"
     }
 
 
