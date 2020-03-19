@@ -36,6 +36,7 @@ class BuildLogicZipFunctionalTests extends AbstractSpecification {
             result.output.contains("remoteExtractDestFolder='/bin/placeToBeInstalled'")
     }
 
+    @Ignore
     def "Deploy and install ZIP Tasks works against test environment for dummy ZIP with dest installation folder"() {
         given:
             def zipResource = new ClassPathResource("dummy.zip")
@@ -80,6 +81,7 @@ class BuildLogicZipFunctionalTests extends AbstractSpecification {
             result.output.toString().trim() ==~ /(?ms).*Success command.*dummy.zip.*/
     }
 
+    @Ignore
     def "Deploy and install ZIP Tasks works against test environment for dummy ZIP without dest installation folder"() {
         given:
             def zipResource = new ClassPathResource("dummy.zip")

@@ -34,6 +34,7 @@ class BuildLogicRpmFunctionalTests extends AbstractSpecification {
             result.output.contains("remoteDestFolder='/etc/installer'")
     }
 
+    @Ignore
     def "Deploy and Install Tasks works against test environment for dummy RPM"() {
         given:
             def rpmResource = new ClassPathResource("apgGradlePluginDummyRpm-1-0.src.rpm")
