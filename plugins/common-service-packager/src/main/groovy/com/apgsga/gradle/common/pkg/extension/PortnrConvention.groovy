@@ -10,7 +10,7 @@ class PortnrConvention {
 		try {
 			def portNrClosureMap = proj.extensions.extraProperties.get("portNr")
 			return portNrClosureMap.calc.call(target,service)
-		} catch (UnknownPropertyException e) {
+		} catch (UnknownPropertyException ignored) {
 			proj.logger.warn("Port Nr Calculation Closure not found, providing default")
 			return "XXXXX"
 		}
@@ -20,7 +20,7 @@ class PortnrConvention {
 		try {
 			def portNrClosureMap = proj.extensions.extraProperties.get("portNr")
 			portNrClosureMap.list.call()
-		} catch (UnknownPropertyException e) {
+		} catch (UnknownPropertyException ignored) {
 			proj.logger.warn("Port Nr List Calculation Closure not found, providing default")
 		}
 	}

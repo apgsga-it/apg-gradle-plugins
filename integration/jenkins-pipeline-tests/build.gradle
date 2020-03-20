@@ -32,7 +32,7 @@ task jenkinsPluginsCopyTask(type: SshGetTask) {
 
 task cleanJenkins  {
     doLast {
-        File jenkinsTargetDir = new File("${jenkinsRunnerConfig.jenkinsDirPath}/jenkins");
+        File jenkinsTargetDir = new File("${jenkinsRunnerConfig.jenkinsDirPath}/jenkins")
         if (!jenkinsTargetDir.exists()) {
             jenkinsTargetDir.mkdir()
         }

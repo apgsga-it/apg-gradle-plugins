@@ -18,8 +18,16 @@
       <module name="apg-gradle-plugins.test" target="1.8" />
       <module name="docker-sshd-compose.main" target="1.8" />
       <module name="docker-sshd-compose.test" target="1.8" />
+      <module name="it21-ui-bundle.it21-ui-dm-version-manager.main" target="1.8" />
+      <module name="it21-ui-bundle.it21-ui-dm-version-manager.test" target="1.8" />
+      <module name="it21-ui-bundle.it21-ui-pkg-client.main" target="1.8" />
+      <module name="it21-ui-bundle.it21-ui-pkg-client.test" target="1.8" />
+      <module name="it21-ui-bundle.it21-ui-pkg-server.main" target="1.8" />
+      <module name="it21-ui-bundle.it21-ui-pkg-server.test" target="1.8" />
       <module name="jenkins-.main" target="1.8" />
       <module name="jenkins-.test" target="1.8" />
+      <module name="jenkins-patch-scripts.main" target="1.8" />
+      <module name="jenkins-patch-scripts.test" target="1.8" />
       <module name="jenkins-pipeline-tests.jenkinsAll.main" target="1.8" />
       <module name="jenkins-pipeline-tests.jenkinsAll.test" target="1.8" />
       <module name="jenkins-pipeline-tests.jenkinsBuild.main" target="1.8" />

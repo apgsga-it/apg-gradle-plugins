@@ -15,7 +15,7 @@ class ResolutionStrategyConfigTaskTests extends AbstractSpecification {
     def sourcePath
 
     def setupSpec() {
-    	String workingDirectory = System.getProperty("user.dir");
+    	String workingDirectory = System.getProperty("user.dir")
         println "WorkingDirectory: ${workingDirectory}"
         String fileSeperator = System.getProperty("file.separator")
         println "File Seperator ${fileSeperator}"

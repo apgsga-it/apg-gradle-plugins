@@ -14,7 +14,6 @@ class ZipPackageAction implements Action<Zip> {
 
 	@Override
     void execute(Zip zip) {
-		def ex = project.extensions.apgPackage
 		zip.from("${project.buildDir}/app-pkg")
 		// TODO (che, 1.10 ) Verify 
 		zip.destinationDir = new File("${project.buildDir}/distributions")

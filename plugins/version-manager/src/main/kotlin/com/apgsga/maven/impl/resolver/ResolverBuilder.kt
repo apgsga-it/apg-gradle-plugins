@@ -1,14 +1,20 @@
 package com.apgsga.maven.impl.resolver
 
+import com.apgsga.maven.MavenBomManager
 import com.apgsga.maven.VersionResolver
+import com.apgsga.maven.impl.bom.GradleDependencyBomLoader
 import com.apgsga.maven.impl.bom.MavenBomManagerDefault
+import com.apgsga.maven.impl.bom.RepositoryBomLoader
 import com.apgsga.maven.impl.bom.RepositoryFactory
+import org.apache.commons.lang.NotImplementedException
+import org.gradle.api.Project
 import java.io.File
 
 // TODO (che, 11.12) The Builders will be verified against concrete usage scenarios
 
 interface VersionResolverBuilder {
     fun build(): VersionResolver
+    fun build(project: Project) : VersionResolver
 }
 
 // TODO (che,11.12) : Can this be done better?
@@ -31,10 +37,32 @@ data class BomVersionResolverBuilder(
 
 
     override fun build(): VersionResolver {
-        return BomVersionResolver(bomArtifact!!, recursive, mavenBomManagerDefault(repoBaseUrl, repoName, userName, password))
+        return BomVersionResolver(bomArtifact!!, recursive, mavenBomManagerRepositoryDefault(repoBaseUrl, repoName, userName, password))
+    }
+
+    override fun build(project: Project) : VersionResolver {
+       return build()
     }
 
 }
+
+data class BomVersionGradleResolverBuilder(
+        var bomArtifact: String? = null,
+        var recursive: Boolean? = false) : VersionResolverBuilder {
+
+    fun bomArtifact(bomArtifact: String) = apply { this.bomArtifact = bomArtifact }
+    fun recursive(recursive: Boolean?) = apply { this.recursive = recursive }
+
+    override fun build(): VersionResolver {
+        throw NotImplementedException()
+    }
+
+    override fun build(project: Project) : VersionResolver {
+       return BomVersionResolver(bomArtifact!!, recursive, MavenBomManagerDefault(GradleDependencyBomLoader(project)))
+    }
+
+}
+
 
 data class PatchFileVersionResolverBuilder(var patchFile: File? = null, var patchFileName: String? = null, var parentDir: File? = null, var parentDirName: String? = null) : VersionResolverBuilder {
     fun patchFile(theFile: File) = apply {
@@ -75,6 +103,10 @@ data class PatchFileVersionResolverBuilder(var patchFile: File? = null, var patc
         return SortedPatchFileListVersionResolver(patchFiles)
     }
 
+    override fun build(project: Project) : VersionResolver {
+        return build()
+    }
+
 }
 
 data class PatchFileListVersionResolverBuilder(var parentDir: File? = null, var parentDirName: String? = null, var patchFiles: MutableList<File>? = mutableListOf<File>(), var patchComparator: SortedPatchFileListVersionResolver.PatchComparator? = SortedPatchFileListVersionResolver.PatchComparator.PATCHNUMBER_ASC) : VersionResolverBuilder {
@@ -94,7 +126,7 @@ data class PatchFileListVersionResolverBuilder(var parentDir: File? = null, var 
     fun add(patchFile: File) = apply { this.patchFiles!!.add(patchFile) }
     fun add(patchFile: String) = apply {
         require(this.parentDir != null) { "parentDir must be set" }
-        if (!patchFile.isNullOrEmpty()) {
+        if (!patchFile.isEmpty()) {
             this.patchFiles!!.add(File(parentDir, patchFile))
         }
     }
@@ -104,6 +136,10 @@ data class PatchFileListVersionResolverBuilder(var parentDir: File? = null, var 
     override fun build(): VersionResolver {
         require(patchFiles != null) { "patchFiles should'nt be null" }
         return SortedPatchFileListVersionResolver(patchFiles!!, patchComparator!!)
+    }
+
+    override fun build(project: Project) : VersionResolver {
+        return build()
     }
 
 }
@@ -118,9 +154,16 @@ data class CompositeVersionResolverBuilder(var resolverBuilders: MutableCollecti
         }
         return compositeResolver
     }
+    override fun build(project: Project) : VersionResolver {
+        val compositeResolver = CompositeVersionResolverDefault()
+        resolverBuilders?.forEach {
+            compositeResolver.add(it.first, it.second.build(project))
+        }
+        return compositeResolver
+    }
 }
 
-private fun mavenBomManagerDefault(repoBaseUrl: String?, repoName: String?, userName: String?, password: String?): MavenBomManagerDefault {
+private fun mavenBomManagerRepositoryDefault(repoBaseUrl: String?, repoName: String?, userName: String?, password: String?): MavenBomManager {
     require(!repoBaseUrl.isNullOrEmpty()) { "repoBaseUrl should'nt be null or empty" }
     require(!repoName.isNullOrEmpty()) { "repoName should'nt be null or empty" }
     val repositoryFactory = if (userName == null) {
@@ -128,5 +171,6 @@ private fun mavenBomManagerDefault(repoBaseUrl: String?, repoName: String?, user
     } else {
         RepositoryFactory.createFactory(repoBaseUrl, repoName, userName, password)
     }
-    return MavenBomManagerDefault(repositoryFactory.makeRepo())
+    return MavenBomManagerDefault(RepositoryBomLoader(repositoryFactory.makeRepo()))
 }
+
