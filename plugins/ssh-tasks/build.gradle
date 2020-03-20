@@ -1,0 +1,27 @@
+apply from: "${projectDir}/../gradle-common/common-plugin.gradle"
+apply from: "${projectDir}/../gradle-common/integration-test.gradle"
+apply from: "${projectDir}/../gradle-common/functional-test.gradle"
+
+description 'Provides tasks and properties related with all SSH operations'
+
+sourceSets {
+    main {
+        java {
+            srcDirs = []
+        }
+        groovy {
+            srcDirs = ['src/main/groovy', 'src/main/java']
+        }
+    }
+}
+
+dependencies {
+    testCompile gradleTestKit()
+    testCompile project(':common-test')
+    // TODO JHE: common-repo needed here because of our test which by default include ENUM coming from common-repo
+    //           BUT: in worse case, testCompile should be enough, doesn't seem to be the case
+    //                best case, this dependency should be resolved within common-test or within gradle-common (functionalTest.gradle)
+    compile project(':common-repo')
+    compile group: 'org.springframework', name: 'spring-core', version: '5.2.1.RELEASE'
+    compile group: "org.hidetake", name: 'gradle-ssh-plugin', version: '2.10.1'
+}

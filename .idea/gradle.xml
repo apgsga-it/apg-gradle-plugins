@@ -52,11 +52,9 @@
             <option value="$PROJECT_DIR$/plugins/repo-config" />
             <option value="$PROJECT_DIR$/plugins/revision-manager" />
             <option value="$PROJECT_DIR$/plugins/rpm-service-packager" />
-            <option value="$PROJECT_DIR$/plugins/rpm-ssh-deployer" />
-            <option value="$PROJECT_DIR$/plugins/ssh-common" />
+            <option value="$PROJECT_DIR$/plugins/ssh-tasks" />
             <option value="$PROJECT_DIR$/plugins/version-manager" />
             <option value="$PROJECT_DIR$/plugins/zip-service-packager" />
-            <option value="$PROJECT_DIR$/plugins/zip-ssh-deployer" />
           </set>
         </option>
         <option name="useAutoImport" value="true" />
