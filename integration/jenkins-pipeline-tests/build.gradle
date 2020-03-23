@@ -1,15 +1,15 @@
 import com.apgsga.gradle.jenkinsrunner.JenkinsRunner
-import com.apgsga.gradle.ssh.tasks.SshGetTask
+import com.apgsga.ssh.general.tasks.SshGetTask
 import com.apgsga.gradle.jenkinsrunner.JenkinsRunnerExec
 
 plugins {
-    id("com.apgsga.rpm.ssh.deployer")
+    id("com.apgsga.ssh")
 }
 apply plugin: JenkinsRunner
 
-apgSshCommon {
-    username = credentials.cheUser
-    userpwd =  credentials.apgChePw
+apgSshConfig {
+    username = credentials.jheUser
+    userpwd =  credentials.apgjhePw
     destinationHost =  "jenkins.apgsga.ch"
 
 }
@@ -57,9 +57,9 @@ task testPkgAndDeploy(type: JenkinsRunnerExec) {
                        "-a","rpmReleaseNr=51" ,
                        "-a", "bomLastRevision=SNAPSHOT" ,
                        "-a", "installTarget=CHTI211" ,
-                       "-a", "targetHost=172.16.92.139" ,
-                       "-a", "sshUser=che" ,
-                       "-a", "sshPw=chePw" ,
+                       "-a", "targetHost=dev-jhedocker.light.apgsga.ch" ,
+                       "-a", "sshUser=lightUser" ,
+                       "-a", "sshPw=lightPw" ,
                        "-a",  "downLoadDir=downloads"]
     jenkinsFilePath = "${project.projectDir}/jenkinsPkgAndDeploy/Jenkinsfile"
     logging.captureStandardOutput LogLevel.INFO
