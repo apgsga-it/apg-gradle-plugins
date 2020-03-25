@@ -8,13 +8,10 @@ import java.util.Map;
 
 public class RepoNamesBean {
 
-    @JsonProperty
     public String repoUserName;
 
-    @JsonProperty
     public String repoUserPwd;
 
-    @JsonProperty
     public String repoBaseUrl;
 
     @JsonProperty
