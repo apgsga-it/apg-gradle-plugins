@@ -34,7 +34,7 @@ public class ApgCommonRepoPlugin implements Plugin<Project> {
 	@Override
 	public void apply(final Project project) {
 		this.project = project;
-		project.getPlugins().apply("nu.studer.credentials");
+		//project.getPlugins().apply("nu.studer.credentials");
 		final ExtensionContainer ext = project.getExtensions();
 		ReposImpl reposImpl = ext.create(COMMMON_REPO_EXTENSION_NAME, ReposImpl.class, project);
 
