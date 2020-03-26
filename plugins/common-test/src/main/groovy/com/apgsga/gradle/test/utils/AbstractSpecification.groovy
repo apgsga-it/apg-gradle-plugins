@@ -17,9 +17,7 @@ abstract class AbstractSpecification extends Specification {
         setupTestProjectDir()
         createBuildFile()
         createGradleHomeDir()
-        // TODO JHE: Might not be needed anymore with IT-35189
         createGradleProperties()
-        // TODO JHE: Might not be needed anymore with IT-35189
         createGradleEncryptedProperties()
         setupRepoNameJson()
     }
@@ -87,6 +85,11 @@ abstract class AbstractSpecification extends Specification {
         gradleEncyrpytedProperties << System.getProperty("line.separator")
         gradleEncyrpytedProperties << "mavenRepoPwd=jTgfLqung5Pw4VQqSldeUEK9NG/HslI+GjGZ2aqtdx8\\="
         println "${gradleEncyrpytedProperties.absolutePath} has been created!"
+    }
+
+    private def createApgInfoFile(String parentPath) {
+        File apgInfo = new File("${parentPath}/ApgInfo.gradle")
+        apgInfo << "println \"Properties have been initiliazed for testing purpose via AbstractSpecification class\""
     }
 
     private def setupRepoNameJson() {

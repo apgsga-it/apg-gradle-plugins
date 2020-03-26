@@ -3,15 +3,11 @@ package com.apgsga.gradle.repo.plugin;
 import com.apgsga.gradle.repo.extensions.ApgRepo;
 import com.apgsga.gradle.repo.extensions.RepoType;
 import com.apgsga.gradle.repo.extensions.ReposImpl;
-import com.fasterxml.jackson.core.Version;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.module.SimpleModule;
-import nu.studer.gradle.credentials.AddCredentialsTask;
 import nu.studer.gradle.credentials.domain.CredentialsContainer;
 import org.gradle.api.NonNullApi;
 import org.gradle.api.Plugin;
 import org.gradle.api.Project;
-import org.gradle.api.Task;
 import org.gradle.api.plugins.ExtensionContainer;
 import org.springframework.core.io.FileSystemResourceLoader;
 import org.springframework.core.io.Resource;
@@ -34,7 +30,7 @@ public class ApgCommonRepoPlugin implements Plugin<Project> {
 	@Override
 	public void apply(final Project project) {
 		this.project = project;
-		//project.getPlugins().apply("nu.studer.credentials");
+		project.getPlugins().apply("nu.studer.credentials");
 		final ExtensionContainer ext = project.getExtensions();
 		ReposImpl reposImpl = ext.create(COMMMON_REPO_EXTENSION_NAME, ReposImpl.class, project);
 
