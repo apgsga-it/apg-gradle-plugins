@@ -4,7 +4,7 @@ import com.apgsga.revision.manager.domain.RevisionManagerBuilder
 plugins {
 	id("com.apgsga.rpm.package")
 	id("com.apgsga.publish")
-	id("com.apgsga.rpm.ssh.deployer")
+	id("com.apgsga.ssh")
 	id("com.apgsga.version.resolver")
 }
 
@@ -39,7 +39,7 @@ configurations {
 
 apgRepos {
 	// TODO (che, 27.2) : Profiles needed
-	config(RepoType.MAVEN,[REPO_NAME:"testrepo",REPO_BASE_URL:"/Users/chhex/maven"])
+	config(RepoType.MAVEN,[REPO_NAME:"testrepo",REPO_BASE_URL:"/home/jhe/.m2/repository/"])
 	config(RepoType.MAVEN_RELEASE,[REPO_NAME:"repo", REPO_BASE_URL:"https://artifactory4t4apgsga.jfrog.io/artifactory4t4apgsga",REPO_USER:"dev",REPO_PASSWORD:credentials.devPw])
 	config(RepoType.MAVEN_SNAPSHOT,[REPO_NAME:"snapshot", REPO_BASE_URL:"https://artifactory4t4apgsga.jfrog.io/artifactory4t4apgsga",REPO_USER:"dev",REPO_PASSWORD:credentials.devPw])
 }
@@ -94,14 +94,13 @@ apgGenericPublishConfig {
 
 apgGenericPublishConfig.log()
 
-apgSshCommon {
+apgSshConfig {
 	username credentials."${project.ext.sshUser}"
 	userpwd credentials."${project.ext.sshPw}"
 	destinationHost project.ext.targetHost
 }
 
 apgRpmDeployConfig {
-	allowAnyHosts = true
 	rpmFilePath "${buildDir}/distributions/"
 	rpmFileName "${apgPackage.archiveName}"
 	remoteDestFolder "${project.ext.downloadDir}"

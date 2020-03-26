@@ -10,11 +10,9 @@ include ':gradle-common'
 include ':repo-config'
 include ':version-manager'
 include ':common-test'
-include 'rpm-ssh-deployer'
-include 'ssh-common'
 include 'docker-client'
 include 'revision-manager'
-include 'zip-ssh-deployer'
+include 'ssh-tasks'
 
 project(':common-repo').projectDir = "$rootDir/common-repo" as File
 project(':generic-publish').projectDir = "$rootDir/generic-publish" as File
@@ -27,10 +25,8 @@ project(':gradle-common').projectDir = "$rootDir/gradle-common" as File
 project(':repo-config').projectDir = "$rootDir/repo-config" as File
 project(':version-manager').projectDir = "$rootDir/version-manager" as File
 project(':common-test').projectDir = "$rootDir/common-test" as File
-project(':rpm-ssh-deployer').projectDir = "$rootDir/rpm-ssh-deployer" as File
-project(':ssh-common').projectDir = "$rootDir/ssh-common" as File
 project(':docker-client').projectDir = "$rootDir/docker-client" as File
 project(':revision-manager').projectDir = "$rootDir/revision-manager" as File
-project(':zip-ssh-deployer').projectDir = "$rootDir/zip-ssh-deployer" as File
+project(':ssh-tasks').projectDir = "$rootDir/ssh-tasks" as File
 
 

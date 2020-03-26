@@ -15,16 +15,13 @@ import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
 fun version(baseVersion: String?, revision: String?): String {
-    System.out.println("Determining version with baseVersion <$baseVersion> and revision <$revision>  ")
     val baseVersionRegex = Regex("[A-Z]*-[A-Z]*$")
     if (baseVersionRegex.containsMatchIn(baseVersion!!)) {
-        System.out.println("Returning: ${baseVersion}-${revision} ")
         return "${baseVersion}-${revision}"
     }
     val revisionInclSeperator = if (revision == "SNAPSHOT") "-SNAPSHOT" else ".${revision}"
     val versionNumberRegex = Regex("\\.?[0-9]+$")
     if (versionNumberRegex.containsMatchIn(baseVersion)) {
-        System.out.println("Returning: ${baseVersion}${revisionInclSeperator} ")
         return "${baseVersion}${revisionInclSeperator}"
     }
     throw IllegalArgumentException("Illegal Version for Artifact with baseVersion: ${baseVersion} and revision: ${revision}")
@@ -116,8 +113,7 @@ open class VersionResolutionExtension(val project: Project, private val revision
     private fun generateBomXml(publication: MavenPublication) {
         publication.artifactId = bomArtifactId
         publication.groupId = bomGroupId
-        val nextVersion =  version(bomNextRevision)
-        publication.version = nextVersion
+        publication.version = version(bomNextRevision)
         publication.pom {
             name.set(bomArtifactId)
             val date = LocalDateTime.now()
