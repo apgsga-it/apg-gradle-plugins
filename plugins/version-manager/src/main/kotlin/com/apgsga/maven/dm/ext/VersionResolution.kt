@@ -1,12 +1,8 @@
 package com.apgsga.maven.dm.ext
 
 
-import com.apgsga.gradle.repo.extensions.RepoType
-import com.apgsga.gradle.repo.extensions.Repos
-import com.apgsga.gradle.repo.plugin.ApgCommonRepoPlugin
 import com.apgsga.maven.VersionResolver
 import com.apgsga.maven.impl.resolver.BomVersionGradleResolverBuilder
-import com.apgsga.maven.impl.resolver.BomVersionResolverBuilder
 import com.apgsga.maven.impl.resolver.CompositeVersionResolverBuilder
 import com.apgsga.maven.impl.resolver.PatchFileVersionResolverBuilder
 import com.apgsga.revision.manager.domain.RevisionManager
@@ -15,8 +11,6 @@ import groovy.lang.Closure
 import org.gradle.api.Action
 import org.gradle.api.Project
 import org.gradle.api.publish.maven.MavenPublication
-import org.gradle.kotlin.dsl.getByName
-import java.lang.IllegalArgumentException
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 

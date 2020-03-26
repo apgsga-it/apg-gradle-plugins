@@ -1,0 +1,61 @@
+import static com.apgsga.gradle.repo.extensions.RepoType.*
+plugins {
+	id("com.apgsga.gui.package")
+	id("com.apgsga.publish")
+}
+
+
+project.ext {
+	installTarget = project.hasProperty('installTarget') ? project.property('installTarget') : "CHEI212"
+        prgVersion = project.hasProperty('prgVersion') ? project.property('prgVersion') : "1.0"
+	targetHost = project.hasProperty('targetHost') ? project.property('targetHost') : "localhost"
+	sshUser = project.hasProperty('sshUser') ? project.property('sshUser') : 'dev'
+	downloadDir = project.hasProperty('downloadDir') ? project.property('downloadDir') : "/Daten/Downloads"
+	installDir = project.hasProperty('installDir') ? project.property('installDir') : "/Daten/Programme"
+}
+
+println "installTarget = ${project.ext.installTarget}"
+println "prgVersion = ${project.ext.prgVersion}"
+
+apgRepos {
+	// TODO (che, 23.10) : decide on this and determine naming schema
+	config(MAVEN_RELEASE,[REPO_NAME:"repo",REPO_USER:credentials.devUser,REPO_PASSWORD:credentials.devPw])
+}
+
+apgRepos.get(MAVEN_RELEASE).log()
+apgRepos.get(LOCAL).log()
+
+apgRepositories {
+	local()
+	mavenLocal()
+	artifactory()
+}
+
+configurations.all {
+	 resolutionStrategy {	
+		 force 'org.springframework:spring-web:4.3.18.RELEASE'
+	 }
+}
+
+
+apgPackage {
+	pkgName = 'digiflex-it21-ui'
+	dependencies = [
+		"com.affichage.it21.ui:it21-ui-runtime:9.1.0.DIGIFLEX-SNAPSHOT",
+		"com.apgsga.it21.ui.mdt:it21ui-app-starter:9.1.0.DIGIFLEX-SNAPSHOT",
+		"com.apgsga.it21.ui.mdt:javaforms-starter:9.1.0.DIGIFLEX-SNAPSHOT",
+		"org.springframework.boot:spring-boot-starter-tomcat:1.5.3.RELEASE",
+		"moyosoft:moyocore_x64:3.0.4:@dll",
+	]
+	resourcesPath = "resources"
+	mainProgramm  = "com.affichage.it21.ui.runtime.It21GuiRuntimeStarter"
+	version = project.ext.prgVersion 
+}
+apgPackage.log()
+
+apgGenericPublishConfig {
+	artefactFile =  file ("${buildDir}/distributions/${apgPackage.archiveName}")
+	local()
+}
+
+apgGenericPublishConfig.log()

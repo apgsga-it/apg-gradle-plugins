@@ -49,15 +49,19 @@ apgRepositories {
 	artifactory()
 }
 
+configurations {
+	serviceRuntime.exclude group: 'log4j', module: 'log4j'
+	serviceRuntime.exclude group: 'org.neo4j' , module: 'neo4j-ogm'
+	serviceRuntime.exclude group: 'org.neo4j' , module: 'neo4j-ogm'
+	serviceRuntime.exclude group: 'org.codehaus.groovy' , module: 'groovy-all'
+}
 
 apgVersionResolver {
 	bomArtifactId = 'dm-bom'
-	bomGroupId = 'com.apgsga.testapp'
-	bomBaseVersion = '1.0'
-	bomLastRevision =  project.ext.bomLastRevision
+	bomGroupId = 'com.affichage.common.maven'
+	bomBaseVersion = '9.1.0.ADMIN-UIMIG'
+	bomLastRevision = project.ext.bomLastRevision
 	installTarget = project.ext.installTarget
-	persistence =  RevisionManagerBuilder.PersistenceTyp.BEANS
-	algorithm =  RevisionManagerBuilder.AlgorithmTyp.PATCH
 	patches {
 		parentDir = project.ext.patchParentDir
 		fileNames = project.ext.patchFileNames
@@ -66,43 +70,39 @@ apgVersionResolver {
 }
 
 
-
-
 apgPackage {
-	serviceName = 'echoservice'
+	serviceName = "digiflex-jadas"
 	configurationName = "serviceRuntime"
 	dependencies = [
-		"com.apgsga.testapp:testapp-service"
-    ]
-	resourceFilters = "serviceport"
-	appConfigFilters = "general"
+		"com.apgsga.it21.ui.mdt:jadas-app-starter:9.1.0.DIGIFLEX-SNAPSHOT",
+		"com.apgsga.it21.ui.mdt:jadas-framework-starter:9.1.0.DIGIFLEX-SNAPSHOT"
+	]
+	resourceFilters = "serviceport:it21db-jadas:ibdsdb-jadas:ecmservice:interapp"
+	appConfigFilters = "general:jadas"
   	servicePropertiesDir = "resources"
 	installTarget = project.ext.installTarget
-	mainProgramName  = "com.apgsga.testapp.TestappApplication"
+	mainProgramName  = "com.apgsga.it21.ui.webapp.Webapp"
 	releaseNr = project.ext.rpmReleaseNr
 }
 
-apgPackage.log()
 
-apgPackage.listPortNumbers()
+
+apgPackage.log()
 
 apgGenericPublishConfig {
 	artefactFile =  file ("${buildDir}/distributions/${apgPackage.archiveName}")
 	local()
 }
 
-
-
 apgGenericPublishConfig.log()
 
 apgSshCommon {
-	username credentials."${project.ext.sshUser}"
-	userpwd credentials."${project.ext.sshPw}"
+	username project.ext.sshUser
+	userpwd credentials."${project.ext.sshUser}Pw"
 	destinationHost project.ext.targetHost
 }
 
 apgRpmDeployConfig {
-	allowAnyHosts = true
 	rpmFilePath "${buildDir}/distributions/"
 	rpmFileName "${apgPackage.archiveName}"
 	remoteDestFolder "${project.ext.downloadDir}"
@@ -120,5 +120,3 @@ publishing {
 		}
 	}
 }
-
- 

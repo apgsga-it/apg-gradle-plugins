@@ -36,6 +36,7 @@
       <module name="jenkins-pipeline-tests.jenkinsPkgAndDeploy.test" target="1.8" />
       <module name="jenkins-pipeline.main" target="1.8" />
       <module name="jenkins-pipeline.test" target="1.8" />
+      <module name="parent" target="1.5" />
       <module name="testapp-service-kotlin.main" target="1.8" />
       <module name="testapp-service-kotlin.test" target="1.8" />
     </bytecodeTargetLevel>

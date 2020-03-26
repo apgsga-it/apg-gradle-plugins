@@ -1,0 +1,79 @@
+import static com.apgsga.gradle.repo.extensions.RepoType.*
+
+plugins {
+	id("com.apgsga.rpm.package")
+	id("com.apgsga.zip.package")
+	id("com.apgsga.publish")
+	id("com.apgsga.rpm.ssh.deployer")
+}
+
+project.ext {
+	targetHost = project.hasProperty('targetHost') ? project.property('targetHost') : "jadas-e.apgsga.ch"
+	sshUser = project.hasProperty('sshUser') ? project.property('sshUser') : credentials.deployUser
+	installTarget = project.hasProperty('installTarget') ? project.property('installTarget') : "CHEI212"
+    serviceVersion = project.hasProperty('serviceVersion') ? project.property('serviceVersion') : "1.0"
+	releaseNr = project.hasProperty('releaseNr') ? project.property('releaseNr') : "2"
+	downloadDir = project.hasProperty('downloadDir') ? project.property('downloadDir') : "downloads"
+}
+println "targetHost = ${project.ext.targetHost}"
+println "sshUser = ${project.ext.sshUser}"
+println "installTarget = ${project.ext.installTarget}"
+println "serviceVersion = ${project.ext.serviceVersion}"
+println "releaseNr = ${project.ext.releaseNr}"
+println "downloadDir = ${project.ext.downloadDir}"
+
+apgRepos {
+	// TODO (che, 23.10) : decide on this and determine naming schema
+	config(MAVEN_RELEASE,[REPO_NAME:"repo",REPO_USER:credentials.devUser,REPO_PASSWORD:credentials.devPw])
+}
+
+apgRepositories {
+	mavenLocal()
+	artifactory()
+}
+
+configurations {
+	serviceRuntime.exclude group: 'log4j', module: 'log4j'
+	serviceRuntime.exclude group: 'org.neo4j' , module: 'neo4j-ogm'
+	serviceRuntime.exclude group: 'org.neo4j' , module: 'neo4j-ogm'
+	serviceRuntime.exclude group: 'org.codehaus.groovy' , module: 'groovy-all'
+}
+
+
+apgPackage {
+	serviceName = "digiflex-web-it21"
+        configurationName = "serviceRuntime"
+	dependencies = [
+		"com.apgsga.vk.digiflex:apg-vk-digiflex-web:9.1.0.DIGIFLEX-SNAPSHOT"
+	]
+	resourceFilters = "serviceport:it21db-webui:interapp:javamelody"
+	appConfigFilters = "general:webui"
+	it21DbDaoLocations = "com/affichage/vaadin/**"
+  	servicePropertiesDir = "resources"
+	installTarget = project.ext.installTarget
+	mainProgramName  = "com.affichage.vaadin.vk.VkWebApplication"
+	version = project.ext.serviceVersion 
+	releaseNr = project.ext.releaseNr
+}
+
+apgPackage.log()
+
+apgGenericPublishConfig {
+	artefactFile =  file ("${buildDir}/distributions/${apgPackage.archiveName}")
+	local()
+}
+
+apgGenericPublishConfig.log()
+
+apgSshCommon {
+	username project.ext.sshUser
+	userpwd credentials."${project.ext.sshUser}Pw"
+	destinationHost project.ext.targetHost
+}
+
+apgRpmDeployConfig {
+	rpmFilePath "${buildDir}/distributions/"
+	rpmFileName "${apgPackage.archiveName}"
+	remoteDestFolder "${project.ext.downloadDir}"
+}
+
