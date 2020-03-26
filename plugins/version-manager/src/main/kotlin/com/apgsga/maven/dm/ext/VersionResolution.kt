@@ -57,7 +57,7 @@ open class VersionResolutionExtension(val project: Project, private val revision
     private val revisionManger : RevisionManager
         get() {
             if (_revisionManger == null) {
-                _revisionManger = revisionManagerBuilder.revisionRootPath(revisionRootPath?: project.gradle.gradleUserHomeDir.absolutePath ).algorithm(algorithm).persistence(RevisionManagerBuilder.PersistenceTyp.BEANS).build()
+                _revisionManger = revisionManagerBuilder.revisionRootPath(revisionRootPath?: project.gradle.gradleUserHomeDir.absolutePath ).algorithm(algorithm).build()
             }
             return  _revisionManger as RevisionManager
         }
