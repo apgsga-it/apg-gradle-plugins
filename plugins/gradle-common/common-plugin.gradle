@@ -1,10 +1,21 @@
+buildscript {
+	repositories {
+		gradlePluginPortal()
+	}
+	dependencies {
+		classpath 'nu.studer:gradle-credentials-plugin:2.1'
+	}
+}
+
 apply plugin: 'groovy'
 apply plugin: 'java-gradle-plugin'
 apply plugin: 'maven-publish'
 apply plugin: 'eclipse'
+apply plugin: nu.studer.gradle.credentials.CredentialsPlugin
 
 group = 'com.apgsga.gradle'
 version = '1.1-SNAPSHOT'
+
 
 def devUser = project.credentials.devUser
 def devPw = project.credentials.devPw

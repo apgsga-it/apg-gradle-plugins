@@ -6,6 +6,7 @@ plugins {
     id("com.apgsga.ssh")
 }
 apply plugin: JenkinsRunner
+apply plugin: 'nu.studer.credentials'
 
 apgSshConfig {
     username = credentials.jheUser
