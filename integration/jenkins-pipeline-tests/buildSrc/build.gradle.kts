@@ -16,7 +16,7 @@ dependencies {
     testImplementation(gradleTestKit())
     implementation(kotlin("gradle-plugin"))
     implementation ("org.hidetake:gradle-ssh-plugin:2.10.1")
-    implementation ("com.apgsga.gradle:ssh-common:1.1-SNAPSHOT")
+    implementation ("com.apgsga.gradle:ssh-tasks:1.1-SNAPSHOT")
 }
 
 tasks {

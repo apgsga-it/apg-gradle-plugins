@@ -15,7 +15,7 @@ public class TestArtifactoryJavaClient {
 		// Connection
 		Artifactory artifactory = ArtifactoryClientBuilder.create()
 				.setUrl("https://artifactory4t4apgsga.jfrog.io/artifactory4t4apgsga").setUsername("dev")
-				.setPassword("dev1234").build();
+				.setPassword("xxxx").build();
 		System.out.println("Digiflex Repo Info: ");
 
 		// Query Repository
