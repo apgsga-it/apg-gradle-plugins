@@ -56,7 +56,6 @@ apgVersionResolver {
 	bomBaseVersion = '1.0'
 	bomLastRevision =  project.ext.bomLastRevision
 	installTarget = project.ext.installTarget
-	persistence =  RevisionManagerBuilder.PersistenceTyp.BEANS
 	algorithm =  RevisionManagerBuilder.AlgorithmTyp.PATCH
 	patches {
 		parentDir = project.ext.patchParentDir

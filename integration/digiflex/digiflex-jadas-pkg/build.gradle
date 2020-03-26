@@ -62,6 +62,7 @@ apgVersionResolver {
 	bomBaseVersion = '9.1.0.ADMIN-UIMIG'
 	bomLastRevision = project.ext.bomLastRevision
 	installTarget = project.ext.installTarget
+	algorithm =  RevisionManagerBuilder.AlgorithmTyp.PATCH
 	patches {
 		parentDir = project.ext.patchParentDir
 		fileNames = project.ext.patchFileNames

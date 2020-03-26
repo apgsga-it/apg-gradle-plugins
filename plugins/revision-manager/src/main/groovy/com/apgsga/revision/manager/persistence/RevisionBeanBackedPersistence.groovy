@@ -8,6 +8,7 @@ class RevisionBeanBackedPersistence implements RevisionPersistence {
 
     RevisionBeanBackedPersistence(File revisionRootDir) {
         this.revisionRootDir = revisionRootDir
+        println "Initializing ${this.toString()} with $revisionRootDir"
         init(Revisions.class, 0, new HashMap<String, String>())
         init(RevisionTargetHistory.class, new HashMap<String, List<String>>())
     }
@@ -69,8 +70,10 @@ class RevisionBeanBackedPersistence implements RevisionPersistence {
     }
 
     def <T> void init(Class<T> clx, Object[] constArgs) {
+        println "Initializing ${this.toString()} with $constArgs"
         if (exits(clx)) return
         def obj = clx.newInstance(constArgs)
+        println "About to write ${obj.toString()}"
         write(obj)
     }
 }

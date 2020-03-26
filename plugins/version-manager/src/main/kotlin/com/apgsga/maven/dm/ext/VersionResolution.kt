@@ -15,13 +15,16 @@ import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
 fun version(baseVersion: String?, revision: String?): String {
+    System.out.println("Determining version with baseVersion <$baseVersion> and revision <$revision>  ")
     val baseVersionRegex = Regex("[A-Z]*-[A-Z]*$")
     if (baseVersionRegex.containsMatchIn(baseVersion!!)) {
+        System.out.println("Returning: ${baseVersion}-${revision} ")
         return "${baseVersion}-${revision}"
     }
     val revisionInclSeperator = if (revision == "SNAPSHOT") "-SNAPSHOT" else ".${revision}"
     val versionNumberRegex = Regex("\\.?[0-9]+$")
     if (versionNumberRegex.containsMatchIn(baseVersion)) {
+        System.out.println("Returning: ${baseVersion}${revisionInclSeperator} ")
         return "${baseVersion}${revisionInclSeperator}"
     }
     throw IllegalArgumentException("Illegal Version for Artifact with baseVersion: ${baseVersion} and revision: ${revision}")
@@ -42,10 +45,8 @@ open class VersionResolutionExtension(val project: Project, private val revision
     var bomArtifactId: String? = null
     var bomGroupId: String? = null
     var bomBaseVersion: String? = null
-    var persistence: RevisionManagerBuilder.PersistenceTyp = RevisionManagerBuilder.PersistenceTyp.BEANS
     var algorithm: RevisionManagerBuilder.AlgorithmTyp = RevisionManagerBuilder.AlgorithmTyp.SNAPSHOT
     var installTarget: String? = null
-    var bomDestDirPath: String = "${project.buildDir}/generatedBom"
     private var _versionResolver : VersionResolver? = null
     val versionResolver: VersionResolver
         get() {
@@ -55,10 +56,18 @@ open class VersionResolutionExtension(val project: Project, private val revision
             return _versionResolver as VersionResolver
         }
     // Revision Manager and Revision Initialization
-    private val revisionManger: RevisionManager get() = initRevisionManager()
-    var revisionRootPath: String = project.gradle.gradleUserHomeDir.absolutePath
+    private var _revisionManger: RevisionManager? = null
+    private val revisionManger : RevisionManager
+        get() {
+            if (_revisionManger == null) {
+                _revisionManger = revisionManagerBuilder.revisionRootPath(revisionRootPath?: project.gradle.gradleUserHomeDir.absolutePath ).algorithm(algorithm).persistence(RevisionManagerBuilder.PersistenceTyp.BEANS).build()
+            }
+            return  _revisionManger as RevisionManager
+        }
+
+    var revisionRootPath: String?  = null
     private var _bomNextRevision: String? = null
-    val bomNextRevision: String
+    private val bomNextRevision: String
         get() {
             if (_bomNextRevision == null) {
                 _bomNextRevision = revisionManger.nextRevision().toString()
@@ -82,24 +91,13 @@ open class VersionResolutionExtension(val project: Project, private val revision
         configureConfiguration(configurationName)
     }
 
-    private fun initRevisionManager(): RevisionManager {
-        // TODO (jhe, che) : consider current revision file and bootstrapping
-        return revisionManagerBuilder.revisionRootPath(revisionRootPath).algorithm(algorithm).persistence(persistence).build()
-
-    }
-
     fun saveRevision() {
+        // TODO (che, jhe , 26.3 ) When best to save the Revision? Necessary?
         revisionManger.saveRevision(installTarget, bomNextRevision, bomBaseVersion)
     }
 
     fun patches(action: Action<Patches>) {
         action.execute(patches)
-    }
-
-    fun log() {
-        project.logger.info("Logging VersionResolutions: ")
-        project.logger.info(toString())
-        project.logger.info(patches.toString())
     }
 
     private fun configureConfiguration(name: String) {
@@ -118,7 +116,8 @@ open class VersionResolutionExtension(val project: Project, private val revision
     private fun generateBomXml(publication: MavenPublication) {
         publication.artifactId = bomArtifactId
         publication.groupId = bomGroupId
-        publication.version = version(bomNextRevision)
+        val nextVersion =  version(bomNextRevision)
+        publication.version = nextVersion
         publication.pom {
             name.set(bomArtifactId)
             val date = LocalDateTime.now()
@@ -171,9 +170,6 @@ open class VersionResolutionExtension(val project: Project, private val revision
         return version(bomBaseVersion, revision)
     }
 
-    override fun toString(): String {
-        return "VersionResolutionExtension(configurationName='$configurationName', bomArtifactId=$bomArtifactId, bomGroupId=$bomGroupId, bomBaseVersion=$bomBaseVersion, revisionTyp=$persistence, installTarget=$installTarget, patches=$patches)"
-    }
 
 
 }
