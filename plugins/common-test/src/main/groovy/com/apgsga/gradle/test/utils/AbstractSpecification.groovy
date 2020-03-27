@@ -17,12 +17,9 @@ abstract class AbstractSpecification extends Specification {
         setupTestProjectDir()
         createBuildFile()
         createGradleHomeDir()
-        // TODO JHE: Might not be needed anymore with IT-35189
         createGradleProperties()
-        // TODO JHE: Might not be needed anymore with IT-35189
         createGradleEncryptedProperties()
         setupRepoNameJson()
-        setupSupportedServicesJson()
     }
 
     private def createBuildFile() {
@@ -75,26 +72,19 @@ abstract class AbstractSpecification extends Specification {
         gradleProperties << "config.dir=src/functionalTest/resources/config"
         gradleProperties << System.getProperty("line.separator")
         gradleProperties << "target.system.mapping.file.name=TargetSystemMappings.json"
+        gradleProperties << System.getProperty("line.separator")
+        gradleProperties << "mavenRepoBaseUrl=https://artifactory4t4apgsga.jfrog.io/artifactory4t4apgsga"
         println "${gradleProperties.absolutePath} has been created!"
     }
 
     def createGradleEncryptedProperties() {
         File gradleEncyrpytedProperties = new File("${gradleHomeDirPath}/gradle.encrypted.properties")
         gradleEncyrpytedProperties << "apg_install=tAAMlNlXrCjnphgKtCkHHZLkezTSeM1QwZ4+kfXyMaM\\="
+        gradleEncyrpytedProperties << System.getProperty("line.separator")
+        gradleEncyrpytedProperties << "mavenRepoUser=jTgfLqung5Pw4VQqSldeUEK9NG/HslI+GjGZ2aqtdx8\\="
+        gradleEncyrpytedProperties << System.getProperty("line.separator")
+        gradleEncyrpytedProperties << "mavenRepoPwd=jTgfLqung5Pw4VQqSldeUEK9NG/HslI+GjGZ2aqtdx8\\="
         println "${gradleEncyrpytedProperties.absolutePath} has been created!"
-    }
-
-    def setupSupportedServicesJson() {
-        File installableServicesJson = new File(gradleHomeDirPath, "supportedServices.json")
-        initSupportedServicesJsonContent(installableServicesJson)
-    }
-
-    def initSupportedServicesJsonContent(File file) {
-        file << """
-            {
-                "supportedServices": ["jadas","digiflex","vkjadas","interjadas","interweb","testapp"]
-            }
-        """
     }
 
     private def setupRepoNameJson() {
@@ -105,35 +95,32 @@ abstract class AbstractSpecification extends Specification {
     private static def initTepoNamesJsonContent(File repoNames) {
         repoNames << """
 
-    {
-  "repos": [
-    {
-      "ZIP": "release-functionaltest"
-    },
-    {
-      "RPM": "rpm-functionaltest"
-    },
-    {
-      "MAVEN_SNAPSHOT": "snapshot-functionaltest"
-    },
-    {
-      "MAVEN_RELEASE": "release-functionaltest"
-    },
-    {
-      "LOCAL": "local"
-    },
-    {
-      "MAVEN": "maven"
-    },
-    {
-      "JAVA_DIST": "apgPlatformDependencies-test"
-    }
-  ],
-  "repoUserName": "gradledev-tests-user",
-  "repoUserPwd": "gradledev-tests-user",
-  "repoBaseUrl": "https://artifactory4t4apgsga.jfrog.io/artifactory4t4apgsga"
-}
-"""
+                {
+              "repos": [
+                {
+                  "ZIP": "release-functionaltest"
+                },
+                {
+                  "RPM": "rpm-functionaltest"
+                },
+                {
+                  "MAVEN_SNAPSHOT": "snapshot-functionaltest"
+                },
+                {
+                  "MAVEN_RELEASE": "release-functionaltest"
+                },
+                {
+                  "LOCAL": "local"
+                },
+                {
+                  "MAVEN": "maven"
+                },
+                {
+                  "JAVA_DIST": "apgPlatformDependencies-test"
+                }
+              ]
+            }
+            """
     }
 
     protected def gradleRunnerFactory() {

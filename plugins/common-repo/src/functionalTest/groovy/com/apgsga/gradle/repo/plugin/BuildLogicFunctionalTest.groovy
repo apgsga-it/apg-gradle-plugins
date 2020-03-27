@@ -109,4 +109,23 @@ class BuildLogicFunctionalTest extends AbstractSpecification {
 			result.output.contains('repoName=maven')
 			result.output.contains('repoName=apgPlatformDependencies-test')
 	}
+
+	def "Default repoBaseUrl, default user and default password work"() {
+		// JHE: we arbitrarly test against maven Repo
+		given:
+			buildFile << """
+					plugins {
+						id 'com.apgsga.common.repo' 
+					}
+					apgRepos.get(MAVEN).log()
+				"""
+		when:
+			def result = gradleRunnerFactory(['init']).build()
+		then:
+			println "Result output: ${result.output}"
+			result.output.contains('repoName=maven')
+			result.output.contains('user=gradledev-tests-user')
+			result.output.contains('password=xxxxxx')
+			result.output.contains('repoBaseUrl=https://artifactory4t4apgsga.jfrog.io/artifactory4t4apgsga')
+	}
 }

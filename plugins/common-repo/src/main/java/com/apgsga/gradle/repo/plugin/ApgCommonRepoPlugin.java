@@ -4,6 +4,7 @@ import com.apgsga.gradle.repo.extensions.ApgRepo;
 import com.apgsga.gradle.repo.extensions.RepoType;
 import com.apgsga.gradle.repo.extensions.ReposImpl;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import nu.studer.gradle.credentials.domain.CredentialsContainer;
 import org.gradle.api.NonNullApi;
 import org.gradle.api.Plugin;
 import org.gradle.api.Project;
@@ -29,6 +30,7 @@ public class ApgCommonRepoPlugin implements Plugin<Project> {
 	@Override
 	public void apply(final Project project) {
 		this.project = project;
+		project.getPlugins().apply("nu.studer.credentials");
 		final ExtensionContainer ext = project.getExtensions();
 		ReposImpl reposImpl = ext.create(COMMMON_REPO_EXTENSION_NAME, ReposImpl.class, project);
 
@@ -42,10 +44,31 @@ public class ApgCommonRepoPlugin implements Plugin<Project> {
 
 	private RepoNamesBean loadRepoNames() {
 		try {
-			return new ObjectMapper().readerFor(RepoNamesBean.class).readValue(getRepoNameResource().getFile());
+			RepoNamesBean bean = new ObjectMapper().readerFor(RepoNamesBean.class).readValue(getRepoNameResource().getFile());
+			bean.repoUserPwd = getRepoUserPassword();
+			bean.repoUserName = getRepoUserName();
+			bean.repoBaseUrl = getRepoBaseUrl();
+			return bean;
 		} catch (IOException e) {
-			throw new RuntimeException("Problem while deserializing " + REPO_NAMES_JSON_FILENAME + ". Original esxception was: " + e.getMessage());
+			throw new RuntimeException("Problem while deserializing " + REPO_NAMES_JSON_FILENAME + ". Original exception was: " + e.getMessage());
 		}
+	}
+
+	private String getRepoUserName() {
+		return (String) getCredentialsContainer().propertyMissing("mavenRepoUser");
+	}
+
+	private String getRepoUserPassword() {
+		return (String) getCredentialsContainer().propertyMissing("mavenRepoPwd");
+	}
+
+	private CredentialsContainer getCredentialsContainer() {
+		// credentials Property comes from the nu.studer.credentials plugin
+		return (CredentialsContainer) project.getExtensions().getExtraProperties().get("credentials");
+	}
+
+	private String getRepoBaseUrl() {
+		return (String) project.getExtensions().getExtraProperties().get("mavenRepoBaseUrl");
 	}
 
 	private Resource getRepoNameResource() {
