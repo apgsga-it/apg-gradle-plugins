@@ -87,11 +87,6 @@ abstract class AbstractSpecification extends Specification {
         println "${gradleEncyrpytedProperties.absolutePath} has been created!"
     }
 
-    private def createApgInfoFile(String parentPath) {
-        File apgInfo = new File("${parentPath}/ApgInfo.gradle")
-        apgInfo << "println \"Properties have been initiliazed for testing purpose via AbstractSpecification class\""
-    }
-
     private def setupRepoNameJson() {
         File repoNamesJson = new File(gradleHomeDirPath, "repoNames.json")
         initTepoNamesJsonContent(repoNamesJson)
