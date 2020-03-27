@@ -4,7 +4,7 @@ import com.apgsga.revision.manager.domain.RevisionManagerBuilder
 plugins {
 	id("com.apgsga.rpm.package")
 	id("com.apgsga.publish")
-	id("com.apgsga.ssh")
+	id("com.apgsga.rpm.ssh.deployer")
 	id("com.apgsga.version.resolver")
 }
 
@@ -39,7 +39,7 @@ configurations {
 
 apgRepos {
 	// TODO (che, 27.2) : Profiles needed
-	config(RepoType.MAVEN,[REPO_NAME:"testrepo",REPO_BASE_URL:"/home/jhe/.m2/repository/"])
+	config(RepoType.MAVEN,[REPO_NAME:"testrepo",REPO_BASE_URL:"/Users/chhex/maven"])
 	config(RepoType.MAVEN_RELEASE,[REPO_NAME:"repo", REPO_BASE_URL:"https://artifactory4t4apgsga.jfrog.io/artifactory4t4apgsga",REPO_USER:"dev",REPO_PASSWORD:credentials.devPw])
 	config(RepoType.MAVEN_SNAPSHOT,[REPO_NAME:"snapshot", REPO_BASE_URL:"https://artifactory4t4apgsga.jfrog.io/artifactory4t4apgsga",REPO_USER:"dev",REPO_PASSWORD:credentials.devPw])
 }
@@ -49,12 +49,18 @@ apgRepositories {
 	artifactory()
 }
 
+configurations {
+	serviceRuntime.exclude group: 'log4j', module: 'log4j'
+	serviceRuntime.exclude group: 'org.neo4j' , module: 'neo4j-ogm'
+	serviceRuntime.exclude group: 'org.neo4j' , module: 'neo4j-ogm'
+	serviceRuntime.exclude group: 'org.codehaus.groovy' , module: 'groovy-all'
+}
 
 apgVersionResolver {
 	bomArtifactId = 'dm-bom'
-	bomGroupId = 'com.apgsga.testapp'
-	bomBaseVersion = '1.0'
-	bomLastRevision =  project.ext.bomLastRevision
+	bomGroupId = 'com.affichage.common.maven'
+	bomBaseVersion = '9.1.0.ADMIN-UIMIG'
+	bomLastRevision = project.ext.bomLastRevision
 	installTarget = project.ext.installTarget
 	algorithm =  RevisionManagerBuilder.AlgorithmTyp.PATCH
 	patches {
@@ -65,38 +71,35 @@ apgVersionResolver {
 }
 
 
-
-
 apgPackage {
-	serviceName = 'echoservice'
+	serviceName = "digiflex-jadas"
 	configurationName = "serviceRuntime"
 	dependencies = [
-		"com.apgsga.testapp:testapp-service"
-    ]
-	resourceFilters = "serviceport"
-	appConfigFilters = "general"
+		"com.apgsga.it21.ui.mdt:jadas-app-starter:9.1.0.DIGIFLEX-SNAPSHOT",
+		"com.apgsga.it21.ui.mdt:jadas-framework-starter:9.1.0.DIGIFLEX-SNAPSHOT"
+	]
+	resourceFilters = "serviceport:it21db-jadas:ibdsdb-jadas:ecmservice:interapp"
+	appConfigFilters = "general:jadas"
   	servicePropertiesDir = "resources"
 	installTarget = project.ext.installTarget
-	mainProgramName  = "com.apgsga.testapp.TestappApplication"
+	mainProgramName  = "com.apgsga.it21.ui.webapp.Webapp"
 	releaseNr = project.ext.rpmReleaseNr
 }
 
-apgPackage.log()
 
-apgPackage.listPortNumbers()
+
+apgPackage.log()
 
 apgGenericPublishConfig {
 	artefactFile =  file ("${buildDir}/distributions/${apgPackage.archiveName}")
 	local()
 }
 
-
-
 apgGenericPublishConfig.log()
 
-apgSshConfig {
-	username credentials."${project.ext.sshUser}"
-	userpwd credentials."${project.ext.sshPw}"
+apgSshCommon {
+	username project.ext.sshUser
+	userpwd credentials."${project.ext.sshUser}Pw"
 	destinationHost project.ext.targetHost
 }
 
@@ -118,5 +121,3 @@ publishing {
 		}
 	}
 }
-
- 

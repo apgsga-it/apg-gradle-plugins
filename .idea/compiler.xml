@@ -15,7 +15,19 @@
       <module name="apg-gradle-plugins.docker-client.test" target="1.8" />
       <module name="apg-gradle-plugins.main" target="1.8" />
       <module name="apg-gradle-plugins.revision-manager.functionalTest" target="1.8" />
+      <module name="apg-gradle-plugins.rpm-ssh-deployer.functionalTest" target="1.8" />
+      <module name="apg-gradle-plugins.rpm-ssh-deployer.integrationTest" target="1.8" />
+      <module name="apg-gradle-plugins.rpm-ssh-deployer.main" target="1.8" />
+      <module name="apg-gradle-plugins.rpm-ssh-deployer.test" target="1.8" />
+      <module name="apg-gradle-plugins.ssh-common.functionalTest" target="1.8" />
+      <module name="apg-gradle-plugins.ssh-common.integrationTest" target="1.8" />
+      <module name="apg-gradle-plugins.ssh-common.main" target="1.8" />
+      <module name="apg-gradle-plugins.ssh-common.test" target="1.8" />
       <module name="apg-gradle-plugins.test" target="1.8" />
+      <module name="apg-gradle-plugins.zip-ssh-deployer.functionalTest" target="1.8" />
+      <module name="apg-gradle-plugins.zip-ssh-deployer.integrationTest" target="1.8" />
+      <module name="apg-gradle-plugins.zip-ssh-deployer.main" target="1.8" />
+      <module name="apg-gradle-plugins.zip-ssh-deployer.test" target="1.8" />
       <module name="docker-sshd-compose.main" target="1.8" />
       <module name="docker-sshd-compose.test" target="1.8" />
       <module name="it21-ui-bundle.it21-ui-dm-version-manager.main" target="1.8" />
@@ -36,6 +48,7 @@
       <module name="jenkins-pipeline-tests.jenkinsPkgAndDeploy.test" target="1.8" />
       <module name="jenkins-pipeline.main" target="1.8" />
       <module name="jenkins-pipeline.test" target="1.8" />
+      <module name="parent" target="1.5" />
       <module name="testapp-service-kotlin.main" target="1.8" />
       <module name="testapp-service-kotlin.test" target="1.8" />
     </bytecodeTargetLevel>

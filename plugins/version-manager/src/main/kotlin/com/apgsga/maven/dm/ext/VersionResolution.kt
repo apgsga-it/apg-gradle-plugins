@@ -1,12 +1,8 @@
 package com.apgsga.maven.dm.ext
 
 
-import com.apgsga.gradle.repo.extensions.RepoType
-import com.apgsga.gradle.repo.extensions.Repos
-import com.apgsga.gradle.repo.plugin.ApgCommonRepoPlugin
 import com.apgsga.maven.VersionResolver
 import com.apgsga.maven.impl.resolver.BomVersionGradleResolverBuilder
-import com.apgsga.maven.impl.resolver.BomVersionResolverBuilder
 import com.apgsga.maven.impl.resolver.CompositeVersionResolverBuilder
 import com.apgsga.maven.impl.resolver.PatchFileVersionResolverBuilder
 import com.apgsga.revision.manager.domain.RevisionManager
@@ -15,8 +11,6 @@ import groovy.lang.Closure
 import org.gradle.api.Action
 import org.gradle.api.Project
 import org.gradle.api.publish.maven.MavenPublication
-import org.gradle.kotlin.dsl.getByName
-import java.lang.IllegalArgumentException
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
@@ -50,7 +44,6 @@ open class VersionResolutionExtension(val project: Project, private val revision
     var bomBaseVersion: String? = null
     var algorithm: RevisionManagerBuilder.AlgorithmTyp = RevisionManagerBuilder.AlgorithmTyp.SNAPSHOT
     var installTarget: String? = null
-    var bomDestDirPath: String = "${project.buildDir}/generatedBom"
     private var _versionResolver : VersionResolver? = null
     val versionResolver: VersionResolver
         get() {
@@ -60,10 +53,18 @@ open class VersionResolutionExtension(val project: Project, private val revision
             return _versionResolver as VersionResolver
         }
     // Revision Manager and Revision Initialization
-    private val revisionManger: RevisionManager get() = initRevisionManager()
-    var revisionRootPath: String = project.gradle.gradleUserHomeDir.absolutePath
+    private var _revisionManger: RevisionManager? = null
+    private val revisionManger : RevisionManager
+        get() {
+            if (_revisionManger == null) {
+                _revisionManger = revisionManagerBuilder.revisionRootPath(revisionRootPath?: project.gradle.gradleUserHomeDir.absolutePath ).algorithm(algorithm).build()
+            }
+            return  _revisionManger as RevisionManager
+        }
+
+    var revisionRootPath: String?  = null
     private var _bomNextRevision: String? = null
-    val bomNextRevision: String
+    private val bomNextRevision: String
         get() {
             if (_bomNextRevision == null) {
                 _bomNextRevision = revisionManger.nextRevision().toString()
@@ -87,24 +88,13 @@ open class VersionResolutionExtension(val project: Project, private val revision
         configureConfiguration(configurationName)
     }
 
-    private fun initRevisionManager(): RevisionManager {
-        // TODO (jhe, che) : consider current revision file and bootstrapping
-        return revisionManagerBuilder.revisionRootPath(revisionRootPath).algorithm(algorithm).build()
-
-    }
-
     fun saveRevision() {
+        // TODO (che, jhe , 26.3 ) When best to save the Revision? Necessary?
         revisionManger.saveRevision(installTarget, bomNextRevision, bomBaseVersion)
     }
 
     fun patches(action: Action<Patches>) {
         action.execute(patches)
-    }
-
-    fun log() {
-        project.logger.info("Logging VersionResolutions: ")
-        project.logger.info(toString())
-        project.logger.info(patches.toString())
     }
 
     private fun configureConfiguration(name: String) {
@@ -176,9 +166,6 @@ open class VersionResolutionExtension(val project: Project, private val revision
         return version(bomBaseVersion, revision)
     }
 
-    override fun toString(): String {
-        return "VersionResolutionExtension(configurationName='$configurationName', bomArtifactId=$bomArtifactId, bomGroupId=$bomGroupId, bomBaseVersion=$bomBaseVersion, installTarget=$installTarget, patches=$patches)"
-    }
 
 
 }
