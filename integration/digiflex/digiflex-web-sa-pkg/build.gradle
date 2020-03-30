@@ -3,7 +3,7 @@ plugins {
 	id("com.apgsga.rpm.package")
 	id("com.apgsga.zip.package")
 	id("com.apgsga.publish")
-	id("com.apgsga.rpm.ssh.deployer")
+	id("com.apgsga.ssh")
 }
 
 project.ext {
@@ -64,7 +64,7 @@ apgGenericPublishConfig {
 
 apgGenericPublishConfig.log()
 
-apgSshCommon {
+apgSshConfig {
 	username project.ext.sshUser
 	userpwd credentials."${project.ext.sshUser}Pw"
 	destinationHost project.ext.targetHost
