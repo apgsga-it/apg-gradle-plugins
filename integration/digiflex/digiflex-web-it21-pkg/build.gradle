@@ -5,6 +5,7 @@ plugins {
 	id("com.apgsga.zip.package")
 	id("com.apgsga.publish")
 	id("com.apgsga.ssh")
+	id "nu.studer.credentials" version "2.1"
 }
 
 project.ext {

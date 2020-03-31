@@ -4,9 +4,11 @@ import com.apgsga.gradle.jenkinsrunner.JenkinsRunnerExec
 
 plugins {
     id("com.apgsga.ssh")
+    id "nu.studer.credentials" version "2.1"
 }
 apply plugin: JenkinsRunner
-apply plugin: 'nu.studer.credentials'
+
+
 
 apgSshConfig {
     username = credentials.jheUser

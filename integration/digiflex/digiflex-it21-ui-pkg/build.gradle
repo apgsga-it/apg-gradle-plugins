@@ -2,6 +2,7 @@ import static com.apgsga.gradle.repo.extensions.RepoType.*
 plugins {
 	id("com.apgsga.gui.package")
 	id("com.apgsga.publish")
+	id "nu.studer.credentials" version "2.1"
 }
 
 
