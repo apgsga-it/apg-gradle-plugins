@@ -17,7 +17,7 @@ project.ext {
 	bomLastRevision = project.hasProperty('bomLastRevision') ? project.property('bomLastRevision') : "SNAPSHOT"
 	patchParentDir = project.hasProperty('patchParentDir') ? project.property('patchParentDir') : project.buildDir.absolutePath
 	patchFileNames = project.hasProperty('patchFileNames') ? project.property('patchFileNames') : ""
-	revisionRootPath = project.hasProperty('revisionRootPath') ? project.property('revisionRootPath') : project.gradle.gradleUserHomeDir
+	buildTyp = project.hasProperty('buildTyp') ? project.property('buildTyp') : "PATCH"
 	rpmReleaseNr = project.hasProperty('rpmReleaseNr') ? project.property('rpmReleaseNr') : "2"
 	downloadDir = project.hasProperty('downloadDir') ? project.property('downloadDir') : "downloads"
 }
@@ -60,13 +60,11 @@ apgVersionResolver {
 	bomGroupId = 'com.affichage.common.maven'
 	bomBaseVersion = '9.1.0.ADMIN-UIMIG'
 	bomLastRevision = project.ext.bomLastRevision
-	installTarget = project.ext.installTarget
-	algorithm =  RevisionManagerBuilder.AlgorithmTyp.PATCH
+	algorithm =  project.ext.buildTyp == "PATCH" ? RevisionManagerBuilder.AlgorithmTyp.PATCH : RevisionManagerBuilder.AlgorithmTyp.SNAPSHOT
 	patches {
 		parentDir = project.ext.patchParentDir
 		fileNames = project.ext.patchFileNames
 	}
-	revisionRootPath = project.ext.revisionRootPath
 }
 
 

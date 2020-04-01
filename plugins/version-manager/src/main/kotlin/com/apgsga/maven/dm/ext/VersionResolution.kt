@@ -1,6 +1,7 @@
 package com.apgsga.maven.dm.ext
 
 
+import com.apgsga.gradle.common.pkg.extension.ApgCommonPackageExtension
 import com.apgsga.maven.VersionResolver
 import com.apgsga.maven.impl.resolver.BomVersionGradleResolverBuilder
 import com.apgsga.maven.impl.resolver.CompositeVersionResolverBuilder
@@ -43,7 +44,6 @@ open class VersionResolutionExtension(val project: Project, private val revision
     var bomGroupId: String? = null
     var bomBaseVersion: String? = null
     var algorithm: RevisionManagerBuilder.AlgorithmTyp = RevisionManagerBuilder.AlgorithmTyp.SNAPSHOT
-    var installTarget: String? = null
     private var _versionResolver: VersionResolver? = null
     val versionResolver: VersionResolver
         get() {
@@ -74,10 +74,28 @@ open class VersionResolutionExtension(val project: Project, private val revision
             return _bomNextRevision as String
         }
     private var _bomLastRevision: String? = null
+    private var _installTarget: String? = null
+    private val installTarget: String?
+        get() {
+            if (_installTarget == null) {
+                val pkgExt = project.extensions.getByType(ApgCommonPackageExtension::class.java)
+                _installTarget = pkgExt.installTarget
+            }
+            return  _installTarget
+        }
+    private var _serviceName: String? = null
+    private val serviceName: String?
+        get() {
+             if (_serviceName == null) {
+                 val pkgExt = project.extensions.getByType(ApgCommonPackageExtension::class.java)
+                 _serviceName = pkgExt.serviceName
+             }
+             return  _serviceName
+         }
     var bomLastRevision: String?
         get() {
             if (_bomLastRevision == null) {
-                _bomLastRevision = revisionManger.lastRevision("todo_serviceName", installTarget) as String?
+                _bomLastRevision = revisionManger.lastRevision(serviceName, installTarget) as String?
             }
             return _bomLastRevision
         }
@@ -92,7 +110,7 @@ open class VersionResolutionExtension(val project: Project, private val revision
 
     fun saveRevision() {
         // TODO (che, jhe , 26.3 ) When best to save the Revision? Necessary?
-        revisionManger.saveRevision("todo_serviceName",installTarget, bomNextRevision, bomBaseVersion)
+        revisionManger.saveRevision(serviceName, installTarget, bomNextRevision, bomBaseVersion)
     }
 
     fun patches(action: Action<Patches>) {

@@ -11,11 +11,14 @@ class VersionResolutionDslTests extends AbstractSpecification {
             plugins {
                 id("com.apgsga.version.resolver")
             }
+            apgPackage {
+               serviceName = 'aserviceName'
+               installTarget = 'CHEI212'
+            }
             apgVersionResolver {
 	            bomArtifactId = 'aArtifactid'
 	            bomGroupId = 'someGroupid'
 	            bomBaseVersion = '9.1.0.ADMIN-UIMIG'
-	            installTarget = 'CHEI212'
 	            revisionRootPath = 'aRevisionParentDir'
                 patches {
                    parentDir = "aPatchParentDir"
@@ -41,11 +44,14 @@ class VersionResolutionDslTests extends AbstractSpecification {
             project.ext {
               bomBaseVersion = project.hasProperty('bomBaseVersion') ? project.property('bomBaseVersion') : "XXXXXXXX"
             }
+           apgPackage {
+               serviceName = 'aserviceName'
+               installTarget = 'CHEI212'
+            }
              apgVersionResolver {
 	            bomArtifactId = 'aArtifactid'
 	            bomGroupId = 'someGroupid'
 	            bomBaseVersion = "\\\$\\\\{bomBaseVersion\\\\}"
-	            installTarget = 'CHEI212'
 	            revisionRootPath = '.'
                 patches {
                    parentDir = "aParentDir"
@@ -76,11 +82,14 @@ class VersionResolutionDslTests extends AbstractSpecification {
               patchParentDir = project.hasProperty('patchParentDir') ? project.property('patchParentDir') : "/"
               patchFiles = project.hasProperty('patchFiles') ? project.property('patchFiles') : "Patch8765.json:Patch8787.json"
             }  
+            apgPackage {
+               serviceName = 'aServiceName'
+               installTarget = 'CHEI212'
+            }
             apgVersionResolver {
 	            bomArtifactId = "\\\$\\\\{bomArtifactId\\\\}"
 	            bomGroupId = "\\\$\\\\{bomGroupId\\\\}"
 	            bomBaseVersion = "\\\$\\\\{bomVersion\\\\}"
-	            installTarget = 'CHEI212'
 	            revisionRootPath = '.'
                 patches {
                    parentDir = patchParentDir
