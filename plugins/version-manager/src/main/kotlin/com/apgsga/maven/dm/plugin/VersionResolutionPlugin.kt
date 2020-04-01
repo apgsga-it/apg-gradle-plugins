@@ -7,11 +7,13 @@ import org.gradle.api.Action
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.api.artifacts.Configuration
+import org.gradle.api.publish.maven.plugins.MavenPublishPlugin
 
 
 open class VersionResolutionPlugin : Plugin<Project> {
     override fun apply(project: Project) {
         project.plugins.apply(ApgCommonRepoPlugin::class.java)
+        project.plugins.apply(MavenPublishPlugin::class.java)
         val revisionManagerBuilder = RevisionManagerBuilder.create()
         val extension =  project.extensions.create("apgVersionResolver", VersionResolutionExtension::class.java, project, revisionManagerBuilder)
         applyRecommendations(project, extension)

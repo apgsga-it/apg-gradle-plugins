@@ -9,8 +9,6 @@ plugins {
 	id "nu.studer.credentials" version "2.1"
 }
 
-apply plugin: 'maven-publish'
-
 project.ext {
 	targetHost = project.hasProperty('targetHost') ? project.property('targetHost') : "jadas-e.apgsga.ch"
 	sshUser = project.hasProperty('sshUser') ? project.property('sshUser') : "deployUser"
@@ -101,11 +99,6 @@ apgRpmDeployConfig {
 }
 
 publishing {
-	publications {
-		bom(MavenPublication) {
-			apgVersionResolver.generateBom { }
-		}
-	}
 	repositories {
 		maven {
 			url "${new File(buildDir, 'local-repo').toURL()}"

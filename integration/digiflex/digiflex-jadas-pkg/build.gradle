@@ -9,8 +9,6 @@ plugins {
 	id "nu.studer.credentials" version "2.1"
 }
 
-apply plugin: 'maven-publish'
-
 project.ext {
 	targetHost = project.hasProperty('targetHost') ? project.property('targetHost') : "jadas-e.apgsga.ch"
 	sshUser = project.hasProperty('sshUser') ? project.property('sshUser') : "deployUser"
@@ -19,7 +17,7 @@ project.ext {
 	bomLastRevision = project.hasProperty('bomLastRevision') ? project.property('bomLastRevision') : "SNAPSHOT"
 	patchParentDir = project.hasProperty('patchParentDir') ? project.property('patchParentDir') : project.buildDir.absolutePath
 	patchFileNames = project.hasProperty('patchFileNames') ? project.property('patchFileNames') : ""
-	revisionRootPath = project.hasProperty('revisionRootPath') ? project.property('revisionRootPath') : project.buildDir.absolutePath
+	revisionRootPath = project.hasProperty('revisionRootPath') ? project.property('revisionRootPath') : project.gradle.gradleUserHomeDir
 	rpmReleaseNr = project.hasProperty('rpmReleaseNr') ? project.property('rpmReleaseNr') : "2"
 	downloadDir = project.hasProperty('downloadDir') ? project.property('downloadDir') : "downloads"
 }
@@ -68,7 +66,7 @@ apgVersionResolver {
 		parentDir = project.ext.patchParentDir
 		fileNames = project.ext.patchFileNames
 	}
-	revisionRootPath = project.buildDir.absolutePath
+	revisionRootPath = project.ext.revisionRootPath
 }
 
 
@@ -87,16 +85,11 @@ apgPackage {
 	releaseNr = project.ext.rpmReleaseNr
 }
 
-
-
-apgPackage.log()
-
 apgGenericPublishConfig {
 	artefactFile =  file ("${buildDir}/distributions/${apgPackage.archiveName}")
 	local()
 }
 
-apgGenericPublishConfig.log()
 
 apgSshConfig {
 	username project.ext.sshUser

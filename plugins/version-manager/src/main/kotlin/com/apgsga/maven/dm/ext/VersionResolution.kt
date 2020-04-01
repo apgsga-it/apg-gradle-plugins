@@ -44,7 +44,7 @@ open class VersionResolutionExtension(val project: Project, private val revision
     var bomBaseVersion: String? = null
     var algorithm: RevisionManagerBuilder.AlgorithmTyp = RevisionManagerBuilder.AlgorithmTyp.SNAPSHOT
     var installTarget: String? = null
-    private var _versionResolver : VersionResolver? = null
+    private var _versionResolver: VersionResolver? = null
     val versionResolver: VersionResolver
         get() {
             if (_versionResolver == null) {
@@ -52,17 +52,19 @@ open class VersionResolutionExtension(val project: Project, private val revision
             }
             return _versionResolver as VersionResolver
         }
+
     // Revision Manager and Revision Initialization
     private var _revisionManger: RevisionManager? = null
-    private val revisionManger : RevisionManager
+    private val revisionManger: RevisionManager
         get() {
             if (_revisionManger == null) {
-                _revisionManger = revisionManagerBuilder.revisionRootPath(revisionRootPath?: project.gradle.gradleUserHomeDir.absolutePath ).algorithm(algorithm).build()
+                _revisionManger = revisionManagerBuilder.revisionRootPath(revisionRootPath
+                        ?: project.gradle.gradleUserHomeDir.absolutePath).algorithm(algorithm).build()
             }
-            return  _revisionManger as RevisionManager
+            return _revisionManger as RevisionManager
         }
 
-    var revisionRootPath: String?  = null
+    var revisionRootPath: String? = null
     private var _bomNextRevision: String? = null
     private val bomNextRevision: String
         get() {
@@ -107,7 +109,14 @@ open class VersionResolutionExtension(val project: Project, private val revision
     fun generateBom(configurationsClosure: Closure<Any>) {
         val callingClosure = configurationsClosure.delegate as Closure<*>
         val mavenPublication = callingClosure.delegate as MavenPublication
-        generateBomXml(mavenPublication)
+        project.gradle.startParameter.taskNames.forEach tasks@{
+            project.logger.info("Task : $it")
+            if (it.startsWith("publish")) {
+                generateBomXml(mavenPublication)
+                saveRevision()
+                return@tasks
+            }
+        }
     }
 
     private fun generateBomXml(publication: MavenPublication) {
@@ -128,7 +137,7 @@ open class VersionResolutionExtension(val project: Project, private val revision
             versionResolver.getMavenArtifactList()?.forEach {
                 val dependencyNode = dependenciesNode.appendNode("dependency")
                 dependencyNode.appendNode("groupId", it.groupId)
-                dependencyNode.appendNode("artifactId" , it.artifactId)
+                dependencyNode.appendNode("artifactId", it.artifactId)
                 dependencyNode.appendNode("version", it.version)
                 // TODO (che, jhe,12.3) : possibly more
 //                dependencyNode.appendNode("scope", it.scope)
@@ -165,7 +174,6 @@ open class VersionResolutionExtension(val project: Project, private val revision
     fun version(revision: String): String {
         return version(bomBaseVersion, revision)
     }
-
 
 
 }

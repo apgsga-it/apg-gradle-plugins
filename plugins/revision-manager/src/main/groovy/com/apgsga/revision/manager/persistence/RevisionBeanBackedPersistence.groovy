@@ -43,9 +43,11 @@ class RevisionBeanBackedPersistence implements RevisionPersistence {
     }
 
     private void saveRevision(String targetName, revision) {
+        println("Saveing Revision : ${revision} for Target: ${targetName}")
         def revisions = read(Revisions.class)
         revisions.targets[targetName as String] = revision
         write(revisions)
+        println("Saveing Revision : ${revision} for Target: ${targetName} done.")
     }
 
     private  <T> T read(Class<T> clx) {
