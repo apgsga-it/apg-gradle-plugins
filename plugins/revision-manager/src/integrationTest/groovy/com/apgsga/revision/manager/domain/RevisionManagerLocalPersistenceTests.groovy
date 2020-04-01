@@ -2,6 +2,7 @@ package com.apgsga.revision.manager.domain
 
 import com.apgsga.revision.manager.persistence.Revisions
 import com.apgsga.revision.manager.persistence.RevisionTargetHistory
+import spock.lang.Ignore
 import spock.lang.Specification
 
 import java.nio.file.Files
@@ -33,7 +34,7 @@ class RevisionManagerLocalPersistenceTests extends Specification {
         then:
             Files.exists(Paths.get(revisionFilePath))
             Files.exists(Paths.get(historyFilePath))
-            nextRev == 1
+            nextRev == "1"
     }
 
     def "Get next global Revision"() {
@@ -42,7 +43,7 @@ class RevisionManagerLocalPersistenceTests extends Specification {
         then:
             Files.exists(Paths.get(revisionFilePath))
             Files.exists(Paths.get(historyFilePath))
-            nextRev == 1
+            nextRev == "1"
         when:
             RevisionManager rm2 =  RevisionManagerBuilder.create()
                     .revisionRootPath(revisionRootPath)
@@ -51,35 +52,35 @@ class RevisionManagerLocalPersistenceTests extends Specification {
             nextRev = rm2.nextRevision()
         then:
             Files.exists(Paths.get(revisionFilePath))
-            nextRev == 2
+            nextRev == "2"
     }
 
-    def "Get last Revision for a target when target not in Revisions.json"() {
+    def "Get last Revision for a service on a given target when the service is not yet in Revisions.json"() {
         given:
             Files.exists(Paths.get(revisionFilePath))
             Files.exists(Paths.get(historyFilePath))
         when:
-            def lastRevForCHXXX = rm.lastRevision("CHXXX")
+            def lastRevForCHXXX = rm.lastRevision("myTestService","CHXXX")
         then:
             lastRevForCHXXX == "SNAPSHOT"
     }
 
-    def "Save and get revisions for targets"() {
+    def "Save and get revisions for a service on given targets"() {
         when:
-            rm.saveRevision("chxxx", "22", "TEST-")
+            rm.saveRevision("myTestService","chxxx", "22", "TEST-")
         then:
             Files.exists(Paths.get(revisionFilePath))
             Files.exists(Paths.get(historyFilePath))
         when:
-            def lastRevForCHXXX = rm.lastRevision("chxxx")
-            def lastRevForCHYYY = rm.lastRevision("chyyy")
+            def lastRevForCHXXX = rm.lastRevision("myTestService","chxxx")
+            def lastRevForCHYYY = rm.lastRevision("myTestService","chyyy")
         then:
             lastRevForCHXXX == "22"
             lastRevForCHYYY == "SNAPSHOT"
         when:
-            rm.saveRevision("chyyy", "33", "TEST-")
-            lastRevForCHXXX = rm.lastRevision("chxxx")
-            lastRevForCHYYY = rm.lastRevision("chyyy")
+            rm.saveRevision("myTestService","chyyy", "33", "TEST-")
+            lastRevForCHXXX = rm.lastRevision("myTestService","chxxx")
+            lastRevForCHYYY = rm.lastRevision("myTestService","chyyy")
         then:
             lastRevForCHXXX == "22"
             lastRevForCHYYY == "33"

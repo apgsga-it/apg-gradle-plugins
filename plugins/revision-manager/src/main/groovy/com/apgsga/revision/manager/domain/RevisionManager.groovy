@@ -9,18 +9,18 @@ interface RevisionManager {
      * @param fullRevisionPrefix
      * @return void
      */
-    void saveRevision(def target, def revision, def fullRevisionPrefix)
+    void saveRevision(String serviceName, String target, String revision, String fullRevisionPrefix)
 
     /**
      *
      * @param target
      * @return last revision for the given target
      */
-    def lastRevision(def target)
+    String lastRevision(String serviceName, String target)
 
     /**
      * Fetch the next global revision and set lastRevForTarget and nextRevForTarget of NextRevision task
      * @return revision
      */
-    def nextRevision()
+    String nextRevision()
 }

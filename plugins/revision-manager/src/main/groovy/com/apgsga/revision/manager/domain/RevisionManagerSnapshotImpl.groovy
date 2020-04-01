@@ -4,17 +4,17 @@ class RevisionManagerSnapshotImpl implements RevisionManager {
 
 
     @Override
-    def nextRevision() {
+    String nextRevision() {
        "SNAPSHOT"
     }
 
     @Override
-    def lastRevision(def target) {
+    String lastRevision(String serviceName, String target) {
         "SNAPSHOT"
     }
 
     @Override
-    void saveRevision(def target, def revision, def fullRevisionPrefix) {
+    void saveRevision(String serviceName, String target, String revision, String fullRevisionPrefix) {
     }
 
 
