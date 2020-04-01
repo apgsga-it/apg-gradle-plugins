@@ -11,7 +11,7 @@ class RevisionManagerPatchImpl implements RevisionManager {
     }
 
     @Override
-    def nextRevision() {
+    String nextRevision() {
         def currentRev =revisionPersistence.currentRevision()
         currentRev++
         revisionPersistence.save(currentRev)
@@ -19,9 +19,9 @@ class RevisionManagerPatchImpl implements RevisionManager {
     }
 
     @Override
-    def lastRevision(def target) {
+    String lastRevision(String serviceName, String target) {
         assert target != null , "Target must be set, cannot be null"
-        String lastRevision = revisionPersistence.lastRevision(target.toUpperCase())
+        String lastRevision = revisionPersistence.lastRevision(serviceName,target.toUpperCase())
         if(lastRevision != null)
             return lastRevision
         else {
@@ -30,8 +30,8 @@ class RevisionManagerPatchImpl implements RevisionManager {
     }
 
     @Override
-    void saveRevision(def target, def revision, def fullRevisionPrefix) {
-        revisionPersistence.save(target.toUpperCase(), revision.toUpperCase(), fullRevisionPrefix.toUpperCase())
+    void saveRevision(String serviceName, String target, String revision, String fullRevisionPrefix) {
+        revisionPersistence.save(serviceName,target.toUpperCase(), revision.toUpperCase(), fullRevisionPrefix.toUpperCase())
     }
 
 

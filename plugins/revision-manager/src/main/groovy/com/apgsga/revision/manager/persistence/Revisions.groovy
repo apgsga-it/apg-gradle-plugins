@@ -1,19 +1,18 @@
 package com.apgsga.revision.manager.persistence
 
 class Revisions  {
-    Integer currentRevision
-    Map<String, String> targets
+    String currentRevision
+    Map<String,Map<String, String>> services
 
-    Revisions(Integer currentRevision, Map<String, String> targets) {
+    Revisions(String currentRevision, Map<String,Map<String, String>> services) {
         this.currentRevision = currentRevision
-        this.targets = targets
+        this.services = services
     }
 
     Revisions() {
     }
 
-    def lastRevision(String target, String revision) {
-        targets[target] = revision
+    def lastRevision(String serviceName, String target, String revision) {
+        services[serviceName][target] = revision
     }
-
 }
