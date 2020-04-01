@@ -75,7 +75,7 @@ open class VersionResolutionExtension(val project: Project, private val revision
     var bomLastRevision: String?
         get() {
             if (_bomLastRevision == null) {
-                _bomLastRevision = revisionManger.lastRevision(installTarget) as String?
+                _bomLastRevision = revisionManger.lastRevision("todo_serviceName", installTarget) as String?
             }
             return _bomLastRevision
         }
@@ -90,7 +90,7 @@ open class VersionResolutionExtension(val project: Project, private val revision
 
     fun saveRevision() {
         // TODO (che, jhe , 26.3 ) When best to save the Revision? Necessary?
-        revisionManger.saveRevision(installTarget, bomNextRevision, bomBaseVersion)
+        revisionManger.saveRevision("todo_serviceName",installTarget, bomNextRevision, bomBaseVersion)
     }
 
     fun patches(action: Action<Patches>) {
