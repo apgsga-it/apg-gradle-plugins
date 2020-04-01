@@ -1,8 +1,7 @@
 package com.apgsga.revision.manager.domain
 
-import com.apgsga.revision.manager.persistence.Revisions
 import com.apgsga.revision.manager.persistence.RevisionTargetHistory
-import spock.lang.Ignore
+import com.apgsga.revision.manager.persistence.Revisions
 import spock.lang.Specification
 
 import java.nio.file.Files

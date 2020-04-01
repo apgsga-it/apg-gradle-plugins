@@ -20,7 +20,10 @@ class RevisionBeanBackedPersistence implements RevisionPersistence {
     @Override
     String lastRevision(String serviceName, String targetName) {
         def revisions = read(Revisions.class)
-        revisions.targets.get(serviceName).get(targetName)
+        if(revisions.services.get(serviceName) != null) {
+            return revisions.services.get(serviceName).get(targetName)
+        }
+        return null
     }
 
     @Override
@@ -44,10 +47,10 @@ class RevisionBeanBackedPersistence implements RevisionPersistence {
 
     private void saveRevision(String serviceName, String targetName, String revision) {
         def revisions = read(Revisions.class)
-        if(!revisions.targets.keySet().contains(serviceName)) {
-            revisions.targets.put(serviceName, new HashMap<String, String>())
+        if(!revisions.services.keySet().contains(serviceName)) {
+            revisions.services.put(serviceName, new HashMap<String, String>())
         }
-        revisions.targets.get(serviceName).put(targetName,revision)
+        revisions.services.get(serviceName).put(targetName,revision)
         write(revisions)
     }
 

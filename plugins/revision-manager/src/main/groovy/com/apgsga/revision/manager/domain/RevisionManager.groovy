@@ -1,6 +1,5 @@
 package com.apgsga.revision.manager.domain
 
-// TODO (jhe, che , 21.2 ) The interface should have explicitly defined types
 interface RevisionManager {
 
     /**
