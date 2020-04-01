@@ -1,21 +1,24 @@
 package com.apgsga.revision.manager.persistence
 
 class RevisionTargetHistory {
-    Map<String,List<String>> revisions
+    Map<String,Map<String,List<String>>> services
 
-    RevisionTargetHistory(Map<String,List<String>> revisions) {
-        this.revisions = revisions
+    RevisionTargetHistory(Map<String,Map<String,List<String>>> services) {
+        this.services = services
     }
 
     RevisionTargetHistory() {
     }
 
-    def add(String target, versionPrefix, revision) {
-        def targetHistory = revisions[target as String] as List
+    def add(String serviceName, String target, String versionPrefix, String revision) {
+        if(!services.keySet().contains(serviceName)) {
+            services.put(serviceName,new HashMap<String, List<String>>())
+        }
+        def targetHistory = services.get(serviceName).get(target) as List
         if (targetHistory == null) {
             targetHistory = new ArrayList<String>()
         }
         targetHistory.add("${versionPrefix}-${revision}".toString())
-        revisions[target as String] = targetHistory
+        services.get(serviceName)[target] = targetHistory
     }
 }

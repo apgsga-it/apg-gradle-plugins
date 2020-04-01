@@ -8,43 +8,49 @@ class RevisionBeanBackedPersistence implements RevisionPersistence {
 
     RevisionBeanBackedPersistence(File revisionRootDir) {
         this.revisionRootDir = revisionRootDir
-        init(Revisions.class, 0, new HashMap<String, String>())
-        init(RevisionTargetHistory.class, new HashMap<String, List<String>>())
+        init(Revisions.class, "0", new HashMap<String,HashMap<String, String>>())
+        init(RevisionTargetHistory.class, new HashMap<String,HashMap<String, List<String>>>())
     }
 
     @Override
-    def currentRevision() {
+    String currentRevision() {
         read(Revisions.class).currentRevision
     }
 
     @Override
-    def lastRevision(def targetName) {
+    String lastRevision(String serviceName, String targetName) {
         def revisions = read(Revisions.class)
-        revisions.targets[targetName as String]
+        if(revisions.services.get(serviceName) != null) {
+            return revisions.services.get(serviceName).get(targetName)
+        }
+        return null
     }
 
     @Override
-    def save(def revision) {
+    void save(String revision) {
         def revisions = read(Revisions.class)
         revisions.currentRevision = revision
         write(revisions)
     }
 
     @Override
-    def save(def target, def revision, def versionPrefix) {
-        saveRevision(target, revision)
-        saveRevisionHistory(target, versionPrefix, revision)
+    void save(String serviceName, String target, String revision, String versionPrefix) {
+        saveRevision(serviceName,target, revision)
+        saveRevisionHistory(serviceName,target, versionPrefix, revision)
     }
 
-    private void saveRevisionHistory(String target, versionPrefix, revision) {
+    private void saveRevisionHistory(String serviceName, String target, String versionPrefix, String revision) {
         def targetsHistory = read(RevisionTargetHistory.class)
-        targetsHistory.add(target,versionPrefix,revision)
+        targetsHistory.add(serviceName,target,versionPrefix,revision)
         write(targetsHistory)
     }
 
-    private void saveRevision(String targetName, revision) {
+    private void saveRevision(String serviceName, String targetName, String revision) {
         def revisions = read(Revisions.class)
-        revisions.targets[targetName as String] = revision
+        if(!revisions.services.keySet().contains(serviceName)) {
+            revisions.services.put(serviceName, new HashMap<String, String>())
+        }
+        revisions.services.get(serviceName).put(targetName,revision)
         write(revisions)
     }
 

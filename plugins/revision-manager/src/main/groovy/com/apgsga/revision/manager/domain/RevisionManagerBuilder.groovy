@@ -4,6 +4,7 @@ import com.apgsga.revision.manager.persistence.RevisionBeanBackedPersistence
 
 class RevisionManagerBuilder {
 
+    // TODO JHE: Shouldn't we deal with the history file as well ?
     private static String REVISION_FILENAME = "Revisions.json"
 
     static enum AlgorithmTyp {
