@@ -35,13 +35,13 @@ class MavenBomManagerDefault(private val bomLoader: BomLoader) : MavenBomManager
      * @return Collection of [Dependency]
      */
     private fun loadModel(bomFile: InputStream, artList: Collection<Dependency>, resursive: Boolean): Collection<Dependency> {
-        logger.info("Loading Maven Model")
+        logger.debug("Loading Maven Model")
         val mavenReader = MavenXpp3Reader()
         val mavenModel = mavenReader.read(bomFile)
         val dependencies = mavenModel.dependencyManagement.dependencies
         val artifactList = list(dependencies, mavenModel, artList, resursive)
-        logger.info("Loading Maven Model done.")
-        logger.info("Resolved the following artifacts from pom $mavenModel.groupId, ${mavenModel.artifactId} : $artifactList")
+        logger.debug("Loading Maven Model done.")
+        logger.debug("Resolved the following artifacts from pom $mavenModel.groupId, ${mavenModel.artifactId} : $artifactList")
         return artifactList
     }
 

@@ -1,4 +1,4 @@
-package com.apgsga.gradle.common.pkg.task
+package com.apgsga.gradle.service.pkg.task
 
 import org.gradle.api.DefaultTask
 import org.gradle.api.tasks.OutputDirectory

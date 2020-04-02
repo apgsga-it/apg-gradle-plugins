@@ -16,6 +16,7 @@ dependencies {
 	compile group: 'commons-io', name: 'commons-io', version: '2.6'
 	compile group: 'com.google.guava', name: 'guava', version: '20.0'
 	compile project(':repo-config')
+	compile project(':common-service-packager')
 
 }
 

@@ -62,14 +62,14 @@ apgVersionResolver {
 }
 
 apgPackage {
-	serviceName = 'echoservice'
+	name = 'echoservice'
 	configurationName = "serviceRuntime"
 	dependencies = [
 		"com.apgsga.testapp:testapp-service"
     ]
 	resourceFilters = "serviceport"
 	appConfigFilters = "general"
-  	servicePropertiesDir = "resources"
+	resourcesPath = "resources"
 	installTarget = project.ext.installTarget
 	mainProgramName  = "com.apgsga.testapp.TestappApplication"
 	releaseNr = project.ext.rpmReleaseNr

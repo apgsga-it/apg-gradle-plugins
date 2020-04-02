@@ -14,7 +14,6 @@ import org.gradle.api.tasks.bundling.Zip;
 
 public class ApgZipPackagePlugin implements Plugin<Project> {
 
-	@SuppressWarnings("unused")
 	@Override
 	public void apply(Project project) {
 

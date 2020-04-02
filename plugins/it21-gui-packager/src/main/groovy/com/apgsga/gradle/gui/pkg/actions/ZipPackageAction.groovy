@@ -15,11 +15,11 @@ class ZipPackageAction implements Action<Zip> {
 	@Override
     void execute(Zip zip) {
 		def ex = project.extensions.apgPackage
-		zip.from("${project.buildDir}/${ex.pkgName}")
-		zip.into("${ex.pkgName}")
+		zip.from("${project.buildDir}/${ex.name}")
+		zip.into("${ex.name}")
 		// TODO (che, 1.10 ) Verify 
 		zip.destinationDir = new File("${project.buildDir}/distributions")
 		// TODO (che, 23.10) : Is this enough for Version?
-		zip.archiveName = "${ex.pkgName}-${ex.version}.zip"
+		zip.archiveName = "${ex.name}-${ex.version}.zip"
 	}
 }

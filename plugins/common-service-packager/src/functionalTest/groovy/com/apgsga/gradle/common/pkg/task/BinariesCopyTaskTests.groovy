@@ -17,7 +17,7 @@ class BinariesCopyTaskTests extends AbstractSpecification {
         buildFile << """
 
             plugins {
-                id 'com.apgsga.common.package'
+                id 'com.apgsga.service.package'
             }
 
 			apgRepositories {
@@ -27,7 +27,7 @@ class BinariesCopyTaskTests extends AbstractSpecification {
 
 		// The guava dependency is only for testing purposes, consider to be likely found in mavenCentral()
         apgPackage {
-			serviceName ="testapp"
+			name ="testapp"
 			configurationName = 'serviceRuntime'
 		    dependencies = ["com.google.guava:guava:+"]
             installTarget = "CHTX211"
@@ -55,7 +55,7 @@ class BinariesCopyTaskTests extends AbstractSpecification {
 		buildFile << """
 
             plugins {
-                id 'com.apgsga.common.package'
+                id 'com.apgsga.service.package'
             }
             
             configurations { testRuntime.exclude group: 'log4j', module: 'log4j' }
@@ -67,7 +67,7 @@ class BinariesCopyTaskTests extends AbstractSpecification {
 
 		// The guava dependency is only for testing purposes, consider to be likely found in mavenCentral()
         apgPackage {
-			serviceName ="testapp"
+			name ="testapp"
 			configurationName = 'testRuntime'
 		    dependencies = ["com.google.guava:guava:+"]
             installTarget = "CHTX211"

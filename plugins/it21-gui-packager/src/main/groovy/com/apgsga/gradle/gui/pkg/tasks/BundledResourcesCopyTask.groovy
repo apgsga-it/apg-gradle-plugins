@@ -10,7 +10,7 @@ class BundledResourcesCopyTask extends DefaultTask {
 	@OutputDirectory
     File getOutputDir() {
 		def ex = project.extensions.apgPackage
-		return new File("${project.buildDir}/${ex.pkgName}") 
+		return new File("${project.buildDir}/${ex.name}")
 	}
 
 	
@@ -18,9 +18,9 @@ class BundledResourcesCopyTask extends DefaultTask {
 	def taskAction() {
 		def ex = project.extensions.apgPackage
 		project.copy {
-			into "${project.buildDir}/${ex.pkgName}"
+			into "${project.buildDir}/${ex.name}"
 			from ("${project.buildDir}/packageing") {
-				expand(javaOpts:ex.javaOpts,mainProgramm:ex.mainProgramm,pkgName:ex.pkgName)
+				expand(javaOpts:ex.javaOpts,mainProgramm:ex.mainProgramName,pkgName:ex.name)
 				include '**/*.bat'
 				include '**/logback.xml'
 			}

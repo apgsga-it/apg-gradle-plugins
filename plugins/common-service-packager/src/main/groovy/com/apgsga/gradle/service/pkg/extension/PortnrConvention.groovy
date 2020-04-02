@@ -1,4 +1,4 @@
-package com.apgsga.gradle.common.pkg.extension
+package com.apgsga.gradle.service.pkg.extension
 
 import org.gradle.api.Project
 import org.gradle.api.plugins.ExtraPropertiesExtension.UnknownPropertyException

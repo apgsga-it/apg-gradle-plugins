@@ -1,4 +1,4 @@
-package com.apgsga.gradle.common.pkg.task
+package com.apgsga.gradle.service.pkg.task
 
 import org.gradle.api.DefaultTask
 import org.gradle.api.Project
@@ -62,7 +62,7 @@ class ResourceFileMergerTask extends CommonPropertyFileMergerTask {
 	@TaskAction
 	def taskAction() {
 		def resourceFilters = project.extensions.apgPackage.resourceFilters
-		def servicePropertiesDir = project.extensions.apgPackage.servicePropertiesDir
+		def servicePropertiesDir = project.extensions.apgPackage.resourcesPath
 		mergePropertyFiles(project, resourceFilters, "${project.buildDir}/packageing/resources","${project.buildDir}/template/app/conf/ops","${project.projectDir}/${servicePropertiesDir}",'resource')
 	}
 }
@@ -74,7 +74,7 @@ class AppConfigFileMergerTask extends CommonPropertyFileMergerTask {
 	@TaskAction
 	def taskAction() {
 		def appConfigFilters = project.extensions.apgPackage.appConfigFilters
-		def servicePropertiesDir = project.extensions.apgPackage.servicePropertiesDir
+		def servicePropertiesDir = project.extensions.apgPackage.resourcesPath
 		mergePropertyFiles(project, appConfigFilters,"${project.buildDir}/packageing/appconfigs","${project.buildDir}/template/app/conf/app","${project.projectDir}/${servicePropertiesDir}",'appconfig')
 	}
 }

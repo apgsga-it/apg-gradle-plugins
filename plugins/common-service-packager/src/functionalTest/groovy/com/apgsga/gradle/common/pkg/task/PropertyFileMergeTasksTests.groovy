@@ -18,7 +18,7 @@ class PropertyFileMergeTasksTests extends AbstractSpecification {
         given:
         buildFile << """
             plugins {
-                id 'com.apgsga.common.package' 
+                id 'com.apgsga.service.package' 
             }
         """
 
@@ -43,12 +43,12 @@ class PropertyFileMergeTasksTests extends AbstractSpecification {
 		given:
 		buildFile << """
             plugins {
-                id 'com.apgsga.common.package' 
+                id 'com.apgsga.service.package' 
             }
 			apgPackage {
 				resourceFilters = "serviceport"
 				appConfigFilters = "general"
-				servicePropertiesDir = "resources"
+				resourcesPath = "resources"
 			}
 	    """
 		def resourceDir = new File(testProjectDir,'resources')
@@ -83,12 +83,12 @@ class PropertyFileMergeTasksTests extends AbstractSpecification {
 		given:
 		buildFile << """
             plugins {
-                id 'com.apgsga.common.package' 
+                id 'com.apgsga.service.package' 
             }
 			apgPackage {
 				resourceFilters = "serviceport"
 				appConfigFilters = "general"
-				servicePropertiesDir = "resources"
+				resourcesPath = "resources"
 			}
 	    """
 		def resourceDir = new File(testProjectDir,'resources')
@@ -121,7 +121,7 @@ class PropertyFileMergeTasksTests extends AbstractSpecification {
 		given:
 		buildFile << """
             plugins {
-                id 'com.apgsga.common.package' 
+                id 'com.apgsga.service.package' 
             }
         """
 

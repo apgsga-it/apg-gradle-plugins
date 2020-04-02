@@ -7,6 +7,7 @@ plugins {
 	id("com.apgsga.ssh")
 	id("com.apgsga.version.resolver")
 	id "nu.studer.credentials" version "2.1"
+	id 'java'
 }
 
 
@@ -20,7 +21,7 @@ project.ext {
 	bomLastRevision = project.hasProperty('bomLastRevision') ? project.property('bomLastRevision') : "SNAPSHOT"
 	patchParentDir = project.hasProperty('patchParentDir') ? project.property('patchParentDir') : project.buildDir.absolutePath
 	patchFileNames = project.hasProperty('patchFileNames') ? project.property('patchFileNames') : ""
-	revisionRootPath = project.hasProperty('revisionRootPath') ? project.property('revisionRootPath') : project.buildDir.absolutePath
+	buildTyp = project.hasProperty('buildTyp') ? project.property('buildTyp') : "PATCH"
 	downloadDir = project.hasProperty('downloadDir') ? project.property('downloadDir') : "/Daten/Downloads"
 	installDir = project.hasProperty('installDir') ? project.property('installDir') : "/Daten/Programme"
 }
@@ -40,39 +41,42 @@ apgRepositories {
 	artifactory()
 }
 
-configurations.all {
-	 resolutionStrategy {	
-		 force 'org.springframework:spring-web:4.3.18.RELEASE'
-	 }
+configurations {
+	serviceRuntime
 }
+//configurations.uiRuntime {
+//	 resolutionStrategy {
+//		 force 'org.springframework:spring-web:4.3.18.RELEASE'
+//	 }
+//}
 
 
 apgVersionResolver {
 	bomArtifactId = 'dm-bom'
 	bomGroupId = 'com.affichage.common.maven'
-	bomBaseVersion = '9.1.0.ADMIN-UIMIG'
+	bomBaseVersion = '9.1.0.DIGIFLEX'
 	bomLastRevision = project.ext.bomLastRevision
 	installTarget = project.ext.installTarget
-	algorithm =  RevisionManagerBuilder.AlgorithmTyp.PATCH
+	algorithm =  project.ext.buildTyp == "PATCH" ? RevisionManagerBuilder.AlgorithmTyp.PATCH : RevisionManagerBuilder.AlgorithmTyp.SNAPSHOT
 	patches {
 		parentDir = project.ext.patchParentDir
 		fileNames = project.ext.patchFileNames
 	}
-	revisionRootPath = project.buildDir.absolutePath
 }
 
 
 apgPackage {
-	pkgName = 'digiflex-it21-ui'
+	name = 'digiflex-it21-ui'
+	configurationName = "serviceRuntime"
 	dependencies = [
-		"com.affichage.it21.ui:it21-ui-runtime:9.1.0.DIGIFLEX-SNAPSHOT",
-		"com.apgsga.it21.ui.mdt:it21ui-app-starter:9.1.0.DIGIFLEX-SNAPSHOT",
-		"com.apgsga.it21.ui.mdt:javaforms-starter:9.1.0.DIGIFLEX-SNAPSHOT",
-		"org.springframework.boot:spring-boot-starter-tomcat:1.5.3.RELEASE",
-		"moyosoft:moyocore_x64:3.0.4:@dll",
+		"com.affichage.it21.ui:it21-ui-runtime",
+		"com.apgsga.it21.ui.mdt:it21ui-app-starter",
+		"com.apgsga.it21.ui.mdt:javaforms-starter",
+		"org.springframework.boot:spring-boot-starter-tomcat",
+		"moyosoft:moyocore_x64:3.0.4:@dll"
 	]
 	resourcesPath = "resources"
-	mainProgramm  = "com.affichage.it21.ui.runtime.It21GuiRuntimeStarter"
+	mainProgramName  = "com.affichage.it21.ui.runtime.It21GuiRuntimeStarter"
 }
 
 apgGenericPublishConfig {
@@ -80,4 +84,16 @@ apgGenericPublishConfig {
 	local()
 }
 
-
+// TODO (che, jhe , 2.4.20) test version, needs to be adopted acccordingly
+publishing {
+	publications {
+		bom(MavenPublication) {
+			apgVersionResolver.generateBom { }
+		}
+	}
+	repositories {
+		maven {
+			url "${new File(buildDir, 'local-repo').toURL()}"
+		}
+	}
+}

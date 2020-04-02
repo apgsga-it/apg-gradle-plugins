@@ -1,4 +1,4 @@
-package com.apgsga.gradle.common.pkg.actions
+package com.apgsga.gradle.service.pkg.actions
 
 import org.gradle.api.Action
 import org.gradle.api.Project

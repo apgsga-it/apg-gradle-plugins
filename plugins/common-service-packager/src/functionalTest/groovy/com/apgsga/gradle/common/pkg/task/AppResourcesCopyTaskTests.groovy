@@ -18,7 +18,7 @@ class AppResourcesCopyTaskTests extends AbstractSpecification {
         given:
         buildFile << """
             plugins {
-                id 'com.apgsga.common.package' 
+                id 'com.apgsga.service.package' 
             }
         """
 
@@ -44,10 +44,10 @@ class AppResourcesCopyTaskTests extends AbstractSpecification {
 		given:
 		buildFile << """
             plugins {
-                id 'com.apgsga.common.package' 
+                id 'com.apgsga.service.package' 
             }
 		 apgPackage {
-			serviceName ="testapp"
+			name ="testapp"
             installTarget = "CHTX211"
 			mainProgramName  = "com.apgsga.test.SomeMain"
          }

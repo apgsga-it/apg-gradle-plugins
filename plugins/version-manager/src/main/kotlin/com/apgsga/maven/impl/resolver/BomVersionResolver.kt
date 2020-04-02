@@ -6,9 +6,9 @@ import org.apache.maven.model.Dependency
 class BomVersionResolver(private var bomArtifact: String, private var recursive: Boolean? = true, private var mavenBomManager: MavenBomManager) : AbstractVersionResolver() {
 
     override fun getMavenArtifactList(): Collection<Dependency>? {
-        logger.info(toString())
+        logger.debug(toString())
         val retrieved = mavenBomManager.retrieve(bomArtifact, recursive ?: true)
-        logger.info("Got versions: $retrieved")
+        logger.debug("Got versions: $retrieved")
         return retrieved
     }
 

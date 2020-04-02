@@ -1,4 +1,4 @@
-package com.apgsga.gradle.common.pkg.task
+package com.apgsga.gradle.service.pkg.task
 
 import org.apache.tools.ant.filters.FixCrLfFilter
 import org.gradle.api.DefaultTask
@@ -23,7 +23,7 @@ class AppResourcesCopyTask extends DefaultTask {
 			rename { filename ->
 				filename.replace 'servicetemplate', ex.targetServiceName
 			}
-			expand(serviceName:ex.serviceName,portNr:ex.portNr,installTarget:ex.installTarget,mainPrg:ex.mainProgramName,
+			expand(serviceName:ex.name,portNr:ex.portNr,installTarget:ex.installTarget,mainPrg:ex.mainProgramName,
 				targetServiceName:ex.targetServiceName,targetServiceExecDir:ex.targetServiceExecDir,targetServiceDataDir:ex.targetServiceDataDir,
 				targetServiceConfigDir:ex.targetServiceConfigDir,javaDir:ex.javaDir,javaDist:ex.javaDist,distRepoUrl:ex.distRepoUrl,
 				ecmTargetSystemInd:ex.ecmTargetSystemInd,ibdsTargetSystemInd:ex.ibdsTargetSystemInd,

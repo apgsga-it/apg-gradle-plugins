@@ -51,7 +51,7 @@ configurations {
 apgVersionResolver {
 	bomArtifactId = 'dm-bom'
 	bomGroupId = 'com.affichage.common.maven'
-	bomBaseVersion = '9.1.0.ADMIN-UIMIG'
+	bomBaseVersion = '9.1.0.DIGIFLEX'
 	bomLastRevision = project.ext.bomLastRevision
 	algorithm =  project.ext.buildTyp == "PATCH" ? RevisionManagerBuilder.AlgorithmTyp.PATCH : RevisionManagerBuilder.AlgorithmTyp.SNAPSHOT
 	patches {
@@ -63,15 +63,15 @@ apgVersionResolver {
 
 
 apgPackage {
-	serviceName = "digiflex-web-it21"
+	name = "digiflex-web-it21"
 	configurationName = "serviceRuntime"
 	dependencies = [
-		"com.apgsga.vk.digiflex:apg-vk-digiflex-web:9.1.0.DIGIFLEX-SNAPSHOT"
+		"com.apgsga.vk.digiflex:apg-vk-digiflex-web"
 	]
 	resourceFilters = "serviceport:it21db-webui:interapp:javamelody"
 	appConfigFilters = "general:webui"
 	it21DbDaoLocations = "com/affichage/vaadin/**"
-  	servicePropertiesDir = "resources"
+	resourcesPath = "resources"
 	installTarget = project.ext.installTarget
 	mainProgramName  = "com.affichage.vaadin.vk.VkWebApplication"
 	releaseNr = project.ext.rpmReleaseNr
@@ -96,6 +96,7 @@ apgRpmDeployConfig {
 	remoteDestFolder "${project.ext.downloadDir}"
 }
 
+// TODO (che, jhe , 2.4.20) test version, needs to be adopted acccordingly
 publishing {
 	publications {
 		bom(MavenPublication) {

@@ -10,7 +10,7 @@ class DllCopyTask extends DefaultTask {
 	@OutputDirectory
     File getOutputDir() {
 		def ex = project.extensions.apgPackage
-		return new File("${project.buildDir}/${ex.pkgName}/dll") 
+		return new File("${project.buildDir}/${ex.name}/dll")
 	}
 
 	
@@ -18,9 +18,11 @@ class DllCopyTask extends DefaultTask {
 	def taskAction() {
 		def ex = project.extensions.apgPackage
 		def configName = ex.configurationName
+		logger.info("Configure Dependency config ${configName}")
+		def config = project.configurations.findByName("${configName}")
 		project.copy {
-			into "${project.buildDir}/${ex.pkgName}/dll"
-			from configName
+			into "${project.buildDir}/${ex.name}/dll"
+			from config
 			// In lib we only want jars files to go in lib folder (no dll, exe, bat, etc...)
 			include "*.dll"
 			project.configurations."${configName}".allDependencies.each {rename "-${it.version}", ""} // Remove version information

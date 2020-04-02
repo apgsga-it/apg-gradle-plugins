@@ -29,13 +29,6 @@ println "downloadDir = ${project.ext.downloadDir}"
 
 apply from : "${project.gradle.gradleUserHomeDir}/common/portnr.gradle"
 
-configurations {
-	serviceRuntime.exclude group: 'log4j', module: 'log4j'
-	serviceRuntime.exclude group: 'org.neo4j' , module: 'neo4j-ogm'
-	serviceRuntime.exclude group: 'org.neo4j' , module: 'neo4j-ogm'
-	serviceRuntime.exclude group: 'org.codehaus.groovy' , module: 'groovy-all'
-}
-
 apgRepos {
 	// TODO (che, 27.2) : Profiles needed
 	config(RepoType.MAVEN,[REPO_NAME:"testrepo",REPO_BASE_URL:"/Users/chhex/maven"])
@@ -58,7 +51,7 @@ configurations {
 apgVersionResolver {
 	bomArtifactId = 'dm-bom'
 	bomGroupId = 'com.affichage.common.maven'
-	bomBaseVersion = '9.1.0.ADMIN-UIMIG'
+	bomBaseVersion = '9.1.0.DIGIFLEX'
 	bomLastRevision = project.ext.bomLastRevision
 	algorithm =  project.ext.buildTyp == "PATCH" ? RevisionManagerBuilder.AlgorithmTyp.PATCH : RevisionManagerBuilder.AlgorithmTyp.SNAPSHOT
 	patches {
@@ -69,15 +62,15 @@ apgVersionResolver {
 
 
 apgPackage {
-	serviceName = "digiflex-jadas"
+	name = "digiflex-jadas"
 	configurationName = "serviceRuntime"
 	dependencies = [
-		"com.apgsga.it21.ui.mdt:jadas-app-starter:9.1.0.DIGIFLEX-SNAPSHOT",
-		"com.apgsga.it21.ui.mdt:jadas-framework-starter:9.1.0.DIGIFLEX-SNAPSHOT"
+		"com.apgsga.it21.ui.mdt:jadas-app-starter",
+		"com.apgsga.it21.ui.mdt:jadas-framework-starter"
 	]
 	resourceFilters = "serviceport:it21db-jadas:ibdsdb-jadas:ecmservice:interapp"
 	appConfigFilters = "general:jadas"
-  	servicePropertiesDir = "resources"
+	resourcesPath = "resources"
 	installTarget = project.ext.installTarget
 	mainProgramName  = "com.apgsga.it21.ui.webapp.Webapp"
 	releaseNr = project.ext.rpmReleaseNr
@@ -101,6 +94,7 @@ apgRpmDeployConfig {
 	remoteDestFolder "${project.ext.downloadDir}"
 }
 
+// TODO (che, jhe , 2.4.20) test version, needs to be adopted acccordingly
 publishing {
 	publications {
 		bom(MavenPublication) {

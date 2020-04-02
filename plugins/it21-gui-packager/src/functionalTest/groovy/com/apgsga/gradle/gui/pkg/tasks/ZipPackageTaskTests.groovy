@@ -21,7 +21,7 @@ class ZipPackageTaskTests extends AbstractSpecification  {
 
 		// The guava dependency is only for testing purposes, consider to be likely found in mavenCentral()
         apgPackage {
-			pkgName ="testuiapp"
+			name ="testuiapp"
 			configurationName = "testRuntime"
 		    dependencies = ["com.google.guava:guava:+"]
 			version = "2.1-SNAPSHOT"
@@ -30,7 +30,7 @@ class ZipPackageTaskTests extends AbstractSpecification  {
         """
 
         when:
-        def result = gradleRunnerFactory(['zipPackageTask']).build()
+        def result = gradleRunnerFactory(['buildZip']).build()
         then:
 		println "Result output: ${result.output}" 
         result.output.contains('')	

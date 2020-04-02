@@ -10,7 +10,7 @@ class SerivceResourcesCopyTask extends DefaultTask {
 	@OutputDirectory
     File getOutputDir() {
 		def ex = project.extensions.apgPackage
-		return new File("${project.buildDir}/${ex.pkgName}") 
+		return new File("${project.buildDir}/${ex.name}")
 	}
 
 	
@@ -18,7 +18,7 @@ class SerivceResourcesCopyTask extends DefaultTask {
 	def taskAction() {
 		def ex = project.extensions.apgPackage
 		project.copy {
-			into "${project.buildDir}/${ex.pkgName}"
+			into "${project.buildDir}/${ex.name}"
 			from ("${project.projectDir}/${ex.resourcesPath}") {
 				include '**/*'
 			}

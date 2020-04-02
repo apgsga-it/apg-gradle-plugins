@@ -4,15 +4,15 @@ import com.apgsga.gradle.repo.extensions.Repo;
 import com.apgsga.gradle.repo.extensions.RepoType;
 import com.apgsga.gradle.repo.extensions.Repos;
 import com.apgsga.gradle.repo.plugin.ApgCommonRepoPlugin;
+import com.apgsga.gradle.service.pkg.extension.PortnrConvention;
 import org.gradle.api.Project;
 
 import java.util.Arrays;
-import java.util.List;
 
 public class ApgCommonPackageExtension {
 
-    public static final String CONFIGURATION_NAME_DEFAULT = "serviceRuntime";
-	private static final String SERVICE_PROPERTIES_DIR_DEFAULT = "resources";
+    public static final String CONFIGURATION_NAME_DEFAULT = "prgRuntime";
+	private static final String RESOURCES_PATH_DEFAULT = "resources";
 	private static final String APG_OPSDEFAULT = "apg_ops";
 	private static final String RELEASENR_DEFAULT = "1";
 	private static final String VERSION_DEFAULT = "0.1";
@@ -30,10 +30,11 @@ public class ApgCommonPackageExtension {
 	private static final String FIRST_DEP_DEFAULT = "com.apgsga.it21.ui.mdt:jadas-app-starter:9.1.0.DIGIFLEX-SNAPSHOT";
 	private static final String TARGET_DEFAULT = "CHEI212";
 	private static final String MAIN_PRG_DEFAULT = "com.apgsga.it21.ui.webapp.Webapp";
-	private static final String SERVICE_NAME_DEFAULT = "jadas";
+	private static final String NAME_DEFAULT = "jadas";
+    private static final String JAVAOPTS_DEFAULT = "-Xms100m -Xmx2560m -Xincgc -XX:NewRatio=2";
 
     private String configurationName = CONFIGURATION_NAME_DEFAULT;
-	private String serviceName =  SERVICE_NAME_DEFAULT;
+	private String name = NAME_DEFAULT;
 	private String mainProgramName = MAIN_PRG_DEFAULT;
 	private String installTarget = TARGET_DEFAULT;
 	private String[] dependencies = new String[] {FIRST_DEP_DEFAULT,SEC_DEP_DEFAULT};
@@ -51,7 +52,8 @@ public class ApgCommonPackageExtension {
 	private String version = VERSION_DEFAULT;
 	private String releaseNr = RELEASENR_DEFAULT; 
 	private String opsUserGroup = APG_OPSDEFAULT; 
-	private String servicePropertiesDir = SERVICE_PROPERTIES_DIR_DEFAULT; 
+	private String resourcesPath = RESOURCES_PATH_DEFAULT;
+    private String javaOpts = JAVAOPTS_DEFAULT;
 	private final Project project; 
 	
 	public ApgCommonPackageExtension(Project project) {
@@ -66,12 +68,12 @@ public class ApgCommonPackageExtension {
         distRepoUrl = javaDistRepo.getRepoBaseUrl() + "/" + javaDistRepo.getRepoName();
     }
 
-    public String getServiceName() {
-        return serviceName;
+    public String getName() {
+        return name;
     }
 
-    public void setServiceName(String serviceName) {
-        this.serviceName = serviceName;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getConfigurationName() {
@@ -217,12 +219,20 @@ public class ApgCommonPackageExtension {
         this.opsUserGroup = opsUserGroup;
     }
 
-    public String getServicePropertiesDir() {
-        return servicePropertiesDir;
+    public String getResourcesPath() {
+        return resourcesPath;
     }
 
-    public void setServicePropertiesDir(String servicePropertiesDir) {
-        this.servicePropertiesDir = servicePropertiesDir;
+    public void setResourcesPath(String resourcesPath) {
+        this.resourcesPath = resourcesPath;
+    }
+
+    public String getJavaOpts() {
+        return javaOpts;
+    }
+
+    public void setJavaOpts(String javaOpts) {
+        this.javaOpts = javaOpts;
     }
 
     // Logging
@@ -233,7 +243,7 @@ public class ApgCommonPackageExtension {
     // Conventions
 
     public String getTargetServiceName() {
-        return "apg-" + getServiceName() + "-" + getInstallTarget();
+        return "apg-" + getName() + "-" + getInstallTarget();
     }
 
     public String getTargetServiceExecDir() {
@@ -249,7 +259,7 @@ public class ApgCommonPackageExtension {
     }
 
     public String getPortNr() {
-        return PortnrConvention.calculate(project, getInstallTarget(), getServiceName()).toString();
+        return PortnrConvention.calculate(project, getInstallTarget(), getName()).toString();
     }
 
     public void listPortNumbers() {
@@ -270,29 +280,30 @@ public class ApgCommonPackageExtension {
         return getTargetServiceName() + "-" + getVersion() + "-" + getReleaseNr() + ".noarch.rpm";
     }
 
-	@Override
-	public String toString() {
-		return "ApgCommonPackageExtension{" +
-				"serviceName='" + serviceName + '\'' +
-				", configurationName='" + configurationName + '\'' +
-				", mainProgramName='" + mainProgramName + '\'' +
-				", installTarget='" + installTarget + '\'' +
-				", dependencies=" + Arrays.toString(dependencies) +
-				", resourceFilters='" + resourceFilters + '\'' +
-				", appConfigFilters='" + appConfigFilters + '\'' +
-				", dataAccessStrategie='" + dataAccessStrategie + '\'' +
-				", it21DbDaoLocations='" + it21DbDaoLocations + '\'' +
-				", ibdsDbDaoLocations='" + ibdsDbDaoLocations + '\'' +
-				", serverContextPath='" + serverContextPath + '\'' +
-				", springProfiles='" + springProfiles + '\'' +
-				", webuiEmbedded=" + webuiEmbedded +
-				", javaDir='" + javaDir + '\'' +
-				", javaDist='" + javaDist + '\'' +
-				", distRepoUrl='" + distRepoUrl + '\'' +
-				", version='" + version + '\'' +
-				", releaseNr='" + releaseNr + '\'' +
-				", opsUserGroup='" + opsUserGroup + '\'' +
-				", servicePropertiesDir='" + servicePropertiesDir + '\'' +
-				'}';
-	}
+    @Override
+    public String toString() {
+        return "ApgCommonPackageExtension{" +
+                "configurationName='" + configurationName + '\'' +
+                ", name='" + name + '\'' +
+                ", mainProgramName='" + mainProgramName + '\'' +
+                ", installTarget='" + installTarget + '\'' +
+                ", dependencies=" + Arrays.toString(dependencies) +
+                ", resourceFilters='" + resourceFilters + '\'' +
+                ", appConfigFilters='" + appConfigFilters + '\'' +
+                ", dataAccessStrategie='" + dataAccessStrategie + '\'' +
+                ", it21DbDaoLocations='" + it21DbDaoLocations + '\'' +
+                ", ibdsDbDaoLocations='" + ibdsDbDaoLocations + '\'' +
+                ", serverContextPath='" + serverContextPath + '\'' +
+                ", springProfiles='" + springProfiles + '\'' +
+                ", webuiEmbedded=" + webuiEmbedded +
+                ", javaDir='" + javaDir + '\'' +
+                ", javaDist='" + javaDist + '\'' +
+                ", distRepoUrl='" + distRepoUrl + '\'' +
+                ", version='" + version + '\'' +
+                ", releaseNr='" + releaseNr + '\'' +
+                ", opsUserGroup='" + opsUserGroup + '\'' +
+                ", resourcesPath='" + resourcesPath + '\'' +
+                ", javaOpts='" + javaOpts + '\'' +
+                '}';
+    }
 }

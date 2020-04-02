@@ -12,7 +12,7 @@ class VersionResolutionDslTests extends AbstractSpecification {
                 id("com.apgsga.version.resolver")
             }
             apgPackage {
-               serviceName = 'aserviceName'
+               name = 'aserviceName'
                installTarget = 'CHEI212'
             }
             apgVersionResolver {
@@ -45,7 +45,7 @@ class VersionResolutionDslTests extends AbstractSpecification {
               bomBaseVersion = project.hasProperty('bomBaseVersion') ? project.property('bomBaseVersion') : "XXXXXXXX"
             }
            apgPackage {
-               serviceName = 'aserviceName'
+               name = 'aserviceName'
                installTarget = 'CHEI212'
             }
              apgVersionResolver {
@@ -83,7 +83,7 @@ class VersionResolutionDslTests extends AbstractSpecification {
               patchFiles = project.hasProperty('patchFiles') ? project.property('patchFiles') : "Patch8765.json:Patch8787.json"
             }  
             apgPackage {
-               serviceName = 'aServiceName'
+               name = 'aServiceName'
                installTarget = 'CHEI212'
             }
             apgVersionResolver {

@@ -21,7 +21,7 @@ class RpmScriptsCopyTask extends DefaultTask {
 			from "${project.buildDir}/template/rpm"
 			into "${project.buildDir}/rpm"
 			include "**/*.sh"
-			expand(serviceName:ex.serviceName,installTarget:ex.installTarget,mainPrg:ex.mainProgramName,targetServiceName:ex.targetServiceName,
+			expand(serviceName:ex.name,installTarget:ex.installTarget,mainPrg:ex.mainProgramName,targetServiceName:ex.targetServiceName,
 				targetServiceExecDir:ex.targetServiceExecDir,targetServiceDataDir:ex.targetServiceDataDir,
 				targetServiceConfigDir:ex.targetServiceConfigDir,javaDir:ex.javaDir,
 				javaDist:ex.javaDist,distRepoUrl:ex.distRepoUrl)

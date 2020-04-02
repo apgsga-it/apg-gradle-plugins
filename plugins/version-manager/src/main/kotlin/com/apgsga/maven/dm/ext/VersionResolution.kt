@@ -16,7 +16,7 @@ import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
 fun version(baseVersion: String?, revision: String?): String {
-    val baseVersionRegex = Regex("[A-Z]*-[A-Z]*$")
+    val baseVersionRegex = Regex("[A-Z]*$")
     if (baseVersionRegex.containsMatchIn(baseVersion!!)) {
         return "${baseVersion}-${revision}"
     }
@@ -88,14 +88,14 @@ open class VersionResolutionExtension(val project: Project, private val revision
         get() {
              if (_serviceName == null) {
                  val pkgExt = project.extensions.getByType(ApgCommonPackageExtension::class.java)
-                 _serviceName = pkgExt.serviceName
+                 _serviceName = pkgExt.name
              }
              return  _serviceName
          }
     var bomLastRevision: String?
         get() {
             if (_bomLastRevision == null) {
-                _bomLastRevision = revisionManger.lastRevision(serviceName, installTarget) as String?
+                _bomLastRevision = revisionManger.lastRevision(serviceName, installTarget)
             }
             return _bomLastRevision
         }

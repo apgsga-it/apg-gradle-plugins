@@ -5,6 +5,7 @@ import com.apgsga.gradle.rpm.pkg.actions.CopyResourcesToBuildDirAction;
 import com.apgsga.gradle.rpm.pkg.plugins.OsPackagingPlugin;
 import com.apgsga.gradle.rpm.pkg.tasks.OsPackageConfigureTask;
 import com.apgsga.gradle.rpm.pkg.tasks.RpmScriptsCopyTask;
+import com.apgsga.gradle.service.pkg.plugin.ApgServicePackagePlugin;
 import org.gradle.api.Plugin;
 import org.gradle.api.Project;
 import org.gradle.api.Task;
@@ -24,7 +25,7 @@ public class ApgRpmPackagePlugin implements Plugin<Project> {
 		final ExtensionContainer ext = project.getExtensions();
 		final Logger logger = project.getLogger();
 		final PluginContainer plugins = project.getPlugins();
-		plugins.apply(ApgCommonPackagePlugin.class);
+		plugins.apply(ApgServicePackagePlugin.class);
 		plugins.apply(OsPackagingPlugin.class);
 		TaskContainer tasks = project.getTasks();
 		TaskProvider<Copy> copyPackagingResourcesAction = tasks.register("copyRpmPackagingResources", Copy.class,

@@ -8,7 +8,7 @@ class CopyResourcesToBuildDirActionTests extends AbstractSpecification {
         given:
         buildFile << """
             plugins {
-                id 'com.apgsga.common.package' 
+                id 'com.apgsga.service.package' 
             }
         """
 

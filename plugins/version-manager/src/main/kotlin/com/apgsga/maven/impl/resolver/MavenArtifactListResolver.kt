@@ -8,13 +8,13 @@ class MavenArtifactListResolver(var mavenArtifacts: Collection<Dependency>? = Ar
      protected val logger by LoggerDelegate()
 
      override fun getVersion(groupId: String, artifactId: String): String {
-         logger.info("Resolving Version for groupId <${groupId}> , artifactId <${artifactId}< with ${this}")
+         logger.debug("Resolving Version for groupId <${groupId}> , artifactId <${artifactId}< with ${this}")
          mavenArtifacts?.forEach{
-             logger.info("Resolving with $it")
+             logger.debug("Resolving with $it")
              if (it.artifactId == artifactId && it.groupId == groupId) return it.version
-             logger.info("Not resolved ")
+             logger.debug("Not resolved ")
          }
-         logger.info("Could'nt resolve Version for groupId <${groupId}> , artifactId <${artifactId}< with ${this}")
+         logger.debug("Could'nt resolve Version for groupId <${groupId}> , artifactId <${artifactId}< with ${this}")
          return ""
      }
 

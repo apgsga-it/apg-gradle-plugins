@@ -1,32 +1,21 @@
 package com.apgsga.gradle.common.pkg.plugin;
 
-import com.apgsga.gradle.common.pkg.actions.CopyResourcesToBuildDirAction;
 import com.apgsga.gradle.common.pkg.extension.ApgCommonPackageExtension;
-import com.apgsga.gradle.common.pkg.task.*;
+import com.apgsga.gradle.common.pkg.task.BinariesCopyTask;
+import com.apgsga.gradle.common.pkg.task.ConfigureDepsTask;
 import com.apgsga.gradle.repo.config.plugin.ApgRepoConfigPlugin;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.gradle.api.Plugin;
 import org.gradle.api.Project;
 import org.gradle.api.logging.Logger;
 import org.gradle.api.plugins.ExtensionContainer;
 import org.gradle.api.plugins.PluginContainer;
-import org.gradle.api.tasks.Copy;
 import org.gradle.api.tasks.TaskContainer;
 import org.gradle.api.tasks.TaskProvider;
-import org.springframework.core.io.FileSystemResourceLoader;
-import org.springframework.core.io.Resource;
-import org.springframework.util.Assert;
-
-import java.io.File;
-import java.io.IOException;
 
 public class ApgCommonPackagePlugin implements Plugin<Project> {
 
-	private static final String INSTALLABLE_SERVICES_JSON_FILENAME = "supportedServices.json";
-
 	private Project project;
 
-	@SuppressWarnings("unused")
 	@Override
 	public void apply(Project project) {
 		this.project = project;
@@ -36,21 +25,9 @@ public class ApgCommonPackagePlugin implements Plugin<Project> {
 		plugins.apply(ApgRepoConfigPlugin.class);
 		ext.create("apgPackage", ApgCommonPackageExtension.class, project);
 		TaskContainer tasks = project.getTasks();
-		TaskProvider<Copy> copyPackagingResourcesTask = tasks.register("copyCommonPackagingResources", Copy.class,
-				new CopyResourcesToBuildDirAction(project));
-		TaskProvider<TemplateDirCopyTask> templateDirCopyTask = tasks.register("templateDirCopy",
-				TemplateDirCopyTask.class);
-		templateDirCopyTask.configure(task -> task.dependsOn(copyPackagingResourcesTask));
-		TaskProvider<ResourceFileMergerTask> resourceMergeTask = tasks.register("mergeResourcePropertyFiles",
-				ResourceFileMergerTask.class);
-		TaskProvider<AppConfigFileMergerTask> appConfigMergeTask = tasks.register("mergeAppConfigPropertyFiles",
-				AppConfigFileMergerTask.class);
-		TaskProvider<AppResourcesCopyTask> appResourcesCopyAndExpandTask = tasks.register("copyAppResources",
-				AppResourcesCopyTask.class);
-		appResourcesCopyAndExpandTask
-				.configure(task -> task.dependsOn(templateDirCopyTask, resourceMergeTask, appConfigMergeTask));
 		TaskProvider<BinariesCopyTask> binariesCopyTask = tasks.register("copyAppBinaries", BinariesCopyTask.class);
-		binariesCopyTask.configure(task -> task.dependsOn(appResourcesCopyAndExpandTask));
+		TaskProvider<ConfigureDepsTask> configureDeps = tasks.register("configureDeps", ConfigureDepsTask.class);
+		binariesCopyTask.configure(task -> task.dependsOn(configureDeps));
 
 	}
 
