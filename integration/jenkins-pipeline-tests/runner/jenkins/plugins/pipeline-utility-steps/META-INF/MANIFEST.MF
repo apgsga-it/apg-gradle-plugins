@@ -1,0 +1,23 @@
+Manifest-Version: 1.0
+Archiver-Version: Plexus Archiver
+Created-By: Apache Maven
+Built-By: rsandell
+Build-Jdk: 1.8.0_211
+Extension-Name: pipeline-utility-steps
+Specification-Title: The Jenkins Plugins Parent POM Project
+Implementation-Title: pipeline-utility-steps
+Implementation-Version: 2.3.1
+Group-Id: org.jenkins-ci.plugins
+Short-Name: pipeline-utility-steps
+Long-Name: Pipeline Utility Steps
+Url: https://wiki.jenkins.io/display/JENKINS/Pipeline+Utility+Steps+Pl
+ ugin
+Minimum-Java-Version: 1.8
+Plugin-Version: 2.3.1
+Hudson-Version: 2.121.2
+Jenkins-Version: 2.121.2
+Plugin-Dependencies: workflow-api:2.31,workflow-cps:2.58;resolution:=o
+ ptional,workflow-step-api:2.19,scm-api:2.2.6,script-security:1.46,str
+ ucts:1.17
+Plugin-Developers: Robert Sandell:rsandell:rsandell@cloudbees.com
+

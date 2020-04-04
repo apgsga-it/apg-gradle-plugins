@@ -30,9 +30,9 @@ pipeline {
 
 
 def pkg(packagename) {
-    echo "installTarget : ${installTarget}, serviceVersion : ${baseVersion}, rpmReleaseNr : ${rpmReleaseNr}, downLoadDir : ${downLoadDir}"
+    echo "installTarget : ${installTarget}, targetHost : ${targetHost},serviceVersion : ${baseVersion}, rpmReleaseNr : ${rpmReleaseNr}, downLoadDir : ${downLoadDir}"
     dir ("${packagename}") {
         sh "chmod +x gradlew"
-        sh "./gradlew clean configureResolutionStrategy buildRpm deployRpm installRpm --info  --stacktrace -PbaseVersion=${baseVersion} -PbomLastRevision=${bomLastRevision}  -PinstallTarget=${installTarget}  -PrpmReleaseNr=${rpmReleaseNr} -PtargetHost=${targetHost}  -PsshUser=${sshUser} -PsshPw=${sshPw} -PdownloadDir=${downLoadDir}"
+        sh "./gradlew clean buildRpm deployRpm installRpm --info  --stacktrace -PbaseVersion=${baseVersion} -PbomLastRevision=${bomLastRevision}  -PinstallTarget=${installTarget}  -PrpmReleaseNr=${rpmReleaseNr} -PtargetHost=${targetHost}  -PsshUser=${sshUser} -PsshPw=${sshPw} -PdownloadDir=${downLoadDir}"
     }
 }

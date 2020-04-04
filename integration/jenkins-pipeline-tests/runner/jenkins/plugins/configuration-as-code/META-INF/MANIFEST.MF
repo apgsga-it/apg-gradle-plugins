@@ -1,0 +1,28 @@
+Manifest-Version: 1.0
+Archiver-Version: Plexus Archiver
+Created-By: Apache Maven
+Built-By: timja
+Build-Jdk: 1.8.0_222
+Extension-Name: configuration-as-code
+Specification-Title: Manage Jenkins master configuration as code
+Implementation-Title: configuration-as-code
+Implementation-Version: 1.32
+Group-Id: io.jenkins
+Short-Name: configuration-as-code
+Long-Name: Configuration as Code Plugin
+Url: https://github.com/jenkinsci/configuration-as-code-plugin
+Compatible-Since-Version: 1.28
+Minimum-Java-Version: 1.8
+Plugin-Version: 1.32
+Hudson-Version: 2.60.3
+Jenkins-Version: 2.60.3
+Plugin-Developers: Joseph Petersen:casz:,Tim Jacomb:timja:,Oleg Nenash
+ ev:oleg_nenashev:
+Plugin-License-Name: MIT License
+Plugin-License-Url: http://opensource.org/licenses/MIT
+Plugin-ChangelogUrl: https://github.com/jenkinsci/configuration-as-cod
+ e-plugin/releases
+Plugin-LogoUrl: https://raw.githubusercontent.com/jenkinsci/configurat
+ ion-as-code-plugin/master/plugin/src/main/webapp/img/logo-head.svg
+Plugin-ScmUrl: https://github.com/jenkinsci/configuration-as-code-plugin
+

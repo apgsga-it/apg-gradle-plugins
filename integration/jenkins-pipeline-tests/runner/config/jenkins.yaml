@@ -1,0 +1,14 @@
+unclassified:
+  globalLibraries:
+    libraries:
+      - defaultVersion: "0.1"
+        name: "test-functions"
+        implicit: true
+        retriever:
+          legacySCM:
+            scm:
+              git:
+                userRemoteConfigs:
+                  - url: "https://github.com/chhex/jenkins-pipeline-testlib.git"
+                branches:
+                  - name: "master"
