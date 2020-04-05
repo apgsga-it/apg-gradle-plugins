@@ -1,5 +1,30 @@
-Packageing and Testing with Jenkinsfile Runner
-----------------------------------------------
+Testing with Jenkinsfile Runner
+-------------------------------
+
+This module supports the Testing of the combination of different Jenkins
+Pipeline , Pipeline Library Functionality and Input data.
+
+### Run Tests
+
+For the available Test tasks, see
+
+`./gradlew tasks --group="Apg Gradle Jenkinsrunner"
+`
+
+### Create new Tests
+
+1. Create new subdirectory containing the Jenkinsfile to Test
+2. Create a new Task of JenkinsRunnerExec Typ in the build and parametrize accordingly ,see below
+
+### Parameters of the JenkinsRunnerExec Task
+
+- jenkinsWorkspaceDirPath : the directory where the Test modules are. The Jenkins Workspace. This basically skips the checking out of the modules
+- workspaceDir : the directory, where the Jenkinsfile under Test is
+- appArgs : the Parameters to run the Pipeline with
+- environment : Enviroment Variable to be set, example `environment =
+  [CASC_JENKINS_CONFIG:"${project.projectDir}/runner/config/jenkins.yaml"]
+  `
+### Packaging of the Jenkinsfile Runner
 
 See also
 [github.com/jenkinsci jenkinsfile-runner](https://github.com/jenkinsci/jenkinsfile-runner)
@@ -8,17 +33,14 @@ See also
 
 #### Jenkins Runner
 - **runner/bin** : *The executable fat jar of the jenkinsfile-runner*
-- **jenkins** : *Currently a pure vanilla packaging of Jenkins , ratio:
-  find out what we \ what we really need of the Jenkins Plugins*
-- **jenkins\war** : *the jenkins.war*
-- **jenkins\plugins** : *plugins of the current Jenkins container
+- **runner/jenkins** : *Currently a pure vanilla packaging of Jenkins ,
+  ratio: find out what we \ what we really need of the Jenkins Plugins*
+- **jenkins/war** : *the jenkins.war*
+- **jenkins/plugins** : *plugins of the current Jenkins container
   tested*
-- **jenkins\config** : all yaml files we need for the
+- **jenkins/config** : all yaml files we need for the
   [Jenkins Casc Plugin](https://github.com/jenkinsci/configuration-as-code-plugin),
   also for configuration of Jenkins Libs
-#### Tests Directory
-
-TODO
 
 ### `Packaging` of the Jenkins File Runner
 
@@ -39,6 +61,8 @@ must be done, by example
 Basically the Jenkins File Runner Repo is clone from Github , built and
 the resulting artifacts copied accordingly
 
+So the jenkinsfile runner runtime is version controlled in github, with
+all the necessary binary artifacts
 
 ### Jenkins Casc
 
@@ -66,12 +90,3 @@ unclassified:
 
 
 ```
-
-### Testing
-
-TODO
-
-#### Build script
-
-#### Test Cases
-

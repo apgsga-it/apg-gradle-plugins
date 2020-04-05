@@ -4,12 +4,17 @@ plugins {
 }
 
 class JenkinsRunnerExec extends JavaExec {
+    public static final String APG_TASK_GROUP = "Apg Gradle Jenkinsrunner"
     @Input
     public def workspaceDir
 
     @Input def appArgs = []
 
     @Input def jenkinsWorkspaceDirPath = "${project.projectDir.absolutePath}/../modules"
+
+    JenkinsRunnerExec() {
+        group = APG_TASK_GROUP
+    }
 
     @Override
     void exec() {
@@ -33,6 +38,8 @@ class JenkinsRunnerExec extends JavaExec {
 task runTestLibHelloWorld(type: JenkinsRunnerExec) {
     workspaceDir = "jenkinsHelloWorldLib"
     environment = [CASC_JENKINS_CONFIG:"${project.projectDir}/runner/config/jenkins.yaml"]
+    description = "Runs Pipeline in ${workspaceDir} , which loads the Pipeline libarary from https://github.com/chhex/jenkins-pipeline-testlib.git  "
+
 }
 
 
@@ -46,10 +53,13 @@ task runTestPkgAndDeploy(type: JenkinsRunnerExec) {
                       "-a", "sshPw=${sshPw}",
                       "-a", "downLoadDir=${downLoadDir}"]
     workspaceDir = "jenkinsPkgAndDeploy"
+    description = "Runs Pipeline in the dir ${workspaceDir}"
+
 }
 
 task runTestBuild(type: JenkinsRunnerExec) {
     appArgs = ["-a", "modules=testapp-bom:testapp-parentpom:testapp-module:testapp-service"]
     workspaceDir = "jenkinsBuild"
+    description = "Runs Pipeline in the dir ${workspaceDir}"
 }
 
