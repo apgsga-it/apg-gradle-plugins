@@ -1,78 +1,65 @@
-import com.apgsga.gradle.jenkinsrunner.JenkinsRunner
-import com.apgsga.ssh.general.tasks.SshGetTask
-import com.apgsga.gradle.jenkinsrunner.JenkinsRunnerExec
-
 plugins {
-    id("com.apgsga.ssh")
-    id ("nu.studer.credentials")
-}
-apply plugin: JenkinsRunner
-
-
-
-apgSshConfig {
-    username = credentials.jheUser
-    userpwd =  credentials.apgjhePw
-    destinationHost =  "jenkins.apgsga.ch"
-
+    id 'java'
+    id "nu.studer.credentials" version "2.1"
 }
 
-jenkinsRunnerConfig {
-    jenkinsWorkspaceDirPath = "${project.projectDir}/../modules"
-}
+class JenkinsRunnerExec extends JavaExec {
+    public static final String APG_TASK_GROUP = "Apg Gradle Jenkinsrunner"
+    @Input
+    public def workspaceDir
 
+    @Input def appArgs = []
 
+    @Input def jenkinsWorkspaceDirPath = "${project.projectDir.absolutePath}/../modules"
 
-task jenkinsWarCopyTask(type: SshGetTask) {
-    from = "/usr/lib/jenkins/jenkins.war"
-    into ="${jenkinsRunnerConfig.jenkinsDirPath}/jenkins/lib/jenkins.war"
-}
-
-task jenkinsPluginsCopyTask(type: SshGetTask) {
-    from = "/var/jenkins/plugins"
-    into ="${jenkinsRunnerConfig.jenkinsDirPath}/jenkins"
-}
-
-task cleanJenkins  {
-    doLast {
-        File jenkinsTargetDir = new File("${jenkinsRunnerConfig.jenkinsDirPath}/jenkins")
-        if (!jenkinsTargetDir.exists()) {
-            jenkinsTargetDir.mkdir()
-        }
-        fileTree(jenkinsTargetDir).visit {
-            logger.info("About to delete: ${it.file.name}")
-            def deleted = delete(it.file)
-            logger.info("File deleted ${deleted}")
-        }
-        File jenkinsWarDir = new File(jenkinsTargetDir,"lib")
-        jenkinsWarDir.mkdir()
+    JenkinsRunnerExec() {
+        group = APG_TASK_GROUP
     }
-}
 
-task jenkinsClone() {
-    dependsOn (cleanJenkins,jenkinsWarCopyTask,jenkinsPluginsCopyTask)
-}
-
-
-
-task testPkgAndDeploy(type: JenkinsRunnerExec) {
-    testParameters = [ "-a", "baseVersion=1.0" ,
-                       "-a","rpmReleaseNr=51" ,
-                       "-a", "bomLastRevision=SNAPSHOT" ,
-                       "-a", "installTarget=CHTI211" ,
-                       "-a", "targetHost=dev-jhedocker.light.apgsga.ch" ,
-                       "-a", "sshUser=lightUser" ,
-                       "-a", "sshPw=lightPw" ,
-                       "-a",  "downLoadDir=downloads"]
-    jenkinsFilePath = "${project.projectDir}/jenkinsPkgAndDeploy/Jenkinsfile"
-    logging.captureStandardOutput LogLevel.INFO
-    logging.captureStandardError  LogLevel.ERROR
+    @Override
+    void exec() {
+        args = [
+                "${project.projectDir}/runner/bin/jenkinsfile-runner-standalone.jar",
+                "-w",
+                "${project.projectDir}/runner/jenkins/war/jenkins.war",
+                "-p",
+                "${project.projectDir}/runner/jenkins/plugins",
+                "--runWorkspace", "${jenkinsWorkspaceDirPath}",
+                "-f","${project.projectDir}/${workspaceDir}"
+        ] + appArgs
+        logging.captureStandardOutput LogLevel.INFO
+        logging.captureStandardError LogLevel.ERROR
+        main = "-jar"
+        super.exec();
+    }
 
 }
 
-task testBuild(type: JenkinsRunnerExec) {
-    testParameters = [ "-a","modules=testapp-bom:testapp-parentpom:testapp-module:testapp-service"]
-    jenkinsFilePath = "${project.projectDir}/jenkinsBuild/Jenkinsfile"
-    logging.captureStandardOutput LogLevel.INFO
-    logging.captureStandardError  LogLevel.ERROR
+task runTestLibHelloWorld(type: JenkinsRunnerExec) {
+    workspaceDir = "jenkinsHelloWorldLib"
+    environment = [CASC_JENKINS_CONFIG:"${project.projectDir}/runner/casc/jenkins.yaml"]
+    description = "Runs Pipeline in ${workspaceDir} , which loads the Pipeline libarary from https://github.com/chhex/jenkins-pipeline-testlib.git  "
+
 }
+
+
+task runTestPkgAndDeploy(type: JenkinsRunnerExec) {
+    appArgs = ["-a", "baseVersion=1.0",
+                      "-a", "rpmReleaseNr=${rpmReleaseNr}",
+                      "-a", "bomLastRevision=SNAPSHOT",
+                      "-a", "installTarget=${installTarget}",
+                      "-a", "targetHost=${targetHost}",
+                      "-a", "sshUser=${sshUser}",
+                      "-a", "sshPw=${sshPw}",
+                      "-a", "downLoadDir=${downLoadDir}"]
+    workspaceDir = "jenkinsPkgAndDeploy"
+    description = "Runs Pipeline in the dir ${workspaceDir}"
+
+}
+
+task runTestBuild(type: JenkinsRunnerExec) {
+    appArgs = ["-a", "modules=testapp-bom:testapp-parentpom:testapp-module:testapp-service"]
+    workspaceDir = "jenkinsBuild"
+    description = "Runs Pipeline in the dir ${workspaceDir}"
+}
+
