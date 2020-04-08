@@ -3,7 +3,7 @@
 # Usage info
 show_help() {
   cat <<EOF
-Usage: ${0##*/} [-d BUILDDIR] [-r GITREPO] [-b BRANCH] [-i INSTALLDIR]
+Usage: ${0##*/} [-d BUILDDIR] [-r GITREPO] [-b BRANCH] [-i INSTALLDIR] -ns
 Builds and Installs the jenkinsfile-runner build into a installation Dir to be used with the Jenkinspipeline Tests
 
     -h          display this help and exit
