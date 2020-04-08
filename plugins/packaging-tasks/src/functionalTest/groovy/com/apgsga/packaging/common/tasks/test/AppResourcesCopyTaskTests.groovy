@@ -1,4 +1,4 @@
-package com.apgsga.packaging.tasks.test
+package com.apgsga.packaging.common.tasks.test
 
 import com.apgsga.gradle.test.utils.AbstractSpecification
 import com.apgsga.packaging.plugins.ApgPackaging
@@ -6,38 +6,25 @@ import spock.lang.Shared
 
 import static groovy.io.FileType.FILES
 
-class BinariesCopyTaskTests extends AbstractSpecification {
+class AppResourcesCopyTaskTests extends AbstractSpecification {
+	
+
 	@Shared File resourcesDir
 	
     def setupSpec() {
 		resourcesDir = new File("src/main/resources/packaging")
-    } 
+    }
 
-    def "copyAppBinaries creating confiug works"() {
+    def "copyRpmScripts works"() {
         given:
         buildFile << """
-
             plugins {
-                id '${ApgPackaging.PLUGIN_ID}'
+                id '${ApgPackaging.PLUGIN_ID}' 
             }
-
-			apgRepositories {
-				mavenLocal()
-				mavenCentral()
-			}
-
-		// The guava dependency is only for testing purposes, consider to be likely found in mavenCentral()
-        apgPackage {
-			name ="testapp"
-			configurationName = 'serviceRuntime'
-		    dependencies = ["com.google.guava:guava:+"]
-            installTarget = "CHTX211"
-			mainProgramName  = "com.apgsga.test.SomeMain"
-         }
         """
 
         when:
-        def result = gradleRunnerFactory(['copyAppBinaries']).build()
+        def result = gradleRunnerFactory(['copyAppResources']).build()
         then:
 		println "Result output: ${result.output}" 
         result.output.contains('')	
@@ -48,36 +35,27 @@ class BinariesCopyTaskTests extends AbstractSpecification {
 			cntFiles++
 		}
 		dirTarget.traverse type: FILES , visit: cntFileVisitor
+		// TODO (che, 25.9) : haha, test is really terrific
 		cntFiles > 4
+		// TODO (che, 25.9) : test expected files
+	
     }
-
-	def "copyAppBinaries with config works"() {
+	
+	def "copyRpmScripts with explicit configuration works"() {
 		given:
 		buildFile << """
-
             plugins {
-                id '${ApgPackaging.PLUGIN_ID}'
+                id '${ApgPackaging.PLUGIN_ID}' 
             }
-            
-            configurations { testRuntime.exclude group: 'log4j', module: 'log4j' }
-
-			apgRepositories {
-				mavenLocal()
-				mavenCentral()
-			}
-
-		// The guava dependency is only for testing purposes, consider to be likely found in mavenCentral()
-        apgPackage {
+		 apgPackage {
 			name ="testapp"
-			configurationName = 'testRuntime'
-		    dependencies = ["com.google.guava:guava:+"]
             installTarget = "CHTX211"
 			mainProgramName  = "com.apgsga.test.SomeMain"
          }
         """
 
 		when:
-		def result = gradleRunnerFactory(['copyAppBinaries']).build()
+		def result = gradleRunnerFactory(['copyAppResources']).build()
 		then:
 		println "Result output: ${result.output}"
 		result.output.contains('')
@@ -88,10 +66,11 @@ class BinariesCopyTaskTests extends AbstractSpecification {
 			cntFiles++
 		}
 		dirTarget.traverse type: FILES , visit: cntFileVisitor
+		// TODO (che, 25.9) : haha, test is really terrific
 		cntFiles > 4
-
-	}
+		// TODO (che, 25.9) : test expected files
 	
+	}
 	
 }
 

@@ -1,4 +1,4 @@
-package com.apgsga.packaging.tasks.test
+package com.apgsga.packaging.common.tasks.test
 
 import com.apgsga.gradle.test.utils.AbstractSpecification
 import com.apgsga.packaging.plugins.ApgPackaging
