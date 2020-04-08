@@ -84,19 +84,16 @@
           <set>
             <option value="$PROJECT_DIR$/plugins" />
             <option value="$PROJECT_DIR$/plugins/common-repo" />
-            <option value="$PROJECT_DIR$/plugins/common-service-packager" />
             <option value="$PROJECT_DIR$/plugins/common-test" />
             <option value="$PROJECT_DIR$/plugins/docker-client" />
             <option value="$PROJECT_DIR$/plugins/generic-publish" />
             <option value="$PROJECT_DIR$/plugins/gradle-common" />
-            <option value="$PROJECT_DIR$/plugins/it21-gui-packager" />
             <option value="$PROJECT_DIR$/plugins/maven-publish" />
+            <option value="$PROJECT_DIR$/plugins/packaging-tasks" />
             <option value="$PROJECT_DIR$/plugins/repo-config" />
             <option value="$PROJECT_DIR$/plugins/revision-manager" />
-            <option value="$PROJECT_DIR$/plugins/rpm-service-packager" />
             <option value="$PROJECT_DIR$/plugins/ssh-tasks" />
             <option value="$PROJECT_DIR$/plugins/version-manager" />
-            <option value="$PROJECT_DIR$/plugins/zip-service-packager" />
           </set>
         </option>
         <option name="useAutoImport" value="true" />
