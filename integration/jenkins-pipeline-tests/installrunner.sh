@@ -1,4 +1,32 @@
 #!/bin/bash
+# Command line parsing
+# Usage info
+show_help() {
+  cat <<EOF
+Usage: ${0##*/} [-d BUILDDIR] [-r GITREPO] [-b BRANCH] [-i INSTALLDIR]
+Builds and Installs the jenkinsfile-runner build into a installation Dir to be used with the Jenkinspipeline Tests
+
+    -h          display this help and exit
+    -d=BUILDDIR target of the git clone of the git repo
+    -r=GITREPO  git repo, from which the jenkinsfile runner will be cloned
+    -b=BRANCH   git of the git repo
+    -i=INSTALLDIR Installation Dir of the jenkinsfile runner
+    -n          do not delete and clone the Builddir, if it exists
+    -s          skip maven package of jenkinsfile-runner
+
+EOF
+}
+# saner programming env: these switches turn some bugs into errors
+set -o errexit -o pipefail -o noclobber -o nounset
+# -allow a command to fail with !’s side effect on errexit
+# -use return value from ${PIPESTATUS[0]}, because ! hosed $?
+! getopt --test >/dev/null
+if [[ ${PIPESTATUS[0]} -ne 4 ]]; then
+  echo "I’m sorry, $(getopt --test) failed in this environment, see if you install gnu-getopt "
+  exit 1
+fi
+
+#Defaults
 TARGET_DIR=~/git/jenkinsfile-runner
 # TODO (che, jhe, .4) : Master broken
 #REPO=https://github.com/jenkinsci/jenkinsfile-runner.git
@@ -8,6 +36,68 @@ BRANCH=master
 RUNNER_DIR=runner
 BIN_DIR=bin
 JENKINS_DIR=jenkins
+CLEAN=Y
+SKIP=n
+
+
+#Command line Options
+OPTIONS=hd:r:b:i:ns
+LONGOPTS=help,builddir:,repo:,branch:,installdir:,noclean,skip
+
+# -regarding ! and PIPESTATUS see above
+# -temporarily store output to be able to check for errors
+# -activate quoting/enhanced mode (e.g. by writing out “--options”)
+# -pass arguments only via   -- "$@"   to separate them correctly
+! PARSED=$(getopt --options=$OPTIONS --longoptions=$LONGOPTS --name "$0" -- "$@")
+if [[ ${PIPESTATUS[0]} -ne 0 ]]; then
+  show_help
+  exit 0
+fi
+# read getopt’s output this way to handle the quoting right:
+eval set -- "$PARSED"
+while true; do
+  case "$1" in
+  -h | --help)
+    show_help
+    exit 0
+    ;;
+  -d | --builddir)
+    TARGET_DIR=$2
+    TARGET_DIR="${TARGET_DIR/#\~/$HOME}"
+    shift 2
+    ;;
+  -r | --repo)
+    REPO=y
+    shift 2
+    ;;
+  -b | --branch)
+    BRANCH=$2
+    shift 2
+    ;;
+  -i | --installdir)
+    RUNNER_DIR=$2
+    RUNNER_DIR="${RUNNER_DIR/#\~/$HOME}"
+    shift 2
+    ;;
+  -n | --noclean)
+    CLEAN=n
+    shift
+    ;;
+   -s | --skip)
+    SKIP=Y
+    shift
+    ;;
+  --)
+    shift
+    break
+    ;;
+  *)
+    show_help >&2
+    exit 1
+    ;;
+  esac
+done
+echo "Running with builddir=$TARGET_DIR, repo=$REPO, branch:$BRANCH, installdir=$RUNNER_DIR, clean=$CLEAN"
 # Preconditions
 mvn --version >/dev/null 2>&1 || {
   exit 1
@@ -23,23 +113,23 @@ fi
 SAVEDWD=$(pwd)
 echo "$SAVEDWD"
 # Target Directory
-if [ -d $TARGET_DIR ]; then
-  echo "The Target Directory for the jenkinsfile-runner exists, delete it and then clone the repo? Y/n"
-  read varname
-  if [ "$varname" = "Y" ]; then
-    echo "$TARGET_DIR will be deleted recursively "
-    rm -Rf $TARGET_DIR
-  else
-    echo "Continueing "
-  fi
+if [ -d "$TARGET_DIR" ] && [ $CLEAN == "Y" ]; then
+  echo "$TARGET_DIR will be deleted recursively "
+  rm -Rf $TARGET_DIR
 fi
-echo "Cloneing jenkinsfile-runner from $REPO to $TARGET_DIR from branch: $BRANCH"
-git clone -b $BRANCH $REPO $TARGET_DIR
-echo "Done."
-echo "Building jenkinsfile-runner "
+if [ ! -d "$TARGET_DIR" ]; then
+  echo "Cloneing jenkinsfile-runner from $REPO to $TARGET_DIR from branch: $BRANCH"
+  git clone -b $BRANCH $REPO $TARGET_DIR
+  echo "Done."
+  echo "Building jenkinsfile-runner "
+else
+  echo "Skipping git clone, because directory already there and clean=$CLEAN"
+fi
 cd "$TARGET_DIR"
 pwd
-mvn clean package
+if [ $SKIP == 'n' ] ; then
+  mvn clean package
+fi
 cd "$SAVEDWD" || {
   echo >&2 "Could'nt cd to $SAVEDWD.  Aborting."
   exit 1
@@ -71,4 +161,4 @@ cd "$SAVEDWD" || {
   exit 1
 }
 ./gradlew tasks --group="Apg Gradle Jenkinsrunner"
-./gradlew runTestLibHelloWorld --info --stacktrace
+./gradlew runTestLibHelloWorld -PinstallDir="$RUNNER_DIR" --info --stacktrace
