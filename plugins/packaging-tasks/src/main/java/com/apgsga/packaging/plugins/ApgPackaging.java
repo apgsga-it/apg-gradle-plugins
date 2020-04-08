@@ -10,6 +10,9 @@ import com.apgsga.packaging.gui.tasks.BundledResourcesCopyTask;
 import com.apgsga.packaging.gui.tasks.DllCopyTask;
 import com.apgsga.packaging.gui.tasks.JarCopyTask;
 import com.apgsga.packaging.gui.tasks.SerivceResourcesCopyTask;
+import com.apgsga.packaging.rpm.plugins.OsPackagingPlugin;
+import com.apgsga.packaging.rpm.tasks.OsPackageConfigureTask;
+import com.apgsga.packaging.rpm.tasks.RpmScriptsCopyTask;
 import com.apgsga.packaging.service.pkg.actions.CopyResourcesToBuildDirAction;
 import com.apgsga.packaging.service.pkg.task.AppConfigFileMergerTask;
 import com.apgsga.packaging.service.pkg.task.AppResourcesCopyTask;
@@ -38,6 +41,32 @@ public class ApgPackaging implements Plugin<Project> {
         applyCommonPlugin();
         applyServicePackagePlugin();
         applyGuiPackagingPlugin();
+        applyRpmServicePlugin();
+    }
+
+    private void applyRpmServicePlugin() {
+        final ExtensionContainer ext = project.getExtensions();
+        final Logger logger = project.getLogger();
+        final PluginContainer plugins = project.getPlugins();
+        plugins.apply(OsPackagingPlugin.class);
+        TaskContainer tasks = project.getTasks();
+        TaskProvider<Copy> copyPackagingResourcesAction = tasks.register("copyRpmPackagingResources", Copy.class,
+                new CopyResourcesToBuildDirAction(project));
+        TaskProvider<RpmScriptsCopyTask> rpmCopyAndExpandTask = tasks.register("copyRpmScripts",
+                RpmScriptsCopyTask.class);
+        TaskProvider<OsPackageConfigureTask> osPackageConfigureTask = tasks.register("osPackageConfigure",
+                OsPackageConfigureTask.class);
+        Task buildRpmTask = tasks.findByName("buildRpm");
+        Task copyCommonPkgResourcesTask = tasks.findByName("copyCommonPackagingResources");
+        Task templateDirCopyTask = tasks.findByName("templateDirCopy");
+        Task copyBinariesIntoLib = tasks.findByName("copyAppBinaries");
+        Task copyRpmPkgResources = tasks.findByName("copyRpmPackagingResources");
+        assert templateDirCopyTask != null;
+        templateDirCopyTask.dependsOn(copyRpmPkgResources, copyCommonPkgResourcesTask);
+        rpmCopyAndExpandTask.configure(task -> task.dependsOn(templateDirCopyTask));
+        osPackageConfigureTask.configure(task -> task.dependsOn(copyBinariesIntoLib));
+        assert buildRpmTask != null;
+        buildRpmTask.dependsOn(osPackageConfigureTask, rpmCopyAndExpandTask);
     }
 
     private void applyGuiPackagingPlugin() {
