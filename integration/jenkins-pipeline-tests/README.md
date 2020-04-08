@@ -103,7 +103,7 @@ https://github.com/chhex/jenkins-pipeline-testlib.git "
 Are configure with the
 [Jenkins Casc Plugin](https://github.com/jenkinsci/configuration-as-code-plugin).
 Currently for example in the config File in
-[jenkins.yaml](file:/runner/config/jenkins.yaml)
+[jenkins.yaml](file:/runner/config/jenkins.yaml)<!-- @IGNORE PREVIOUS: link -->
 
 with this content
 ```

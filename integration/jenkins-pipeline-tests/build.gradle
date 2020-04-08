@@ -3,7 +3,7 @@ plugins {
     id "nu.studer.credentials" version "2.1"
 }
 project.ext {
-    runnerInstallationDir = project.hasProperty('installDir') ? project.property('installDir') : "${project.projectDir}/runner"
+    runnerInstallationDir = project.hasProperty('installDir') ? project.property('installDir') : System.getProperty("user.home") + "/jenkins/runner"
 }
 class JenkinsRunnerExec extends JavaExec {
     public static final String APG_TASK_GROUP = "Apg Gradle Jenkinsrunner"

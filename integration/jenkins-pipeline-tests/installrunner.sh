@@ -4,7 +4,7 @@
 show_help() {
   cat <<EOF
 Usage: ${0##*/} [-d BUILDDIR] [-r GITREPO] [-b BRANCH] [-i INSTALLDIR] -ns
-Builds and Installs the jenkinsfile-runner build into a installation Dir to be used with the Jenkinspipeline Tests
+Builds and Installs the jenkinsfile-runner to a installation Dir to be used with the Jenkinspipeline Tests
 
     -h          display this help and exit
     -d=BUILDDIR target of the git clone of the git repo
@@ -33,7 +33,7 @@ TARGET_DIR=~/git/jenkinsfile-runner
 # Temp fix in Apg fork
 REPO=https://github.com/apgsga-it/jenkinsfile-runner.git
 BRANCH=master
-RUNNER_DIR=runner
+RUNNER_DIR="$HOME/jenkins/runner"
 BIN_DIR=bin
 JENKINS_DIR=jenkins
 CLEAN=Y
