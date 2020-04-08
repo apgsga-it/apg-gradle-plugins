@@ -13,6 +13,7 @@ include ':common-test'
 include 'docker-client'
 include 'revision-manager'
 include 'ssh-tasks'
+include 'packaging-tasks'
 
 project(':common-repo').projectDir = "$rootDir/common-repo" as File
 project(':generic-publish').projectDir = "$rootDir/generic-publish" as File
@@ -28,5 +29,6 @@ project(':common-test').projectDir = "$rootDir/common-test" as File
 project(':docker-client').projectDir = "$rootDir/docker-client" as File
 project(':revision-manager').projectDir = "$rootDir/revision-manager" as File
 project(':ssh-tasks').projectDir = "$rootDir/ssh-tasks" as File
+project(':packaging-tasks').projectDir = "$rootDir/packaging-tasks" as File
 
 
