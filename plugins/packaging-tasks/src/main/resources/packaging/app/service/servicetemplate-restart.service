@@ -1,0 +1,9 @@
+[Unit]
+Description=Restart ${targetServiceName} Server Service 
+
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/systemctl try-restart ${targetServiceName}
+
+[Install]
+WantedBy=timers.target
