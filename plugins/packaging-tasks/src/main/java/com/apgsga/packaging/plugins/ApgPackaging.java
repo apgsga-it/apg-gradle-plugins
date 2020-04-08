@@ -5,7 +5,7 @@ import com.apgsga.packaging.common.task.BinariesCopyTask;
 import com.apgsga.packaging.common.task.ConfigureDepsTask;
 import com.apgsga.packaging.extensions.ApgCommonPackageExtension;
 import com.apgsga.packaging.gui.actions.UnzipBundledResourcesToAction;
-import com.apgsga.packaging.gui.actions.ZipPackageAction;
+import com.apgsga.packaging.gui.actions.GuiZipPackageAction;
 import com.apgsga.packaging.gui.tasks.BundledResourcesCopyTask;
 import com.apgsga.packaging.gui.tasks.DllCopyTask;
 import com.apgsga.packaging.gui.tasks.JarCopyTask;
@@ -18,6 +18,7 @@ import com.apgsga.packaging.service.pkg.task.AppConfigFileMergerTask;
 import com.apgsga.packaging.service.pkg.task.AppResourcesCopyTask;
 import com.apgsga.packaging.service.pkg.task.ResourceFileMergerTask;
 import com.apgsga.packaging.service.pkg.task.TemplateDirCopyTask;
+import com.apgsga.packaging.zip.actions.ZipPackageAction;
 import org.gradle.api.Plugin;
 import org.gradle.api.Project;
 import org.gradle.api.Task;
@@ -42,6 +43,17 @@ public class ApgPackaging implements Plugin<Project> {
         applyServicePackagePlugin();
         applyGuiPackagingPlugin();
         applyRpmServicePlugin();
+        applyZipPackagePlugin();
+    }
+
+    private void applyZipPackagePlugin() {
+        final ExtensionContainer ext = project.getExtensions();
+        final Logger logger = project.getLogger();
+        final PluginContainer plugins = project.getPlugins();
+        TaskContainer tasks = project.getTasks();
+        Task libsCopyTask = tasks.findByName("copyAppBinaries");
+        TaskProvider<Zip> tarGzipDistTask = tasks.register("buildZipPkg", Zip.class, new ZipPackageAction(project));
+        tarGzipDistTask.configure(task -> task.dependsOn(libsCopyTask));
     }
 
     private void applyRpmServicePlugin() {
@@ -80,7 +92,7 @@ public class ApgPackaging implements Plugin<Project> {
                 SerivceResourcesCopyTask.class);
         TaskProvider<BundledResourcesCopyTask> bundledResourcesCopyTask = tasks.register("bundledResourcesCopyTask",
                 BundledResourcesCopyTask.class);
-        TaskProvider<Zip> zipPackageTask = tasks.register("buildZip", Zip.class, new ZipPackageAction(project));
+        TaskProvider<Zip> zipPackageTask = tasks.register("buildZip", Zip.class, new GuiZipPackageAction(project));
         TaskProvider<Copy> unzipBundledResourcesTask = tasks.register("unzipBundledResourcesTask", Copy.class, new UnzipBundledResourcesToAction(project));
         dllCopyTask.configure(task -> task.dependsOn(configureDepsTask));
         jarCopyTask.configure(task -> task.dependsOn(configureDepsTask));

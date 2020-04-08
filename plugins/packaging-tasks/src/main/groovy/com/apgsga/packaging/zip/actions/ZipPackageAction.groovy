@@ -1,4 +1,4 @@
-package com.apgsga.packaging.gui.actions
+package com.apgsga.packaging.zip.actions
 
 import org.gradle.api.Action
 import org.gradle.api.Project
@@ -14,12 +14,9 @@ class ZipPackageAction implements Action<Zip> {
 
 	@Override
     void execute(Zip zip) {
-		def ex = project.extensions.apgPackage
-		zip.from("${project.buildDir}/${ex.name}")
-		zip.into("${ex.name}")
+		zip.from("${project.buildDir}/app-pkg")
 		// TODO (che, 1.10 ) Verify 
 		zip.destinationDir = new File("${project.buildDir}/distributions")
-		// TODO (che, 23.10) : Is this enough for Version?
-		zip.archiveName = "${ex.name}-${ex.version}.zip"
+		zip.archiveName = "app-pkg.zip"
 	}
 }
