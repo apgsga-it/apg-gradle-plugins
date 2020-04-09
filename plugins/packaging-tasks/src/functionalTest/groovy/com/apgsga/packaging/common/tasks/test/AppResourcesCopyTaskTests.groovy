@@ -1,7 +1,7 @@
 package com.apgsga.packaging.common.tasks.test
 
 import com.apgsga.gradle.test.utils.AbstractSpecification
-import com.apgsga.packaging.plugins.ApgPackaging
+import com.apgsga.packaging.plugins.ApgServicePackagePlugin
 import spock.lang.Shared
 
 import static groovy.io.FileType.FILES
@@ -19,7 +19,7 @@ class AppResourcesCopyTaskTests extends AbstractSpecification {
         given:
         buildFile << """
             plugins {
-                id '${ApgPackaging.PLUGIN_ID}' 
+                id '${ApgServicePackagePlugin.PLUGIN_ID}' 
             }
         """
 
@@ -45,7 +45,7 @@ class AppResourcesCopyTaskTests extends AbstractSpecification {
 		given:
 		buildFile << """
             plugins {
-                id '${ApgPackaging.PLUGIN_ID}' 
+                id '${ApgServicePackagePlugin.PLUGIN_ID}' 
             }
 		 apgPackage {
 			name ="testapp"

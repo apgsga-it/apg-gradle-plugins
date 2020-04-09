@@ -1,7 +1,7 @@
 package com.apgsga.packaging.it21gui.tasks.test
 
 import com.apgsga.gradle.test.utils.AbstractSpecification
-import com.apgsga.packaging.plugins.ApgPackaging
+import com.apgsga.packaging.plugins.ApgGuiPackagePlugin
 
 import static groovy.io.FileType.FILES
 
@@ -12,7 +12,7 @@ class ZipPackageTaskTests extends AbstractSpecification  {
         buildFile << """
 
             plugins {
-                id '${ApgPackaging.PLUGIN_ID}'
+                id '${ApgGuiPackagePlugin.PLUGIN_ID}'
             }
 
 			apgRepositories {

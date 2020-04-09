@@ -1,7 +1,7 @@
 package com.apgsga.packaging.common.tasks.test
 
 import com.apgsga.gradle.test.utils.AbstractSpecification
-import com.apgsga.packaging.plugins.ApgPackaging
+import com.apgsga.packaging.plugins.ApgServicePackagePlugin
 import spock.lang.Shared
 
 import static groovy.io.FileType.FILES
@@ -19,7 +19,7 @@ class PropertyFileMergeTasksTests extends AbstractSpecification {
         given:
         buildFile << """
             plugins {
-                id '${ApgPackaging.PLUGIN_ID}' 
+                id '${ApgServicePackagePlugin.PLUGIN_ID}' 
             }
         """
 
@@ -44,7 +44,7 @@ class PropertyFileMergeTasksTests extends AbstractSpecification {
 		given:
 		buildFile << """
             plugins {
-                id '${ApgPackaging.PLUGIN_ID}' 
+                id '${ApgServicePackagePlugin.PLUGIN_ID}' 
             }
 			apgPackage {
 				resourceFilters = "serviceport"
@@ -84,7 +84,7 @@ class PropertyFileMergeTasksTests extends AbstractSpecification {
 		given:
 		buildFile << """
             plugins {
-                id '${ApgPackaging.PLUGIN_ID}' 
+                id '${ApgServicePackagePlugin.PLUGIN_ID}' 
             }
 			apgPackage {
 				resourceFilters = "serviceport"
@@ -122,7 +122,7 @@ class PropertyFileMergeTasksTests extends AbstractSpecification {
 		given:
 		buildFile << """
             plugins {
-                id '${ApgPackaging.PLUGIN_ID}' 
+                id '${ApgServicePackagePlugin.PLUGIN_ID}' 
             }
         """
 

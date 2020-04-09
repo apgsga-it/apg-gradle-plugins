@@ -1,7 +1,7 @@
 package com.apgsga.packaging.common.tasks.test
 
 import com.apgsga.gradle.test.utils.AbstractSpecification
-import com.apgsga.packaging.plugins.ApgPackaging
+import com.apgsga.packaging.plugins.ApgCommonPackagePlugin
 import spock.lang.Shared
 
 import static groovy.io.FileType.FILES
@@ -18,7 +18,7 @@ class BinariesCopyTaskTests extends AbstractSpecification {
         buildFile << """
 
             plugins {
-                id '${ApgPackaging.PLUGIN_ID}'
+                id '${ApgCommonPackagePlugin.PLUGIN_ID}'
             }
 
 			apgRepositories {
@@ -56,7 +56,7 @@ class BinariesCopyTaskTests extends AbstractSpecification {
 		buildFile << """
 
             plugins {
-                id '${ApgPackaging.PLUGIN_ID}'
+                id '${ApgCommonPackagePlugin.PLUGIN_ID}'
             }
             
             configurations { testRuntime.exclude group: 'log4j', module: 'log4j' }

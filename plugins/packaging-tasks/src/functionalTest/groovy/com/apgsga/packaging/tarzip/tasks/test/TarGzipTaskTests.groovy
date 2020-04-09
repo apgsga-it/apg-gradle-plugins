@@ -1,7 +1,7 @@
 package com.apgsga.packaging.tarzip.tasks.test
 
 import com.apgsga.gradle.test.utils.AbstractSpecification
-import com.apgsga.packaging.plugins.ApgPackaging
+import com.apgsga.packaging.plugins.ApgZipPackagePlugin
 
 import static groovy.io.FileType.FILES
 
@@ -11,7 +11,7 @@ class TarGzipTaskTests extends AbstractSpecification {
         given:
         buildFile << """
             plugins {
-                id '${ApgPackaging.PLUGIN_ID}'
+                id '${ApgZipPackagePlugin.PLUGIN_ID}'
             }
 
 			apgRepositories {

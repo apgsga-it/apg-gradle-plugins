@@ -1,7 +1,7 @@
 package com.apgsga.packaging.rpm.tasks.test
 
 import com.apgsga.gradle.test.utils.AbstractSpecification
-import com.apgsga.packaging.plugins.ApgPackaging
+import com.apgsga.packaging.plugins.ApgRpmPackagePlugin
 import spock.lang.Shared
 
 import static groovy.io.FileType.FILES
@@ -19,7 +19,7 @@ class BuildRpmTaskTests extends AbstractSpecification {
         given:
         buildFile << """
             plugins {
-                id '${ApgPackaging.PLUGIN_ID}'
+                id '${ApgRpmPackagePlugin.PLUGIN_ID}'
             }
 			apgRepositories {
 				mavenLocal()

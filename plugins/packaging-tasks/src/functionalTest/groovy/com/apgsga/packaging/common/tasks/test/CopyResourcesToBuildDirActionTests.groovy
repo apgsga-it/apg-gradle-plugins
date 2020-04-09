@@ -1,7 +1,7 @@
 package com.apgsga.packaging.common.tasks.test
 
 import com.apgsga.gradle.test.utils.AbstractSpecification
-import com.apgsga.packaging.plugins.ApgPackaging
+import com.apgsga.packaging.plugins.ApgServicePackagePlugin
 
 class CopyResourcesToBuildDirActionTests extends AbstractSpecification {
 
@@ -9,7 +9,7 @@ class CopyResourcesToBuildDirActionTests extends AbstractSpecification {
         given:
         buildFile << """
             plugins {
-                id '${ApgPackaging.PLUGIN_ID}' 
+                id '${ApgServicePackagePlugin.PLUGIN_ID}' 
             }
         """
 
