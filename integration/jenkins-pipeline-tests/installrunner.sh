@@ -11,6 +11,7 @@ Builds and Installs the jenkinsfile-runner to a installation Dir to be used with
     -r=GITREPO  git repo, from which the jenkinsfile runner will be cloned
     -b=BRANCH   git of the git repo
     -i=INSTALLDIR Installation Dir of the jenkinsfile runner
+    -m=MAVENLOCALDIR alternative Mavenlocal Directory
     -n          do not delete and clone the Builddir, if it exists
     -s          skip maven package of jenkinsfile-runner
 
@@ -33,16 +34,17 @@ TARGET_DIR=~/git/jenkinsfile-runner
 # Temp fix in Apg fork
 REPO=https://github.com/apgsga-it/jenkinsfile-runner.git
 BRANCH=master
-RUNNER_DIR="$HOME/jenkins/runner"
+RUNNER_DIR="$HOME/jenkinstests/jenkins/runner"
 BIN_DIR=bin
 JENKINS_DIR=jenkins
 CLEAN=Y
 SKIP=n
+MAVENLOCALDIR=
 
 
 #Command line Options
-OPTIONS=hd:r:b:i:ns
-LONGOPTS=help,builddir:,repo:,branch:,installdir:,noclean,skip
+OPTIONS=hd:r:b:i:m:ns
+LONGOPTS=help,builddir:,repo:,branch:,installdir:,mavenLocal:,noclean,skip
 
 # -regarding ! and PIPESTATUS see above
 # -temporarily store output to be able to check for errors
@@ -79,6 +81,11 @@ while true; do
     RUNNER_DIR="${RUNNER_DIR/#\~/$HOME}"
     shift 2
     ;;
+  -m | --mavenLocal)
+    MAVENLOCALDIR=$2
+    MAVENLOCALDIR="${MAVENLOCALDIR/#\~/$HOME}"
+    shift 2
+    ;;
   -n | --noclean)
     CLEAN=n
     shift
@@ -100,6 +107,7 @@ done
 echo "Running with builddir=$TARGET_DIR, repo=$REPO, branch:$BRANCH, installdir=$RUNNER_DIR, clean=$CLEAN"
 # Preconditions
 mvn --version >/dev/null 2>&1 || {
+  echo >&2 "mvn is either not in Path or Installed.  Aborting."
   exit 1
 }
 git --version >/dev/null 2>&1 || {
@@ -107,7 +115,7 @@ git --version >/dev/null 2>&1 || {
   exit 1
 }
 if [ ! -d $RUNNER_DIR ]; then
-  echo >&2 "Installation directtory $RUNNER_DIR for jenkinsfile-runner missing.  Aborting."
+  echo >&2 "Installation directtory $RUNNER_DIR for jenkinsfile-runner is missing.  Aborting."
   exit 1
 fi
 SAVEDWD=$(pwd)
@@ -124,6 +132,10 @@ if [ ! -d "$TARGET_DIR" ]; then
   echo "Building jenkinsfile-runner "
 else
   echo "Skipping git clone, because directory already there and clean=$CLEAN"
+fi
+if [[ -z "$MAVENLOCALDIR" ]]; then
+  export MAVEN_OPTS=-Dmaven.repo.local=$MAVENLOCALDIR
+
 fi
 cd "$TARGET_DIR"
 pwd
