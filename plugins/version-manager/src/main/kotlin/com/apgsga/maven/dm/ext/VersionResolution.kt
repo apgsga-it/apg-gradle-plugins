@@ -1,11 +1,11 @@
 package com.apgsga.maven.dm.ext
 
 
-import com.apgsga.gradle.common.pkg.extension.ApgCommonPackageExtension
 import com.apgsga.maven.VersionResolver
 import com.apgsga.maven.impl.resolver.BomVersionGradleResolverBuilder
 import com.apgsga.maven.impl.resolver.CompositeVersionResolverBuilder
 import com.apgsga.maven.impl.resolver.PatchFileVersionResolverBuilder
+import com.apgsga.packaging.extensions.ApgCommonPackageExtension
 import com.apgsga.revision.manager.domain.RevisionManager
 import com.apgsga.revision.manager.domain.RevisionManagerBuilder
 import groovy.lang.Closure

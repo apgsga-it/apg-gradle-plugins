@@ -62,9 +62,14 @@
       <option name="url" value="file:$PROJECT_DIR$/integration/digiflex/digiflex-it21-ui-pkg/null/repo" />
     </remote-repository>
     <remote-repository>
+      <option name="id" value="MavenLocal" />
+      <option name="name" value="MavenLocal" />
+      <option name="url" value="file:/$MAVEN_REPOSITORY$/" />
+    </remote-repository>
+    <remote-repository>
       <option name="id" value="Embedded Kotlin Repository" />
       <option name="name" value="Embedded Kotlin Repository" />
-      <option name="url" value="file:$USER_HOME$/gradle/home/caches/5.2.1/embedded-kotlin-repo-1.3.20-2/repo/" />
+      <option name="url" value="file:/$USER_HOME$/.gradle/caches/5.2.1/embedded-kotlin-repo-1.3.20-2/repo/" />
     </remote-repository>
   </component>
 </project>

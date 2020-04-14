@@ -5,6 +5,10 @@
       <profile default="true" name="Default" enabled="true" />
     </annotationProcessing>
     <bytecodeTargetLevel>
+      <module name="apg-gradle-plugins.common-service-packager.functionalTest" target="1.8" />
+      <module name="apg-gradle-plugins.common-service-packager.integrationTest" target="1.8" />
+      <module name="apg-gradle-plugins.common-service-packager.main" target="1.8" />
+      <module name="apg-gradle-plugins.common-service-packager.test" target="1.8" />
       <module name="apg-gradle-plugins.dependency-manager.functionalTest" target="1.8" />
       <module name="apg-gradle-plugins.dependency-manager.integrationTest" target="1.8" />
       <module name="apg-gradle-plugins.dependency-manager.main" target="1.8" />
@@ -13,8 +17,16 @@
       <module name="apg-gradle-plugins.docker-client.integrationTest" target="1.8" />
       <module name="apg-gradle-plugins.docker-client.main" target="1.8" />
       <module name="apg-gradle-plugins.docker-client.test" target="1.8" />
+      <module name="apg-gradle-plugins.it21-gui-packager.functionalTest" target="1.8" />
+      <module name="apg-gradle-plugins.it21-gui-packager.integrationTest" target="1.8" />
+      <module name="apg-gradle-plugins.it21-gui-packager.main" target="1.8" />
+      <module name="apg-gradle-plugins.it21-gui-packager.test" target="1.8" />
       <module name="apg-gradle-plugins.main" target="1.8" />
       <module name="apg-gradle-plugins.revision-manager.functionalTest" target="1.8" />
+      <module name="apg-gradle-plugins.rpm-service-packager.functionalTest" target="1.8" />
+      <module name="apg-gradle-plugins.rpm-service-packager.integrationTest" target="1.8" />
+      <module name="apg-gradle-plugins.rpm-service-packager.main" target="1.8" />
+      <module name="apg-gradle-plugins.rpm-service-packager.test" target="1.8" />
       <module name="apg-gradle-plugins.rpm-ssh-deployer.functionalTest" target="1.8" />
       <module name="apg-gradle-plugins.rpm-ssh-deployer.integrationTest" target="1.8" />
       <module name="apg-gradle-plugins.rpm-ssh-deployer.main" target="1.8" />
@@ -24,6 +36,10 @@
       <module name="apg-gradle-plugins.ssh-common.main" target="1.8" />
       <module name="apg-gradle-plugins.ssh-common.test" target="1.8" />
       <module name="apg-gradle-plugins.test" target="1.8" />
+      <module name="apg-gradle-plugins.zip-service-packager.functionalTest" target="1.8" />
+      <module name="apg-gradle-plugins.zip-service-packager.integrationTest" target="1.8" />
+      <module name="apg-gradle-plugins.zip-service-packager.main" target="1.8" />
+      <module name="apg-gradle-plugins.zip-service-packager.test" target="1.8" />
       <module name="apg-gradle-plugins.zip-ssh-deployer.functionalTest" target="1.8" />
       <module name="apg-gradle-plugins.zip-ssh-deployer.integrationTest" target="1.8" />
       <module name="apg-gradle-plugins.zip-ssh-deployer.main" target="1.8" />
