@@ -19,7 +19,7 @@ class PropertyFileMergeTasksTests extends AbstractSpecification {
         given:
         buildFile << """
             plugins {
-                id '${ApgServicePackagePlugin.PLUGIN_ID}' 
+                id 'com.apgsga.service.package' 
             }
         """
 
@@ -44,7 +44,7 @@ class PropertyFileMergeTasksTests extends AbstractSpecification {
 		given:
 		buildFile << """
             plugins {
-                id '${ApgServicePackagePlugin.PLUGIN_ID}' 
+                id 'com.apgsga.service.package' 
             }
 			apgPackage {
 				resourceFilters = "serviceport"
@@ -84,7 +84,7 @@ class PropertyFileMergeTasksTests extends AbstractSpecification {
 		given:
 		buildFile << """
             plugins {
-                id '${ApgServicePackagePlugin.PLUGIN_ID}' 
+                id 'com.apgsga.service.package' 
             }
 			apgPackage {
 				resourceFilters = "serviceport"
@@ -122,7 +122,7 @@ class PropertyFileMergeTasksTests extends AbstractSpecification {
 		given:
 		buildFile << """
             plugins {
-                id '${ApgServicePackagePlugin.PLUGIN_ID}' 
+                id 'com.apgsga.service.package' 
             }
         """
 

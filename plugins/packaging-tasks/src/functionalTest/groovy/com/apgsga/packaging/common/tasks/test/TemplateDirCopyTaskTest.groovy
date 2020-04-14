@@ -9,7 +9,7 @@ class TemplateDirCopyTaskTest extends AbstractSpecification {
         given:
         buildFile << """
             plugins {
-                id '${ApgServicePackagePlugin.PLUGIN_ID}' 
+                id 'com.apgsga.service.package' 
             }
         """
 

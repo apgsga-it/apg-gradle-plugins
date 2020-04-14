@@ -19,7 +19,7 @@ class AppResourcesCopyTaskTests extends AbstractSpecification {
         given:
         buildFile << """
             plugins {
-                id '${ApgServicePackagePlugin.PLUGIN_ID}' 
+                id 'com.apgsga.service.package' 
             }
         """
 
@@ -45,7 +45,7 @@ class AppResourcesCopyTaskTests extends AbstractSpecification {
 		given:
 		buildFile << """
             plugins {
-                id '${ApgServicePackagePlugin.PLUGIN_ID}' 
+                id 'com.apgsga.service.package' 
             }
 		 apgPackage {
 			name ="testapp"

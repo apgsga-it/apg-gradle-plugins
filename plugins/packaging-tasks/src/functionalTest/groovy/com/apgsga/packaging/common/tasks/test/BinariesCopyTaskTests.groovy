@@ -18,7 +18,7 @@ class BinariesCopyTaskTests extends AbstractSpecification {
         buildFile << """
 
             plugins {
-                id '${ApgCommonPackagePlugin.PLUGIN_ID}'
+                id 'com.apgsga.common.package'
             }
 
 			apgRepositories {
@@ -56,7 +56,7 @@ class BinariesCopyTaskTests extends AbstractSpecification {
 		buildFile << """
 
             plugins {
-                id '${ApgCommonPackagePlugin.PLUGIN_ID}'
+                id 'com.apgsga.common.package'
             }
             
             configurations { testRuntime.exclude group: 'log4j', module: 'log4j' }
