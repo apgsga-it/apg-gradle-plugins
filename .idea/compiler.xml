@@ -56,6 +56,8 @@
       <module name="jenkins-.test" target="1.8" />
       <module name="jenkins-patch-scripts.main" target="1.8" />
       <module name="jenkins-patch-scripts.test" target="1.8" />
+      <module name="jenkins-pipeline-tests.buildSrc.main" target="1.8" />
+      <module name="jenkins-pipeline-tests.buildSrc.test" target="1.8" />
       <module name="jenkins-pipeline-tests.jenkinsAll.main" target="1.8" />
       <module name="jenkins-pipeline-tests.jenkinsAll.test" target="1.8" />
       <module name="jenkins-pipeline-tests.jenkinsBuild.main" target="1.8" />
