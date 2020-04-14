@@ -1,8 +1,8 @@
 package com.apgsga.maven.dm.plugin
 
-import com.apgsga.gradle.common.pkg.plugin.ApgCommonPackagePlugin
 import com.apgsga.gradle.repo.plugin.ApgCommonRepoPlugin
 import com.apgsga.maven.dm.ext.VersionResolutionExtension
+import com.apgsga.packaging.plugins.ApgCommonPackagePlugin
 import com.apgsga.revision.manager.domain.RevisionManagerBuilder
 import org.gradle.api.Action
 import org.gradle.api.Plugin

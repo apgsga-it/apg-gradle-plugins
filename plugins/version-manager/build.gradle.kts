@@ -30,7 +30,7 @@ dependencies {
     compile(project(":common-repo"))
     compile(project(":generic-publish"))
     compile(project(":revision-manager"))
-    compile(project(":common-service-packager"))
+    compile(project(":packaging-tasks"))
     compile("org.slf4j:slf4j-api:1.7.25")
     integrationTestRuntimeOnly("org.slf4j:slf4j-simple:1.7.29")
 

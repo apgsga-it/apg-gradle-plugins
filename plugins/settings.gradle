@@ -2,10 +2,6 @@ rootProject.name = 'apg-gradle-plugins'
 include ':common-repo'
 include ':generic-publish'
 include ':maven-publish'
-include ':common-service-packager'
-include ':rpm-service-packager'
-include ':zip-service-packager'
-include ':it21-gui-packager'
 include ':gradle-common'
 include ':repo-config'
 include ':version-manager'
@@ -13,14 +9,11 @@ include ':common-test'
 include 'docker-client'
 include 'revision-manager'
 include 'ssh-tasks'
+include 'packaging-tasks'
 
 project(':common-repo').projectDir = "$rootDir/common-repo" as File
 project(':generic-publish').projectDir = "$rootDir/generic-publish" as File
 project(':maven-publish').projectDir = "$rootDir/maven-publish" as File
-project(':common-service-packager').projectDir = "$rootDir/common-service-packager" as File
-project(':it21-gui-packager').projectDir = "$rootDir/it21-gui-packager" as File
-project(':zip-service-packager').projectDir = "$rootDir/zip-service-packager" as File
-project(':rpm-service-packager').projectDir = "$rootDir/rpm-service-packager" as File
 project(':gradle-common').projectDir = "$rootDir/gradle-common" as File
 project(':repo-config').projectDir = "$rootDir/repo-config" as File
 project(':version-manager').projectDir = "$rootDir/version-manager" as File
@@ -28,5 +21,6 @@ project(':common-test').projectDir = "$rootDir/common-test" as File
 project(':docker-client').projectDir = "$rootDir/docker-client" as File
 project(':revision-manager').projectDir = "$rootDir/revision-manager" as File
 project(':ssh-tasks').projectDir = "$rootDir/ssh-tasks" as File
+project(':packaging-tasks').projectDir = "$rootDir/packaging-tasks" as File
 
 
