@@ -44,6 +44,7 @@
       <module name="apg-gradle-plugins.zip-ssh-deployer.integrationTest" target="1.8" />
       <module name="apg-gradle-plugins.zip-ssh-deployer.main" target="1.8" />
       <module name="apg-gradle-plugins.zip-ssh-deployer.test" target="1.8" />
+      <module name="dm-bom" target="1.5" />
       <module name="docker-sshd-compose.main" target="1.8" />
       <module name="docker-sshd-compose.test" target="1.8" />
       <module name="it21-ui-bundle.it21-ui-dm-version-manager.main" target="1.8" />
@@ -56,6 +57,7 @@
       <module name="jenkins-.test" target="1.8" />
       <module name="jenkins-patch-scripts.main" target="1.8" />
       <module name="jenkins-patch-scripts.test" target="1.8" />
+      <module name="jenkins-pipeline-tests" target="1.8" />
       <module name="jenkins-pipeline-tests.buildSrc.main" target="1.8" />
       <module name="jenkins-pipeline-tests.buildSrc.test" target="1.8" />
       <module name="jenkins-pipeline-tests.jenkinsAll.main" target="1.8" />
@@ -64,9 +66,14 @@
       <module name="jenkins-pipeline-tests.jenkinsBuild.test" target="1.8" />
       <module name="jenkins-pipeline-tests.jenkinsPkgAndDeploy.main" target="1.8" />
       <module name="jenkins-pipeline-tests.jenkinsPkgAndDeploy.test" target="1.8" />
+      <module name="jenkins-pipeline-tests.main" target="1.8" />
+      <module name="jenkins-pipeline-tests.test" target="1.8" />
       <module name="jenkins-pipeline.main" target="1.8" />
       <module name="jenkins-pipeline.test" target="1.8" />
       <module name="parent" target="1.5" />
+      <module name="parent-pom" target="8" />
+      <module name="testapp-module" target="8" />
+      <module name="testapp-service" target="8" />
       <module name="testapp-service-kotlin.main" target="1.8" />
       <module name="testapp-service-kotlin.test" target="1.8" />
     </bytecodeTargetLevel>
