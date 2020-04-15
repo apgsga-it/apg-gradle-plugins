@@ -39,7 +39,6 @@ BIN_DIR=bin
 JENKINS_DIR=jenkins
 CLEAN=Y
 SKIP=n
-# TODO (che,14.2) : see if only of the following could be possible , mavensettings.
 MAVENBASEDIR=
 
 #Command line Options
