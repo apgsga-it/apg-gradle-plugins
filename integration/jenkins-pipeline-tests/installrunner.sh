@@ -11,7 +11,7 @@ Builds and Installs the jenkinsfile-runner to a installation Dir to be used with
     -r=GITREPO  git repo, from which the jenkinsfile runner will be cloned
     -b=BRANCH   git of the git repo
     -i=INSTALLDIR Installation Dir of the jenkinsfile runner
-    -m=MAVENLOCALDIR alternative Mavenlocal Directory
+    -m=MAVENBASEDIR alternative Mavenlocal Base Directory, expect maven directory as child and a settings.xml
     -n          do not delete and clone the Builddir, if it exists
     -s          skip maven package of jenkinsfile-runner
 
@@ -34,17 +34,17 @@ TARGET_DIR=~/git/jenkinsfile-runner
 # Temp fix in Apg fork
 REPO=https://github.com/apgsga-it/jenkinsfile-runner.git
 BRANCH=master
-RUNNER_DIR="$HOME/jenkinstests/jenkins/runner"
+RUNNER_DIR="$HOME/jenkinstests/runner"
 BIN_DIR=bin
 JENKINS_DIR=jenkins
 CLEAN=Y
 SKIP=n
-MAVENLOCALDIR=
-
+# TODO (che,14.2) : see if only of the following could be possible , mavensettings.
+MAVENBASEDIR=
 
 #Command line Options
-OPTIONS=hd:r:b:i:m:ns
-LONGOPTS=help,builddir:,repo:,branch:,installdir:,mavenLocal:,noclean,skip
+OPTIONS=hd:r:b:i:m:l:ns
+LONGOPTS=help,builddir:,repo:,branch:,installdir:,mavenLocal:,mavenSettings:,noclean,skip
 
 # -regarding ! and PIPESTATUS see above
 # -temporarily store output to be able to check for errors
@@ -82,15 +82,15 @@ while true; do
     shift 2
     ;;
   -m | --mavenLocal)
-    MAVENLOCALDIR=$2
-    MAVENLOCALDIR="${MAVENLOCALDIR/#\~/$HOME}"
+    MAVENBASEDIR=$2
+    MAVENBASEDIR="${MAVENBASEDIR/#\~/$HOME}"
     shift 2
     ;;
   -n | --noclean)
     CLEAN=n
     shift
     ;;
-   -s | --skip)
+  -s | --skip)
     SKIP=Y
     shift
     ;;
@@ -118,6 +118,20 @@ if [ ! -d $RUNNER_DIR ]; then
   echo >&2 "Installation directtory $RUNNER_DIR for jenkinsfile-runner is missing.  Aborting."
   exit 1
 fi
+if [ ! -z "$MAVENBASEDIR" ]; then
+  if [ ! -d "$MAVENBASEDIR" ]; then
+    echo >&2 "Maven base  directory is missing for  $MAVENBASEDIR.  Aborting."
+    exit 1
+  fi
+  if [ ! -d "$MAVENBASEDIR/repo" ]; then
+    echo >&2 "Maven repo  directory is missing for  $MAVENBASEDIR.  Aborting."
+    exit 1
+  fi
+  if [ ! -f "$MAVENBASEDIR/settings.xml" ]; then
+    echo >&2 "Maven settings.xml file is missing for  $MAVENBASEDIR.  Aborting."
+    exit 1
+  fi
+fi
 SAVEDWD=$(pwd)
 echo "$SAVEDWD"
 # Target Directory
@@ -133,13 +147,9 @@ if [ ! -d "$TARGET_DIR" ]; then
 else
   echo "Skipping git clone, because directory already there and clean=$CLEAN"
 fi
-if [[ -z "$MAVENLOCALDIR" ]]; then
-  export MAVEN_OPTS=-Dmaven.repo.local=$MAVENLOCALDIR
-
-fi
 cd "$TARGET_DIR"
 pwd
-if [ $SKIP == 'n' ] ; then
+if [ $SKIP == 'n' ]; then
   mvn clean package
 fi
 cd "$SAVEDWD" || {
@@ -151,13 +161,14 @@ cd $RUNNER_DIR || {
   echo >&2 "Could'nt cd to $RUNNER_DIR.  Aborting."
   exit 1
 }
+pwd
 if [ -d $BIN_DIR ]; then
-  echo "Deleting Target bin directory $SAVEDWD/$BIN_DIR"
+  echo "Deleting Target bin directory $RUNNER_DIR/$BIN_DIR"
   rm -Rf $BIN_DIR
   echo "Done"
 fi
 if [ -d $JENKINS_DIR ]; then
-  echo "Deleting jenkins directory  $SAVEDWD/$JENKINS_DIR"
+  echo "Deleting jenkins directory  $RUNNER_DIR/$JENKINS_DIR"
   rm -Rf $JENKINS_DIR
   echo "Done"
 fi
@@ -173,4 +184,8 @@ cd "$SAVEDWD" || {
   exit 1
 }
 ./gradlew tasks --group="Apg Gradle Jenkinsrunner"
-./gradlew runTestLibHelloWorld -PinstallDir="$RUNNER_DIR" --info --stacktrace
+if [[ -z "$MAVENBASEDIR" ]]; then
+  ./gradlew runTestLibHelloWorld -PinstallDir="$RUNNER_DIR" -PmavenSettings="$MAVENBASEDIR/settings.xml" --info --stacktrace
+else
+  ./gradlew runTestLibHelloWorld -PinstallDir="$RUNNER_DIR" --info --stacktrace
+fi

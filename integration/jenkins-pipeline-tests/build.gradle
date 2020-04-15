@@ -1,9 +1,13 @@
 plugins {
     id 'java'
     id "nu.studer.credentials" version "2.1"
+    id 'net.linguica.maven-settings' version '0.5'
+
 }
 project.ext {
-    runnerInstallationDir = project.hasProperty('installDir') ? project.property('installDir') : System.getProperty("user.home") + "/jenkins/runner"
+    runnerInstallationDir = project.hasProperty('installDir') ? project.property('installDir') : System.getProperty("user.home") + "/jenkinstests/runner"
+    mavenSettingsFile = project.hasProperty('mavenSettings') ? project.property('mavenSettings') : '$USER_HOME/.m2/settings.xml'
+
 }
 class JenkinsRunnerExec extends JavaExec {
     public static final String APG_TASK_GROUP = "Apg Gradle Jenkinsrunner"
@@ -32,9 +36,13 @@ class JenkinsRunnerExec extends JavaExec {
         logging.captureStandardOutput LogLevel.INFO
         logging.captureStandardError LogLevel.ERROR
         main = "-jar"
-        super.exec();
+        super.exec()
     }
 
+}
+
+mavenSettings {
+    userSettingsFileName  = project.ext.mavenSettingsFile
 }
 
 task runTestLibHelloWorld(type: JenkinsRunnerExec) {
