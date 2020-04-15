@@ -4,14 +4,24 @@
 # Usage info
 show_help() {
   cat <<EOF
-Usage: ${0##*/} -r GITREPO] [-b BRANCH] [-i INSTALLDIR] -ns
-Initializes Gradle User Home and MavenLocal for Jenkinsfile Runner based Tests
+Usage: ${0##*/} -u USER [-b BRANCH] [-t TARGETDIR] -ns
+Initializes in a TARGETDIR Gradle User Home and MavenLocal for Jenkinsfile Runner based Tests
 Gradle User Home is intialized from Apg's apg-gradle-properties git repo , with the according profiles
-MavenLocal is initialized as a empty repo running maven and running compile dependency:resolve dependency:resolve-plugins
+MavenLocal is initialized as a empty repo running maven and running
+dependency:resolve dependency:resolve-plugins on selected test modules
+
+The directory structure of TARGETDIR is:
+
+maven
+  settings.xml maven settings.xml
+  repo  : maven Local Repository
+gradle
+  home : clone of apg-gradle-properties
+
     -h          display this help and exit
-    -u=USER     userid for the gitrepo, from which apg-gradle-properties will be clone
-    -b=BRANCH   git of the git repo apg-gradle-properties
-    -t=TARGETDIR Target Directory for MavenLocal & Gradle User Home
+    -u=USER     userid for the gitrepo, from which apg-gradle-properties will be clone. Mandatory option
+    -b=BRANCH   git of the git repo apg-gradle-properties, defaults to master
+    -t=TARGETDIR Target Directory for MavenLocal & Gradle User Home, defaults to ~/jenkinstests
     -m          Skip Maven Initialization
     -g          Skip Gradle Initialization
 
