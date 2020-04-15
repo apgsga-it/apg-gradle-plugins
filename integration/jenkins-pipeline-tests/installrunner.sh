@@ -3,7 +3,7 @@
 # Usage info
 show_help() {
   cat <<EOF
-Usage: ${0##*/} [-d BUILDDIR] [-r GITREPO] [-b BRANCH] [-i INSTALLDIR] -ns
+Usage: ${0##*/} [-d BUILDDIR] [-r GITREPO] [-b BRANCH] [-i INSTALLDIR] [ -m  MAVENBASEDIR ] -ns
 Builds and Installs the jenkinsfile-runner to a installation Dir to be used with the Jenkinspipeline Tests
 
     -h          display this help and exit
@@ -11,8 +11,8 @@ Builds and Installs the jenkinsfile-runner to a installation Dir to be used with
     -r=GITREPO  git repo, from which the jenkinsfile runner will be cloned
     -b=BRANCH   git of the git repo
     -i=INSTALLDIR Installation Dir of the jenkinsfile runner
-    -m=MAVENBASEDIR alternative Mavenlocal Base Directory, expect maven directory as child and a settings.xml
-    -n          do not delete and clone the Builddir, if it exists
+    -m=MAVENBASEDIR alternative Mavenlocal Base Directory, expected to have  maven directory as child and a settings.xml
+    -n          do not delete and clone the BUILDDIR, if it exists
     -s          skip maven package of jenkinsfile-runner
 
 EOF
