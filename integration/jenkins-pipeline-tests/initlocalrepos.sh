@@ -6,7 +6,8 @@ show_help() {
   cat <<EOF
 Usage: ${0##*/} -u USER [-b BRANCH] [-t TARGETDIR] -ns
 Initializes in a TARGETDIR Gradle User Home and MavenLocal for Jenkinsfile Runner based Tests
-Gradle User Home is intialized from Apg's apg-gradle-properties git repo , with the according profiles
+Gradle User Home is intialized from Apg's apg-gradle-properties git repo: git.apgsga.ch:/var/git/repos/apg-gradle-properties.git
+TODO (jhe,che, 15.4) support Apg profiles
 MavenLocal is initialized as a empty repo running maven and running
 dependency:resolve dependency:resolve-plugins on selected test modules
 

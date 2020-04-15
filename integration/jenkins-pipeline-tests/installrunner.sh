@@ -11,7 +11,7 @@ copied to INSTALLDIR
     -h          display this help and exit
     -d=BUILDDIR target of the git clone of the git repo , defaults to ~/git/jenkinsfile-runner
     -r=GITREPO  git repo, from which the jenkinsfile runner will be cloned, defaults to https://github.com/apgsga-it/jenkinsfile-runner.git
-    -b=BRANCH   git of the git repo, defaults to master 
+    -b=BRANCH   git of the git repo, defaults to master
     -i=INSTALLDIR Installation Dir of the jenkinsfile runner, defaults to ~/jenkinstests/runner
     -m=MAVENBASEDIR alternative Mavenlocal Base Directory, expected to have  maven directory as child and a settings.xml, optional
     -n          do not delete and clone the BUILDDIR, if it exists
