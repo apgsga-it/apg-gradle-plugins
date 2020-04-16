@@ -7,9 +7,8 @@
   </component>
   <component name="ExternalStorageConfigurationManager" enabled="true" />
   <component name="FrameworkDetectionExcludesConfiguration">
-    <file type="web" url="file://$PROJECT_DIR$/integration/digiflex/digiflex-it21-ui-pkg" />
-    <file type="web" url="file://$PROJECT_DIR$/integration/digiflex/digiflex-jadas-pkg" />
-    <file type="web" url="file://$PROJECT_DIR$/integration/digiflex/digiflex-web-it21-pkg" />
+    <file type="web" url="file://$PROJECT_DIR$/integration/digiflex" />
+    <file type="web" url="file://$PROJECT_DIR$/integration/modules/testapp-pkg" />
     <file type="web" url="file://$PROJECT_DIR$/plugins" />
   </component>
   <component name="JavaScriptSettings">
@@ -29,15 +28,14 @@
         <option value="$PROJECT_DIR$/integration/testapp-bom/pom.xml" />
         <option value="$PROJECT_DIR$/integration/testapp-parentpom/pom.xml" />
         <option value="$PROJECT_DIR$/integration/modules/pom.xml" />
+        <option value="$PROJECT_DIR$/integration/modules/testapp-bom/pom.xml" />
+        <option value="$PROJECT_DIR$/integration/modules/testapp-parentpom/pom.xml" />
+        <option value="$PROJECT_DIR$/integration/modules/testapp-module/pom.xml" />
+        <option value="$PROJECT_DIR$/integration/modules/testapp-service/pom.xml" />
       </list>
     </option>
     <option name="ignoredFiles">
       <set>
-        <option value="$PROJECT_DIR$/integration/modules/pom.xml" />
-        <option value="$PROJECT_DIR$/integration/modules/testapp-bom/pom.xml" />
-        <option value="$PROJECT_DIR$/integration/modules/testapp-module/pom.xml" />
-        <option value="$PROJECT_DIR$/integration/modules/testapp-parentpom/pom.xml" />
-        <option value="$PROJECT_DIR$/integration/modules/testapp-service/pom.xml" />
         <option value="$PROJECT_DIR$/integration/testapp-parent-pom/pom.xml" />
       </set>
     </option>

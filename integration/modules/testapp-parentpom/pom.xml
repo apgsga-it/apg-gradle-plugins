@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>com.apgsga.testapp</groupId>
+    <artifactId>parent-pom</artifactId>
+    <version>1.0-SNAPSHOT</version>
+    <packaging>pom</packaging>
+    <name>testapp-parentpom</name>
+    <description>Parent Pom and the the "container" for the dependency Management for Apg builds.
+        It imports the relevant "Bill of Material" Poms in the Dependency Management Section </description>
+    <properties>
+        <bomVersion>1.0-SNAPSHOT</bomVersion>
+        <revision>SNAPSHOT</revision>
+        <scmFilePath>scm:cvs:local:/var/local/cvs/root:</scmFilePath>
+        <maven.compiler.target>1.8</maven.compiler.target>
+        <maven.compiler.source>1.8</maven.compiler.source>
+        <junit-jupiter.version>5.5.2</junit-jupiter.version>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>
+    <scm>
+        <connection>${scmFilePath}${project.name}</connection>
+        <developerConnection>${scmFilePath}${project.name}</developerConnection>
+    </scm>
+    <developers>
+    </developers>
+    <build>
+        <plugins>
+            <!-- Need at least 2.22.0 to support JUnit 5 platform -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>3.0.0-M3</version>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.8.1</version>
+                <configuration>
+                    <source>8</source>
+                    <target>8</target>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>com.apgsga.testapp</groupId>
+                <artifactId>dm-bom</artifactId>
+                <version>${bomVersion}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+</project>

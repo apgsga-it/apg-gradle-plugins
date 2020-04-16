@@ -4,6 +4,17 @@
   <component name="GradleSettings">
     <option name="linkedExternalProjectsSettings">
       <GradleProjectSettings>
+        <option name="distributionType" value="DEFAULT_WRAPPED" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$/integration/digiflex" />
+        <option name="gradleHome" value="/usr/local/Cellar/gradle/6.2.2/libexec" />
+        <option name="modules">
+          <set>
+            <option value="$PROJECT_DIR$/integration/digiflex" />
+          </set>
+        </option>
+        <option name="useQualifiedModuleNames" value="true" />
+      </GradleProjectSettings>
+      <GradleProjectSettings>
         <option name="delegatedBuild" value="true" />
         <option name="testRunner" value="GRADLE" />
         <option name="distributionType" value="DEFAULT_WRAPPED" />
@@ -21,26 +32,23 @@
         <option name="delegatedBuild" value="true" />
         <option name="testRunner" value="GRADLE" />
         <option name="distributionType" value="DEFAULT_WRAPPED" />
-        <option name="externalProjectPath" value="$PROJECT_DIR$/integration/digiflex/digiflex-jadas-pkg" />
-        <option name="gradleHome" value="/usr/local/Cellar/gradle/6.2.2/libexec" />
-        <option name="gradleJvm" value="1.8" />
-        <option name="modules">
-          <set>
-            <option value="$PROJECT_DIR$/integration/digiflex/digiflex-jadas-pkg" />
-          </set>
-        </option>
-        <option name="useQualifiedModuleNames" value="true" />
-      </GradleProjectSettings>
-      <GradleProjectSettings>
-        <option name="delegatedBuild" value="true" />
-        <option name="testRunner" value="GRADLE" />
-        <option name="distributionType" value="DEFAULT_WRAPPED" />
         <option name="externalProjectPath" value="$PROJECT_DIR$/integration/digiflex/digiflex-web-it21-pkg" />
         <option name="gradleHome" value="/usr/local/Cellar/gradle/6.2.2/libexec" />
         <option name="gradleJvm" value="1.8" />
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$/integration/digiflex/digiflex-web-it21-pkg" />
+          </set>
+        </option>
+        <option name="useQualifiedModuleNames" value="true" />
+      </GradleProjectSettings>
+      <GradleProjectSettings>
+        <option name="distributionType" value="DEFAULT_WRAPPED" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$/integration/modules/testapp-pkg" />
+        <option name="gradleHome" value="/usr/local/Cellar/gradle/6.2.2/libexec" />
+        <option name="modules">
+          <set>
+            <option value="$PROJECT_DIR$/integration/modules/testapp-pkg" />
           </set>
         </option>
         <option name="useQualifiedModuleNames" value="true" />
