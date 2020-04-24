@@ -4,7 +4,7 @@
 package com.apgsga.gradle.maven.publish.plugin;
 
 import com.apgsga.gradle.maven.publish.extension.ApgMavenPublishDsl;
-import com.apgsga.gradle.repo.plugin.ApgCommonRepoPlugin;
+import net.linguica.gradle.maven.settings.MavenSettingsPlugin;
 import org.gradle.api.NonNullApi;
 import org.gradle.api.Plugin;
 import org.gradle.api.Project;
@@ -27,7 +27,7 @@ public class ApgMavenPublishPlugin implements Plugin<Project> {
 		logger.info("Download dependencies from maven central");
 		
 		logger.info("Applying Apg Common Repo Plugin");
-		plugins.apply(ApgCommonRepoPlugin.class);
+		plugins.apply(MavenSettingsPlugin.class);
 		logger.info("Applying Maven Publish Plugin");
 		plugins.apply(MavenPublishPlugin.class);
 		ext.create("apgMavenPublish", ApgMavenPublishDsl.class, project);

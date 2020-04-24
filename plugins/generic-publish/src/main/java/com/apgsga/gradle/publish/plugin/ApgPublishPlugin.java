@@ -5,7 +5,7 @@ package com.apgsga.gradle.publish.plugin;
 
 import com.apgsga.gradle.publish.extension.ApgGenericPublish;
 import com.apgsga.gradle.publish.tasks.ApgPublishTask;
-import com.apgsga.gradle.repo.plugin.ApgCommonRepoPlugin;
+import net.linguica.gradle.maven.settings.MavenSettingsPlugin;
 import org.gradle.api.NonNullApi;
 import org.gradle.api.Plugin;
 import org.gradle.api.Project;
@@ -23,7 +23,7 @@ public class ApgPublishPlugin implements Plugin<Project> {
 		final PluginContainer plugins = project.getPlugins();
 		ApgGenericPublish extension = ext.create("apgGenericPublishConfig", ApgGenericPublish.class, project);
 		logger.info("Applying Apg Common Repo Plugin");
-		plugins.apply(ApgCommonRepoPlugin.class);
+		plugins.apply(MavenSettingsPlugin.class);
 		ApgPublishTask publishTask = project.getTasks().create("apgGenericPublish", ApgPublishTask.class);
 		publishTask.setArtefactFile(extension.getArtefactFileProvider());
 

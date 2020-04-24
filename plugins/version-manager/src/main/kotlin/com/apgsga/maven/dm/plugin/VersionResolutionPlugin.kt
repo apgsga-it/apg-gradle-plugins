@@ -1,9 +1,9 @@
 package com.apgsga.maven.dm.plugin
 
-import com.apgsga.gradle.repo.plugin.ApgCommonRepoPlugin
 import com.apgsga.maven.dm.ext.VersionResolutionExtension
 import com.apgsga.packaging.plugins.ApgCommonPackagePlugin
 import com.apgsga.revision.manager.domain.RevisionManagerBuilder
+import net.linguica.gradle.maven.settings.MavenSettingsPlugin
 import org.gradle.api.Action
 import org.gradle.api.Plugin
 import org.gradle.api.Project
@@ -13,7 +13,7 @@ import org.gradle.api.publish.maven.plugins.MavenPublishPlugin
 
 open class VersionResolutionPlugin : Plugin<Project> {
     override fun apply(project: Project) {
-        project.plugins.apply(ApgCommonRepoPlugin::class.java)
+        project.plugins.apply(MavenSettingsPlugin::class.java)
         project.plugins.apply(MavenPublishPlugin::class.java)
         project.plugins.apply(ApgCommonPackagePlugin::class.java)
         val revisionManagerBuilder = RevisionManagerBuilder.create()
