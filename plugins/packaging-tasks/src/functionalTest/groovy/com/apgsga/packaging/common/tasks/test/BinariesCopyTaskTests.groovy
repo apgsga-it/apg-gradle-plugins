@@ -8,6 +8,8 @@ import static groovy.io.FileType.FILES
 
 class BinariesCopyTaskTests extends AbstractSpecification {
 	@Shared File resourcesDir
+
+	String testMavenSettingsFilePath = new File("src/functionalTest/resources/testMavenSettings.xml").getAbsolutePath().replace("\\","/")
 	
     def setupSpec() {
 		resourcesDir = new File("src/main/resources/packaging")
@@ -20,11 +22,10 @@ class BinariesCopyTaskTests extends AbstractSpecification {
             plugins {
                 id 'com.apgsga.common.package'
             }
-
-			apgRepositories {
-				mavenLocal()
-				mavenCentral()
-			}
+            
+            mavenSettings {
+            	userSettingsFileName = '${testMavenSettingsFilePath}'
+            }
 
 		// The guava dependency is only for testing purposes, consider to be likely found in mavenCentral()
         apgPackage {
@@ -59,12 +60,11 @@ class BinariesCopyTaskTests extends AbstractSpecification {
                 id 'com.apgsga.common.package'
             }
             
+            mavenSettings {
+              userSettingsFileName = '${testMavenSettingsFilePath}'
+            }
+            
             configurations { testRuntime.exclude group: 'log4j', module: 'log4j' }
-
-			apgRepositories {
-				mavenLocal()
-				mavenCentral()
-			}
 
 		// The guava dependency is only for testing purposes, consider to be likely found in mavenCentral()
         apgPackage {

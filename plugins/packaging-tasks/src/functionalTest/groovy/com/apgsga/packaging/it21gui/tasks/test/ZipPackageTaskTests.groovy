@@ -15,11 +15,6 @@ class ZipPackageTaskTests extends AbstractSpecification  {
                 id '${ApgGuiPackagePlugin.PLUGIN_ID}'
             }
 
-			apgRepositories {
-				mavenLocal()
-				mavenCentral()
-			}
-
 		// The guava dependency is only for testing purposes, consider to be likely found in mavenCentral()
         apgPackage {
 			name ="testuiapp"

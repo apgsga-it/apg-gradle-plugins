@@ -1,8 +1,5 @@
 package com.apgsga.packaging.extensions;
 
-import com.apgsga.gradle.repo.extensions.Repo;
-import com.apgsga.gradle.repo.extensions.RepoType;
-import com.apgsga.gradle.repo.extensions.Repos;
 import com.apgsga.packaging.service.pkg.extension.PortnrConvention;
 import org.gradle.api.Project;
 
@@ -58,15 +55,7 @@ public class ApgCommonPackageExtension {
 	public ApgCommonPackageExtension(Project project) {
 		super();
 		this.project = project;
-		initDistRepoUrl();
 	}
-
-    private void initDistRepoUrl() {
-	    // TODO JHE: Search for extension without any hardcoded value
-        Repos repos = (Repos) project.getExtensions().findByName("ApgCommonRepoPlugin.COMMMON_REPO_EXTENSION_NAME");
-        Repo javaDistRepo = repos.get(RepoType.JAVA_DIST);
-        distRepoUrl = javaDistRepo.getRepoBaseUrl() + "/" + javaDistRepo.getRepoName();
-    }
 
     public String getName() {
         return name;
