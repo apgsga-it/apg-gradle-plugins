@@ -4,9 +4,8 @@ import org.gradle.api.DefaultTask
 import org.gradle.api.tasks.OutputDirectory
 import org.gradle.api.tasks.TaskAction
 
-class SerivceResourcesCopyTask extends DefaultTask { 
+class ResourcesCopyTask extends DefaultTask {
 	
-	// TODO (che, 2.10 ) : Verifiy if and when needed (in general)
 	@OutputDirectory
     File getOutputDir() {
 		def ex = project.extensions.apgPackage

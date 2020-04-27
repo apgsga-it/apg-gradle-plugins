@@ -20,7 +20,6 @@ public class ApgRpmPackagePlugin implements Plugin<Project> {
 
     private Project project;
 
-    @SuppressWarnings("unused")
     @Override
     public void apply(Project project) {
         final ExtensionContainer ext = project.getExtensions();

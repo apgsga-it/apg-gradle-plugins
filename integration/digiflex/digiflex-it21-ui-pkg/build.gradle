@@ -44,11 +44,11 @@ apgRepositories {
 configurations {
 	serviceRuntime
 }
-//configurations.uiRuntime {
-//	 resolutionStrategy {
-//		 force 'org.springframework:spring-web:4.3.18.RELEASE'
-//	 }
-//}
+configurations.serviceRuntime {
+	 resolutionStrategy {
+		 force 'org.springframework:spring-web:4.3.18.RELEASE'
+	 }
+}
 
 
 apgVersionResolver {
@@ -79,10 +79,6 @@ apgPackage {
 	mainProgramName  = "com.affichage.it21.ui.runtime.It21GuiRuntimeStarter"
 }
 
-apgGenericPublishConfig {
-	artefactFile =  file ("${buildDir}/distributions/${apgPackage.archiveName}")
-	local()
-}
 
 // TODO (che, jhe , 2.4.20) test version, needs to be adopted acccordingly
 publishing {

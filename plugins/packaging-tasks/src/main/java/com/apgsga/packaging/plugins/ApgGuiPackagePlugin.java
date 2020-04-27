@@ -6,7 +6,7 @@ import com.apgsga.packaging.gui.actions.UnzipBundledResourcesToAction;
 import com.apgsga.packaging.gui.tasks.BundledResourcesCopyTask;
 import com.apgsga.packaging.gui.tasks.DllCopyTask;
 import com.apgsga.packaging.gui.tasks.JarCopyTask;
-import com.apgsga.packaging.gui.tasks.SerivceResourcesCopyTask;
+import com.apgsga.packaging.gui.tasks.ResourcesCopyTask;
 import org.gradle.api.Plugin;
 import org.gradle.api.Project;
 import org.gradle.api.Task;
@@ -32,8 +32,8 @@ public class ApgGuiPackagePlugin implements Plugin<Project> {
         Task configureDepsTask = tasks.findByName("configureDeps");
         TaskProvider<DllCopyTask> dllCopyTask = tasks.register("dllCopyTask", DllCopyTask.class);
         TaskProvider<JarCopyTask> jarCopyTask = tasks.register("jarCopyTask", JarCopyTask.class);
-        TaskProvider<SerivceResourcesCopyTask> resourcesCopyTask = tasks.register("resourcesCopyTask",
-                SerivceResourcesCopyTask.class);
+        TaskProvider<ResourcesCopyTask> resourcesCopyTask = tasks.register("resourcesCopyTask",
+                ResourcesCopyTask.class);
         TaskProvider<BundledResourcesCopyTask> bundledResourcesCopyTask = tasks.register("bundledResourcesCopyTask",
                 BundledResourcesCopyTask.class);
         TaskProvider<Zip> zipPackageTask = tasks.register("buildZip", Zip.class, new GuiZipPackageAction(project));
