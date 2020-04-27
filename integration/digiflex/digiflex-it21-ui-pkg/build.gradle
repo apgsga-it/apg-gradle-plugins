@@ -1,9 +1,7 @@
-import com.apgsga.gradle.repo.extensions.RepoType
 import com.apgsga.revision.manager.domain.RevisionManagerBuilder
 
 plugins {
 	id("com.apgsga.gui.package")
-	id("com.apgsga.publish")
 	id("com.apgsga.ssh")
 	id("com.apgsga.version.resolver")
 	id "nu.studer.credentials" version "2.1"
@@ -27,19 +25,6 @@ project.ext {
 }
 
 println "installTarget = ${project.ext.installTarget}"
-
-apgRepos {
-	// TODO (che, 27.2) : Profiles needed
-	config(RepoType.MAVEN,[REPO_NAME:"testrepo", REPO_BASE_URL:"/Users/chhex/maven"])
-	config(RepoType.MAVEN_RELEASE,[REPO_NAME:"repo", REPO_BASE_URL:"https://artifactory4t4apgsga.jfrog.io/artifactory4t4apgsga",REPO_USER:"dev",REPO_PASSWORD:credentials.devPw])
-	config(RepoType.MAVEN_SNAPSHOT,[REPO_NAME:"snapshot", REPO_BASE_URL:"https://artifactory4t4apgsga.jfrog.io/artifactory4t4apgsga",REPO_USER:"dev",REPO_PASSWORD:credentials.devPw])
-}
-
-
-apgRepositories {
-	mavenLocal()
-	artifactory()
-}
 
 configurations {
 	serviceRuntime
@@ -77,11 +62,6 @@ apgPackage {
 	]
 	resourcesPath = "resources"
 	mainProgramName  = "com.affichage.it21.ui.runtime.It21GuiRuntimeStarter"
-}
-
-apgGenericPublishConfig {
-	artefactFile =  file ("${buildDir}/distributions/${apgPackage.archiveName}")
-	local()
 }
 
 // TODO (che, jhe , 2.4.20) test version, needs to be adopted acccordingly
