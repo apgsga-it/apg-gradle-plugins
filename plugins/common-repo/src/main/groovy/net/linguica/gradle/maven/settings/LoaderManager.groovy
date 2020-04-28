@@ -15,6 +15,7 @@ import org.apache.maven.settings.SettingsUtils
 import org.apache.maven.settings.building.SettingsBuildingException
 import org.gradle.api.Project
 import org.gradle.api.artifacts.repositories.MavenArtifactRepository
+import org.gradle.api.logging.Logger
 import org.gradle.api.plugins.ExtraPropertiesExtension
 import org.gradle.api.publish.PublishingExtension
 
@@ -51,6 +52,9 @@ public class LoaderManager {
     }
 
     private void activateProfiles(Project project, MavenSettingsPluginExtension extension) {
+
+        Logger log = project.logger
+
         DefaultProfileSelector profileSelector = new DefaultProfileSelector()
         DefaultProfileActivationContext activationContext = new DefaultProfileActivationContext()
         List<ProfileActivator> profileActivators = [new JdkVersionProfileActivator(), new OperatingSystemProfileActivator(),
@@ -72,7 +76,10 @@ public class LoaderManager {
             }
         })
 
+        log.info("Maven Profile will be parse to apply Repositories configuration")
         profiles.each { profile ->
+
+            log.info("Parsing profile '${profile.id}'")
 
             // TODO JHE: do we really need this loop ?!?
             for (Map.Entry entry: profile.properties) {
@@ -81,13 +88,16 @@ public class LoaderManager {
 
             // Publish extension
             project.extensions.findByType(PublishingExtension)?.repositories?.all {gradleRepo ->
+                log.info("Publish Repository '${gradleRepo.name}' found.")
                 if (gradleRepo instanceof MavenArtifactRepository) {
                     profile.repositories.each {mavenConfigRepo ->
                         if(mavenConfigRepo.name == gradleRepo.name){
+                            log.info("'${gradleRepo.name}' name match a maven repo -> '${mavenConfigRepo.name}'")
                             gradleRepo.url = mavenConfigRepo.url
                             if(!gradleRepo.name.equalsIgnoreCase("local")) {
                                 settings.servers.each { server ->
                                     if (mavenConfigRepo.id == server.id) {
+                                        log.info("Credentials found for Repo '${gradleRepo.name}'. Credentials Id is '${server.id}'")
                                         addCredentials(server, gradleRepo as MavenArtifactRepository)
                                     }
                                 }
@@ -95,31 +105,30 @@ public class LoaderManager {
                         }
                     }
                 }
+                log.info("Publish Repository '${gradleRepo.name}' -> DONE")
             }
 
             // apply "standard" repository configuration
+            log.info("Dependencies Repositores confiuration will be applied.")
             profile.repositories.each {mavenConfigRepo ->
-
+                log.info("Dealing with Repo called '${mavenConfigRepo.name}'")
                 project.repositories.maven {m ->
+                    log.info("Applying a gradle maven Repo with following properties: url -> ${mavenConfigRepo.url}, artifactsUrl -> ${mavenConfigRepo.url}, name -> ${mavenConfigRepo.name}")
                     m.setUrl(mavenConfigRepo.url)
                     m.artifactUrls(mavenConfigRepo.url)
                     m.setName(mavenConfigRepo.name)
                     if(!mavenConfigRepo.name.equalsIgnoreCase("local")) {
                         settings.servers.each { server ->
                             if (mavenConfigRepo.id == server.id) {
+                                log.info("Credentials found for Repo '${mavenConfigRepo.name}'. Credentials Id is '${server.id}'")
                                 addCredentials(server, m as MavenArtifactRepository)
                             }
                         }
                     }
                 }
-
-                println "to be deleted"
-
             }
-
-            println "to be deleted"
-
         }
+        log.info("Maven Profile have been parsed successfuly!")
     }
 
 //    private void registerMirrors(Project project) {
