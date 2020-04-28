@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?><settings>
-    <localRepository>C:\\temp\\testlocalmavenrepo</localRepository>
+    <localRepository>.</localRepository>
     <servers>
         <server>
             <id>central</id>
@@ -26,7 +26,7 @@
                     </snapshots>
                     <id>central</id>
                     <name>local</name>
-                    <url>C:\\temp\\testlocalmavenrepo</url>
+                    <url>.</url>
                 </repository>
                 <repository>
                     <snapshots>
