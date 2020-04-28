@@ -31,16 +31,11 @@ public class LoaderManager {
     public void load() {
         MavenSettingsPluginExtension mavenExtension = project.extensions.findByName(MavenSettingsPlugin.MAVEN_SETTINGS_EXTENSION_NAME);
 
-        project.afterEvaluate {
+//        project.afterEvaluate {
             // TODO JHE: We do not need to pass the project as parameter here.
             loadSettings(mavenExtension)
-//        mapMavenLocalRepo(mavenExtension)
             activateProfiles(project, mavenExtension)
-//        registerMirrors(project)
-//        applyRepoCredentials(project.repositories)
-//        applyRepoCredentials(project.extensions.findByType(PublishingExtension)?.repositories);
-//        initRepoExtension(repoExtension)
-        }
+//        }
     }
 
     private void loadSettings(MavenSettingsPluginExtension extension) {
