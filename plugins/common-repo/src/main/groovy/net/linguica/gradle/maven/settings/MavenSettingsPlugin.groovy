@@ -36,10 +36,10 @@ class MavenSettingsPlugin implements Plugin<Project> {
                 project.extensions.create(MAVEN_SETTINGS_EXTENSION_NAME, MavenSettingsPluginExtension.class, project)
 
 
-        project.beforeEvaluate {
+       // project.beforeEvaluate {
             LoaderManager lm = new LoaderManager(project);
             lm.load();
-        }
+      //  }
 
             project.getPlugins().apply("maven-publish")
 
