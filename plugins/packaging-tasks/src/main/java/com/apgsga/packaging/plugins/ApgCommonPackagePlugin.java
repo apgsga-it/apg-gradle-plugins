@@ -3,7 +3,7 @@ package com.apgsga.packaging.plugins;
 import com.apgsga.packaging.common.task.BinariesCopyTask;
 import com.apgsga.packaging.common.task.ConfigureDepsTask;
 import com.apgsga.packaging.extensions.ApgCommonPackageExtension;
-import net.linguica.gradle.maven.settings.MavenSettingsPlugin;
+import com.apgsga.common.repo.plugin.ApgCommonRepoPlugin;
 import org.gradle.api.Plugin;
 import org.gradle.api.Project;
 import org.gradle.api.logging.Logger;
@@ -24,7 +24,7 @@ public class ApgCommonPackagePlugin implements Plugin<Project> {
         final ExtensionContainer ext = project.getExtensions();
         final Logger logger = project.getLogger();
         final PluginContainer plugins = project.getPlugins();
-        plugins.apply(MavenSettingsPlugin.class);
+        plugins.apply(ApgCommonRepoPlugin.class);
         ext.create("apgPackage", ApgCommonPackageExtension.class, project);
         TaskContainer tasks = project.getTasks();
         TaskProvider<BinariesCopyTask> binariesCopyTask = tasks.register("copyAppBinaries", BinariesCopyTask.class);

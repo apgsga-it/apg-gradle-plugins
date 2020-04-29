@@ -1,20 +1,4 @@
-/*
- * Copyright 2014 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
-package net.linguica.gradle.maven.settings;
+package com.apgsga.common.repo.extensions;
 
 import org.apache.maven.settings.Server;
 import org.apache.maven.settings.Settings;
@@ -31,18 +15,14 @@ import org.sonatype.plexus.components.sec.dispatcher.model.SettingsSecurity;
 
 import java.io.File;
 
-/**
- * Class used to load Maven settings.
- *
- * @author Mark Vieira
- */
 public class LocalMavenSettingsLoader {
     public static final File GLOBAL_SETTINGS_FILE = new File(System.getenv("M2_HOME"), "conf/settings.xml");
     public static final String SETTINGS_SECURITY_FILE_LOCATION = System.getProperty("user.home") + "/.m2/settings-security.xml";
 
-    private final MavenSettingsPluginExtension extension;
+    private final MavenSettingsExtension extension;
 
-    public LocalMavenSettingsLoader(MavenSettingsPluginExtension extension) {
+    public LocalMavenSettingsLoader(MavenSettingsExtension extension) {
+
         this.extension = extension;
     }
 

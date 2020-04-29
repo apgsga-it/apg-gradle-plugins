@@ -1,7 +1,7 @@
 import com.apgsga.revision.manager.domain.RevisionManagerBuilder
 
 plugins {
-	id("net.linguica.maven-settings")
+	id("com.apgsga.common.repo")
 	id("com.apgsga.ssh")
 	id("com.apgsga.version.resolver")
 	id("com.apgsga.rpm.package")

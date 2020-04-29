@@ -11,7 +11,7 @@ class BuildLogicFunctionalTest extends AbstractSpecification {
         given:
             buildFile << """
                                 plugins {
-                                    id 'net.linguica.maven-settings' 
+                                    id 'com.apgsga.common.repo' 
                                 }
     
                                 apply plugin: 'groovy'
@@ -43,7 +43,7 @@ class BuildLogicFunctionalTest extends AbstractSpecification {
         given:
             buildFile << """
                             plugins {
-                                id 'net.linguica.maven-settings' 
+                                id 'com.apgsga.common.repo' 
                             }
 
                             apply plugin: 'groovy'
@@ -75,7 +75,7 @@ class BuildLogicFunctionalTest extends AbstractSpecification {
         given:
             buildFile << """
                                 plugins {
-                                    id 'net.linguica.maven-settings' 
+                                    id 'com.apgsga.common.repo' 
                                 }
     
                                 apply plugin: 'groovy'
@@ -110,7 +110,7 @@ class BuildLogicFunctionalTest extends AbstractSpecification {
         given:
         buildFile << """
                                 plugins {
-                                    id 'net.linguica.maven-settings' 
+                                    id 'com.apgsga.common.repo' 
                                 }
     
                                 apply plugin: 'groovy'
@@ -137,7 +137,7 @@ class BuildLogicFunctionalTest extends AbstractSpecification {
         given:
             buildFile << """
                                     plugins {
-                                        id 'net.linguica.maven-settings' 
+                                        id 'com.apgsga.common.repo' 
                                     }
         
                                     apply plugin: 'groovy'
