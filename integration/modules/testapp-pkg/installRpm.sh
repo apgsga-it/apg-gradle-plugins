@@ -1,2 +1,2 @@
 #!/bin/bash
-./gradlew installRpm  -PinstallTarget=CHEI212  -PbomLastRevision=SNAPSHOT -PrpmReleaseNr=1 -PtargetHost=192.168.1.28 -PsshUser=che -PsshPw=chePw  --stacktrace --info
+./gradlew installRpm  -PinstallTarget=CHEI212  -PbomLastRevision=SNAPSHOT -PrpmReleaseNr=1 -PtargetHost=dev-jhedocker.light.apgsga.ch  --stacktrace --info
