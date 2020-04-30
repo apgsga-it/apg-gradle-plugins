@@ -83,8 +83,8 @@ apgGenericPublishConfig {
 
 
 apgSshConfig {
-	username project.ext.sshUser
-	userpwd credentials."${project.ext.sshUser}Pw"
+	username credentials."${project.ext.sshUser}"
+	userpwd credentials."${project.ext.sshPw}"
 	destinationHost project.ext.targetHost
 }
 
