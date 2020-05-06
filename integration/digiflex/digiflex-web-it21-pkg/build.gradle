@@ -12,7 +12,7 @@ plugins {
 project.ext {
 	targetHost = project.hasProperty('targetHost') ? project.property('targetHost') : "jadas-e.apgsga.ch"
 	sshUser = project.hasProperty('sshUser') ? project.property('sshUser') : "deployUser"
-	sshPw = project.hasProperty('sshPw') ? project.property('sshPw') : "deployUserPassword"
+	sshPw = project.hasProperty('sshPw') ? project.property('sshPw') : "deployPw"
 	installTarget = project.hasProperty('installTarget') ? project.property('installTarget') : "CHEI212"
 	bomLastRevision = project.hasProperty('bomLastRevision') ? project.property('bomLastRevision') : "SNAPSHOT"
 	patchParentDir = project.hasProperty('patchParentDir') ? project.property('patchParentDir') : project.buildDir.absolutePath
@@ -22,10 +22,14 @@ project.ext {
 	downloadDir = project.hasProperty('downloadDir') ? project.property('downloadDir') : "downloads"
 }
 println "targetHost = ${project.ext.targetHost}"
+println "sshUser = ${project.ext.sshUser}"
+println "sshPw = ${project.ext.sshPw}"
 println "installTarget = ${project.ext.installTarget}"
 println "bomLastRevision = ${project.ext.bomLastRevision}"
 println "rpmReleaseNr = ${project.ext.rpmReleaseNr}"
+println "buildTyp = ${project.ext.buildTyp}"
 println "downloadDir = ${project.ext.downloadDir}"
+
 
 apply from : "${project.gradle.gradleUserHomeDir}/common/portnr.gradle"
 
@@ -77,7 +81,6 @@ apgPackage {
 	releaseNr = project.ext.rpmReleaseNr
 }
 
-
 apgGenericPublishConfig {
 	artefactFile =  file ("${buildDir}/distributions/${apgPackage.archiveName}")
 	local()
@@ -85,8 +88,8 @@ apgGenericPublishConfig {
 
 
 apgSshConfig {
-	username project.ext.sshUser
-	userpwd credentials."${project.ext.sshUser}Pw"
+	username credentials."${project.ext.sshUser}"
+	userpwd credentials."${project.ext.sshPw}"
 	destinationHost project.ext.targetHost
 }
 
