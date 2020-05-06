@@ -19,11 +19,11 @@ public class LocalMavenSettingsLoader {
     public static final File GLOBAL_SETTINGS_FILE = new File(System.getenv("M2_HOME"), "conf/settings.xml");
     public static final String SETTINGS_SECURITY_FILE_LOCATION = System.getProperty("user.home") + "/.m2/settings-security.xml";
 
-    private final MavenSettingsExtension extension;
+    private final String userSettingFile;
 
-    public LocalMavenSettingsLoader(MavenSettingsExtension extension) {
+    public LocalMavenSettingsLoader(String userSettingFile) {
 
-        this.extension = extension;
+        this.userSettingFile = userSettingFile;
     }
 
     /**
@@ -35,7 +35,7 @@ public class LocalMavenSettingsLoader {
      */
     public Settings loadSettings() throws SettingsBuildingException {
         SettingsBuildingRequest settingsBuildingRequest = new DefaultSettingsBuildingRequest();
-        settingsBuildingRequest.setUserSettingsFile(extension.getUserSettingsFile());
+        settingsBuildingRequest.setUserSettingsFile(new File(userSettingFile));
         settingsBuildingRequest.setGlobalSettingsFile(GLOBAL_SETTINGS_FILE);
         settingsBuildingRequest.setSystemProperties(System.getProperties());
 

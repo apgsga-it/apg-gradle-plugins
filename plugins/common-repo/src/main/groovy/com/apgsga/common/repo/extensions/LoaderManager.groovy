@@ -25,7 +25,11 @@ class LoaderManager {
 
     private Settings settings
 
-    private MavenSettingsExtension mavenExtension
+    private String userSettingsFileName
+
+    private String activeProfile
+
+    private boolean exportGradleProps
 
     Logger log
 
@@ -34,14 +38,16 @@ class LoaderManager {
         log = project.logger
     }
 
-    void load() {
-        mavenExtension = project.extensions.findByName(ApgCommonRepoPlugin.MAVEN_SETTINGS_EXTENSION_NAME);
+    void load(userSettingsFileName,activeProfile,exportGradleProps) {
+        this.userSettingsFileName = userSettingsFileName
+        this.activeProfile = activeProfile
+        this.exportGradleProps = exportGradleProps
         loadSettings()
         activateProfiles()
     }
 
     private void loadSettings() {
-        LocalMavenSettingsLoader settingsLoader = new LocalMavenSettingsLoader(mavenExtension)
+        LocalMavenSettingsLoader settingsLoader = new LocalMavenSettingsLoader(userSettingsFileName)
         try {
             settings = settingsLoader.loadSettings()
         } catch (SettingsBuildingException e) {
@@ -58,10 +64,10 @@ class LoaderManager {
                                                     new PropertyProfileActivator(), new FileProfileActivator().setPathTranslator(new DefaultPathTranslator())]
         profileActivators.each { profileSelector.addProfileActivator(it) }
 
-        activationContext.setActiveProfileIds(mavenExtension.activeProfiles.toList() + settings.activeProfiles)
+        activationContext.setActiveProfileIds([activeProfile])
         activationContext.setProjectDirectory(project.projectDir)
         activationContext.setSystemProperties(System.getProperties())
-        if (mavenExtension.exportGradleProps) {
+        if (exportGradleProps) {
             activationContext.setUserProperties(project.properties.collectEntries { key, value -> [key, value.toString()] } as Map<String, String>)
         }
 
@@ -72,6 +78,8 @@ class LoaderManager {
 
             }
         })
+
+        return profiles
     }
 
     private void loadPublishExtension(Profile profile) {
@@ -122,20 +130,25 @@ class LoaderManager {
 
         Logger log = project.logger
 
-        log.info("Maven Profile will be parse to apply Repositories configuration")
+
         getProfiles().each { profile ->
 
-            log.info("Parsing profile '${profile.id}'")
+            if(activeProfile.equalsIgnoreCase(profile.id)) {
 
-            // TODO JHE: do we really need this loop ?!?
-            for (Map.Entry entry: profile.properties) {
-                project.extensions.getByType(ExtraPropertiesExtension).set(entry.key.toString(), entry.value.toString())
+                log.info("Parsing profile '${profile.id}'")
+
+                // TODO JHE: do we really need this loop ?!?
+                for (Map.Entry entry : profile.properties) {
+                    project.extensions.getByType(ExtraPropertiesExtension).set(entry.key.toString(), entry.value.toString())
+                }
+
+                loadPublishExtension(profile)
+                loadDependenciesRepositories(profile)
+
+                log.info("${profile.id} Profile has been parsed successfuly!")
             }
-
-            loadPublishExtension(profile)
-            loadDependenciesRepositories(profile)
         }
-        log.info("Maven Profile have been parsed successfuly!")
+
     }
 
     private static addCredentials(Server server, MavenArtifactRepository repo) {

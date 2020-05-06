@@ -1,6 +1,7 @@
 import com.apgsga.revision.manager.domain.RevisionManagerBuilder
 
 plugins {
+	id("com.apgsga.common.repo")
 	id("com.apgsga.gui.package")
 	id("com.apgsga.ssh")
 	id("com.apgsga.version.resolver")
@@ -22,6 +23,7 @@ project.ext {
 	buildTyp = project.hasProperty('buildTyp') ? project.property('buildTyp') : "PATCH"
 	downloadDir = project.hasProperty('downloadDir') ? project.property('downloadDir') : "/Daten/Downloads"
 	installDir = project.hasProperty('installDir') ? project.property('installDir') : "/Daten/Programme"
+	mavenProfile = project.hasProperty('mavenProfile') ? project.property('mavenProfile') : "artifactory"
 }
 
 println "installTarget = ${project.ext.installTarget}"
@@ -34,6 +36,10 @@ configurations {
 //		 force 'org.springframework:spring-web:4.3.18.RELEASE'
 //	 }
 //}
+
+mavenSettings {
+	activeProfiles = project.ext.mavenProfile
+}
 
 
 apgVersionResolver {

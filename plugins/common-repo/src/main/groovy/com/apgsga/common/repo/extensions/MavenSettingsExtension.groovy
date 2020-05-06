@@ -15,13 +15,19 @@ class MavenSettingsExtension {
     void setUserSettingsFileName(String userSettingsFileName) {
         this.userSettingsFileName = userSettingsFileName;
         LoaderManager lm = new LoaderManager(project);
-        lm.load();
+        lm.load(userSettingsFileName,activeProfile,exportGradleProps);
     }
 
     /**
      * List of profile ids to treat as active.
      */
-    String[] activeProfiles = []
+    String activeProfile = ""
+
+    void setActiveProfile(String profile) {
+        this.activeProfile = profile
+        LoaderManager lm = new LoaderManager(project);
+        lm.load(userSettingsFileName,activeProfile,exportGradleProps);
+    }
 
     /**
      * Flag indicating whether or not Gradle project properties should be exported for the purposes of settings file

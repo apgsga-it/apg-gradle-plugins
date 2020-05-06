@@ -81,8 +81,71 @@
             </properties>
             <id>artifactory-test</id>
         </profile>
+        <profile>
+            <repositories>
+                <repository>
+                    <snapshots>
+                        <enabled>false</enabled>
+                    </snapshots>
+                    <id>central</id>
+                    <name>local-dummy</name>
+                    <url>.</url>
+                </repository>
+                <repository>
+                    <snapshots>
+                        <enabled>false</enabled>
+                    </snapshots>
+                    <id>central-dummy</id>
+                    <name>gradle_maven_releases_dummy</name>
+                    <url>https://artifactory4t4apgsga.jfrog.io/artifactory/releases-dummy</url>
+                </repository>
+                <repository>
+                    <snapshots>
+                        <enabled>false</enabled>
+                    </snapshots>
+                    <id>central-dummy</id>
+                    <name>gradle_maven_snapshots_dummy</name>
+                    <url>https://artifactory4t4apgsga.jfrog.io/artifactory/snapshots-dummy</url>
+                </repository>
+                <repository>
+                    <snapshots>
+                        <enabled>false</enabled>
+                    </snapshots>
+                    <id>central-dummy</id>
+                    <name>public-dummy</name>
+                    <url>https://artifactory4t4apgsga.jfrog.io/artifactory/public-dummy</url>
+                </repository>
+                <repository>
+                    <snapshots/>
+                    <id>snapshots-dummy</id>
+                    <name>public-snapshots-dummy</name>
+                    <url>https://artifactory4t4apgsga.jfrog.io/artifactory/public-snapshots-dummy</url>
+                </repository>
+            </repositories>
+            <pluginRepositories>
+                <pluginRepository>
+                    <snapshots>
+                        <enabled>false</enabled>
+                    </snapshots>
+                    <id>central-dummy</id>
+                    <name>public-dummy</name>
+                    <url>https://artifactory4t4apgsga.jfrog.io/artifactory/public-dummy</url>
+                </pluginRepository>
+                <pluginRepository>
+                    <snapshots/>
+                    <id>snapshots-dummy</id>
+                    <name>public-snapshots-dummy</name>
+                    <url>https://artifactory4t4apgsga.jfrog.io/artifactory/public-snapshots-dummy</url>
+                </pluginRepository>
+            </pluginRepositories>
+            <properties>
+                <distributionManagementRepositoryUrl>https://artifactory4t4apgsga.jfrog.io/artifactory/releases-dummy</distributionManagementRepositoryUrl>
+                <snapshotRepositoryUrl>https://artifactory4t4apgsga.jfrog.io/artifactory/snapshots-dummy</snapshotRepositoryUrl>
+            </properties>
+            <id>artifactory-dummy</id>
+        </profile>
     </profiles>
     <activeProfiles>
-        <activeProfile>artifactory-test</activeProfile>
+        <activeProfile>artifactory-dummy</activeProfile>
     </activeProfiles>
 </settings>

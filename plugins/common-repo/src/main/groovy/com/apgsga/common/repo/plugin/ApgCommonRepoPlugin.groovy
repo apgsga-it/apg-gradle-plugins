@@ -14,8 +14,9 @@ class ApgCommonRepoPlugin implements Plugin<Project> {
     @Override
     void apply(Project project) {
         project.extensions.create(MAVEN_SETTINGS_EXTENSION_NAME, MavenSettingsExtension.class, project)
-        new LoaderManager(project).load();
+        //new LoaderManager(project).load();
         //TODO JHE: Really needed and what we want?
         project.getPlugins().apply("maven-publish")
+
     }
 }

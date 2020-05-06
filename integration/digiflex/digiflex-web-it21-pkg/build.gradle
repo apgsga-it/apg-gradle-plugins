@@ -1,6 +1,7 @@
 import com.apgsga.revision.manager.domain.RevisionManagerBuilder
 
 plugins {
+	id("com.apgsga.common.repo")
 	id("com.apgsga.rpm.package")
 	id("com.apgsga.ssh")
 	id("com.apgsga.version.resolver")
@@ -18,6 +19,7 @@ project.ext {
 	buildTyp = project.hasProperty('buildTyp') ? project.property('buildTyp') : "PATCH"
 	rpmReleaseNr = project.hasProperty('rpmReleaseNr') ? project.property('rpmReleaseNr') : "2"
 	downloadDir = project.hasProperty('downloadDir') ? project.property('downloadDir') : "downloads"
+	mavenProfile = project.hasProperty('mavenProfile') ? project.property('mavenProfile') : "artifactory"
 }
 println "targetHost = ${project.ext.targetHost}"
 println "installTarget = ${project.ext.installTarget}"
@@ -39,11 +41,15 @@ apgVersionResolver {
 	bomGroupId = 'com.affichage.common.maven'
 	bomBaseVersion = '9.1.0.DIGIFLEX'
 	bomLastRevision = project.ext.bomLastRevision
-	algorithm =  project.ext.buildTyp == "PATCH" ? RevisionManagerBuilder.AlgorithmTyp.PATCH : RevisionManagerBuilder.AlgorithmTyp.SNAPSHOT
+	algorithm = project.ext.buildTyp == "PATCH" ? RevisionManagerBuilder.AlgorithmTyp.PATCH : RevisionManagerBuilder.AlgorithmTyp.SNAPSHOT
 	patches {
 		parentDir = project.ext.patchParentDir
 		fileNames = project.ext.patchFileNames
 	}
+}
+
+mavenSettings {
+	activeProfiles = project.ext.mavenProfile
 }
 
 apgPackage {
