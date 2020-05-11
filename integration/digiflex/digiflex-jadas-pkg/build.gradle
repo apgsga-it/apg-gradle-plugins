@@ -30,7 +30,7 @@ println "downloadDir = ${project.ext.downloadDir}"
 apply from : "${project.gradle.gradleUserHomeDir}/common/portnr.gradle"
 
 mavenSettings {
-	activeProfiles = project.ext.mavenProfile
+	activeProfile = project.ext.mavenProfile
 }
 
 configurations {

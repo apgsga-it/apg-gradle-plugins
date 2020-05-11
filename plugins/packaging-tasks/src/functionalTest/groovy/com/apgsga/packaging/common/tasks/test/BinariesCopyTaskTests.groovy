@@ -25,6 +25,7 @@ class BinariesCopyTaskTests extends AbstractSpecification {
             
             mavenSettings {
             	userSettingsFileName = '${testMavenSettingsFilePath}'
+				activeProfile = 'artifactory-test'
             }
 
 		// The guava dependency is only for testing purposes, consider to be likely found in mavenCentral()
@@ -62,6 +63,7 @@ class BinariesCopyTaskTests extends AbstractSpecification {
             
             mavenSettings {
               userSettingsFileName = '${testMavenSettingsFilePath}'
+			  activeProfile = 'artifactory-test'
             }
             
             configurations { testRuntime.exclude group: 'log4j', module: 'log4j' }

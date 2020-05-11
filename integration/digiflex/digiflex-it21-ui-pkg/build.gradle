@@ -38,7 +38,7 @@ configurations {
 //}
 
 mavenSettings {
-	activeProfiles = project.ext.mavenProfile
+	activeProfile = project.ext.mavenProfile
 }
 
 

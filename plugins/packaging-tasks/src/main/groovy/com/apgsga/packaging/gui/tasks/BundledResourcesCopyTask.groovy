@@ -19,13 +19,15 @@ class BundledResourcesCopyTask extends DefaultTask {
 		def ex = project.extensions.apgPackage
 		project.copy {
 			into "${project.buildDir}/${ex.name}"
-			from ("${project.buildDir}/packaging") {
+			from ("${project.buildDir}/packaging/it21-gui") {
 				expand(javaOpts:ex.javaOpts,mainProgramm:ex.mainProgramName,pkgName:ex.name)
 				include '**/*.bat'
+				include '**/*.sh'
 				include '**/logback.xml'
 			}
-			from ("${project.buildDir}/packaging") {
+			from ("${project.buildDir}/packaging/it21-gui") {
 				exclude '**/*.bat'
+				exclude '**/*.sh'
 				exclude '**/logback.xml'
 			}
 	

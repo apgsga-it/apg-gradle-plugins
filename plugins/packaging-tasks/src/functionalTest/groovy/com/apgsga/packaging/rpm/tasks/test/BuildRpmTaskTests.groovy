@@ -9,6 +9,8 @@ import static groovy.io.FileType.FILES
 class BuildRpmTaskTests extends AbstractSpecification {
 
 	@Shared File resourcesDir
+
+	String testMavenSettingsFilePath = new File("src/functionalTest/resources/testMavenSettings.xml").getAbsolutePath().replace("\\","/")
 	
     def setupSpec() {
 		resourcesDir = new File("src/main/resources/packaging")
@@ -20,6 +22,11 @@ class BuildRpmTaskTests extends AbstractSpecification {
         buildFile << """
             plugins {
                 id '${ApgRpmPackagePlugin.PLUGIN_ID}'
+            }
+            
+            mavenSettings {
+              userSettingsFileName = '${testMavenSettingsFilePath}'
+			  activeProfile = 'artifactory-test'
             }
 
 		// The guava dependency is only for testing purposes, consider to be likely found in mavenCentral()

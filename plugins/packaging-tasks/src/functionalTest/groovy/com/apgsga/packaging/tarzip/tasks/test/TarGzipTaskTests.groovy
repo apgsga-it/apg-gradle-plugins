@@ -7,11 +7,18 @@ import static groovy.io.FileType.FILES
 
 class TarGzipTaskTests extends AbstractSpecification {
 
+	String testMavenSettingsFilePath = new File("src/functionalTest/resources/testMavenSettings.xml").getAbsolutePath().replace("\\","/")
+
     def "tarGzipAppPkg Task works"() {
         given:
         buildFile << """
             plugins {
                 id '${ApgZipPackagePlugin.PLUGIN_ID}'
+            }
+
+			mavenSettings {
+              userSettingsFileName = '${testMavenSettingsFilePath}'
+			  activeProfile = 'artifactory-test'
             }
 
 		// The guava dependency is only for testing purposes, consider to be likely found in mavenCentral()
