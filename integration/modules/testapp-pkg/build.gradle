@@ -36,11 +36,6 @@ configurations {
 	serviceRuntime.exclude group: 'org.codehaus.groovy' , module: 'groovy-all'
 }
 
-mavenSettings {
-	userSettingsFileName = "C:\\Users\\jhe\\.m2\\settings.xml"
-	activeProfile = project.ext.mavenProfile
-}
-
 apgVersionResolver {
 	bomArtifactId = 'dm-bom'
 	bomGroupId = 'com.apgsga.testapp'
