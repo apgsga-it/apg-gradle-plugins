@@ -19,7 +19,6 @@ abstract class AbstractSpecification extends Specification {
         createGradleHomeDir()
         createGradleProperties()
         createGradleEncryptedProperties()
-        setupRepoNameJson()
     }
 
     private def createBuildFile() {
@@ -65,6 +64,12 @@ abstract class AbstractSpecification extends Specification {
         gradleProperties << "target.system.mapping.file.name=TargetSystemMappings.json"
         gradleProperties << System.getProperty("line.separator")
         gradleProperties << "mavenRepoBaseUrl=https://artifactory4t4apgsga.jfrog.io/artifactory4t4apgsga"
+        gradleProperties << System.getProperty("line.separator")
+        gradleProperties << "apg.common.repo.maven.file.path=src/functionalTest/resources/testMavenSettings.xml"
+        gradleProperties << System.getProperty("line.separator")
+        gradleProperties << "apg.common.repo.gradle.maven.active.profile=artifactory-test"
+        gradleProperties << System.getProperty("line.separator")
+        gradleProperties << "apg.common.repo.gradle.export.gradle.props=true"
         println "${gradleProperties.absolutePath} has been created!"
     }
 
@@ -76,42 +81,6 @@ abstract class AbstractSpecification extends Specification {
         gradleEncyrpytedProperties << System.getProperty("line.separator")
         gradleEncyrpytedProperties << "mavenRepoPwd=jTgfLqung5Pw4VQqSldeUEK9NG/HslI+GjGZ2aqtdx8\\="
         println "${gradleEncyrpytedProperties.absolutePath} has been created!"
-    }
-
-    private def setupRepoNameJson() {
-        File repoNamesJson = new File(gradleHomeDirPath, "repoNames.json")
-        initTepoNamesJsonContent(repoNamesJson)
-    }
-
-    private static def initTepoNamesJsonContent(File repoNames) {
-        repoNames << """
-
-                {
-              "repos": [
-                {
-                  "ZIP": "release-functionaltest"
-                },
-                {
-                  "RPM": "rpm-functionaltest"
-                },
-                {
-                  "MAVEN_SNAPSHOT": "snapshot-functionaltest"
-                },
-                {
-                  "MAVEN_RELEASE": "release-functionaltest"
-                },
-                {
-                  "LOCAL": "local"
-                },
-                {
-                  "MAVEN": "maven"
-                },
-                {
-                  "JAVA_DIST": "apgPlatformDependencies-test"
-                }
-              ]
-            }
-            """
     }
 
     protected def gradleRunnerFactory() {

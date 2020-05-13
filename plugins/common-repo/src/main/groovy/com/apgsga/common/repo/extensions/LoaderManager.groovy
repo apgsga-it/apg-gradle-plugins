@@ -1,6 +1,5 @@
 package com.apgsga.common.repo.extensions
 
-import com.apgsga.common.repo.plugin.ApgCommonRepoPlugin
 import org.apache.maven.model.InputLocation
 import org.apache.maven.model.Profile
 import org.apache.maven.model.building.ModelProblem
@@ -21,6 +20,12 @@ import org.gradle.api.publish.PublishingExtension
 
 class LoaderManager {
 
+    public static final String APG_COMMON_REPO_MAVEN_FILE_PATH = "apg.common.repo.maven.file.path"
+
+    public static final String APG_COMMON_REPO_GRADLE_MAVEN_ACTIVE_PROFILE = "apg.common.repo.gradle.maven.active.profile"
+
+    public static final String APG_COMMON_REPO_GRADLE_EXPORT_GRADLE_PROPS = "apg.common.repo.gradle.export.gradle.props"
+
     private Project project;
 
     private Settings settings
@@ -35,13 +40,14 @@ class LoaderManager {
 
     LoaderManager(Project project) {
         this.project = project;
+        // TODO JHE: do we want to have default values here?
+        this.userSettingsFileName = project.property(APG_COMMON_REPO_MAVEN_FILE_PATH)
+        this.activeProfile = project.property(APG_COMMON_REPO_GRADLE_MAVEN_ACTIVE_PROFILE)
+        this.exportGradleProps = project.property(APG_COMMON_REPO_GRADLE_EXPORT_GRADLE_PROPS)
         log = project.logger
     }
 
-    void load(userSettingsFileName,activeProfile,exportGradleProps) {
-        this.userSettingsFileName = userSettingsFileName
-        this.activeProfile = activeProfile
-        this.exportGradleProps = exportGradleProps
+    void load() {
         loadSettings()
         activateProfiles()
     }

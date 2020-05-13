@@ -12,6 +12,7 @@ class BuildLogicFunctionalTest extends AbstractSpecification {
         buildFile << """
                                     plugins {
                                         id 'com.apgsga.common.repo' 
+                                        id 'maven-publish'
                                     }
         
                                     apply plugin: 'groovy'
@@ -20,11 +21,6 @@ class BuildLogicFunctionalTest extends AbstractSpecification {
                                     group = 'com.apgsga.jhe'
                                     version = '1.0'
         
-                                    mavenSettings {
-                                            userSettingsFileName = '${testMavenSettingsFilePath}'
-                                            activeProfile = 'artifactory-test'
-                                        }
-                                    
                                     dependencies {
                                         compile group: 'com.google.guava', name: 'guava', version: '11.0.2'
                                     }
