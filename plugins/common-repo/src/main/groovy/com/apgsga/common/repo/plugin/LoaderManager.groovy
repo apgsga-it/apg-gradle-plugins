@@ -1,4 +1,4 @@
-package com.apgsga.common.repo.extensions
+package com.apgsga.common.repo.plugin
 
 import org.apache.maven.model.InputLocation
 import org.apache.maven.model.Profile
@@ -17,6 +17,7 @@ import org.gradle.api.artifacts.repositories.MavenArtifactRepository
 import org.gradle.api.logging.Logger
 import org.gradle.api.plugins.ExtraPropertiesExtension
 import org.gradle.api.publish.PublishingExtension
+import org.springframework.util.Assert
 
 class LoaderManager {
 
@@ -42,8 +43,11 @@ class LoaderManager {
         this.project = project;
         // TODO JHE: do we want to have default values here?
         this.userSettingsFileName = project.property(APG_COMMON_REPO_MAVEN_FILE_PATH)
+        Assert.notNull(this.userSettingsFileName, "Missing ${APG_COMMON_REPO_MAVEN_FILE_PATH} property")
         this.activeProfile = project.property(APG_COMMON_REPO_GRADLE_MAVEN_ACTIVE_PROFILE)
+        Assert.notNull(this.activeProfile, "Missing ${APG_COMMON_REPO_GRADLE_MAVEN_ACTIVE_PROFILE} property")
         this.exportGradleProps = project.property(APG_COMMON_REPO_GRADLE_EXPORT_GRADLE_PROPS)
+        Assert.notNull(this.exportGradleProps, "Missing ${APG_COMMON_REPO_GRADLE_EXPORT_GRADLE_PROPS} property")
         log = project.logger
     }
 

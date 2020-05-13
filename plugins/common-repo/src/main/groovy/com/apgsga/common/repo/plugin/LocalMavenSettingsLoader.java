@@ -1,4 +1,4 @@
-package com.apgsga.common.repo.extensions;
+package com.apgsga.common.repo.plugin;
 
 import org.apache.maven.settings.Server;
 import org.apache.maven.settings.Settings;
