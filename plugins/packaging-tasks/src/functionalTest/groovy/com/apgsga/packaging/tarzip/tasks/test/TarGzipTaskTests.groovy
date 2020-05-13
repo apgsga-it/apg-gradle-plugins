@@ -7,8 +7,6 @@ import static groovy.io.FileType.FILES
 
 class TarGzipTaskTests extends AbstractSpecification {
 
-	String testMavenSettingsFilePath = new File("src/functionalTest/resources/testMavenSettings.xml").getAbsolutePath().replace("\\","/")
-
     def "tarGzipAppPkg Task works"() {
         given:
         buildFile << """

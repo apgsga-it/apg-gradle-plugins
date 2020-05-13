@@ -10,8 +10,6 @@ class BuildRpmTaskTests extends AbstractSpecification {
 
 	@Shared File resourcesDir
 
-	String testMavenSettingsFilePath = new File("src/functionalTest/resources/testMavenSettings.xml").getAbsolutePath().replace("\\","/")
-	
     def setupSpec() {
 		resourcesDir = new File("src/main/resources/packaging")
     } 

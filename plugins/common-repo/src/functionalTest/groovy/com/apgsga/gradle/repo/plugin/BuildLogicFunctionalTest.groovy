@@ -5,8 +5,6 @@ import com.apgsga.gradle.test.utils.AbstractSpecification
 
 class BuildLogicFunctionalTest extends AbstractSpecification {
 
-    String testMavenSettingsFilePath = new File("src/functionalTest/resources/testMavenSettings.xml").getAbsolutePath().replace("\\","/")
-
     def "Test build, publish locally and remote from a project having an external dependency by explicitly specifying a profile"() {
         given:
         buildFile << """
