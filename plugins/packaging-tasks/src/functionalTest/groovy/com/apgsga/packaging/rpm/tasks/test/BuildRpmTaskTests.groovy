@@ -23,11 +23,6 @@ class BuildRpmTaskTests extends AbstractSpecification {
             plugins {
                 id '${ApgRpmPackagePlugin.PLUGIN_ID}'
             }
-            
-            mavenSettings {
-              userSettingsFileName = '${testMavenSettingsFilePath}'
-			  activeProfile = 'artifactory-test'
-            }
 
 		// The guava dependency is only for testing purposes, consider to be likely found in mavenCentral()
         apgPackage {

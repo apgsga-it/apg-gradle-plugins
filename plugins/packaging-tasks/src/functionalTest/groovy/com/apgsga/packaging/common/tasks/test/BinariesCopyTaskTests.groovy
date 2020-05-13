@@ -23,11 +23,6 @@ class BinariesCopyTaskTests extends AbstractSpecification {
                 id 'com.apgsga.common.package'
             }
             
-            mavenSettings {
-            	userSettingsFileName = '${testMavenSettingsFilePath}'
-				activeProfile = 'artifactory-test'
-            }
-
 		// The guava dependency is only for testing purposes, consider to be likely found in mavenCentral()
         apgPackage {
 			name ="testapp"
@@ -59,11 +54,6 @@ class BinariesCopyTaskTests extends AbstractSpecification {
 
             plugins {
                 id 'com.apgsga.common.package'
-            }
-            
-            mavenSettings {
-              userSettingsFileName = '${testMavenSettingsFilePath}'
-			  activeProfile = 'artifactory-test'
             }
             
             configurations { testRuntime.exclude group: 'log4j', module: 'log4j' }

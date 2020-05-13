@@ -7,14 +7,13 @@ import static groovy.io.FileType.FILES
 
 class ZipPackageTaskTests extends AbstractSpecification  {
 
-	String testMavenSettingsFilePath = new File("src/functionalTest/resources/testMavenSettings.xml").getAbsolutePath().replace("\\","/")
-
     def "archivePackage works"() {
         given:
         buildFile << """
 
             plugins {
                 id '${ApgGuiPackagePlugin.PLUGIN_ID}'
+				id 'maven-publish' 
             }
 
 			// The guava dependency is only for testing purposes, consider to be likely found in mavenCentral()
@@ -25,12 +24,7 @@ class ZipPackageTaskTests extends AbstractSpecification  {
 				version = "2.1-SNAPSHOT"
 			 }
 			 apgPackage.log()
-			 
-            mavenSettings {
-                userSettingsFileName = '${testMavenSettingsFilePath}'
-				activeProfile = 'artifactory-test'
-             }  			 
-			 
+ 			 
 			 publishing {
 			 	publications {
 			 		mavenJava(MavenPublication) {
