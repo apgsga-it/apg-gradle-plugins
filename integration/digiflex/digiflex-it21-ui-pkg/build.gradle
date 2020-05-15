@@ -11,7 +11,7 @@ plugins {
 }
 
 project.ext {
-	installTarget = project.hasProperty('installTarget') ? project.property('installTarget') : "CHEI212"
+	installTarget = project.hasProperty('installTarget') ? project.property('installTarget') : "CHTI216"
 	sshUser = project.hasProperty('sshUser') ? project.property('sshUser') : 'deployUser'
 	sshPw = project.hasProperty('sshPw') ? project.property('sshPw') : "deployPw"
 	targetHost = project.hasProperty('targetHost') ? project.property('targetHost') : "jadas-t.apgsga.ch"
@@ -21,7 +21,7 @@ project.ext {
 	buildTyp = project.hasProperty('buildTyp') ? project.property('buildTyp') : "PATCH"
 	downloadDir = project.hasProperty('downloadDir') ? project.property('downloadDir') : "/home/apg_install/downloads"
 	baseVersion = project.hasProperty('baseVersion') ? project.property('baseVersion') : "0.1"
-	installDir = project.hasProperty('installDir') ? project.property('installDir') : "/opt/digiflex_ui/CHTI216/${project.ext.baseVersion}"
+	installDir = project.hasProperty('installDir') ? project.property('installDir') : "/opt/digiflex_ui/${project.ext.installTarget}/${project.ext.baseVersion}"
 }
 
 println "installTarget = ${project.ext.installTarget}"
