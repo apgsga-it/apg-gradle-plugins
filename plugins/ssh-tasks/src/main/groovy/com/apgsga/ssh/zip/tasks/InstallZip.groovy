@@ -23,6 +23,8 @@ class InstallZip extends AbstractZip {
                 executeSudo unzipCmd, pty: true
                 // JHE: it probably won't sty like that, we might not want to delete ZIP which were built for production
                 execute "rm -f ${apgZipDeployConfigExt.remoteDeployDestFolder}/${apgZipDeployConfigExt.zipFileName}", pty: true
+                // TODO (jhe, che) : Real quick fix for Digiflex Problem, see IT-35824
+                executeSudo "rm -Rf ${apgZipDeployConfigExt.remoteExtractDestFolder}/digiflex-it21-ui"
                 executeSudo "chmod -R 755 ${apgZipDeployConfigExt.remoteExtractDestFolder}"
             }
         }
