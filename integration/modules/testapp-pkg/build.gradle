@@ -11,7 +11,7 @@ plugins {
 project.ext {
 	targetHost = project.hasProperty('targetHost') ? project.property('targetHost') : "jadas-e.apgsga.ch"
 	sshUser = project.hasProperty('sshUser') ? project.property('sshUser') : "deployUser"
-	sshPw = project.hasProperty('sshPw') ? project.property('sshPw') : "deployUserPw"
+	sshPw = project.hasProperty('sshPw') ? project.property('sshPw') : "deployPw"
 	installTarget = project.hasProperty('installTarget') ? project.property('installTarget') : "CHEI212"
 	bomLastRevision = project.hasProperty('bomLastRevision') ? project.property('bomLastRevision') : "SNAPSHOT"
 	patchParentDir = project.hasProperty('patchParentDir') ? project.property('patchParentDir') : project.buildDir.absolutePath
