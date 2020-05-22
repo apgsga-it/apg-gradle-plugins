@@ -11,7 +11,7 @@ plugins {
 project.ext {
 	targetHost = project.hasProperty('targetHost') ? project.property('targetHost') : "jadas-e.apgsga.ch"
 	sshUser = project.hasProperty('sshUser') ? project.property('sshUser') : "deployUser"
-	sshPw = project.hasProperty('sshPw') ? project.property('sshPw') : "deployUserPassword"
+	sshPw = project.hasProperty('sshPw') ? project.property('sshPw') : "deployPw"
 	installTarget = project.hasProperty('installTarget') ? project.property('installTarget') : "CHEI212"
 	bomLastRevision = project.hasProperty('bomLastRevision') ? project.property('bomLastRevision') : "SNAPSHOT"
 	patchParentDir = project.hasProperty('patchParentDir') ? project.property('patchParentDir') : project.buildDir.absolutePath
@@ -19,7 +19,6 @@ project.ext {
 	buildTyp = project.hasProperty('buildTyp') ? project.property('buildTyp') : "PATCH"
 	rpmReleaseNr = project.hasProperty('rpmReleaseNr') ? project.property('rpmReleaseNr') : "2"
 	downloadDir = project.hasProperty('downloadDir') ? project.property('downloadDir') : "downloads"
-	mavenProfile = project.hasProperty('mavenProfile') ? project.property('mavenProfile') : "artifactory"
 }
 println "targetHost = ${project.ext.targetHost}"
 println "installTarget = ${project.ext.installTarget}"
@@ -48,10 +47,6 @@ apgVersionResolver {
 	}
 }
 
-mavenSettings {
-	activeProfile = project.ext.mavenProfile
-}
-
 apgPackage {
 	name = "digiflex-web-it21"
 	configurationName = "serviceRuntime"
@@ -68,8 +63,8 @@ apgPackage {
 }
 
 apgSshConfig {
-	username project.ext.sshUser
-	userpwd credentials."${project.ext.sshUser}Pw"
+	username credentials."${project.ext.sshUser}"
+	userpwd credentials."${project.ext.sshPw}"
 	destinationHost project.ext.targetHost
 }
 
