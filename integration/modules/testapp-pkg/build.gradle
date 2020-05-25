@@ -19,7 +19,6 @@ project.ext {
 	buildTyp = project.hasProperty('buildTyp') ? project.property('buildTyp') : "PATCH"
 	rpmReleaseNr = project.hasProperty('rpmReleaseNr') ? project.property('rpmReleaseNr') : "2"
 	downloadDir = project.hasProperty('downloadDir') ? project.property('downloadDir') : "downloads"
-	mavenProfile = project.hasProperty('mavenProfile') ? project.property('mavenProfile') : "artifactory-test"
 }
 println "targetHost = ${project.ext.targetHost}"
 println "installTarget = ${project.ext.installTarget}"
