@@ -35,11 +35,6 @@ class Patches {
 }
 
 open class VersionResolutionExtension(val project: Project, private val revisionManagerBuilder: RevisionManagerBuilder) {
-    var configurationName: String = "serviceRuntime"
-        set(value) {
-            if (configurationName != value) configureConfiguration(configurationName)
-            field = value
-        }
     var bomArtifactId: String? = null
     var bomGroupId: String? = null
     var bomBaseVersion: String? = null
@@ -105,7 +100,8 @@ open class VersionResolutionExtension(val project: Project, private val revision
     val patches: Patches = Patches()
 
     init {
-        configureConfiguration(configurationName)
+        val apgPackageExt: ApgCommonPackageExtension = project.extensions.findByName(ApgCommonPackageExtension.EXT_NAME) as ApgCommonPackageExtension
+        configureConfiguration(apgPackageExt.configurationName)
     }
 
     fun saveRevision() {

@@ -4,6 +4,7 @@ import com.apgsga.maven.dm.ext.VersionResolutionExtension
 import com.apgsga.packaging.plugins.ApgCommonPackagePlugin
 import com.apgsga.revision.manager.domain.RevisionManagerBuilder
 import com.apgsga.common.repo.plugin.ApgCommonRepoPlugin
+import com.apgsga.packaging.extensions.ApgCommonPackageExtension
 import org.gradle.api.Action
 import org.gradle.api.Plugin
 import org.gradle.api.Project
@@ -22,7 +23,8 @@ open class VersionResolutionPlugin : Plugin<Project> {
 
     }
     private fun applyRecommendations(project: Project, resolutionExtension : VersionResolutionExtension) {
-        val config = project.configurations.findByName(resolutionExtension.configurationName)
+        val apgPackageExt: ApgCommonPackageExtension = project.extensions.findByName(ApgCommonPackageExtension.EXT_NAME) as ApgCommonPackageExtension
+        val config = project.configurations.findByName(apgPackageExt.configurationName)
         val action = Action<Configuration> {
             if (this == config) {
                 if (state == Configuration.State.UNRESOLVED) {

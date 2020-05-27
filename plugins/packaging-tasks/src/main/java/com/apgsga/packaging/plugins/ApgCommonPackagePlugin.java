@@ -24,7 +24,7 @@ public class ApgCommonPackagePlugin implements Plugin<Project> {
         final ExtensionContainer ext = project.getExtensions();
         final Logger logger = project.getLogger();
         final PluginContainer plugins = project.getPlugins();
-        ext.create("apgPackage", ApgCommonPackageExtension.class, project);
+        ext.create(ApgCommonPackageExtension.EXT_NAME, ApgCommonPackageExtension.class, project);
         plugins.apply(ApgCommonRepoPlugin.class);
         TaskContainer tasks = project.getTasks();
         TaskProvider<BinariesCopyTask> binariesCopyTask = tasks.register("copyAppBinaries", BinariesCopyTask.class);

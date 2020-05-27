@@ -7,6 +7,8 @@ import java.util.Arrays;
 
 public class ApgCommonPackageExtension {
 
+    public static final String EXT_NAME = "apgPackage";
+
     public static final String CONFIGURATION_NAME_DEFAULT = "prgRuntime";
 	private static final String RESOURCES_PATH_DEFAULT = "resources";
 	private static final String APG_OPSDEFAULT = "apg_ops";
