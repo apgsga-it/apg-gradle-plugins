@@ -19,7 +19,9 @@ open class VersionResolutionPlugin : Plugin<Project> {
         project.plugins.apply(ApgCommonPackagePlugin::class.java)
         val revisionManagerBuilder = RevisionManagerBuilder.create()
         val extension =  project.extensions.create("apgVersionResolver", VersionResolutionExtension::class.java, project, revisionManagerBuilder)
-        applyRecommendations(project, extension)
+        project.afterEvaluate {
+            applyRecommendations(project, extension)
+        }
 
     }
     private fun applyRecommendations(project: Project, resolutionExtension : VersionResolutionExtension) {
