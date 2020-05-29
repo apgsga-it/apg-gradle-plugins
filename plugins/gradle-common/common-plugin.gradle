@@ -19,6 +19,7 @@ version = '1.1-SNAPSHOT'
 
 def devUser = project.credentials.devUser
 def devPw = project.credentials.devPw
+def repoUrl = "https://artifactory4t4apgsga.jfrog.io/artifactory4t4apgsga/repo"
 
 repositories {
 	mavenLocal()
@@ -26,17 +27,17 @@ repositories {
 	jcenter()
 
 	maven {
-		url "${mavenRepoBaseUrl}/${mavenRepoName}"
+		url = repoUrl
 		credentials {
-			username devUser
-			password devPw
+			username = devUser
+			password = devPw
 		}
 	}
 
 }
 
 publishing {
-	def repoName = version.endsWith("SNAPSHOT") ? gradlePluginSnapshotsRepo : gradlePluginReleasesRepo
+	def repoName = version.endsWith("SNAPSHOT") ? "apgGradlePlugins-snapshots" : "apgGradlePlugins-releases"
 
 	publications {
 		maven(MavenPublication) {
@@ -46,7 +47,7 @@ publishing {
 	repositories {
 		maven {
 			name ='apgGradlePluginRepo'
-			url  "${mavenRepoBaseUrl}/${repoName}"
+			url = repoUrl
 			credentials {
 				username = devUser
 				password = devPw

@@ -25,8 +25,6 @@ class LoaderManager {
 
     public static final String APG_COMMON_REPO_GRADLE_MAVEN_ACTIVE_PROFILE = "apg.common.repo.gradle.maven.active.profile"
 
-    public static final String APG_COMMON_REPO_GRADLE_EXPORT_GRADLE_PROPS = "apg.common.repo.gradle.export.gradle.props"
-
     private Project project;
 
     private Settings settings
@@ -35,7 +33,7 @@ class LoaderManager {
 
     private String activeProfile
 
-    private boolean exportGradleProps
+    private boolean exportGradleProps = true
 
     Logger log
 
@@ -46,8 +44,6 @@ class LoaderManager {
         Assert.notNull(this.userSettingsFileName, "Missing ${APG_COMMON_REPO_MAVEN_FILE_PATH} property")
         this.activeProfile = project.property(APG_COMMON_REPO_GRADLE_MAVEN_ACTIVE_PROFILE)
         Assert.notNull(this.activeProfile, "Missing ${APG_COMMON_REPO_GRADLE_MAVEN_ACTIVE_PROFILE} property")
-        this.exportGradleProps = project.property(APG_COMMON_REPO_GRADLE_EXPORT_GRADLE_PROPS)
-        Assert.notNull(this.exportGradleProps, "Missing ${APG_COMMON_REPO_GRADLE_EXPORT_GRADLE_PROPS} property")
         log = project.logger
     }
 
