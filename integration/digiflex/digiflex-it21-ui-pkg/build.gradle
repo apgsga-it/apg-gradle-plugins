@@ -9,12 +9,11 @@ plugins {
 	id 'java'
 }
 
-
 project.ext {
-	installTarget = project.hasProperty('installTarget') ? project.property('installTarget') : "CHEI212"
-	targetHost = project.hasProperty('targetHost') ? project.property('targetHost') : "jadas-e.apgsga.ch"
-	sshUser = project.hasProperty('sshUser') ? project.property('sshUser') : "deployUser"
+	installTarget = project.hasProperty('installTarget') ? project.property('installTarget') : "CHTI216"
+	sshUser = project.hasProperty('sshUser') ? project.property('sshUser') : 'deployUser'
 	sshPw = project.hasProperty('sshPw') ? project.property('sshPw') : "deployPw"
+	targetHost = project.hasProperty('targetHost') ? project.property('targetHost') : "jadas-t.apgsga.ch"
 	bomLastRevision = project.hasProperty('bomLastRevision') ? project.property('bomLastRevision') : "SNAPSHOT"
 	patchParentDir = project.hasProperty('patchParentDir') ? project.property('patchParentDir') : project.buildDir.absolutePath
 	patchFileNames = project.hasProperty('patchFileNames') ? project.property('patchFileNames') : ""
@@ -29,11 +28,11 @@ println "installTarget = ${project.ext.installTarget}"
 configurations {
 	serviceRuntime
 }
-//configurations.uiRuntime {
-//	 resolutionStrategy {
-//		 force 'org.springframework:spring-web:4.3.18.RELEASE'
-//	 }
-//}
+configurations.serviceRuntime {
+	 resolutionStrategy {
+		 force 'org.springframework:spring-web:4.3.18.RELEASE'
+	 }
+}
 
 apgVersionResolver {
 	bomArtifactId = 'dm-bom'

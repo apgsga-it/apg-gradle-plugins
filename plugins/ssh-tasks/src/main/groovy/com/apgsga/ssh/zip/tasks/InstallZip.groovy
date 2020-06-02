@@ -20,15 +20,19 @@ class InstallZip extends AbstractZip {
                 }
             }
             session(remote) {
+                // TODO (jhe, che) : Real quick fix for Digiflex Problem, see IT-35824
+               // executeSudo "rm -f ${apgZipDeployConfigExt.remoteExtractDestFolder}/digiflex-it21-ui/lib/*", pty: true
                 executeSudo unzipCmd, pty: true
                 // JHE: it probably won't sty like that, we might not want to delete ZIP which were built for production
                 execute "rm -f ${apgZipDeployConfigExt.remoteDeployDestFolder}/${apgZipDeployConfigExt.zipFileName}", pty: true
+                executeSudo "chmod -R 755 ${apgZipDeployConfigExt.remoteExtractDestFolder}"
             }
         }
     }
 
     private def getUnzipCmd(ApgZipDeployConfig config) {
-        def cmd = "unzip ${config.remoteDeployDestFolder}/${config.zipFileName}"
+        // JHE_ -o option in order to override the dest files, if they exists.
+        def cmd = "unzip -o ${config.remoteDeployDestFolder}/${config.zipFileName}"
         if(config.remoteExtractDestFolder?.trim()) {
             cmd += " -d ${config.remoteExtractDestFolder}"
         }
