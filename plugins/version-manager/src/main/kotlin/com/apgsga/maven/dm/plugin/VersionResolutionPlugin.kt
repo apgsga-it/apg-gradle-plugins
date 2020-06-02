@@ -25,8 +25,7 @@ open class VersionResolutionPlugin : Plugin<Project> {
 
     }
     private fun applyRecommendations(project: Project, resolutionExtension : VersionResolutionExtension) {
-        val apgPackageExt: ApgCommonPackageExtension = project.extensions.findByName(ApgCommonPackageExtension.EXT_NAME) as ApgCommonPackageExtension
-        val config = project.configurations.findByName(apgPackageExt.configurationName)
+        val config = project.configurations.findByName(resolutionExtension.configurationName as String)
         val action = Action<Configuration> {
             if (this == config) {
                 if (state == Configuration.State.UNRESOLVED) {
