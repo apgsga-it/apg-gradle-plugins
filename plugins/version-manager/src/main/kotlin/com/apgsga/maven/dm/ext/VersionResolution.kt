@@ -38,11 +38,9 @@ open class VersionResolutionExtension(val project: Project, private val revision
     private var _configurationName: String? = null
     val configurationName: String?
         get() {
-            if (_configurationName == null) {
-                val pkgExt = project.extensions.getByType(ApgCommonPackageExtension::class.java)
-                _configurationName = pkgExt.configurationName
-            }
-            return  _configurationName
+             val pkgExt = project.extensions.getByType(ApgCommonPackageExtension::class.java)
+             _configurationName = pkgExt.configurationName
+             return  _configurationName
         }
     var bomArtifactId: String? = null
     var bomGroupId: String? = null
