@@ -19,7 +19,8 @@ version = '1.1-SNAPSHOT'
 
 def devUser = project.credentials.devUser
 def devPw = project.credentials.devPw
-def repoUrl = "https://artifactory4t4apgsga.jfrog.io/artifactory4t4apgsga/repo"
+def repoUrl = "https://artifactory4t4apgsga.jfrog.io/artifactory4t4apgsga/"
+def defaultRepoName = "repo"
 
 repositories {
 	mavenLocal()
@@ -27,7 +28,7 @@ repositories {
 	jcenter()
 
 	maven {
-		url = repoUrl
+		url = "${repoUrl}/${defaultRepoName}"
 		credentials {
 			username = devUser
 			password = devPw
@@ -47,7 +48,7 @@ publishing {
 	repositories {
 		maven {
 			name ='apgGradlePluginRepo'
-			url = repoUrl
+			url = "${repoUrl}/${repoName}"
 			credentials {
 				username = devUser
 				password = devPw
