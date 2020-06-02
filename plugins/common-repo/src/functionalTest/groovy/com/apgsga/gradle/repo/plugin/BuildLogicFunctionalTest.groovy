@@ -1,10 +1,12 @@
 package com.apgsga.gradle.repo.plugin
 
 import com.apgsga.gradle.test.utils.AbstractSpecification
+import spock.lang.Ignore
 
 
 class BuildLogicFunctionalTest extends AbstractSpecification {
 
+    @Ignore
     def "Test build, publish locally and remote from a project having an external dependency by explicitly specifying a profile"() {
         given:
         buildFile << """
