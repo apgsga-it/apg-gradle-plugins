@@ -1,9 +1,10 @@
 package com.apgsga.maven.dm.plugin
 
-import com.apgsga.gradle.repo.plugin.ApgCommonRepoPlugin
 import com.apgsga.maven.dm.ext.VersionResolutionExtension
 import com.apgsga.packaging.plugins.ApgCommonPackagePlugin
 import com.apgsga.revision.manager.domain.RevisionManagerBuilder
+import com.apgsga.common.repo.plugin.ApgCommonRepoPlugin
+import com.apgsga.packaging.extensions.ApgCommonPackageExtension
 import org.gradle.api.Action
 import org.gradle.api.Plugin
 import org.gradle.api.Project
@@ -18,11 +19,13 @@ open class VersionResolutionPlugin : Plugin<Project> {
         project.plugins.apply(ApgCommonPackagePlugin::class.java)
         val revisionManagerBuilder = RevisionManagerBuilder.create()
         val extension =  project.extensions.create("apgVersionResolver", VersionResolutionExtension::class.java, project, revisionManagerBuilder)
-        applyRecommendations(project, extension)
+        project.afterEvaluate {
+            applyRecommendations(project, extension)
+        }
 
     }
     private fun applyRecommendations(project: Project, resolutionExtension : VersionResolutionExtension) {
-        val config = project.configurations.findByName(resolutionExtension.configurationName)
+        val config = project.configurations.findByName(resolutionExtension.configurationName as String)
         val action = Action<Configuration> {
             if (this == config) {
                 if (state == Configuration.State.UNRESOLVED) {

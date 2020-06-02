@@ -1,6 +1,5 @@
 package com.apgsga.packaging.plugins;
 
-import com.apgsga.gradle.repo.config.plugin.ApgRepoConfigPlugin;
 import com.apgsga.packaging.gui.actions.GuiZipPackageAction;
 import com.apgsga.packaging.gui.actions.UnzipBundledResourcesToAction;
 import com.apgsga.packaging.gui.tasks.BundledResourcesCopyTask;
@@ -26,7 +25,6 @@ public class ApgGuiPackagePlugin implements Plugin<Project> {
     public void apply(Project project) {
         this.project = project;
         final PluginContainer plugins = project.getPlugins();
-        plugins.apply(ApgRepoConfigPlugin.class);
         plugins.apply(ApgCommonPackagePlugin.class);
         TaskContainer tasks = project.getTasks();
         Task configureDepsTask = tasks.findByName("configureDeps");

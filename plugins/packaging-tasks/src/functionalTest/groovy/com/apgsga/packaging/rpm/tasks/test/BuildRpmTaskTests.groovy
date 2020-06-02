@@ -9,7 +9,7 @@ import static groovy.io.FileType.FILES
 class BuildRpmTaskTests extends AbstractSpecification {
 
 	@Shared File resourcesDir
-	
+
     def setupSpec() {
 		resourcesDir = new File("src/main/resources/packaging")
     } 
@@ -21,10 +21,6 @@ class BuildRpmTaskTests extends AbstractSpecification {
             plugins {
                 id '${ApgRpmPackagePlugin.PLUGIN_ID}'
             }
-			apgRepositories {
-				mavenLocal()
-				mavenCentral()
-			}
 
 		// The guava dependency is only for testing purposes, consider to be likely found in mavenCentral()
         apgPackage {

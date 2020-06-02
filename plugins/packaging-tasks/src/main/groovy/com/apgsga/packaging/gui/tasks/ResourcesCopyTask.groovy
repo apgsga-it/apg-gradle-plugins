@@ -5,7 +5,7 @@ import org.gradle.api.tasks.OutputDirectory
 import org.gradle.api.tasks.TaskAction
 
 class ResourcesCopyTask extends DefaultTask {
-	
+
 	@OutputDirectory
     File getOutputDir() {
 		def ex = project.extensions.apgPackage

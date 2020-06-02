@@ -13,21 +13,30 @@ class ZipPackageTaskTests extends AbstractSpecification  {
 
             plugins {
                 id '${ApgGuiPackagePlugin.PLUGIN_ID}'
+				id 'maven-publish' 
             }
 
-			apgRepositories {
-				mavenLocal()
-				mavenCentral()
-			}
-
-		// The guava dependency is only for testing purposes, consider to be likely found in mavenCentral()
-        apgPackage {
-			name ="testuiapp"
-			configurationName = "testRuntime"
-		    dependencies = ["com.google.guava:guava:+"]
-			version = "2.1-SNAPSHOT"
-         }
-		 apgPackage.log()
+			// The guava dependency is only for testing purposes, consider to be likely found in mavenCentral()
+			apgPackage {
+				name ="testuiapp"
+				configurationName = "testRuntime"
+				dependencies = ["com.google.guava:guava:+"]
+				version = "2.1-SNAPSHOT"
+			 }
+			 apgPackage.log()
+ 			 
+			 publishing {
+			 	publications {
+			 		mavenJava(MavenPublication) {
+			 			artifact source: '/todo/path/to/file', extension: 'zip'
+			 		}
+			 	}
+				repositories {
+					maven {
+						name = 'local'
+					}
+				}
+			 } 
         """
 
         when:

@@ -1,9 +1,9 @@
 package com.apgsga.packaging.plugins;
 
-import com.apgsga.gradle.repo.config.plugin.ApgRepoConfigPlugin;
 import com.apgsga.packaging.common.task.BinariesCopyTask;
 import com.apgsga.packaging.common.task.ConfigureDepsTask;
 import com.apgsga.packaging.extensions.ApgCommonPackageExtension;
+import com.apgsga.common.repo.plugin.ApgCommonRepoPlugin;
 import org.gradle.api.Plugin;
 import org.gradle.api.Project;
 import org.gradle.api.logging.Logger;
@@ -24,8 +24,8 @@ public class ApgCommonPackagePlugin implements Plugin<Project> {
         final ExtensionContainer ext = project.getExtensions();
         final Logger logger = project.getLogger();
         final PluginContainer plugins = project.getPlugins();
-        plugins.apply(ApgRepoConfigPlugin.class);
-        ext.create("apgPackage", ApgCommonPackageExtension.class, project);
+        ext.create(ApgCommonPackageExtension.EXT_NAME, ApgCommonPackageExtension.class, project);
+        plugins.apply(ApgCommonRepoPlugin.class);
         TaskContainer tasks = project.getTasks();
         TaskProvider<BinariesCopyTask> binariesCopyTask = tasks.register("copyAppBinaries", BinariesCopyTask.class);
         TaskProvider<ConfigureDepsTask> configureDeps = tasks.register("configureDeps", ConfigureDepsTask.class);

@@ -1,15 +1,13 @@
 package com.apgsga.packaging.extensions;
 
-import com.apgsga.gradle.repo.extensions.Repo;
-import com.apgsga.gradle.repo.extensions.RepoType;
-import com.apgsga.gradle.repo.extensions.Repos;
-import com.apgsga.gradle.repo.plugin.ApgCommonRepoPlugin;
 import com.apgsga.packaging.service.pkg.extension.PortnrConvention;
 import org.gradle.api.Project;
 
 import java.util.Arrays;
 
 public class ApgCommonPackageExtension {
+
+    public static final String EXT_NAME = "apgPackage";
 
     public static final String CONFIGURATION_NAME_DEFAULT = "prgRuntime";
 	private static final String RESOURCES_PATH_DEFAULT = "resources";
@@ -59,14 +57,7 @@ public class ApgCommonPackageExtension {
 	public ApgCommonPackageExtension(Project project) {
 		super();
 		this.project = project;
-		initDistRepoUrl();
 	}
-
-    private void initDistRepoUrl() {
-        Repos repos = (Repos) project.getExtensions().findByName(ApgCommonRepoPlugin.COMMMON_REPO_EXTENSION_NAME);
-        Repo javaDistRepo = repos.get(RepoType.JAVA_DIST);
-        distRepoUrl = javaDistRepo.getRepoBaseUrl() + "/" + javaDistRepo.getRepoName();
-    }
 
     public String getName() {
         return name;

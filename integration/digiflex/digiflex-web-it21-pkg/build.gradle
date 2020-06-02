@@ -1,9 +1,8 @@
-import com.apgsga.gradle.repo.extensions.RepoType
 import com.apgsga.revision.manager.domain.RevisionManagerBuilder
 
 plugins {
+	id("com.apgsga.common.repo")
 	id("com.apgsga.rpm.package")
-	id("com.apgsga.publish")
 	id("com.apgsga.ssh")
 	id("com.apgsga.version.resolver")
 	id "nu.studer.credentials" version "2.1"
@@ -33,18 +32,6 @@ println "downloadDir = ${project.ext.downloadDir}"
 
 apply from : "${project.gradle.gradleUserHomeDir}/common/portnr.gradle"
 
-apgRepos {
-	// TODO (che, 27.2) : Profiles needed
-	config(RepoType.MAVEN,[REPO_NAME:"testrepo", REPO_BASE_URL:"/Users/chhex/maven"])
-	config(RepoType.MAVEN_RELEASE,[REPO_NAME:"repo", REPO_BASE_URL:"https://artifactory4t4apgsga.jfrog.io/artifactory4t4apgsga",REPO_USER:"dev",REPO_PASSWORD:credentials.devPw])
-	config(RepoType.MAVEN_SNAPSHOT,[REPO_NAME:"snapshot", REPO_BASE_URL:"https://artifactory4t4apgsga.jfrog.io/artifactory4t4apgsga",REPO_USER:"dev",REPO_PASSWORD:credentials.devPw])
-}
-
-apgRepositories {
-	mavenLocal()
-	artifactory()
-}
-
 configurations {
 	serviceRuntime.exclude group: 'log4j', module: 'log4j'
 	serviceRuntime.exclude group: 'org.neo4j' , module: 'neo4j-ogm'
@@ -57,14 +44,12 @@ apgVersionResolver {
 	bomGroupId = 'com.affichage.common.maven'
 	bomBaseVersion = '9.1.0.DIGIFLEX'
 	bomLastRevision = project.ext.bomLastRevision
-	algorithm =  project.ext.buildTyp == "PATCH" ? RevisionManagerBuilder.AlgorithmTyp.PATCH : RevisionManagerBuilder.AlgorithmTyp.SNAPSHOT
+	algorithm = project.ext.buildTyp == "PATCH" ? RevisionManagerBuilder.AlgorithmTyp.PATCH : RevisionManagerBuilder.AlgorithmTyp.SNAPSHOT
 	patches {
 		parentDir = project.ext.patchParentDir
 		fileNames = project.ext.patchFileNames
 	}
 }
-
-
 
 apgPackage {
 	name = "digiflex-web-it21"
@@ -80,12 +65,6 @@ apgPackage {
 	mainProgramName  = "com.affichage.vaadin.vk.VkWebApplication"
 	releaseNr = project.ext.rpmReleaseNr
 }
-
-apgGenericPublishConfig {
-	artefactFile =  file ("${buildDir}/distributions/${apgPackage.archiveName}")
-	local()
-}
-
 
 apgSshConfig {
 	username credentials."${project.ext.sshUser}"
