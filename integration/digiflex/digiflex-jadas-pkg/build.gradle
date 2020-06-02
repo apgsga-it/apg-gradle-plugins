@@ -21,10 +21,14 @@ project.ext {
 	downloadDir = project.hasProperty('downloadDir') ? project.property('downloadDir') : "downloads"
 }
 println "targetHost = ${project.ext.targetHost}"
+println "sshUser = ${project.ext.sshUser}"
+println "sshPw = ${project.ext.sshPw}"
 println "installTarget = ${project.ext.installTarget}"
 println "bomLastRevision = ${project.ext.bomLastRevision}"
 println "rpmReleaseNr = ${project.ext.rpmReleaseNr}"
+println "buildTyp = ${project.ext.buildTyp}"
 println "downloadDir = ${project.ext.downloadDir}"
+
 
 apply from : "${project.gradle.gradleUserHomeDir}/common/portnr.gradle"
 
