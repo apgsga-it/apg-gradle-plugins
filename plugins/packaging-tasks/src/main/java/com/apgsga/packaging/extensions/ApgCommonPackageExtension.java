@@ -30,6 +30,7 @@ public class ApgCommonPackageExtension {
 	private static final String MAIN_PRG_DEFAULT = "com.apgsga.it21.ui.webapp.Webapp";
 	private static final String NAME_DEFAULT = "jadas";
     private static final String JAVAOPTS_DEFAULT = "-Xms100m -Xmx2560m -Xincgc -XX:NewRatio=2";
+    private static final String DIST_REPO_URL = " https://artifactory4t4apgsga.jfrog.io/artifactory/apgPlatformDependencies";
 
     private String configurationName = CONFIGURATION_NAME_DEFAULT;
 	private String name = NAME_DEFAULT;
@@ -46,7 +47,7 @@ public class ApgCommonPackageExtension {
 	private Boolean webuiEmbedded = WEBEMMEDED_DEFAULT;
 	private String javaDir = JAVADIR_DEFAULT; 
 	private String javaDist = JAVADIST_DEFAULT; 
-	private String distRepoUrl;
+	private String distRepoUrl = DIST_REPO_URL;
 	private String version = VERSION_DEFAULT;
 	private String releaseNr = RELEASENR_DEFAULT; 
 	private String opsUserGroup = APG_OPSDEFAULT; 
