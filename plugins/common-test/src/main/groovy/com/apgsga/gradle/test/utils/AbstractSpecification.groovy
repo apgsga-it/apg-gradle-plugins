@@ -19,6 +19,7 @@ abstract class AbstractSpecification extends Specification {
         createGradleHomeDir()
         createGradleProperties()
         createGradleEncryptedProperties()
+        createPortNrResource()
     }
 
     private def createBuildFile() {
@@ -81,6 +82,65 @@ abstract class AbstractSpecification extends Specification {
         gradleEncyrpytedProperties << System.getProperty("line.separator")
         gradleEncyrpytedProperties << "mavenRepoPwd=jTgfLqung5Pw4VQqSldeUEK9NG/HslI+GjGZ2aqtdx8\\="
         println "${gradleEncyrpytedProperties.absolutePath} has been created!"
+    }
+
+    def createPortNrResource() {
+        def commonDirPath = "${gradleHomeDirPath}/common"
+        File gradleCommonDir = new File(commonDirPath)
+        gradleCommonDir.mkdirs()
+        File portNrFile = new File("${commonDirPath}/portnr.gradle")
+        portNrFile << """
+                ext.portNr = [
+                        serviceNames:{
+                            -> return ['jadas':1, 'digiflex-jadas':2,'digiflex-web-it21':3,'digiflex-web-sa':4, 'echoservice':5]
+                        },
+                        envDesignators: { ->
+                                return ['T':3, 'E':4]
+                        },
+                        list:{ ->
+                                def SERVICE_NAMES = ext.portNr.serviceNames.call()
+                                def TARGETS = ["CHEI212", "CHEI211", "CHTI212", "CHTI211"]
+                                println SERVICE_NAMES.toString()
+                                def names = SERVICE_NAMES.keySet() as List
+                                names.each { name ->
+                                    TARGETS.each {
+                                            println "Calcuated Port Service: \${name} and Target : \${it} is " + ext.portNr.calc.call(it,name)
+                                    }
+                                }
+                        },
+                        calc:{ target, serviceName ->
+                                def SERVICE_NAMES = ext.portNr.serviceNames.call()
+                                def ENVIRONMENT_DESIGNATORS  = ext.portNr.envDesignators.call()
+                
+                                // Be sure we are dealing with String and not GString
+                                String targetInt = target.toString()
+                                String serviceNameInt = serviceName.toString()
+                
+                                // Service Number Part
+                                def serviceNumberPart = SERVICE_NAMES[serviceNameInt]
+                                // TODO (uge,jhe, stb) : should we provide a default here , instead of exception
+                                assert serviceNumberPart != null, "Unkown service : \${serviceNameInt}"
+                                // Enviroment Number Part
+                                // TODO (uge, jhe, stb) Validate target ?
+                                def envDesignator = targetInt.substring(2,3)
+                                def envNumberPart = ENVIRONMENT_DESIGNATORS[envDesignator]
+                                // TODO (uge,jhe, stb) : should we provide a default here , instead of exception
+                                assert envNumberPart != null, "Unkown Enviroment Designator  : \${envDesignator}"
+                                // Database Number Part
+                                def dbPart = targetInt.reverse().take(1)
+                                def calculatedPortNr
+                                if (serviceNumberPart > 9 ) {
+                                    calculatedPortNr = "3\${serviceNumberPart}\${envNumberPart}\${dbPart}"
+                
+                                } else {
+                                    calculatedPortNr = "30\${serviceNumberPart}\${envNumberPart}\${dbPart}"
+                                }
+                                calculatedPortNr
+                        }
+                
+                ]
+        """
+        println "${portNrFile.absolutePath} has been created!"
     }
 
     protected def gradleRunnerFactory() {

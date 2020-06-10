@@ -254,6 +254,10 @@ public class ApgCommonPackageExtension {
         return PortnrConvention.calculate(project, getInstallTarget(), getName()).toString();
     }
 
+    public String getPortNr(String serviceName) {
+	    return PortnrConvention.calculate(project,getInstallTarget(),serviceName).toString();
+    }
+
     public void listPortNumbers() {
         PortnrConvention.list(project);
     }

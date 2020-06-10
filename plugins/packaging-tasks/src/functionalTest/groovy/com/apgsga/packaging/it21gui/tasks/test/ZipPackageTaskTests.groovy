@@ -15,6 +15,8 @@ class ZipPackageTaskTests extends AbstractSpecification  {
                 id '${ApgGuiPackagePlugin.PLUGIN_ID}'
 				id 'maven-publish' 
             }
+            
+            apply from : "${gradleHomeDirPath.replace("\\","/")}/common/portnr.gradle"
 
 			// The guava dependency is only for testing purposes, consider to be likely found in mavenCentral()
 			apgPackage {
