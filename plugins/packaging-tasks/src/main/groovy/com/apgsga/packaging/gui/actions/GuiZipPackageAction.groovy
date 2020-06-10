@@ -16,7 +16,8 @@ class GuiZipPackageAction implements Action<Zip> {
     void execute(Zip zip) {
 		def ex = project.extensions.apgPackage
 		zip.from("${project.buildDir}/${ex.name}")
-		zip.into("${ex.name}")
+		// JHE (10.06.2020): Not 100% sure, but probably we'll want to ZIP without the parent root folder, basically only the content.
+		//zip.into("${ex.name}")
 		// TODO (che, 1.10 ) Verify 
 		zip.destinationDir = new File("${project.buildDir}/distributions")
 		// TODO (che, 23.10) : Is this enough for Version?

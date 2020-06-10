@@ -84,7 +84,7 @@ class BuildLogicZipFunctionalTests extends AbstractSpecification {
     @Ignore
     def "Deploy and install ZIP Tasks works against test environment for dummy ZIP without dest installation folder"() {
         given:
-            def zipResource = new ClassPathResource("dummy.zip")
+            def zipResource = new ClassPathResource("testuiapp-2.1-SNAPSHOT.zip")
             def zipFileName = zipResource.getFilename()
             def zipParentFolder = zipResource.getURI().getPath() - zipFileName
             buildFile << """
@@ -109,17 +109,18 @@ class BuildLogicZipFunctionalTests extends AbstractSpecification {
                                 apgSshConfig {
                                    username 'apg_install'
                                    userpwd credentials.apg_install
-                                   destinationHost 'jenkins-t.apgsga.ch'
+                                   destinationHost 'jadas-t.apgsga.ch'
                                 }
                                 
                                 apgZipDeployConfig {
                                     zipFilePath '${zipParentFolder}'
                                     zipFileName '${zipFileName}'
-                                    remoteDeployDestFolder '/home/apg_install'
+                                    remoteDeployDestFolder '/home/apg_install/downloads'
+                                    remoteExtractDestFolder '/opt/digiflex_ui/testJHE'
                                 }				
                             """
         when:
-            def result = gradleRunnerFactory(['init','deployZip','installZip']).build()
+            def result = gradleRunnerFactory(['init' ,'deployZip', 'installZip']).build()
         then:
             result.output.toString().trim() ==~ /(?ms).*Started command.*dummy.zip.*/
             result.output.toString().trim() ==~ /(?ms).*Success command.*dummy.zip.*/
