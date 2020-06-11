@@ -19,7 +19,8 @@ class BundledResourcesCopyTask extends DefaultTask {
 	def taskAction() {
 		ApgCommonPackageExtension ex = project.extensions.apgPackage
 		def digiflexWebIt21PortNr = ex.getPortNr('digiflex-web-it21')
-		def jadasPortNr = ex.getPortNr('jadas')
+		// JHE (11.06.2020): Currently the jadas service is not "jadas", this will probably change as soon as digiflex will be 100% ready. Eventually we could provide this name as parameter within ApgCommonPackageExtension
+		def jadasPortNr = ex.getPortNr('digiflex-jadas')
 		// JHE (10.06.2020): URL such http://chtadg1.apgsga.ch/geoserver/wms are either with "cht" of "chp", basically never starts with "che"
 		def targetIndicatorProdOrOther = ex.installTarget.charAt(2).toLowerCase().equals("p") ? "p" : "t"
 		project.copy {
