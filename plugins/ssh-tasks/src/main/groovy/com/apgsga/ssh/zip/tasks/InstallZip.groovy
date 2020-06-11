@@ -11,7 +11,7 @@ class InstallZip extends AbstractZip {
         preConditions()
         def apgZipDeployConfigExt = getDeployConfig()
         project.logger.info("${apgZipDeployConfigExt.zipFileName} will be install on ${remote.getProperty('host')} using ${remote.getProperty('user')} User")
-        def unzipCmd = getUnzipCmd(apgZipDeployConfigExt)
+        def newFolderName = guiExtractedFolderName()
         project.ssh.run {
             if (apgZipDeployConfigExt.allowAnyHosts) {
                 project.logger.info("Allowing SSH Anyhosts ")
@@ -20,22 +20,22 @@ class InstallZip extends AbstractZip {
                 }
             }
             session(remote) {
-                // TODO (jhe, che) : Real quick fix for Digiflex Problem, see IT-35824
-               // executeSudo "rm -f ${apgZipDeployConfigExt.remoteExtractDestFolder}/digiflex-it21-ui/lib/*", pty: true
-                executeSudo unzipCmd, pty: true
-                // JHE: it probably won't sty like that, we might not want to delete ZIP which were built for production
-                execute "rm -f ${apgZipDeployConfigExt.remoteDeployDestFolder}/${apgZipDeployConfigExt.zipFileName}", pty: true
-                executeSudo "chmod -R 755 ${apgZipDeployConfigExt.remoteExtractDestFolder}"
+                def uiGettingExtractedFolder = "${apgZipDeployConfigExt.remoteExtractDestFolder}/gettingExtracted_${newFolderName}"
+                execute "mkdir -p ${uiGettingExtractedFolder}"
+                execute "unzip ${apgZipDeployConfigExt.remoteDeployDestFolder}/${apgZipDeployConfigExt.zipFileName} -d ${uiGettingExtractedFolder}"
+                execute "chmod -R 775 ${uiGettingExtractedFolder}"
+                execute "rm -f ${apgZipDeployConfigExt.remoteDeployDestFolder}/${apgZipDeployConfigExt.zipFileName}"
+                execute "mv ${uiGettingExtractedFolder}/start_it21_gui_run.bat ${apgZipDeployConfigExt.remoteExtractDestFolder}"
+                execute "mv ${uiGettingExtractedFolder} ${apgZipDeployConfigExt.remoteExtractDestFolder}/${newFolderName}"
+                // JHE (11.06.2020): Keeping only last 3 version. Could be done with a script on platform as well if we want different behavior for PROD/TEST.
+                execute "cd ${apgZipDeployConfigExt.remoteExtractDestFolder} && ls -rv | awk -F_ '++n[\$1]>3' | xargs rm -rf"
             }
         }
     }
 
-    private def getUnzipCmd(ApgZipDeployConfig config) {
-        // JHE_ -o option in order to override the dest files, if they exists.
-        def cmd = "unzip -o ${config.remoteDeployDestFolder}/${config.zipFileName}"
-        if(config.remoteExtractDestFolder?.trim()) {
-            cmd += " -d ${config.remoteExtractDestFolder}"
-        }
-        return cmd
+    private def guiExtractedFolderName() {
+        def currentDateAndTime = new Date().format('yyyyMMddHHmmss')
+        def extractedFolderName = "java_gui_${currentDateAndTime}"
+        return extractedFolderName
     }
 }
