@@ -27,6 +27,8 @@ class InstallZip extends AbstractZip {
                 execute "rm -f ${apgZipDeployConfigExt.remoteDeployDestFolder}/${apgZipDeployConfigExt.zipFileName}"
                 execute "mv ${uiGettingExtractedFolder}/start_it21_gui_run.bat ${apgZipDeployConfigExt.remoteExtractDestFolder}"
                 execute "mv ${uiGettingExtractedFolder} ${apgZipDeployConfigExt.remoteExtractDestFolder}/${newFolderName}"
+                // JHE (11.06.2020): Keeping only last 3 version. Could be done with a script on platform as well if we want different behavior for PROD/TEST.
+                execute "cd ${apgZipDeployConfigExt.remoteExtractDestFolder} && ls -rv | awk -F_ '++n[\$1]>3' | xargs rm -rf"
             }
         }
     }
