@@ -25,14 +25,6 @@
                         <enabled>false</enabled>
                     </snapshots>
                     <id>central</id>
-                    <name>local</name>
-                    <url>.</url>
-                </repository>
-                <repository>
-                    <snapshots>
-                        <enabled>false</enabled>
-                    </snapshots>
-                    <id>central</id>
                     <name>gradle_maven_releases</name>
                     <url>https://artifactory4t4apgsga.jfrog.io/artifactory/releases-test</url>
                 </repository>

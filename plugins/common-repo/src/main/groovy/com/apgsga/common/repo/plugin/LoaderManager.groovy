@@ -25,13 +25,17 @@ class LoaderManager {
 
     public static final String APG_COMMON_REPO_GRADLE_MAVEN_ACTIVE_PROFILE = "apg.common.repo.gradle.maven.active.profile"
 
-    private Project project;
+    public static final String APG_COMMON_REPO_GRADLE_LOCAL_REPO_FROM_MAVEN = "apg.common.repo.gradle.local.repo.from.maven"
+
+    private Project project
 
     private Settings settings
 
     private String userSettingsFileName
 
     private String activeProfile
+
+    private boolean gradleLocalRepoFromMaven = true
 
     private boolean exportGradleProps = true
 
@@ -44,12 +48,41 @@ class LoaderManager {
         Assert.notNull(this.userSettingsFileName, "Missing ${APG_COMMON_REPO_MAVEN_FILE_PATH} property")
         this.activeProfile = project.property(APG_COMMON_REPO_GRADLE_MAVEN_ACTIVE_PROFILE)
         Assert.notNull(this.activeProfile, "Missing ${APG_COMMON_REPO_GRADLE_MAVEN_ACTIVE_PROFILE} property")
+        gradleLocalRepoFromMaven = doCreateGradleLocalFromMaven() ? true : false
         log = project.logger
+    }
+
+    private boolean doCreateGradleLocalFromMaven() {
+        if(!project.properties.containsKey(APG_COMMON_REPO_GRADLE_LOCAL_REPO_FROM_MAVEN)) {
+            return true
+        }
+        return project.property(APG_COMMON_REPO_GRADLE_LOCAL_REPO_FROM_MAVEN).equals("true")
     }
 
     void load() {
         loadSettings()
+        if(gradleLocalRepoFromMaven) {configureLocalRepository()}
         activateProfiles()
+    }
+
+    private void configureLocalRepository() {
+        String localRepoUrl = settings.localRepository
+
+        project.repositories.maven {m ->
+            log.info("Applying a local gradle maven Repo at following location ${localRepoUrl}")
+            m.setUrl(localRepoUrl)
+            m.artifactUrls(localRepoUrl)
+            m.setName("local")
+        }
+
+        project.extensions.findByType(PublishingExtension)?.repositories?.all {gradleRepo ->
+            if (gradleRepo instanceof MavenArtifactRepository) {
+                if(gradleRepo.name.equalsIgnoreCase("local")) {
+                    log.info("Applying a local publish Repo.")
+                    gradleRepo.url = localRepoUrl
+                }
+            }
+        }
     }
 
     private void loadSettings() {
