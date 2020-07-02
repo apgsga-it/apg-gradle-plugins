@@ -21,7 +21,7 @@ dependencies {
         exclude("","groovy-all")
     }
     testCompile("org.junit.jupiter:junit-jupiter:5.5.2")
-    compile("com.apgsga.patchframework:apg-patch-service-common:1.3.14") {
+    compile("com.apgsga.patchframework:apg-patch-service-api:2.0.0-SNAPSHOT") {
         exclude("","groovy-all")
     }
     kotlin("stdlib")

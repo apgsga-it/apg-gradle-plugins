@@ -72,6 +72,7 @@ class CompositeVersionResolverDefaultTest extends Specification {
                 .build()
         when:
         def version = compositeResolver.getVersion("com.affichage.it21.vk","zentraldispo-dao")
+        println "version : ${version}"
         then:
         version == "AAAAAAAAA"
 

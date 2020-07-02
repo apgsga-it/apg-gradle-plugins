@@ -1,40 +1,59 @@
 {
-  "className": "com.apgsga.microservice.patch.api.impl.PatchBean",
   "patchNummer": "5791",
-  "serviceName": "It21Ui",
-  "microServiceBranch": "it21_release_9_1_0_admin_uimig",
-  "dbPatchBranch": "Patch_0900C1_5791",
-  "prodBranch": "HEAD",
-  "patchTag": "Patch_0900C1_5791_1",
-  "tagNr": 2,
-  "installationTarget": "CHEI212",
-  "baseVersionNumber": "9.1.0",
-  "revisionMnemoPart": "ADMIN-UIMIG",
-  "revisionNumber": null,
-  "lastRevisionNumber": null,
+  "dbPatchBranch": null,
+  "prodBranch": "guiProdBranch",
+  "patchTag": "",
+  "developerBranch": "",
+  "tagNr": 0,
+  "installationTarget": "dev-jhedocker.light.apgsga.ch",
+  "targetToState": null,
+  "runningNr": null,
   "dbObjects": [],
+  "dockerServices": [],
+  "services": [
+    {
+      "serviceName": "digiflex-jadas",
+      "microServiceBranch": "apg_vaadin_1_0_x_digiflex",
+      "baseVersionNumber": "9.1.0",
+      "revisionMnemoPart": "ADMIN-UIMIG",
+      "installOnEmptyModules": false,
+      "revision": null,
+      "lastRevision": null,
+      "mavenArtifacts": [
+        {
+          "artifactId": "alog-ui",
+          "groupId": "com.affichage.it21.alog",
+          "name": "com.affichage.it21.alog.ui",
+          "version": "12",
+          "dependencyLevel": 0
+        }
+      ],
+      "mavenArtifactsToBuild": [
+        {
+          "artifactId": "alog-ui",
+          "groupId": "com.affichage.it21.alog",
+          "name": "com.affichage.it21.alog.ui",
+          "version": "9.1.0.ADMIN-UIMIG-SNAPSHOT",
+          "dependencyLevel": 0
+        }
+      ],
+      "installJadasAndGui": true,
+      "mavenArtifactsAsVcsPath": [
+        "com.apgsga.it21.cm.ui"
+      ]
+    }
+  ],
+  "installDockerServices": false,
+  "lastPipelineTask": "",
+  "currentTarget": "chei212",
+  "currentPipelineTask": null,
+  "logText": null,
   "mavenArtifacts": [
     {
-      "className": "com.apgsga.microservice.patch.api.impl.MavenArtifactBean",
       "artifactId": "alog-ui",
       "groupId": "com.affichage.it21.alog",
       "name": "com.affichage.it21.alog.ui",
       "version": "12",
-      "dependencyLevel": 0
-    }
-  ],
-  "installOnEmptyModules": false,
-  "mavenArtifactsAsVcsPath": [
-    "com.affichage.it21.alog.ui"
-  ],
-  "installJadasAndGui": true,
-  "mavenArtifactsToBuild": [
-    {
-      "className": "com.apgsga.microservice.patch.api.impl.MavenArtifactBean",
-      "artifactId": "alog-ui",
-      "groupId": "com.affichage.it21.alog",
-      "name": "com.affichage.it21.alog.ui",
-      "version": "9.1.0.ADMIN-UIMIG-SNAPSHOT",
       "dependencyLevel": 0
     }
   ],

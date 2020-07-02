@@ -1,28 +1,52 @@
 {
-	"className": "com.apgsga.microservice.patch.api.impl.PatchBean",
 	"patchNummer": "5402",
-	"serviceName": "It21Ui",
-	"microServiceBranch": "it21_release_9_1_0_admin_uimig",
-	"dbPatchBranch": "Patch_0900C1_5402",
-	"prodBranch": "HEAD",
-	"patchTag": "Patch_0900C1_5402_2",
+	"dbPatchBranch": null,
+	"prodBranch": "guiProdBranch",
+	"patchTag": "",
+	"developerBranch": "",
 	"tagNr": 1,
-	"installationTarget": "CHEI212",
-	"baseVersionNumber": "XXXX",
-	"revisionMnemoPart": "ADMIN-UIMIG",
-	"revisionNumber": "1",
-	"lastRevisionNumber": "SNAPSHOT",
-	"dbObjects": [
+	"installationTarget": "dev-jhedocker.light.apgsga.ch",
+	"targetToState": null,
+	"runningNr": null,
+	"dbObjects": [],
+	"dockerServices": [],
+	"services": [
 		{
-			"className": "com.apgsga.microservice.patch.api.impl.DbObjectBean",
-			"fileName": "FileName1",
-			"filePath": "FilePath1",
-			"moduleName": null
+			"serviceName": "digiflex-jadas",
+			"microServiceBranch": "apg_vaadin_1_0_x_digiflex",
+			"baseVersionNumber": "9.1.0",
+			"revisionMnemoPart": "ADMIN-UIMIG",
+			"installOnEmptyModules": false,
+			"revision": "2222",
+			"lastRevision": "2200",
+			"mavenArtifacts": [
+				{
+					"artifactId": "zentraldispo-dao",
+					"groupId": "com.affichage.it21.vk",
+					"name": "com.affichage.it21.vk.zentraldispo.dao",
+					"version": "xxxxxxxxxx"
+				},
+				{
+					"className": "com.apgsga.microservice.patch.api.impl.MavenArtifactBean",
+					"artifactId": "zentraldispo-ui",
+					"groupId": "com.affichage.it21.vk",
+					"name": "com.affichage.it21.vk.zentraldispo.ui",
+					"version": "yyyyyyyyyy"
+				}
+			],
+			"installJadasAndGui": true,
+			"mavenArtifactsAsVcsPath": [
+				"com.apgsga.it21.cm.ui"
+			]
 		}
 	],
+	"installDockerServices": false,
+	"lastPipelineTask": "",
+	"currentTarget": "chei212",
+	"currentPipelineTask": null,
+	"logText": null,
 	"mavenArtifacts": [
 		{
-			"className": "com.apgsga.microservice.patch.api.impl.MavenArtifactBean",
 			"artifactId": "zentraldispo-dao",
 			"groupId": "com.affichage.it21.vk",
 			"name": "com.affichage.it21.vk.zentraldispo.dao",
@@ -35,5 +59,6 @@
 			"name": "com.affichage.it21.vk.zentraldispo.ui",
 			"version": "yyyyyyyyyy"
 		}
-	]
+	],
+	"dbObjectsAsVcsPath": []
 }
