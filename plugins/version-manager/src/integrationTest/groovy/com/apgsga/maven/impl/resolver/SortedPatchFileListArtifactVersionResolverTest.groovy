@@ -4,7 +4,7 @@ import spock.lang.Shared
 import spock.lang.Specification
 
 class SortedPatchFileListArtifactVersionResolverTest extends Specification {
-
+/*
     @Shared
     def source = new File("src/integrationTest/resources/patchresolvertests")
 
@@ -70,4 +70,6 @@ class SortedPatchFileListArtifactVersionResolverTest extends Specification {
         then:
         version == "AAAAAAAAA"
     }
+
+ */
 }

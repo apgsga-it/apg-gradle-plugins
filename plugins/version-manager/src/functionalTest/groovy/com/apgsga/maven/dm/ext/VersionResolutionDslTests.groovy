@@ -4,7 +4,7 @@ import com.apgsga.gradle.test.utils.AbstractSpecification
 
 class VersionResolutionDslTests extends AbstractSpecification {
 
-
+/*
     def "Version Resolution 1 Bom Version 1 Patch File DSL"() {
         given:
         buildFile << """
@@ -33,8 +33,8 @@ class VersionResolutionDslTests extends AbstractSpecification {
         println "Result output: ${result.output}"
         result.output.contains('')
     }
-
-
+*/
+/*
     def "version Resolution DSL with Version Parameter and single Bom works"() {
         given:
         buildFile << """
@@ -67,8 +67,10 @@ class VersionResolutionDslTests extends AbstractSpecification {
         result.output.contains('')
     }
 
+ */
 
 
+/*
     def "version Resolution DSL with List of boms and list of patch files"() {
         given:
         buildFile << """
@@ -108,6 +110,8 @@ class VersionResolutionDslTests extends AbstractSpecification {
         println "Result output: ${result.output}"
         result.output.contains('')
     }
+
+ */
 
 
 

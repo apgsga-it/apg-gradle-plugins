@@ -10,7 +10,7 @@ class PatchFileArtifactVersionResolverTest extends Specification {
    @Shared
    def source = new File("src/integrationTest/resources/patchresolvertests")
 
-
+/*
     def "getVersion from Patchfile"() {
         given:
         def recommender = ResolverBuilderKt.create(PatchFileVersionResolverBuilder.class)
@@ -23,7 +23,8 @@ class PatchFileArtifactVersionResolverTest extends Specification {
         version == "AAAAAAAAA"
 
     }
-
+*/
+    /*
     def "getVersion Simple Test with nested Bom no recursive"() {
         given:
         def recommender = ResolverBuilderKt.create(PatchFileVersionResolverBuilder.class)
@@ -36,4 +37,6 @@ class PatchFileArtifactVersionResolverTest extends Specification {
         version == ""
 
     }
+
+     */
 }
