@@ -19,6 +19,11 @@ class RevisionManagerPatchImpl implements RevisionManager {
     }
 
     @Override
+    void clone(String targetFolderAbsolutePath) {
+        revisionPersistence.cloneRevisionsJson(targetFolderAbsolutePath)
+    }
+
+    @Override
     String lastRevision(String serviceName, String target) {
         assert target != null , "Target must be set, cannot be null"
         String lastRevision = revisionPersistence.lastRevision(serviceName,target.toUpperCase())

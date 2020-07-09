@@ -25,4 +25,10 @@ interface RevisionPersistence {
      */
     void save(String serviceName, String target, String revision, String versionPrefix)
 
+    /**
+     * Copy Revisions.json into the targetFolderPath
+     * @param targetFolderPath
+     */
+    void cloneRevisionsJson(String targetFolderPath)
+
 }

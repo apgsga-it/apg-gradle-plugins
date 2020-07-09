@@ -9,6 +9,11 @@ class RevisionManagerSnapshotImpl implements RevisionManager {
     }
 
     @Override
+    void clone(String targetFolderAbsolutePath) {
+
+    }
+
+    @Override
     String lastRevision(String serviceName, String target) {
         "SNAPSHOT"
     }
