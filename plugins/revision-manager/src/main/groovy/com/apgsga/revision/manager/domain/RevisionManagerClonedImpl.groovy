@@ -30,9 +30,4 @@ class RevisionManagerClonedImpl implements RevisionManager{
     String nextRevision() {
         throw new RuntimeException("nextRevision not supported by ${RevisionManagerClonedImpl.class.name}")
     }
-
-    @Override
-    void clone(String targetFolderAbsolutePath) {
-        throw new RuntimeException("clone not supported by ${RevisionManagerClonedImpl.class.name}")
-    }
 }

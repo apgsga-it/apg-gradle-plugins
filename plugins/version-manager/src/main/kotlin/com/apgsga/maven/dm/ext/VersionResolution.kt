@@ -55,12 +55,13 @@ open class VersionResolutionExtension(val project: Project, private val revision
         get() {
             if (_revisionManger == null) {
                 _revisionManger = revisionManagerBuilder.revisionRootPath(revisionRootPath
-                        ?: project.gradle.gradleUserHomeDir.absolutePath).algorithm(algorithm).build()
+                        ?: project.gradle.gradleUserHomeDir.absolutePath).cloneTargetPath(cloneTargetPath).algorithm(algorithm).build()
             }
             return _revisionManger as RevisionManager
         }
 
     var revisionRootPath: String? = null
+    var cloneTargetPath: String? = null
     private var _bomNextRevision: String? = null
     private val bomNextRevision: String
         get() {

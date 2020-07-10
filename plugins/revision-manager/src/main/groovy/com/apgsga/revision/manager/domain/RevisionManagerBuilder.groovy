@@ -18,6 +18,7 @@ class RevisionManagerBuilder {
 
     private AlgorithmTyp algorithmTyp = AlgorithmTyp.PATCH
     private String revisionRootPath
+    private String cloneTargetPath
 
     RevisionManager build() {
         if (algorithmTyp == AlgorithmTyp.PATCH) {
@@ -31,7 +32,9 @@ class RevisionManagerBuilder {
     }
 
     private RevisionManager buildCloneRevisionManager() {
-        new RevisionManagerClonedImpl(getRevisionPersistence())
+        def revPersistence = getRevisionPersistence()
+        revPersistence.cloneRevisionsJson(cloneTargetPath)
+        new RevisionManagerClonedImpl(revPersistence)
     }
 
     private RevisionManager buildPatchRevisionManager() {
@@ -54,6 +57,11 @@ class RevisionManagerBuilder {
 
     RevisionManagerBuilder revisionRootPath(String revisionRootPath) {
         this.revisionRootPath = revisionRootPath
+        this
+    }
+
+    RevisionManagerBuilder cloneTargetPath(String cloneTargetPath) {
+        this.cloneTargetPath = cloneTargetPath
         this
     }
 

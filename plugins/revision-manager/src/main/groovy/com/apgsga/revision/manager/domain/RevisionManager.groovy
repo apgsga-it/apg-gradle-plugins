@@ -23,9 +23,4 @@ interface RevisionManager {
      */
     String nextRevision()
 
-    /**
-     * Copy Revisions.json to the targetFolder
-     * @param targetFolderAbsolutePath
-     */
-    void clone(String targetFolderAbsolutePath)
 }
