@@ -2,7 +2,6 @@ package com.apgsga.revision.manager.domain
 
 class RevisionManagerSnapshotImpl implements RevisionManager {
 
-
     @Override
     String nextRevision() {
        "SNAPSHOT"
@@ -16,6 +15,4 @@ class RevisionManagerSnapshotImpl implements RevisionManager {
     @Override
     void saveRevision(String serviceName, String target, String revision, String fullRevisionPrefix) {
     }
-
-
 }

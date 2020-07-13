@@ -39,6 +39,12 @@ class RevisionBeanBackedPersistence implements RevisionPersistence {
         saveRevisionHistory(serviceName,target, versionPrefix, revision)
     }
 
+    @Override
+    void cloneRevisionsJson(String targetFolderPath) {
+        def revisions = read(Revisions.class)
+        write(revisions,new File(targetFolderPath))
+    }
+
     private void saveRevisionHistory(String serviceName, String target, String versionPrefix, String revision) {
         def targetsHistory = read(RevisionTargetHistory.class)
         targetsHistory.add(serviceName,target,versionPrefix,revision)
@@ -67,11 +73,15 @@ class RevisionBeanBackedPersistence implements RevisionPersistence {
         file.exists()
     }
 
-    private write(Object value) {
+    private write(Object value, File rootDir) {
         String fileName = "${value.class.simpleName}.json"
-        File file = new File(revisionRootDir as File, fileName)
+        File file = new File(rootDir as File, fileName)
         ObjectMapper mapper = new ObjectMapper()
         mapper.writeValue(file, value)
+    }
+
+    private write(Object value) {
+        write(value,revisionRootDir)
     }
 
     def <T> void init(Class<T> clx, Object[] constArgs) {

@@ -4,7 +4,6 @@ package com.apgsga.maven.dm.ext
 import com.apgsga.maven.VersionResolver
 import com.apgsga.maven.impl.resolver.BomVersionGradleResolverBuilder
 import com.apgsga.maven.impl.resolver.CompositeVersionResolverBuilder
-import com.apgsga.maven.impl.resolver.PatchFileVersionResolverBuilder
 import com.apgsga.packaging.extensions.ApgCommonPackageExtension
 import com.apgsga.revision.manager.domain.RevisionManager
 import com.apgsga.revision.manager.domain.RevisionManagerBuilder
@@ -27,11 +26,6 @@ fun version(baseVersion: String?, revision: String?): String {
     }
     throw IllegalArgumentException("Illegal Version for Artifact with baseVersion: ${baseVersion} and revision: ${revision}")
 
-}
-
-class Patches {
-    var parentDir: String? = null
-    var fileNames: String? = null
 }
 
 open class VersionResolutionExtension(val project: Project, private val revisionManagerBuilder: RevisionManagerBuilder) {
@@ -61,12 +55,13 @@ open class VersionResolutionExtension(val project: Project, private val revision
         get() {
             if (_revisionManger == null) {
                 _revisionManger = revisionManagerBuilder.revisionRootPath(revisionRootPath
-                        ?: project.gradle.gradleUserHomeDir.absolutePath).algorithm(algorithm).build()
+                        ?: project.gradle.gradleUserHomeDir.absolutePath).cloneTargetPath(cloneTargetPath).algorithm(algorithm).build()
             }
             return _revisionManger as RevisionManager
         }
 
     var revisionRootPath: String? = null
+    var cloneTargetPath: String? = null
     private var _bomNextRevision: String? = null
     private val bomNextRevision: String
         get() {
@@ -94,7 +89,7 @@ open class VersionResolutionExtension(val project: Project, private val revision
              }
              return  _serviceName
          }
-    var bomLastRevision: String?
+    private var bomLastRevision: String?
         get() {
             if (_bomLastRevision == null) {
                 _bomLastRevision = revisionManger.lastRevision(serviceName, installTarget)
@@ -104,7 +99,6 @@ open class VersionResolutionExtension(val project: Project, private val revision
         set(value) {
             this._bomLastRevision = value
         }
-    val patches: Patches = Patches()
 
     init {
         configureConfiguration(configurationName as String)
@@ -113,10 +107,6 @@ open class VersionResolutionExtension(val project: Project, private val revision
     fun saveRevision() {
         // TODO (che, jhe , 26.3 ) When best to save the Revision? Necessary?
         revisionManger.saveRevision(serviceName, installTarget, bomNextRevision, bomBaseVersion)
-    }
-
-    fun patches(action: Action<Patches>) {
-        action.execute(patches)
     }
 
     private fun configureConfiguration(name: String) {
@@ -175,14 +165,6 @@ open class VersionResolutionExtension(val project: Project, private val revision
         val compositeResolverBuilder = CompositeVersionResolverBuilder()
         project.logger.info("Creating Dependency configuration")
         var cnt = 0
-        if (!patches.fileNames.isNullOrEmpty()) {
-            patches.fileNames?.split(':')?.forEach {
-                project.logger.info("Patchfile : $it.toString()")
-                compositeResolverBuilder.add(++cnt, PatchFileVersionResolverBuilder()
-                        .parentDir(patches.parentDir!!)
-                        .patchFile(it))
-            }
-        }
         project.logger.info("Version: ${bomLastRevision?.let { version(it) }}")
         compositeResolverBuilder.add(++cnt, BomVersionGradleResolverBuilder()
                 .bomArtifact("${bomGroupId}:${bomArtifactId}:${bomLastRevision?.let { version(it) }}")

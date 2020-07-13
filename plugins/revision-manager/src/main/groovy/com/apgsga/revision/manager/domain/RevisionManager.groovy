@@ -22,4 +22,5 @@ interface RevisionManager {
      * @return revision
      */
     String nextRevision()
+
 }
