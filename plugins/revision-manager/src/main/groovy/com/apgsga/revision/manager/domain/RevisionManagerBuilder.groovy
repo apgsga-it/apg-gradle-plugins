@@ -34,6 +34,7 @@ class RevisionManagerBuilder {
     private RevisionManager buildCloneRevisionManager() {
         def revPersistence = getRevisionPersistence()
         revPersistence.cloneRevisionsJson(cloneTargetPath)
+        revisionRootPath = cloneTargetPath
         new RevisionManagerClonedImpl(revPersistence)
     }
 
