@@ -3,7 +3,6 @@ package com.apgsga.revision.manager.domain
 import com.apgsga.revision.manager.persistence.RevisionTargetHistory
 import com.apgsga.revision.manager.persistence.Revisions
 import spock.lang.Specification
-import sun.security.x509.OtherName
 
 import java.nio.file.Files
 import java.nio.file.Paths
