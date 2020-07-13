@@ -20,10 +20,18 @@ open class VersionResolutionPlugin : Plugin<Project> {
         val revisionManagerBuilder = RevisionManagerBuilder.create()
         val extension =  project.extensions.create("apgVersionResolver", VersionResolutionExtension::class.java, project, revisionManagerBuilder)
         project.afterEvaluate {
+            setReleaseNrToCommonPackager(project)
             applyRecommendations(project, extension)
         }
 
     }
+
+    private fun setReleaseNrToCommonPackager(project: Project) {
+        val config = project.extensions.getByType(VersionResolutionExtension::class.java)
+        val pkgExt = project.extensions.getByType(ApgCommonPackageExtension::class.java)
+        pkgExt.releaseNr = config.releaseNr
+    }
+
     private fun applyRecommendations(project: Project, resolutionExtension : VersionResolutionExtension) {
         val config = project.configurations.findByName(resolutionExtension.configurationName as String)
         val action = Action<Configuration> {

@@ -99,6 +99,14 @@ open class VersionResolutionExtension(val project: Project, private val revision
         set(value) {
             this._bomLastRevision = value
         }
+    private var _releasedNr: String? = null
+    val releaseNr: String
+        get() {
+            if(_releasedNr == null) {
+                _releasedNr = _revisionManger?.lastRevision(_serviceName,_installTarget)
+            }
+            return _releasedNr as String
+        }
 
     init {
         configureConfiguration(configurationName as String)
