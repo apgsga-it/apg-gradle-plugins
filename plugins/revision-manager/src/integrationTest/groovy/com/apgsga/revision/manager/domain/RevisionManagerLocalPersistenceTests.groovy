@@ -112,8 +112,6 @@ class RevisionManagerLocalPersistenceTests extends Specification {
     }
 
     def "Ensure cloning and getting information from clone is working"() {
-        // TODO JHE
-        /*
         when:
             revisionManagerPatch.saveRevision("testService_1","chei212","10","TEST-")
         then:
@@ -122,12 +120,14 @@ class RevisionManagerLocalPersistenceTests extends Specification {
             !Files.exists(Paths.get(revisionClonedFilePath))
         when:
             new File(revisionClonedPath).mkdirs()
-            revisionManagerPatch.clone(revisionClonedPath)
+            def revisionManagerPatchCloneAlso = RevisionManagerBuilder.create()
+                                                                      .revisionRootPath(revisionRootPath)
+                                                                      .algorithm(RevisionManagerBuilder.AlgorithmTyp.CLONED)
+                                                                      .cloneTargetPath(revisionClonedPath)
+                                                                      .build()
         then:
             Files.exists(Paths.get(revisionFilePath))
             Files.exists(Paths.get(historyFilePath))
             Files.exists(Paths.get(revisionClonedFilePath))
-
-         */
     }
 }
