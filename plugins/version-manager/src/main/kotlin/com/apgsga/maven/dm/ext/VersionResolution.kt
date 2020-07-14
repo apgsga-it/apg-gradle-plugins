@@ -108,7 +108,7 @@ open class VersionResolutionExtension(val project: Project, private val revision
     val releasedNr: String?
         get() {
             if(_releasedNr == null) {
-                _releasedNr = _revisionManger?.lastRevision(_serviceName,_installTarget)
+                _releasedNr = revisionManger?.lastRevision(_serviceName,_installTarget)
             }
             return _releasedNr
         }
