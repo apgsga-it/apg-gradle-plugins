@@ -7,6 +7,7 @@ import com.apgsga.maven.impl.resolver.CompositeVersionResolverBuilder
 import com.apgsga.packaging.extensions.ApgCommonPackageExtension
 import com.apgsga.revision.manager.domain.RevisionManager
 import com.apgsga.revision.manager.domain.RevisionManagerBuilder
+import com.apgsga.ssh.extensions.ApgRpmDeployConfig
 import groovy.lang.Closure
 import org.gradle.api.Action
 import org.gradle.api.Project
@@ -56,6 +57,10 @@ open class VersionResolutionExtension(val project: Project, private val revision
             if (_revisionManger == null) {
                 _revisionManger = revisionManagerBuilder.revisionRootPath(revisionRootPath
                         ?: project.gradle.gradleUserHomeDir.absolutePath).cloneTargetPath(cloneTargetPath).algorithm(algorithm).build()
+                val pkgExt = project.extensions.getByType(ApgCommonPackageExtension::class.java)
+                pkgExt.releaseNr = releasedNr
+                val rpmDeployExt = project.extensions.getByType(ApgRpmDeployConfig::class.java)
+                rpmDeployExt.rpmFileName = pkgExt.archiveName
             }
             return _revisionManger as RevisionManager
         }
@@ -100,7 +105,7 @@ open class VersionResolutionExtension(val project: Project, private val revision
             this._bomLastRevision = value
         }
     private var _releasedNr: String? = null
-    val releaseNr: String?
+    val releasedNr: String?
         get() {
             if(_releasedNr == null) {
                 _releasedNr = _revisionManger?.lastRevision(_serviceName,_installTarget)
