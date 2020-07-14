@@ -7,6 +7,7 @@ import com.apgsga.maven.impl.resolver.CompositeVersionResolverBuilder
 import com.apgsga.packaging.extensions.ApgCommonPackageExtension
 import com.apgsga.revision.manager.domain.RevisionManager
 import com.apgsga.revision.manager.domain.RevisionManagerBuilder
+import com.apgsga.ssh.extensions.ApgRpmDeployConfig
 import groovy.lang.Closure
 import org.gradle.api.Action
 import org.gradle.api.Project
@@ -56,6 +57,12 @@ open class VersionResolutionExtension(val project: Project, private val revision
             if (_revisionManger == null) {
                 _revisionManger = revisionManagerBuilder.revisionRootPath(revisionRootPath
                         ?: project.gradle.gradleUserHomeDir.absolutePath).cloneTargetPath(cloneTargetPath).algorithm(algorithm).build()
+
+                // JHE (14.07.2020): we eventually want to do this only for CLONED scenario, not 100% sure yet.
+                val pkgExt = project.extensions.getByType(ApgCommonPackageExtension::class.java)
+                pkgExt.releaseNr = releasedNr
+                val rpmDeployExt = project.extensions.getByType(ApgRpmDeployConfig::class.java)
+                rpmDeployExt.rpmFileName = pkgExt.archiveName
             }
             return _revisionManger as RevisionManager
         }
@@ -98,6 +105,14 @@ open class VersionResolutionExtension(val project: Project, private val revision
         }
         set(value) {
             this._bomLastRevision = value
+        }
+    private var _releasedNr: String? = null
+    val releasedNr: String?
+        get() {
+            if(_releasedNr == null) {
+                _releasedNr = revisionManger?.lastRevision(serviceName,installTarget)
+            }
+            return _releasedNr
         }
 
     init {
