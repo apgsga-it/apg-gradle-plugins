@@ -18,8 +18,8 @@ class InstallRpm extends AbstractRpm {
             }
             session(remote) {
                 execute "f=\$(ls -t1 ${apgRpmDeployConfigExt.remoteDestFolder}/*.rpm | head -n 1) && sudo rpm -Uvh \$f", pty: true
-                // JHE: this probably won't stay like that, as we won't want to delete a production RPM before having archiving it. But quick fix for now for Digiflex
-                execute "rm -f ${apgRpmDeployConfigExt.remoteDestFolder}/${apgRpmDeployConfigExt.rpmFileName}", pty: true
+                // JHE: probably we want to archive the RPM before deleting it ?? To be discussed with UGE/CHE
+                execute "f=\$(ls -t1 ${apgRpmDeployConfigExt.remoteDestFolder}/*.rpm | head -n 1) && rm -f \$f", pty: true
             }
         }
     }
