@@ -8,7 +8,7 @@ class InstallRpm extends AbstractRpm {
     def doRun(Object remote, Object allowAnyHosts) {
         preConditions()
         def apgRpmDeployConfigExt = getDeployConfig()
-        if(apgRpmDeployConfigExt.rpmFileName?.trim()) {
+        if(!apgRpmDeployConfigExt.rpmFileName?.trim()) {
             project.logger.info("Latest RPM within ${apgRpmDeployConfigExt.remoteDestFolder} will be install on ${remote.getProperty('host')} using ${remote.getProperty('user')} User")
         } else {
             project.logger.info("${apgRpmDeployConfigExt.rpmFileName} will be install on ${remote.getProperty('host')} using ${remote.getProperty('user')} User")
@@ -21,7 +21,7 @@ class InstallRpm extends AbstractRpm {
                 }
             }
 
-            if(apgRpmDeployConfigExt.rpmFileName?.trim()) {
+            if(!apgRpmDeployConfigExt.rpmFileName?.trim()) {
                 session(remote) {
                     execute "f=\$(ls -t1 ${apgRpmDeployConfigExt.remoteDestFolder}/*.rpm | head -n 1) && sudo rpm -Uvh \$f", pty: true
                     // JHE: probably we want to archive the RPM before deleting it ?? To be discussed with UGE/CHE

@@ -10,7 +10,7 @@ class InstallZip extends AbstractZip {
     def doRun(Object remote, Object allowAnyHosts) {
         preConditions()
         def apgZipDeployConfigExt = getDeployConfig()
-        if(apgZipDeployConfigExt.zipFileName?.trim()) {
+        if(!apgZipDeployConfigExt.zipFileName?.trim()) {
             project.logger.info("Latest ZIP within ${apgZipDeployConfigExt.remoteExtractDestFolder} will be install on ${remote.getProperty('host')} using ${remote.getProperty('user')} User")
         } else {
             project.logger.info("${apgZipDeployConfigExt.remoteDeployDestFolder}/${apgZipDeployConfigExt.zipFileName} will be install on ${remote.getProperty('host')} using ${remote.getProperty('user')} User")
@@ -26,7 +26,7 @@ class InstallZip extends AbstractZip {
             session(remote) {
                 def uiGettingExtractedFolder = "${apgZipDeployConfigExt.remoteExtractDestFolder}/gettingExtracted_${newFolderName}"
                 execute "mkdir -p ${uiGettingExtractedFolder}"
-                if(apgZipDeployConfigExt.zipFileName?.trim()) {
+                if(!apgZipDeployConfigExt.zipFileName?.trim()) {
                     execute "f=\$(ls -t1 ${apgZipDeployConfigExt.remoteDeployDestFolder}/*.zip | head -n 1) && unzip \$f -d ${uiGettingExtractedFolder}"
                 }
                 else {
