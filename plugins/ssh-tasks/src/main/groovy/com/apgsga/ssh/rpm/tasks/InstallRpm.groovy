@@ -8,7 +8,11 @@ class InstallRpm extends AbstractRpm {
     def doRun(Object remote, Object allowAnyHosts) {
         preConditions()
         def apgRpmDeployConfigExt = getDeployConfig()
-        project.logger.info("${apgRpmDeployConfigExt.rpmFileName} will be install on ${remote.getProperty('host')} using ${remote.getProperty('user')} User")
+        if(!apgRpmDeployConfigExt.rpmFileName?.trim()) {
+            project.logger.info("Latest RPM within ${apgRpmDeployConfigExt.remoteDestFolder} will be install on ${remote.getProperty('host')} using ${remote.getProperty('user')} User")
+        } else {
+            project.logger.info("${apgRpmDeployConfigExt.rpmFileName} will be install on ${remote.getProperty('host')} using ${remote.getProperty('user')} User")
+        }
         project.ssh.run {
             if (apgRpmDeployConfigExt.allowAnyHosts) {
                 project.logger.info("Allowing SSH Anyhosts ")
@@ -16,10 +20,20 @@ class InstallRpm extends AbstractRpm {
                     knownHosts = allowAnyHosts
                 }
             }
-            session(remote) {
-                executeSudo "rpm -Uvh ${apgRpmDeployConfigExt.remoteDestFolder}/${apgRpmDeployConfigExt.rpmFileName}", pty: true
-                // JHE: this probably won't stay like that, as we won't want to delete a production RPM before having archiving it. But quick fix for now for Digiflex
-                execute "rm -f ${apgRpmDeployConfigExt.remoteDestFolder}/${apgRpmDeployConfigExt.rpmFileName}", pty: true
+
+            if(!apgRpmDeployConfigExt.rpmFileName?.trim()) {
+                session(remote) {
+                    execute "f=\$(ls -t1 ${apgRpmDeployConfigExt.remoteDestFolder}/*.rpm | head -n 1) && sudo rpm -Uvh \$f", pty: true
+                    // JHE: probably we want to archive the RPM before deleting it ?? To be discussed with UGE/CHE
+                    execute "f=\$(ls -t1 ${apgRpmDeployConfigExt.remoteDestFolder}/*.rpm | head -n 1) && rm -f \$f", pty: true
+                }
+            }
+            else {
+                session(remote) {
+                    executeSudo "rpm -Uvh ${apgRpmDeployConfigExt.remoteDestFolder}/${apgRpmDeployConfigExt.rpmFileName}", pty: true
+                    // JHE: probably we want to archive the RPM before deleting it ?? To be discussed with UGE/CHE
+                    execute "rm -f ${apgRpmDeployConfigExt.remoteDestFolder}/${apgRpmDeployConfigExt.rpmFileName}", pty: true
+                }
             }
         }
     }

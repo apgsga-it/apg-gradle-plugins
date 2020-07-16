@@ -10,7 +10,11 @@ class InstallZip extends AbstractZip {
     def doRun(Object remote, Object allowAnyHosts) {
         preConditions()
         def apgZipDeployConfigExt = getDeployConfig()
-        project.logger.info("${apgZipDeployConfigExt.zipFileName} will be install on ${remote.getProperty('host')} using ${remote.getProperty('user')} User")
+        if(!apgZipDeployConfigExt.zipFileName?.trim()) {
+            project.logger.info("Latest ZIP within ${apgZipDeployConfigExt.remoteExtractDestFolder} will be install on ${remote.getProperty('host')} using ${remote.getProperty('user')} User")
+        } else {
+            project.logger.info("${apgZipDeployConfigExt.remoteDeployDestFolder}/${apgZipDeployConfigExt.zipFileName} will be install on ${remote.getProperty('host')} using ${remote.getProperty('user')} User")
+        }
         def newFolderName = guiExtractedFolderName()
         project.ssh.run {
             if (apgZipDeployConfigExt.allowAnyHosts) {
@@ -22,7 +26,12 @@ class InstallZip extends AbstractZip {
             session(remote) {
                 def uiGettingExtractedFolder = "${apgZipDeployConfigExt.remoteExtractDestFolder}/gettingExtracted_${newFolderName}"
                 execute "mkdir -p ${uiGettingExtractedFolder}"
-                execute "unzip ${apgZipDeployConfigExt.remoteDeployDestFolder}/${apgZipDeployConfigExt.zipFileName} -d ${uiGettingExtractedFolder}"
+                if(!apgZipDeployConfigExt.zipFileName?.trim()) {
+                    execute "f=\$(ls -t1 ${apgZipDeployConfigExt.remoteDeployDestFolder}/*.zip | head -n 1) && unzip \$f -d ${uiGettingExtractedFolder}"
+                }
+                else {
+                    execute "unzip ${apgZipDeployConfigExt.remoteDeployDestFolder}/${apgZipDeployConfigExt.zipFileName} -d ${uiGettingExtractedFolder}"
+                }
                 execute "chmod -R 775 ${uiGettingExtractedFolder}"
                 execute "rm -f ${apgZipDeployConfigExt.remoteDeployDestFolder}/${apgZipDeployConfigExt.zipFileName}"
                 execute "mv ${uiGettingExtractedFolder}/start_it21_gui_run.bat ${apgZipDeployConfigExt.remoteExtractDestFolder}"

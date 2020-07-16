@@ -23,6 +23,7 @@ class SshPutTask extends AbstractSshTask {
                 }
             }
             session(remote) {
+                execute "mkdir -p ${into}" // will create dest folder if it does not exist
                 put from: from,  into: into
             }
         }
