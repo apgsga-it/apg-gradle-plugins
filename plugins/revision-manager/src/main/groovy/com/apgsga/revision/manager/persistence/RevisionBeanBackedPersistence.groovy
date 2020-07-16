@@ -42,6 +42,7 @@ class RevisionBeanBackedPersistence implements RevisionPersistence {
     @Override
     void cloneRevisionsJson(String targetFolderPath) {
         def revisions = read(Revisions.class)
+        println "WITHIN cloneRevisionsJson ............ targetFolderPath = ${targetFolderPath}"
         write(revisions,new File(targetFolderPath))
     }
 
