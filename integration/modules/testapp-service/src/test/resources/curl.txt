@@ -1,2 +1,0 @@
-curl -i   "localhost:8080/service/echo?text=something"
-curl -i "localhost:8080/service/echo/json?text=something"192.
