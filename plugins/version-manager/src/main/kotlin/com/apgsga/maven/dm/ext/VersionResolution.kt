@@ -57,12 +57,6 @@ open class VersionResolutionExtension(val project: Project, private val revision
             if (_revisionManger == null) {
                 _revisionManger = revisionManagerBuilder.revisionRootPath(revisionRootPath
                         ?: project.gradle.gradleUserHomeDir.absolutePath).cloneTargetPath(cloneTargetPath).algorithm(algorithm).build()
-
-                // JHE (14.07.2020): we eventually want to do this only for CLONED scenario, not 100% sure yet.
-                val pkgExt = project.extensions.getByType(ApgCommonPackageExtension::class.java)
-                pkgExt.releaseNr = releasedNr
-                val rpmDeployExt = project.extensions.getByType(ApgRpmDeployConfig::class.java)
-                rpmDeployExt.rpmFileName = pkgExt.archiveName
             }
             return _revisionManger as RevisionManager
         }
@@ -185,6 +179,10 @@ open class VersionResolutionExtension(val project: Project, private val revision
                 .bomArtifact("${bomGroupId}:${bomArtifactId}:${bomLastRevision?.let { version(it) }}")
                 .recursive(true))
         return compositeResolverBuilder.build(project)
+    }
+
+    fun version(): String {
+        return version(bomBaseVersion,bomLastRevision)
     }
 
 

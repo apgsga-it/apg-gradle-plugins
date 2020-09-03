@@ -1,5 +1,6 @@
 package com.apgsga.ssh.rpm.tasks
 
+import com.apgsga.packaging.extensions.ApgCommonPackageExtension
 import com.apgsga.ssh.general.tasks.SshPutTask
 import com.apgsga.ssh.plugins.ApgSsh
 
@@ -13,9 +14,10 @@ class DeployRpm extends AbstractRpm {
     @Override
     def doRun(Object remote, Object allowAnyHosts) {
         def apgRpmDeployConfigExt = project.extensions."${ApgSsh.APG_RPM_DEPLOY_CONFIG_EXTENSION_NAME}"
+        def apgPkgCommon = project.extensions.getByType(ApgCommonPackageExtension.class)
         preConditions()
         SshPutTask put = project.tasks.findByName(SshPutTask.TASK_NAME)
-        put.from = new File("${apgRpmDeployConfigExt.rpmFilePath}" + File.separator + apgRpmDeployConfigExt.rpmFileName)
+        put.from = new File("${apgRpmDeployConfigExt.rpmFilePath}" + File.separator + apgPkgCommon.archiveName + ".noarch.rpm" )
         put.into = "${apgRpmDeployConfigExt.remoteDestFolder}"
         put.doRun(remote,allowAnyHosts)
     }

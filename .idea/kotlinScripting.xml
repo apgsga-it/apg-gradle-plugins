@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="KotlinScriptingSettings">
-    <option name="isAutoReloadEnabled" value="true" />
     <option name="suppressDefinitionsCheck" value="true" />
     <scriptDefinition className="org.jetbrains.kotlin.idea.core.script.GradleScriptDefinitionsContributor.ErrorGradleScriptDefinition.LegacyDefinition" definitionName="Default Kotlin Gradle Script">
       <order>2</order>
@@ -9,6 +8,10 @@
     </scriptDefinition>
     <scriptDefinition className="org.jetbrains.kotlin.idea.core.script.StandardIdeScriptDefinition" definitionName="Kotlin Script">
       <order>3</order>
+    </scriptDefinition>
+    <scriptDefinition className="org.jetbrains.kotlin.scripting.resolve.KotlinScriptDefinitionFromAnnotatedTemplate" definitionName="KotlinBuildScript">
+      <order>2147483647</order>
+      <autoReloadConfigurations>true</autoReloadConfigurations>
     </scriptDefinition>
   </component>
 </project>
