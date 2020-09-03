@@ -90,7 +90,7 @@ class OsPackageConfigureTask extends DefaultTask {
 		}
 		osPackageExtention.from("$project.buildDir/app-pkg/app/conf/app",copySpec)
 		Task buildRpmTask = project.tasks.findByName("buildRpm")
-		buildRpmTask.archiveName = apgRpmPackage.archiveName
+		buildRpmTask.archiveName = apgRpmPackage.archiveName  + ".noarch.rpm"
 		buildRpmTask.directory("${apgRpmPackage.targetServiceDataDir}", 0775 )
 		buildRpmTask.directory("${apgRpmPackage.targetServiceDataDir}/log", 0775 )
 	}
