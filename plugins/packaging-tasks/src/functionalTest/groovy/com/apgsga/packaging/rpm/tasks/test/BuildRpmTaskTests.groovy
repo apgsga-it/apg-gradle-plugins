@@ -21,6 +21,13 @@ class BuildRpmTaskTests extends AbstractSpecification {
             plugins {
                 id '${ApgRpmPackagePlugin.PLUGIN_ID}'
             }
+            
+        apgVersionResolver {
+		    configurationName = "testRuntime"
+				serviceName = "testapp"
+				installTarget = 'CHTX211'
+				bomBaseVersion = '1.0'
+		}
 
 		// The guava dependency is only for testing purposes, consider to be likely found in mavenCentral()
         apgPackage {
@@ -28,7 +35,6 @@ class BuildRpmTaskTests extends AbstractSpecification {
 		    dependencies = ["com.google.guava:guava:+"]
             installTarget = "CHTX211"
 			mainProgramName  = "com.apgsga.test.SomeMain"
-			version = "1.0"
 		    releaseNr = "1"
          }
         """
