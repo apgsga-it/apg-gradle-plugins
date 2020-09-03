@@ -31,4 +31,5 @@ dependencies {
     compile group: 'com.google.guava', name: 'guava', version: '20.0'
     compile group: 'com.netflix.nebula', name: 'gradle-ospackage-plugin', version: '5.3.5'
     compile project(':common-repo')
+    compile project(':version-manager')
 }

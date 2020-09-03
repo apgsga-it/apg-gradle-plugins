@@ -1,5 +1,7 @@
 package com.apgsga.packaging.extensions;
 
+import com.apgsga.maven.dm.ext.VersionResolutionExtension;
+import com.apgsga.maven.dm.ext.VersionResolutionKt;
 import com.apgsga.packaging.service.pkg.extension.PortnrConvention;
 import org.gradle.api.Project;
 
@@ -13,7 +15,7 @@ public class ApgCommonPackageExtension {
 	private static final String RESOURCES_PATH_DEFAULT = "resources";
 	private static final String APG_OPSDEFAULT = "apg_ops";
 	private static final String RELEASENR_DEFAULT = "1";
-	private static final String VERSION_DEFAULT = "0.1";
+	private static final String VERSION_DEFAULT = "NOP";
 	private static final String JAVADIST_DEFAULT = "jdk-8u191-linux-x64.tar.gz";
 	private static final String JAVADIR_DEFAULT = "jdk1.8.0_191";
 	private static final boolean WEBEMMEDED_DEFAULT = false;
@@ -48,8 +50,7 @@ public class ApgCommonPackageExtension {
 	private String javaDir = JAVADIR_DEFAULT; 
 	private String javaDist = JAVADIST_DEFAULT; 
 	private String distRepoUrl = DIST_REPO_URL;
-	private String version = VERSION_DEFAULT;
-	private String releaseNr = RELEASENR_DEFAULT; 
+	private String releaseNr = RELEASENR_DEFAULT;
 	private String opsUserGroup = APG_OPSDEFAULT; 
 	private String resourcesPath = RESOURCES_PATH_DEFAULT;
     private String javaOpts = JAVAOPTS_DEFAULT;
@@ -187,11 +188,9 @@ public class ApgCommonPackageExtension {
     }
 
     public String getVersion() {
-        return version;
-    }
-
-    public void setVersion(String version) {
-        this.version = version;
+        VersionResolutionExtension ext = project.getExtensions().getByType(VersionResolutionExtension.class);
+        String version = ext.version();
+        return version == null ? VERSION_DEFAULT : version;
     }
 
     public String getReleaseNr() {
@@ -295,7 +294,6 @@ public class ApgCommonPackageExtension {
                 ", javaDir='" + javaDir + '\'' +
                 ", javaDist='" + javaDist + '\'' +
                 ", distRepoUrl='" + distRepoUrl + '\'' +
-                ", version='" + version + '\'' +
                 ", releaseNr='" + releaseNr + '\'' +
                 ", opsUserGroup='" + opsUserGroup + '\'' +
                 ", resourcesPath='" + resourcesPath + '\'' +

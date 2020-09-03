@@ -1,5 +1,6 @@
 package com.apgsga.packaging.plugins;
 
+import com.apgsga.maven.dm.plugin.VersionResolutionPlugin;
 import com.apgsga.packaging.common.task.BinariesCopyTask;
 import com.apgsga.packaging.common.task.ConfigureDepsTask;
 import com.apgsga.packaging.extensions.ApgCommonPackageExtension;
@@ -26,6 +27,7 @@ public class ApgCommonPackagePlugin implements Plugin<Project> {
         final PluginContainer plugins = project.getPlugins();
         ext.create(ApgCommonPackageExtension.EXT_NAME, ApgCommonPackageExtension.class, project);
         plugins.apply(ApgCommonRepoPlugin.class);
+        plugins.apply(VersionResolutionPlugin.class);
         TaskContainer tasks = project.getTasks();
         TaskProvider<BinariesCopyTask> binariesCopyTask = tasks.register("copyAppBinaries", BinariesCopyTask.class);
         TaskProvider<ConfigureDepsTask> configureDeps = tasks.register("configureDeps", ConfigureDepsTask.class);

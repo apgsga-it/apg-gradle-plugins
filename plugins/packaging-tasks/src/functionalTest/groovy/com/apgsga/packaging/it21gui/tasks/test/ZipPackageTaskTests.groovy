@@ -2,11 +2,11 @@ package com.apgsga.packaging.it21gui.tasks.test
 
 import com.apgsga.gradle.test.utils.AbstractSpecification
 import com.apgsga.packaging.plugins.ApgGuiPackagePlugin
+import spock.lang.Ignore
 
 import static groovy.io.FileType.FILES
 
 class ZipPackageTaskTests extends AbstractSpecification  {
-
     def "archivePackage works"() {
         given:
         buildFile << """
@@ -18,12 +18,18 @@ class ZipPackageTaskTests extends AbstractSpecification  {
             
             apply from : "${gradleHomeDirPath.replace("\\","/")}/common/portnr.gradle"
 
+			apgVersionResolver {
+				configurationName = "testRuntime"
+				serviceName = "testuiapp"
+				installTarget = 'CHEI212'
+				bomBaseVersion = '2.1'
+			}
 			// The guava dependency is only for testing purposes, consider to be likely found in mavenCentral()
 			apgPackage {
 				name ="testuiapp"
 				configurationName = "testRuntime"
 				dependencies = ["com.google.guava:guava:+"]
-				version = "2.1-SNAPSHOT"
+				installTarget = 'CHEI212'
 			 }
 			 apgPackage.log()
  			 

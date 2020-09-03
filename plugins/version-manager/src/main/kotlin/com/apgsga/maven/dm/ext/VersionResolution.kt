@@ -27,9 +27,9 @@ fun version(baseVersion: String?, revision: String?): String {
 }
 
 open class VersionResolutionExtension(val project: Project, private val revisionManagerBuilder: RevisionManagerBuilder) {
-    var configurationName: String? = null
-    var installTarget: String? = null
-    var serviceName: String? = null
+    var configurationName: String = "null"
+    var installTarget: String = "null"
+    var serviceName: String = "null"
     var bomArtifactId: String? = null
     var bomGroupId: String? = null
     var bomBaseVersion: String? = null
