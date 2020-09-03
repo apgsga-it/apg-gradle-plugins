@@ -22,6 +22,7 @@ dependencies {
     //           BUT: in worse case, testCompile should be enough, doesn't seem to be the case
     //                best case, this dependency should be resolved within common-test or within gradle-common (functionalTest.gradle)
     compile project(':common-repo')
+    compile project(':packaging-tasks')
     compile group: 'org.springframework', name: 'spring-core', version: '5.2.1.RELEASE'
     compile group: "org.hidetake", name: 'gradle-ssh-plugin', version: '2.10.1'
 }

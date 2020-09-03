@@ -273,7 +273,7 @@ public class ApgCommonPackageExtension {
 
 
     public String getArchiveName() {
-        return getTargetServiceName() + "-" + getVersion() + "-" + getReleaseNr() + ".noarch.rpm";
+        return getTargetServiceName() + "-" + getVersion() + "-" + getReleaseNr();
     }
 
     @Override

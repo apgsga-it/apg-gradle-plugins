@@ -3,7 +3,6 @@ package com.apgsga.maven.impl.bom
 import com.apgsga.maven.BomLoader
 import com.apgsga.maven.LoggerDelegate
 import com.apgsga.maven.MavenBomManager
-import com.apgsga.maven.dm.ext.version
 import org.apache.maven.model.Dependency
 import org.apache.maven.model.Model
 import org.apache.maven.model.io.xpp3.MavenXpp3Reader
