@@ -4,12 +4,9 @@ package com.apgsga.maven.dm.ext
 import com.apgsga.maven.VersionResolver
 import com.apgsga.maven.impl.resolver.BomVersionGradleResolverBuilder
 import com.apgsga.maven.impl.resolver.CompositeVersionResolverBuilder
-import com.apgsga.packaging.extensions.ApgCommonPackageExtension
 import com.apgsga.revision.manager.domain.RevisionManager
 import com.apgsga.revision.manager.domain.RevisionManagerBuilder
-import com.apgsga.ssh.extensions.ApgRpmDeployConfig
 import groovy.lang.Closure
-import org.gradle.api.Action
 import org.gradle.api.Project
 import org.gradle.api.publish.maven.MavenPublication
 import java.time.LocalDateTime
@@ -25,18 +22,14 @@ fun version(baseVersion: String?, revision: String?): String {
     if (versionNumberRegex.containsMatchIn(baseVersion)) {
         return "${baseVersion}${revisionInclSeperator}"
     }
-    throw IllegalArgumentException("Illegal Version for Artifact with baseVersion: ${baseVersion} and revision: ${revision}")
+    throw IllegalArgumentException("Illegal Version for Artifact with baseVersion: $baseVersion and revision: $revision")
 
 }
 
 open class VersionResolutionExtension(val project: Project, private val revisionManagerBuilder: RevisionManagerBuilder) {
-    private var _configurationName: String? = null
-    val configurationName: String?
-        get() {
-             val pkgExt = project.extensions.getByType(ApgCommonPackageExtension::class.java)
-             _configurationName = pkgExt.configurationName
-             return  _configurationName
-        }
+    var configurationName: String? = null
+    var installTarget: String? = null
+    var serviceName: String? = null
     var bomArtifactId: String? = null
     var bomGroupId: String? = null
     var bomBaseVersion: String? = null
@@ -72,24 +65,6 @@ open class VersionResolutionExtension(val project: Project, private val revision
             return _bomNextRevision as String
         }
     private var _bomLastRevision: String? = null
-    private var _installTarget: String? = null
-    private val installTarget: String?
-        get() {
-            if (_installTarget == null) {
-                val pkgExt = project.extensions.getByType(ApgCommonPackageExtension::class.java)
-                _installTarget = pkgExt.installTarget
-            }
-            return  _installTarget
-        }
-    private var _serviceName: String? = null
-    private val serviceName: String?
-        get() {
-             if (_serviceName == null) {
-                 val pkgExt = project.extensions.getByType(ApgCommonPackageExtension::class.java)
-                 _serviceName = pkgExt.name
-             }
-             return  _serviceName
-         }
     private var bomLastRevision: String?
         get() {
             if (_bomLastRevision == null) {
@@ -100,18 +75,7 @@ open class VersionResolutionExtension(val project: Project, private val revision
         set(value) {
             this._bomLastRevision = value
         }
-    private var _releasedNr: String? = null
-    val releasedNr: String?
-        get() {
-            if(_releasedNr == null) {
-                _releasedNr = revisionManger?.lastRevision(serviceName,installTarget)
-            }
-            return _releasedNr
-        }
 
-    init {
-        configureConfiguration(configurationName as String)
-    }
 
     fun saveRevision() {
         // TODO (che, jhe , 26.3 ) When best to save the Revision? Necessary?
@@ -171,6 +135,7 @@ open class VersionResolutionExtension(val project: Project, private val revision
         assert(bomGroupId != null) { "bomGroupId should not be null" }
         assert(bomBaseVersion != null) { "bomBaseVersion should not be null" }
         assert(bomLastRevision != null) { "lastRevision should not be null" }
+        configurationName?.let { configureConfiguration(it) }
         val compositeResolverBuilder = CompositeVersionResolverBuilder()
         project.logger.info("Creating Dependency configuration")
         var cnt = 0
