@@ -12,9 +12,9 @@ class RevisionManagerPatchImpl implements RevisionManager {
 
     @Override
     String nextRevision() {
-        def currentRev =revisionPersistence.currentRevision()
+        def currentRev  =revisionPersistence.currentRevision() as Integer
         currentRev++
-        revisionPersistence.save(currentRev)
+        revisionPersistence.save(currentRev as String)
         return currentRev
     }
 

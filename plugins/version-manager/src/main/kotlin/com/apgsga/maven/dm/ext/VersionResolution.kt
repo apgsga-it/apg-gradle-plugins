@@ -60,6 +60,7 @@ open class VersionResolutionExtension(val project: Project, private val revision
     private val bomNextRevision: String
         get() {
             if (_bomNextRevision == null) {
+                _bomLastRevision = revisionManger.lastRevision(serviceName, installTarget)
                 _bomNextRevision = revisionManger.nextRevision().toString()
             }
             return _bomNextRevision as String
@@ -103,6 +104,7 @@ open class VersionResolutionExtension(val project: Project, private val revision
     }
 
     private fun generateBomXml(publication: MavenPublication) {
+
         publication.artifactId = bomArtifactId
         publication.groupId = bomGroupId
         publication.version = version(bomNextRevision)
@@ -135,6 +137,7 @@ open class VersionResolutionExtension(val project: Project, private val revision
         assert(bomGroupId != null) { "bomGroupId should not be null" }
         assert(bomBaseVersion != null) { "bomBaseVersion should not be null" }
         assert(bomLastRevision != null) { "lastRevision should not be null" }
+        project.logger.info("BuildVersionResolver with $bomArtifactId, $bomGroupId, $bomBaseVersion and $bomLastRevision")
         configurationName?.let { configureConfiguration(it) }
         val compositeResolverBuilder = CompositeVersionResolverBuilder()
         project.logger.info("Creating Dependency configuration")
