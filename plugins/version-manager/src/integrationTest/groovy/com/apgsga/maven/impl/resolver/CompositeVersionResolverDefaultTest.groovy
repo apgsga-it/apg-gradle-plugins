@@ -1,9 +1,10 @@
 package com.apgsga.maven.impl.resolver
 
 import org.gradle.util.GFileUtils
+import spock.lang.Ignore
 import spock.lang.Shared
 import spock.lang.Specification
-
+// TODO (che , jhe , 8.9: these tests need to move to functionaltests , since for resolving boms the Gradle proper Resolver is used"
 class CompositeVersionResolverDefaultTest extends Specification {
 
     private static final String REPO_URL = 'build/repo'
@@ -18,7 +19,7 @@ class CompositeVersionResolverDefaultTest extends Specification {
         def destination = new File("$REPO_URL/$TEST_REPO")
         GFileUtils.copyDirectory(source, destination)
     }
-
+    @Ignore()
     def "GetVersion with one Bom Version Resolver, with nested Bom recursive"() {
         given:
         def mavenRecommenderBuilder = ResolverBuilderKt.create(BomVersionResolverBuilder.class)
