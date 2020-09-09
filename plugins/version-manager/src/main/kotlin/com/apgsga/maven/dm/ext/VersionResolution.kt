@@ -5,6 +5,7 @@ import com.apgsga.maven.VersionResolver
 import com.apgsga.maven.impl.resolver.BomVersionGradleResolverBuilder
 import com.apgsga.maven.impl.resolver.CompositeVersionResolverBuilder
 import com.apgsga.maven.impl.resolver.PatchFileVersionResolverBuilder
+import com.apgsga.maven.impl.resolver.SingleArtifactResolverBuilder
 import com.apgsga.revision.manager.domain.RevisionManager
 import com.apgsga.revision.manager.domain.RevisionManagerBuilder
 import groovy.lang.Closure
@@ -35,6 +36,7 @@ open class VersionResolutionExtension(val project: Project, private val revision
     var bomGroupId: String? = null
     var bomBaseVersion: String? = null
     var patchFilePath: String? = null
+    var updateArtifact: String? = null
     var algorithm: RevisionManagerBuilder.AlgorithmTyp = RevisionManagerBuilder.AlgorithmTyp.SNAPSHOT
     private var _versionResolver: VersionResolver? = null
     val versionResolver: VersionResolver
@@ -109,7 +111,7 @@ open class VersionResolutionExtension(val project: Project, private val revision
 
         publication.artifactId = bomArtifactId
         publication.groupId = bomGroupId
-        publication.version = version(bomNextRevision)
+        publication.version = if (updateArtifact == null  ) version(bomNextRevision) else bomLastRevision?.let { version(it) }
         publication.pom {
             name.set(bomArtifactId)
             val date = LocalDateTime.now()
@@ -136,11 +138,14 @@ open class VersionResolutionExtension(val project: Project, private val revision
         assert(bomBaseVersion != null) { "bomBaseVersion should not be null" }
         assert(bomLastRevision != null) { "lastRevision should not be null" }
         project.logger.info("BuildVersionResolver with $bomArtifactId, $bomGroupId, $bomBaseVersion and $bomLastRevision")
-        configurationName?.let { configureConfiguration(it) }
+        configurationName.let { configureConfiguration(it) }
         val compositeResolverBuilder = CompositeVersionResolverBuilder()
         project.logger.info("Creating Dependency configuration")
         var cnt = 0
         // Patchfile has higher precedence
+        updateArtifact?.let {
+            compositeResolverBuilder.add(++cnt, SingleArtifactResolverBuilder(updateArtifact!!))
+        }
         patchFilePath?.let {
             compositeResolverBuilder.add(++cnt,
                     PatchFileVersionResolverBuilder()
