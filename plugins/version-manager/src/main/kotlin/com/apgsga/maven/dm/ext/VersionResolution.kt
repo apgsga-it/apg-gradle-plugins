@@ -4,6 +4,7 @@ package com.apgsga.maven.dm.ext
 import com.apgsga.maven.VersionResolver
 import com.apgsga.maven.impl.resolver.BomVersionGradleResolverBuilder
 import com.apgsga.maven.impl.resolver.CompositeVersionResolverBuilder
+import com.apgsga.maven.impl.resolver.PatchFileVersionResolverBuilder
 import com.apgsga.revision.manager.domain.RevisionManager
 import com.apgsga.revision.manager.domain.RevisionManagerBuilder
 import groovy.lang.Closure
@@ -33,6 +34,7 @@ open class VersionResolutionExtension(val project: Project, private val revision
     var bomArtifactId: String? = null
     var bomGroupId: String? = null
     var bomBaseVersion: String? = null
+    var patchFilePath: String? = null
     var algorithm: RevisionManagerBuilder.AlgorithmTyp = RevisionManagerBuilder.AlgorithmTyp.SNAPSHOT
     private var _versionResolver: VersionResolver? = null
     val versionResolver: VersionResolver
@@ -124,10 +126,6 @@ open class VersionResolutionExtension(val project: Project, private val revision
                 dependencyNode.appendNode("groupId", it.groupId)
                 dependencyNode.appendNode("artifactId", it.artifactId)
                 dependencyNode.appendNode("version", it.version)
-                // TODO (che, jhe,12.3) : possibly more
-//                dependencyNode.appendNode("scope", it.scope)
-//                dependencyNode.appendNode("classifier", it.classifier)
-//                dependencyNode.appendNode("classifier", it.classifier)
             }
         }
     }
@@ -142,15 +140,22 @@ open class VersionResolutionExtension(val project: Project, private val revision
         val compositeResolverBuilder = CompositeVersionResolverBuilder()
         project.logger.info("Creating Dependency configuration")
         var cnt = 0
+        // Patchfile has higher precedence
+        patchFilePath?.let {
+            compositeResolverBuilder.add(++cnt,
+                    PatchFileVersionResolverBuilder()
+                            .patchFile(it))
+        }
         project.logger.info("Version: ${bomLastRevision?.let { version(it) }}")
         compositeResolverBuilder.add(++cnt, BomVersionGradleResolverBuilder()
                 .bomArtifact("${bomGroupId}:${bomArtifactId}:${bomLastRevision?.let { version(it) }}")
                 .recursive(true))
+
         return compositeResolverBuilder.build(project)
     }
 
     fun version(): String {
-        return version(bomBaseVersion,bomLastRevision)
+        return version(bomBaseVersion, bomLastRevision)
     }
 
 

@@ -2,7 +2,9 @@ package com.apgsga.maven.impl.resolver
 
 
 import org.gradle.util.GFileUtils
+import spock.lang.Ignore
 import spock.lang.Specification
+// TODO (che , jhe , 8.9: these tests need to move to functionaltests , since for resolving boms the Gradle proper Resolver is used"
 
 class BomManagerArtifactVersionResolverTest extends Specification {
 
@@ -16,6 +18,7 @@ class BomManagerArtifactVersionResolverTest extends Specification {
         GFileUtils.copyDirectory(source, destination)
     }
 
+    @Ignore()
     def "getVersion Simple Test with nested Bom recursive"() {
         given:
         def mavenRecommender = ResolverBuilderKt.create(BomVersionResolverBuilder.class)
@@ -31,6 +34,7 @@ class BomManagerArtifactVersionResolverTest extends Specification {
 
     }
 
+    @Ignore()
     def "getVersion Simple Test with nested Bom not recursive"() {
         given:
         def mavenRecommender = ResolverBuilderKt.create(BomVersionResolverBuilder.class)

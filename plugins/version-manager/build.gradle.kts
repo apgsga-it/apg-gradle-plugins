@@ -28,7 +28,6 @@ dependencies {
     compile(kotlin("reflect"))
     compile("org.apache.maven", "maven-model", "3.0.2")
     compile(project(":common-repo"))
-    compile(project(":generic-publish"))
     compile(project(":revision-manager"))
     compile("org.slf4j:slf4j-api:1.7.25")
     integrationTestRuntimeOnly("org.slf4j:slf4j-simple:1.7.29")
