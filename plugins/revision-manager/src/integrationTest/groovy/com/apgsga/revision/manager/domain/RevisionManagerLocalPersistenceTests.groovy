@@ -45,6 +45,7 @@ class RevisionManagerLocalPersistenceTests extends Specification {
     def "Get next global Revision"() {
         when:
             def nextRev = revisionManagerPatch.nextRevision()
+            revisionManagerPatch.saveRevision("testservice","CHEI212", nextRev, "whatevver")
         then:
             Files.exists(Paths.get(revisionFilePath))
             Files.exists(Paths.get(historyFilePath))
