@@ -5,6 +5,7 @@ import com.apgsga.maven.VersionResolver
 import com.apgsga.maven.impl.resolver.BomVersionGradleResolverBuilder
 import com.apgsga.maven.impl.resolver.CompositeVersionResolverBuilder
 import com.apgsga.maven.impl.resolver.PatchFileVersionResolverBuilder
+import com.apgsga.maven.impl.resolver.SingleArtifactResolverBuilder
 import com.apgsga.revision.manager.domain.RevisionManager
 import com.apgsga.revision.manager.domain.RevisionManagerBuilder
 import groovy.lang.Closure
@@ -35,7 +36,9 @@ open class VersionResolutionExtension(val project: Project, private val revision
     var bomGroupId: String? = null
     var bomBaseVersion: String? = null
     var patchFilePath: String? = null
+    var updateArtifact: String? = null
     var algorithm: RevisionManagerBuilder.AlgorithmTyp = RevisionManagerBuilder.AlgorithmTyp.SNAPSHOT
+    var newRevision: Boolean = false
     private var _versionResolver: VersionResolver? = null
     val versionResolver: VersionResolver
         get() {
@@ -58,31 +61,30 @@ open class VersionResolutionExtension(val project: Project, private val revision
 
     var revisionRootPath: String? = null
     var cloneTargetPath: String? = null
-    private var _bomNextRevision: String? = null
-    private val bomNextRevision: String
+
+    private var _lastRevision: String? = null
+    private val lastRevision: String
         get() {
-            if (_bomNextRevision == null) {
-                _bomLastRevision = revisionManger.lastRevision(serviceName, installTarget)
-                _bomNextRevision = revisionManger.nextRevision().toString()
+            if (_lastRevision == null) {
+                revision
             }
-            return _bomNextRevision as String
+            return _lastRevision as String
         }
-    private var _bomLastRevision: String? = null
-    private var bomLastRevision: String?
+    private var _revision: String? = null
+    private val revision: String
         get() {
-            if (_bomLastRevision == null) {
-                _bomLastRevision = revisionManger.lastRevision(serviceName, installTarget)
+            if (_revision == null) {
+                _lastRevision = revisionManger.lastRevision(serviceName, installTarget)
+                _revision = if (newRevision) {revisionManger.nextRevision().toString()} else {
+                    _lastRevision}
             }
-            return _bomLastRevision
-        }
-        set(value) {
-            this._bomLastRevision = value
+            return _revision as String
         }
 
 
-    fun saveRevision() {
-        // TODO (che, jhe , 26.3 ) When best to save the Revision? Necessary?
-        revisionManger.saveRevision(serviceName, installTarget, bomNextRevision, bomBaseVersion)
+    fun save() {
+        if (!newRevision) return
+        revisionManger.saveRevision(serviceName, installTarget, revision, bomBaseVersion)
     }
 
     private fun configureConfiguration(name: String) {
@@ -99,7 +101,7 @@ open class VersionResolutionExtension(val project: Project, private val revision
             project.logger.info("Task : $it")
             if (it.startsWith("publish")) {
                 generateBomXml(mavenPublication)
-                saveRevision()
+                save()
                 return@tasks
             }
         }
@@ -109,7 +111,8 @@ open class VersionResolutionExtension(val project: Project, private val revision
 
         publication.artifactId = bomArtifactId
         publication.groupId = bomGroupId
-        publication.version = version(bomNextRevision)
+        publication.version =  version(revision)
+        project.logger.info("Publishing bom ${publication.artifactId}, ${publication.groupId} with version: ${publication.version}")
         publication.pom {
             name.set(bomArtifactId)
             val date = LocalDateTime.now()
@@ -134,32 +137,32 @@ open class VersionResolutionExtension(val project: Project, private val revision
         assert(bomArtifactId != null) { "bomArtifactId should not be null" }
         assert(bomGroupId != null) { "bomGroupId should not be null" }
         assert(bomBaseVersion != null) { "bomBaseVersion should not be null" }
-        assert(bomLastRevision != null) { "lastRevision should not be null" }
-        project.logger.info("BuildVersionResolver with $bomArtifactId, $bomGroupId, $bomBaseVersion and $bomLastRevision")
-        configurationName?.let { configureConfiguration(it) }
+        project.logger.info("Building VersionResolver with $bomArtifactId, $bomGroupId, $bomBaseVersion and Lastrevision:  $lastRevision with new Revision: $newRevision")
+        configurationName.let { configureConfiguration(it) }
         val compositeResolverBuilder = CompositeVersionResolverBuilder()
         project.logger.info("Creating Dependency configuration")
         var cnt = 0
         // Patchfile has higher precedence
+        updateArtifact?.let {
+            compositeResolverBuilder.add(++cnt, SingleArtifactResolverBuilder(updateArtifact!!))
+        }
         patchFilePath?.let {
             compositeResolverBuilder.add(++cnt,
                     PatchFileVersionResolverBuilder()
                             .patchFile(it))
         }
-        project.logger.info("Version: ${bomLastRevision?.let { version(it) }}")
         compositeResolverBuilder.add(++cnt, BomVersionGradleResolverBuilder()
-                .bomArtifact("${bomGroupId}:${bomArtifactId}:${bomLastRevision?.let { version(it) }}")
+                .bomArtifact("${bomGroupId}:${bomArtifactId}:${version(lastRevision)}")
                 .recursive(true))
 
         return compositeResolverBuilder.build(project)
     }
 
-    fun version(): String {
-        return version(bomBaseVersion, bomLastRevision)
+    fun version(revision: String): String {
+        return version(bomBaseVersion, revision)
     }
 
-
-    fun version(revision: String): String {
+    fun version(): String {
         return version(bomBaseVersion, revision)
     }
 

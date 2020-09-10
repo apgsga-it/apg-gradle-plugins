@@ -35,6 +35,19 @@ data class BomVersionGradleResolverBuilder(
 
 }
 
+data class SingleArtifactResolverBuilder(
+        var updateArtifact: String) : VersionResolverBuilder {
+
+    override fun build(): VersionResolver {
+        throw NotImplementedException()
+    }
+
+    override fun build(project: Project) : VersionResolver {
+        return SingleArtifactResolver(updateArtifact)
+    }
+
+}
+
 data class PatchFileVersionResolverBuilder( var patchFile: File? = null,var patchFileName: String? = null) : VersionResolverBuilder {
 
     fun patchFile(patchFile: String) = apply {
