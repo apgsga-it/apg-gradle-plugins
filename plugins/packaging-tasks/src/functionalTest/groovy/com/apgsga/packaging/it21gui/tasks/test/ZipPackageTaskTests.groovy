@@ -62,7 +62,7 @@ class ZipPackageTaskTests extends AbstractSpecification  {
 		// TODO (che, 25.9) : haha, test is really terrific
 		cntFiles > 4
 		// TODO (che, 25.9) : test expected files
-		new File(testProjectDir,"build/distributions/testuiapp-2.1-SNAPSHOT.zip").exists()
+		new File(testProjectDir,"build/distributions/apg-testuiapp-CHEI212-2.1-SNAPSHOT-1.zip").exists()
     }
 	
 	
