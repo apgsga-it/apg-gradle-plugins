@@ -12,9 +12,10 @@ class DeployZip extends AbstractZip {
         preConditions()
         def apgZipDeployConfigExt = getDeployConfig()
         def apgPkgCommon = project.extensions.getByType(ApgCommonPackageExtension.class)
-        project.logger.info("${apgZipDeployConfigExt.zipFileName} will be deploy on ${remote.getProperty('host')} using ${remote.getProperty('user')} User")
+        def zipFileName = "${apgZipDeployConfigExt.zipFileParentPath}" + File.separator + apgPkgCommon.archiveName + ".zip"
+        project.logger.info("${zipFileName} will be deploy on ${remote.getProperty('host')} using ${remote.getProperty('user')} User")
         SshPutTask put = project.tasks.findByName(SshPutTask.TASK_NAME)
-        put.from = new File("${apgZipDeployConfigExt.zipFilePath}" + File.separator + apgPkgCommon.archiveName + ".zip")
+        put.from = new File(zipFileName)
         put.into = "${apgZipDeployConfigExt.remoteDeployDestFolder}"
         put.doRun(remote,allowAnyHosts)
     }

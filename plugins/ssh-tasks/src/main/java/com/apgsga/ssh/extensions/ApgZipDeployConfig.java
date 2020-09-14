@@ -6,8 +6,7 @@ public class ApgZipDeployConfig {
 
     private final Project project;
 
-    private String zipFilePath;
-    private String zipFileName;
+    private String zipFileParentPath;
     private String remoteDeployDestFolder;
     private String remoteExtractDestFolder;
     private Boolean allowAnyHosts = false;
@@ -16,20 +15,12 @@ public class ApgZipDeployConfig {
         this.project = project;
     }
 
-    public String getZipFileName() {
-        return zipFileName;
+    public String getZipFileParentPath() {
+        return zipFileParentPath;
     }
 
-    public void setZipFileName(String zipFileName) {
-        this.zipFileName = zipFileName;
-    }
-
-    public String getZipFilePath() {
-        return zipFilePath;
-    }
-
-    public void setZipFilePath(String zipFilePath) {
-        this.zipFilePath = zipFilePath;
+    public void setZipFileParentPath(String zipFileParentPath) {
+        this.zipFileParentPath = zipFileParentPath;
     }
 
     public String getRemoteDeployDestFolder() {
@@ -58,8 +49,7 @@ public class ApgZipDeployConfig {
     public String toString() {
         return "ApgZipDeployConfig{" +
                 "project=" + project +
-                ", zipFilePath='" + zipFilePath + '\'' +
-                ", zipFileName='" + zipFileName + '\'' +
+                ", zipFileParentPath='" + zipFileParentPath + '\'' +
                 ", remoteDeployDestFolder='" + remoteDeployDestFolder + '\'' +
                 ", remoteExtractDestFolder='" + remoteExtractDestFolder + '\'' +
                 ", allowAnyHosts=" + allowAnyHosts +
