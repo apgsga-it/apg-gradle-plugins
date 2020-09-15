@@ -1,5 +1,6 @@
 package com.apgsga.ssh.zip.tasks
 
+import com.apgsga.packaging.extensions.ApgCommonPackageExtension
 import com.apgsga.ssh.common.AbstractSshTask
 import com.apgsga.ssh.extensions.ApgSshConfiguration
 import com.apgsga.ssh.extensions.ApgZipDeployConfig
@@ -24,5 +25,10 @@ abstract class AbstractZip extends AbstractSshTask {
 
     def getDeployConfig() {
         return (ApgZipDeployConfig) project.extensions."${ApgSsh.APG_ZIP_DEPLOY_CONFIG_EXTENSION_NAME}"
+    }
+
+    def getZipFileName() {
+        def apgPkgCommon = project.extensions.getByType(ApgCommonPackageExtension.class)
+        return apgPkgCommon.archiveName + ".zip"
     }
 }

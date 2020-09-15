@@ -14,7 +14,7 @@ apply plugin: 'eclipse'
 apply plugin: nu.studer.gradle.credentials.CredentialsPlugin
 
 group = 'com.apgsga.gradle'
-version = '2.11-SNAPSHOT'
+version = '2.12-SNAPSHOT'
 
 
 def devUser = project.credentials.devUser
