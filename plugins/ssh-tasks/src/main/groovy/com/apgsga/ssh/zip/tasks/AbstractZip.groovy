@@ -34,6 +34,6 @@ abstract class AbstractZip extends AbstractSshTask {
     }
 
     def getZipfileName() {
-        return "${getPkgCommonExt().zipFileParentPath}" + File.separator + getDeployConfig().archiveName + ".zip"
+        return "${getDeployConfig().zipFileParentPath}" + File.separator + getPkgCommonExt().archiveName + ".zip"
     }
 }
