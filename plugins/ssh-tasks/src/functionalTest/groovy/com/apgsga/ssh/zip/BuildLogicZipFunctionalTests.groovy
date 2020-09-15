@@ -19,8 +19,7 @@ class BuildLogicZipFunctionalTests extends AbstractSpecification {
                             id '${apgSshPluginId}' 
                         }
                         apgZipDeployConfig {
-                            zipFilePath 'build/output'
-                            zipFileName 'fakeZip.zip'
+                            zipFileParentPath 'build/output'
                             remoteDeployDestFolder '/etc/installer'
                             remoteExtractDestFolder '/bin/placeToBeInstalled'
                         }				
@@ -30,8 +29,7 @@ class BuildLogicZipFunctionalTests extends AbstractSpecification {
             def result = gradleRunnerFactory(['init']).build()
         then:
             println "Result output: ${result.output}"
-            result.output.contains("zipFilePath='build/output'")
-            result.output.contains("zipFileName='fakeZip.zip'")
+            result.output.contains("zipFileParentPath='build/output'")
             result.output.contains("remoteDeployDestFolder='/etc/installer'")
             result.output.contains("remoteExtractDestFolder='/bin/placeToBeInstalled'")
     }
@@ -69,7 +67,6 @@ class BuildLogicZipFunctionalTests extends AbstractSpecification {
                             
                             apgZipDeployConfig {
                                 zipFilePath '${zipParentFolder}'
-                                zipFileName '${zipFileName}'
                                 remoteDeployDestFolder '/home/apg_install'
                                 remoteExtractDestFolder '/home/apg_install/targetFolderForInstallation'
                             }				
@@ -114,7 +111,6 @@ class BuildLogicZipFunctionalTests extends AbstractSpecification {
                                 
                                 apgZipDeployConfig {
                                     zipFilePath '${zipParentFolder}'
-                                    zipFileName '${zipFileName}'
                                     remoteDeployDestFolder '/home/apg_install/downloads'
                                     remoteExtractDestFolder '/opt/digiflex_ui/testJHE'
                                 }				
