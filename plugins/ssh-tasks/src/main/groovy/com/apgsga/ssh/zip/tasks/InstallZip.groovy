@@ -42,8 +42,7 @@ class InstallZip extends AbstractZip {
     }
 
     private def getZipFileToBeExtracted() {
-        def apgPkgCommon = project.extensions.getByType(ApgCommonPackageExtension.class)
         def apgZipDeployConfigExt = getDeployConfig()
-        return "${apgZipDeployConfigExt.remoteDeployDestFolder}${File.separator}${apgPkgCommon.archiveName}"
+        return "${apgZipDeployConfigExt.remoteDeployDestFolder}${File.separator}${getZipFileName()}"
     }
 }
