@@ -24,7 +24,7 @@ class InstallZip extends AbstractZip {
             session(remote) {
                 def uiGettingExtractedFolder = "${apgZipDeployConfigExt.remoteExtractDestFolder}/gettingExtracted_${newFolderName}"
                 execute "mkdir -p ${uiGettingExtractedFolder}"
-                execute "unzip ${zipFileToBeExtracted()} -d ${uiGettingExtractedFolder}"
+                execute "unzip ${zipFileToBeExtracted} -d ${uiGettingExtractedFolder}"
                 execute "chmod -R 775 ${uiGettingExtractedFolder}"
                 execute "rm -f ${zipFileToBeExtracted}"
                 execute "mv ${uiGettingExtractedFolder}/start_it21_gui_run.bat ${apgZipDeployConfigExt.remoteExtractDestFolder}"
