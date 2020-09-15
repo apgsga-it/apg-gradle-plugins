@@ -1,5 +1,7 @@
 package com.apgsga.ssh.zip.tasks
 
+import com.apgsga.packaging.extensions.ApgCommonPackageExtension
+
 class InstallZip extends AbstractZip {
 
     public static final String TASK_NAME = "installZip"
@@ -8,8 +10,8 @@ class InstallZip extends AbstractZip {
     def doRun(Object remote, Object allowAnyHosts) {
         preConditions()
         def apgZipDeployConfigExt = getDeployConfig()
-
-        project.logger.info("${getZipfileName()} will be install on ${remote.getProperty('host')} using ${remote.getProperty('user')} User")
+        def zipFileToBeExtracted = getZipFileToBeExtracted()
+        project.logger.info("${zipFileToBeExtracted} will be install on ${remote.getProperty('host')} using ${remote.getProperty('user')} User")
 
         def newFolderName = guiExtractedFolderName()
         project.ssh.run {
@@ -22,9 +24,9 @@ class InstallZip extends AbstractZip {
             session(remote) {
                 def uiGettingExtractedFolder = "${apgZipDeployConfigExt.remoteExtractDestFolder}/gettingExtracted_${newFolderName}"
                 execute "mkdir -p ${uiGettingExtractedFolder}"
-                execute "unzip ${getZipfileName()} -d ${uiGettingExtractedFolder}"
+                execute "unzip ${zipFileToBeExtracted()} -d ${uiGettingExtractedFolder}"
                 execute "chmod -R 775 ${uiGettingExtractedFolder}"
-                execute "rm -f ${apgZipDeployConfigExt.remoteDeployDestFolder}/${apgZipDeployConfigExt.zipFileName}"
+                execute "rm -f ${zipFileToBeExtracted}"
                 execute "mv ${uiGettingExtractedFolder}/start_it21_gui_run.bat ${apgZipDeployConfigExt.remoteExtractDestFolder}"
                 execute "mv ${uiGettingExtractedFolder} ${apgZipDeployConfigExt.remoteExtractDestFolder}/${newFolderName}"
                 // JHE (11.06.2020): Keeping only last 3 version. Could be done with a script on platform as well if we want different behavior for PROD/TEST.
@@ -37,5 +39,11 @@ class InstallZip extends AbstractZip {
         def currentDateAndTime = new Date().format('yyyyMMddHHmmss')
         def extractedFolderName = "java_gui_${currentDateAndTime}"
         return extractedFolderName
+    }
+
+    private def getZipFileToBeExtracted() {
+        def apgPkgCommon = project.extensions.getByType(ApgCommonPackageExtension.class)
+        def apgZipDeployConfigExt = getDeployConfig()
+        return "${apgZipDeployConfigExt.remoteDeployDestFolder}${File.separator}${apgPkgCommon.archiveName}"
     }
 }
