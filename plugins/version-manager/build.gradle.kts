@@ -12,6 +12,10 @@ val integrationTestRuntimeOnly: Configuration by configurations.getting {
     extendsFrom(configurations.testRuntimeOnly.get())
 }
 
+kotlinDslPluginOptions {
+    experimentalWarning.set(false)
+}
+
 dependencies {
     testImplementation(gradleTestKit())
     testCompile(project(":common-test")) {

@@ -71,7 +71,6 @@
             <option value="$PROJECT_DIR$/plugins" />
             <option value="$PROJECT_DIR$/plugins/common-repo" />
             <option value="$PROJECT_DIR$/plugins/common-test" />
-            <option value="$PROJECT_DIR$/plugins/generic-publish" />
             <option value="$PROJECT_DIR$/plugins/gradle-common" />
             <option value="$PROJECT_DIR$/plugins/packaging-tasks" />
             <option value="$PROJECT_DIR$/plugins/revision-manager" />

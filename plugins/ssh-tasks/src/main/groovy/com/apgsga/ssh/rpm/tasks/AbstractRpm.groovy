@@ -8,7 +8,7 @@ import org.springframework.util.Assert
 
 abstract class AbstractRpm extends AbstractSshTask {
 
-    def getSshConfig() {
+    private def getSshConfig() {
         return (ApgSshConfiguration) project.getExtensions().findByName(ApgSsh.APG_SSH_CONFIGURATION_EXTENSION_NAME)
     }
 
@@ -22,7 +22,7 @@ abstract class AbstractRpm extends AbstractSshTask {
         Assert.notNull(apgRpmDeployConfigExt.remoteDestFolder, "${ApgSsh.APG_RPM_DEPLOY_CONFIG_EXTENSION_NAME} requires a remoteDestFolder to be configured")
     }
 
-    def getDeployConfig() {
+    private def getDeployConfig() {
         return (ApgRpmDeployConfig) project.extensions."${ApgSsh.APG_RPM_DEPLOY_CONFIG_EXTENSION_NAME}"
     }
 }

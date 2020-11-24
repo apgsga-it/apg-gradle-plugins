@@ -17,6 +17,11 @@
       <module name="apg-gradle-plugins.docker-client.integrationTest" target="1.8" />
       <module name="apg-gradle-plugins.docker-client.main" target="1.8" />
       <module name="apg-gradle-plugins.docker-client.test" target="1.8" />
+      <module name="apg-gradle-plugins.generic-publish" target="1.8" />
+      <module name="apg-gradle-plugins.generic-publish.functionalTest" target="1.8" />
+      <module name="apg-gradle-plugins.generic-publish.integrationTest" target="1.8" />
+      <module name="apg-gradle-plugins.generic-publish.main" target="1.8" />
+      <module name="apg-gradle-plugins.generic-publish.test" target="1.8" />
       <module name="apg-gradle-plugins.it21-gui-packager.functionalTest" target="1.8" />
       <module name="apg-gradle-plugins.it21-gui-packager.integrationTest" target="1.8" />
       <module name="apg-gradle-plugins.it21-gui-packager.main" target="1.8" />

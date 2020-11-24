@@ -1,6 +1,5 @@
 rootProject.name = 'apg-gradle-plugins'
 include ':common-repo'
-include ':generic-publish'
 include ':gradle-common'
 include ':version-manager'
 include ':common-test'
@@ -9,7 +8,6 @@ include 'ssh-tasks'
 include 'packaging-tasks'
 
 project(':common-repo').projectDir = "$rootDir/common-repo" as File
-project(':generic-publish').projectDir = "$rootDir/generic-publish" as File
 project(':gradle-common').projectDir = "$rootDir/gradle-common" as File
 project(':version-manager').projectDir = "$rootDir/version-manager" as File
 project(':common-test').projectDir = "$rootDir/common-test" as File

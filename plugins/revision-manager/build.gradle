@@ -1,4 +1,4 @@
-apply from: "${projectDir}/../gradle-common/common-plugin.gradle"
+apply from: "${projectDir}/../gradle-common/common.gradle"
 apply from: "${projectDir}/../gradle-common/integration-test.gradle"
 
 description 'Provides tasks in order to manage the tracking of Artifacts revision number.'
@@ -16,7 +16,6 @@ sourceSets {
 
 dependencies {
     compile group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.10.0'
-    testCompile ("org.spockframework:spock-core:1.1-groovy-2.4") {
-        exclude module: 'groovy-all'
-    }
+    compile group: 'org.codehaus.groovy', name: 'groovy-all', version: '2.5.4'
+    testCompile ("org.spockframework:spock-core:1.1-groovy-2.4")
 }

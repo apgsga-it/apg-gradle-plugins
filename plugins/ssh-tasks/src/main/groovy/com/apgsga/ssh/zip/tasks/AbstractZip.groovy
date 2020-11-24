@@ -9,7 +9,7 @@ import org.springframework.util.Assert
 
 abstract class AbstractZip extends AbstractSshTask {
 
-    def getSshConfig() {
+    private def getSshConfig() {
         return (ApgSshConfiguration) project.getExtensions().findByName(ApgSsh.APG_SSH_CONFIGURATION_EXTENSION_NAME)
     }
 
@@ -23,11 +23,11 @@ abstract class AbstractZip extends AbstractSshTask {
         Assert.notNull(apgZipDeployConfigExt.remoteDeployDestFolder, "${ApgSsh.APG_ZIP_DEPLOY_CONFIG_EXTENSION_NAME} requires a remoteDeployDestFolder to be configured")
     }
 
-    def getDeployConfig() {
+   private  def getDeployConfig() {
         return (ApgZipDeployConfig) project.extensions."${ApgSsh.APG_ZIP_DEPLOY_CONFIG_EXTENSION_NAME}"
     }
-
-    def getZipFileName() {
+    // TODO (jhe, che , 24.11) : Gradle uses public / protected getter / setter for defining Input & Outputs of the Task
+    protected def _getZipFileName() {
         def apgPkgCommon = project.extensions.getByType(ApgCommonPackageExtension.class)
         return apgPkgCommon.archiveName + ".zip"
     }
