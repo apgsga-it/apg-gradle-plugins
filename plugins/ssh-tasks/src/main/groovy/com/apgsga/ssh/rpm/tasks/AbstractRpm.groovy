@@ -14,7 +14,7 @@ abstract class AbstractRpm extends AbstractSshTask {
 
     def preConditions() {
         def apgSshConfig = getSshConfig()
-        def apgRpmDeployConfigExt = getDeployConfig()
+        def apgRpmDeployConfigExt = _deployConfig()
         Assert.notNull(apgSshConfig.username, "${ApgSsh.PLUGIN_ID} requires a user name to be configured")
         Assert.notNull(apgSshConfig.userpwd, "${ApgSsh.PLUGIN_ID} requires a user password to be configured")
         Assert.notNull(apgSshConfig.destinationHost, "${ApgSsh.PLUGIN_ID} requires a destination host to be configured")
@@ -22,7 +22,7 @@ abstract class AbstractRpm extends AbstractSshTask {
         Assert.notNull(apgRpmDeployConfigExt.remoteDestFolder, "${ApgSsh.APG_RPM_DEPLOY_CONFIG_EXTENSION_NAME} requires a remoteDestFolder to be configured")
     }
 
-    private def getDeployConfig() {
+    def _deployConfig() {
         return (ApgRpmDeployConfig) project.extensions."${ApgSsh.APG_RPM_DEPLOY_CONFIG_EXTENSION_NAME}"
     }
 }

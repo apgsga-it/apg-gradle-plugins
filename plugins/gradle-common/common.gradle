@@ -13,7 +13,7 @@ apply plugin: 'eclipse'
 apply plugin: nu.studer.gradle.credentials.CredentialsPlugin
 
 group = 'com.apgsga.gradle'
-version = '2.12-SNAPSHOT'
+version = '2.14-SNAPSHOT'
 
 
 def devUser = project.credentials.devUser
@@ -46,6 +46,7 @@ publishing {
 
 	publications {
 		maven(MavenPublication) {
+			from components.java
 		}
 	}
 

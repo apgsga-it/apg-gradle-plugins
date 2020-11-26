@@ -7,7 +7,7 @@ class InstallRpm extends AbstractRpm {
     @Override
     def doRun(Object remote, Object allowAnyHosts) {
         preConditions()
-        def apgRpmDeployConfigExt = getDeployConfig()
+        def apgRpmDeployConfigExt = _deployConfig()
         if(!apgRpmDeployConfigExt.rpmFileName?.trim()) {
             project.logger.info("Latest RPM within ${apgRpmDeployConfigExt.remoteDestFolder} will be install on ${remote.getProperty('host')} using ${remote.getProperty('user')} User")
         } else {

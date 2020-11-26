@@ -1,5 +1,7 @@
 apply from: "${projectDir}/../gradle-common/common.gradle"
 apply from: "${projectDir}/../gradle-common/integration-test.gradle"
+apply plugin: 'java-library'
+
 
 description 'Provides tasks in order to manage the tracking of Artifacts revision number.'
 

@@ -14,14 +14,20 @@ class RevisionBeanBackedPersistence implements RevisionPersistence {
 
     @Override
     String currentRevision() {
-        read(Revisions.class).currentRevision
+        def cr = read(Revisions.class).currentRevision
+        println "Current Revision: ${cr}"
+        return cr
     }
 
     @Override
     String lastRevision(String serviceName, String targetName) {
+        println "Getting lastRevision for service: ${serviceName} and ${targetName}"
         def revisions = read(Revisions.class)
+        println "Current Revisions:  ${revisions.toString()} "
         if(revisions.services.get(serviceName) != null) {
-            return revisions.services.get(serviceName).get(targetName)
+            def lr = revisions.services.get(serviceName).get(targetName)
+            println "Got lastRevision: ${lr} for service: ${serviceName} and ${targetName}"
+            return lr
         }
         return null
     }

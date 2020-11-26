@@ -26,7 +26,7 @@ sourceSets {
 
 dependencies {
     testImplementation gradleTestKit()
-    compile project(':common-test')
+    testCompile project(':common-test')
     implementation group: 'commons-io', name: 'commons-io', version: '2.6'
     implementation group: 'com.google.guava', name: 'guava', version: '20.0'
     implementation group: 'com.netflix.nebula', name: 'gradle-ospackage-plugin', version: '8.4.1'
