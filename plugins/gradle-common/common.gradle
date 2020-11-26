@@ -21,6 +21,11 @@ def devPw = project.credentials.devPw
 def repoUrl = "https://artifactory4t4apgsga.jfrog.io/artifactory4t4apgsga/"
 def defaultRepoName = "repo"
 
+java {
+	sourceCompatibility = JavaVersion.VERSION_1_8
+	targetCompatibility = JavaVersion.VERSION_1_8
+}
+
 repositories {
 	mavenLocal()
 	mavenCentral()

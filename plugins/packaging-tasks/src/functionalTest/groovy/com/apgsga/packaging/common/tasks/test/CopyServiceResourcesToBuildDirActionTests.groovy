@@ -1,9 +1,8 @@
 package com.apgsga.packaging.common.tasks.test
 
 import com.apgsga.gradle.test.utils.AbstractSpecification
-import com.apgsga.packaging.plugins.ApgServicePackagePlugin
 
-class CopyResourcesToBuildDirActionTests extends AbstractSpecification {
+class CopyServiceResourcesToBuildDirActionTests extends AbstractSpecification {
 
     def "copy resources to build Dir works"() {
         given:

@@ -1,6 +1,6 @@
 package com.apgsga.packaging.plugins;
 
-import com.apgsga.packaging.service.pkg.actions.CopyResourcesToBuildDirAction;
+import com.apgsga.packaging.service.pkg.actions.CopyServiceResourcesToBuildDirAction;
 import com.apgsga.packaging.service.pkg.task.AppConfigFileMergerTask;
 import com.apgsga.packaging.service.pkg.task.AppResourcesCopyTask;
 import com.apgsga.packaging.service.pkg.task.ResourceFileMergerTask;
@@ -30,7 +30,7 @@ public class ApgServicePackagePlugin implements Plugin<Project> {
         plugins.apply(ApgCommonPackagePlugin.class);
         TaskContainer tasks = project.getTasks();
         TaskProvider<Copy> copyPackagingResourcesTask = tasks.register("copyCommonPackagingResources", Copy.class,
-                new CopyResourcesToBuildDirAction(project));
+                new CopyServiceResourcesToBuildDirAction(project));
         TaskProvider<TemplateDirCopyTask> templateDirCopyTask = tasks.register("templateDirCopy",
                 TemplateDirCopyTask.class);
         templateDirCopyTask.configure(task -> task.dependsOn(copyPackagingResourcesTask));

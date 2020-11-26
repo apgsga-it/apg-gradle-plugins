@@ -1,6 +1,6 @@
 package com.apgsga.packaging.plugins;
 
-import com.apgsga.packaging.rpm.actions.CopyResourcesToBuildDirAction;
+import com.apgsga.packaging.rpm.actions.CopyRpmResourcesToBuildDirAction;
 import com.apgsga.packaging.rpm.plugins.OsPackagingPlugin;
 import com.apgsga.packaging.rpm.tasks.OsPackageConfigureTask;
 import com.apgsga.packaging.rpm.tasks.RpmScriptsCopyTask;
@@ -28,8 +28,8 @@ public class ApgRpmPackagePlugin implements Plugin<Project> {
         plugins.apply(ApgServicePackagePlugin.class);
         plugins.apply(OsPackagingPlugin.class);
         TaskContainer tasks = project.getTasks();
-        TaskProvider<Copy> copyPackagingResourcesAction = tasks.register("copyRpmPackagingResources", Copy.class,
-                new CopyResourcesToBuildDirAction(project));
+        TaskProvider<Copy> copyRpmPkgResources = tasks.register("copyRpmPackagingResources", Copy.class,
+                new CopyRpmResourcesToBuildDirAction(project));
         TaskProvider<RpmScriptsCopyTask> rpmCopyAndExpandTask = tasks.register("copyRpmScripts",
                 RpmScriptsCopyTask.class);
         TaskProvider<OsPackageConfigureTask> osPackageConfigureTask = tasks.register("osPackageConfigure",
@@ -38,7 +38,6 @@ public class ApgRpmPackagePlugin implements Plugin<Project> {
         Task copyCommonPkgResourcesTask = tasks.findByName("copyCommonPackagingResources");
         Task templateDirCopyTask = tasks.findByName("templateDirCopy");
         Task copyBinariesIntoLib = tasks.findByName("copyAppBinaries");
-        Task copyRpmPkgResources = tasks.findByName("copyRpmPackagingResources");
         assert templateDirCopyTask != null;
         templateDirCopyTask.dependsOn(copyRpmPkgResources, copyCommonPkgResourcesTask);
         rpmCopyAndExpandTask.configure(task -> task.dependsOn(templateDirCopyTask));

@@ -21,7 +21,7 @@ dependencies {
     testCompile(project(":common-test")) {
         exclude("", "groovy-all")
     }
-    testCompile("org.spockframework:spock-core:1.1-groovy-2.4") {
+    testCompile("org.spockframework:spock-core:1.2-groovy-2.5") {
         exclude("","groovy-all")
     }
     testCompile("org.junit.jupiter:junit-jupiter:5.5.2")
