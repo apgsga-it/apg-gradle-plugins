@@ -11,30 +11,27 @@ task getHomeDir {
 	}
 }
 
-ext {
-	mavenVersion = '3.0.5'
-}
-
 dependencies {
+	api platform(project(':platform'))
 	testImplementation gradleTestKit()
 	testImplementation project(':common-test')
-	implementation group: 'com.google.guava', name: 'guava', version: '11.0.2'
-	implementation group: 'org.springframework', name: 'spring-core', version: '5.2.1.RELEASE'
-	implementation group: 'com.fasterxml.jackson.core', name: 'jackson-annotations', version: '2.8.4'
-	implementation group: 'com.fasterxml.jackson.core', name: 'jackson-core', version: '2.8.4'
-	implementation group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.8.4'
-	implementation group: 'nu.studer', name: 'gradle-credentials-plugin', version: '2.1'
+	implementation group: 'com.google.guava', name: 'guava'
+	implementation group: 'org.springframework', name: 'spring-core'
+	implementation group: 'com.fasterxml.jackson.core', name: 'jackson-annotations'
+	implementation group: 'com.fasterxml.jackson.core', name: 'jackson-core'
+	implementation group: 'com.fasterxml.jackson.core', name: 'jackson-databind'
+
 
 	implementation gradleApi()
 	implementation localGroovy()
-	implementation "org.apache.maven:maven-settings:$mavenVersion"
-	implementation "org.apache.maven:maven-settings-builder:$mavenVersion"
-	implementation "org.apache.maven:maven-model-builder:$mavenVersion"
-	implementation "org.apache.maven:maven-model:$mavenVersion"
-	implementation "org.apache.maven:maven-core:$mavenVersion"
-	implementation 'org.sonatype.plexus:plexus-cipher:1.4'
-	implementation 'org.sonatype.plexus:plexus-sec-dispatcher:1.3'
-	testImplementation 'junit:junit:4.11'
-	testImplementation 'org.hamcrest:hamcrest-library:1.3'
+	implementation "org.apache.maven:maven-settings"
+	implementation "org.apache.maven:maven-settings-builder"
+	implementation "org.apache.maven:maven-model-builder"
+	implementation "org.apache.maven:maven-model"
+	implementation "org.apache.maven:maven-core"
+	implementation 'org.sonatype.plexus:plexus-cipher'
+	implementation 'org.sonatype.plexus:plexus-sec-dispatcher'
+	testImplementation 'junit:junit'
+	testImplementation 'org.hamcrest:hamcrest-library'
 
 }

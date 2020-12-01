@@ -6,6 +6,7 @@ include ':common-test'
 include 'revision-manager'
 include 'ssh-tasks'
 include 'packaging-tasks'
+include 'platform'
 
 project(':common-repo').projectDir = "$rootDir/common-repo" as File
 project(':gradle-common').projectDir = "$rootDir/gradle-common" as File
@@ -14,5 +15,6 @@ project(':common-test').projectDir = "$rootDir/common-test" as File
 project(':revision-manager').projectDir = "$rootDir/revision-manager" as File
 project(':ssh-tasks').projectDir = "$rootDir/ssh-tasks" as File
 project(':packaging-tasks').projectDir = "$rootDir/packaging-tasks" as File
+project(':platform').projectDir = "$rootDir/platform" as File
 
 

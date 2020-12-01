@@ -1,0 +1,11 @@
+apply from: "${projectDir}/../gradle-common/common-lib.gradle"
+apply plugin: 'java-library'
+
+dependencies {
+    api platform(project(':platform'))
+    implementation("org.spockframework:spock-core") {
+        exclude group: "", module:  "groovy-all"
+    }
+    implementation "org.springframework:spring-core"
+    implementation gradleTestKit()
+}

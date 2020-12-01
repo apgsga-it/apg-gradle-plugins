@@ -17,24 +17,25 @@ kotlinDslPluginOptions {
 }
 
 dependencies {
+    api(platform(project(":platform")))
     api(gradleTestKit())
     testImplementation(project(":common-test")) {
         exclude("", "groovy-all")
     }
-    testImplementation("org.spockframework:spock-core:1.2-groovy-2.5") {
+    testImplementation("org.spockframework:spock-core") {
         exclude("","groovy-all")
     }
-    testImplementation("org.junit.jupiter:junit-jupiter:5.5.2")
-    implementation("com.apgsga.patchframework:apg-patch-service-api:2.0.0-SNAPSHOT") {
+    testImplementation("org.junit.jupiter:junit-jupiter")
+    implementation("com.apgsga.patchframework:apg-patch-service-api") {
         exclude("","groovy-all")
     }
     kotlin("stdlib")
     implementation(kotlin("reflect"))
-    implementation("org.apache.maven", "maven-model", "3.0.2")
+    implementation("org.apache.maven", "maven-model")
     implementation(project(":common-repo"))
     implementation(project(":revision-manager"))
-    implementation("com.fasterxml.jackson.core", "jackson-databind", "2.10.0")
-    implementation("org.slf4j:slf4j-api:1.7.25")
+    implementation("com.fasterxml.jackson.core", "jackson-databind")
+    implementation("org.slf4j:slf4j-api")
     integrationTestRuntimeOnly("org.slf4j:slf4j-simple:1.7.29")
 
 }

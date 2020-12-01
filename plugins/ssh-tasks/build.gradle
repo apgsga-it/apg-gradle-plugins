@@ -16,6 +16,7 @@ sourceSets {
 }
 
 dependencies {
+    api platform(project(':platform'))
     testImplementation gradleTestKit()
     testImplementation project(':common-test')
     // TODO JHE: common-repo needed here because of our test which by default include ENUM coming from common-repo
@@ -23,6 +24,6 @@ dependencies {
     //                best case, this dependency should be resolved within common-test or within gradle-common (functionalTest.gradle)
     implementation project(':common-repo')
     implementation project(':packaging-tasks')
-    implementation group: 'org.springframework', name: 'spring-core', version: '5.2.1.RELEASE'
-    implementation group: "org.hidetake", name: 'gradle-ssh-plugin', version: '2.10.1'
+    implementation group: 'org.springframework', name: 'spring-core'
+    implementation group: "org.hidetake", name: 'gradle-ssh-plugin'
 }
