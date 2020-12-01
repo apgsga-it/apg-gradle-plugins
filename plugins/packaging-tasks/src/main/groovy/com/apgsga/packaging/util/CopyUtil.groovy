@@ -7,7 +7,7 @@ import org.springframework.core.io.FileSystemResourceLoader
 class CopyUtil {
     static copy(Class clx,Project project, Copy copy) {
         def resource = clx.getProtectionDomain().getCodeSource().getLocation().toExternalForm()
-        if (resource.endsWith("jar") && !project.rootProject.name.startsWith("gradletestproject")) {
+        if (resource.endsWith("jar")) {
             copy.from(project.zipTree(resource).matching {
                 include 'packaging/**'
             })

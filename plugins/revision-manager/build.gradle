@@ -1,5 +1,4 @@
 apply from: "${projectDir}/../gradle-common/common.gradle"
-apply from: "${projectDir}/../gradle-common/integration-test.gradle"
 apply plugin: 'java-library'
 
 
@@ -17,7 +16,7 @@ sourceSets {
 }
 
 dependencies {
-    compile group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.10.0'
-    compile group: 'org.codehaus.groovy', name: 'groovy-all', version: '2.5.4'
-    testCompile ("org.spockframework:spock-core:1.1-groovy-2.4")
+    implementation group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.10.0'
+    implementation group: 'org.codehaus.groovy', name: 'groovy-all', version: '2.5.4'
+    testImplementation ("org.spockframework:spock-core:1.3-groovy-2.5")
 }
