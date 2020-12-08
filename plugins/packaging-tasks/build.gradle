@@ -11,7 +11,7 @@ sourceSets {
             srcDirs = []
         }
         groovy {
-            srcDirs = ['src/main/groovy', 'src/main/java']
+            srcDirs = ['src/main/groovy', 'src/main/java' ]
         }
     }
     test {
@@ -25,11 +25,13 @@ sourceSets {
 }
 
 dependencies {
-    testCompile gradleTestKit()
-    testCompile project(':common-test')
-    compile group: 'commons-io', name: 'commons-io', version: '2.6'
-    compile group: 'com.google.guava', name: 'guava', version: '20.0'
-    compile group: 'com.netflix.nebula', name: 'gradle-ospackage-plugin', version: '5.3.5'
-    compile project(':common-repo')
-    compile project(':version-manager')
+    api platform(project(':platform'))
+    testImplementation gradleTestKit()
+    testImplementation project(':common-test')
+    implementation group: 'commons-io', name: 'commons-io'
+    implementation group: 'com.google.guava', name: 'guava'
+    implementation group: 'com.netflix.nebula', name: 'gradle-ospackage-plugin'
+    implementation group: 'org.springframework', name: 'spring-core'
+    implementation project(':common-repo')
+    implementation project(':version-manager')
 }

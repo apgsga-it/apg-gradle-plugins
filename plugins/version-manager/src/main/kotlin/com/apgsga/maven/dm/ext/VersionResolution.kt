@@ -68,6 +68,7 @@ open class VersionResolutionExtension(val project: Project, private val revision
             if (_lastRevision == null) {
                 revision
             }
+            project.logger.info("Got Lastrevision: $_revision")
             return _lastRevision as String
         }
     private var _revision: String? = null
@@ -77,7 +78,9 @@ open class VersionResolutionExtension(val project: Project, private val revision
                 _lastRevision = revisionManger.lastRevision(serviceName, installTarget)
                 _revision = if (newRevision) {revisionManger.nextRevision().toString()} else {
                     _lastRevision}
+                project.logger.info("Calculation Revision: $_revision and Lastrevision:  $_lastRevision")
             }
+            project.logger.info("Got Revision: $_revision")
             return _revision as String
         }
 

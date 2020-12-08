@@ -17,7 +17,7 @@ class DeployRpm extends AbstractRpm {
         def apgPkgCommon = project.extensions.getByType(ApgCommonPackageExtension.class)
         preConditions()
         SshPutTask put = project.tasks.findByName(SshPutTask.TASK_NAME)
-        put.from = new File("${apgRpmDeployConfigExt.rpmFilePath}" + File.separator + apgPkgCommon.archiveName + ".noarch.rpm" )
+        put.from = new File("${apgRpmDeployConfigExt.rpmFilePath}" + File.separator + apgPkgCommon.rpmArchiveName + ".noarch.rpm" )
         put.into = "${apgRpmDeployConfigExt.remoteDestFolder}"
         put.doRun(remote,allowAnyHosts)
     }

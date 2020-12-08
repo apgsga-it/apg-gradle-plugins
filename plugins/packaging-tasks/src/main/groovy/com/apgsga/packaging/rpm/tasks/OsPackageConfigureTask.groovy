@@ -83,8 +83,6 @@ class OsPackageConfigureTask extends DefaultTask {
 		copySpec = {
 			into "${apgRpmPackage.targetServiceConfigDir}/app"
 			user 'root'
-
-
 			permissionGroup 'root'
 			fileMode 0775
 		}

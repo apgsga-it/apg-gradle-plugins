@@ -270,7 +270,10 @@ public class ApgCommonPackageExtension {
         return Character.toString(getInstallTarget().charAt(2)).toLowerCase();
     }
 
-
+    public String getRpmArchiveName() {
+        String version = getVersion().replaceAll("-", "~");
+        return getTargetServiceName() + "-" + version + "-" + getReleaseNr();
+    }
     public String getArchiveName() {
         return getTargetServiceName() + "-" + getVersion() + "-" + getReleaseNr();
     }

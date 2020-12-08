@@ -22,7 +22,7 @@ open class VersionResolutionPlugin : Plugin<Project> {
 
     }
     private fun applyRecommendations(project: Project, resolutionExtension : VersionResolutionExtension) {
-        val config = project.configurations.findByName(resolutionExtension.configurationName as String)
+        val config = project.configurations.findByName(resolutionExtension.configurationName)
         val action = Action<Configuration> {
             if (this == config) {
                 if (state == Configuration.State.UNRESOLVED) {

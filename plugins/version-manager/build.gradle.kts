@@ -12,24 +12,30 @@ val integrationTestRuntimeOnly: Configuration by configurations.getting {
     extendsFrom(configurations.testRuntimeOnly.get())
 }
 
+kotlinDslPluginOptions {
+    experimentalWarning.set(false)
+}
+
 dependencies {
-    testImplementation(gradleTestKit())
-    testCompile(project(":common-test")) {
+    api(platform(project(":platform")))
+    api(gradleTestKit())
+    testImplementation(project(":common-test")) {
         exclude("", "groovy-all")
     }
-    testCompile("org.spockframework:spock-core:1.1-groovy-2.4") {
+    testImplementation("org.spockframework:spock-core") {
         exclude("","groovy-all")
     }
-    testCompile("org.junit.jupiter:junit-jupiter:5.5.2")
-    compile("com.apgsga.patchframework:apg-patch-service-api:2.0.0-SNAPSHOT") {
+    testImplementation("org.junit.jupiter:junit-jupiter")
+    implementation("com.apgsga.patchframework:apg-patch-service-api") {
         exclude("","groovy-all")
     }
     kotlin("stdlib")
-    compile(kotlin("reflect"))
-    compile("org.apache.maven", "maven-model", "3.0.2")
-    compile(project(":common-repo"))
-    compile(project(":revision-manager"))
-    compile("org.slf4j:slf4j-api:1.7.25")
+    implementation(kotlin("reflect"))
+    implementation("org.apache.maven", "maven-model")
+    implementation(project(":common-repo"))
+    implementation(project(":revision-manager"))
+    implementation("com.fasterxml.jackson.core", "jackson-databind")
+    implementation("org.slf4j:slf4j-api")
     integrationTestRuntimeOnly("org.slf4j:slf4j-simple:1.7.29")
 
 }

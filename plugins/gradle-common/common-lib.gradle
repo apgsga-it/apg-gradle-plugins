@@ -1,0 +1,19 @@
+apply from: "${projectDir}/../gradle-common/common-repos.gradle"
+apply plugin: 'java-library'
+apply plugin: 'groovy'
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_1_8
+    targetCompatibility = JavaVersion.VERSION_1_8
+}
+
+group = publishGroup  /* From gradle.properties */
+version = publishVersion /* From gradle.properties */
+
+publishing {
+    publications {
+        platformBom(MavenPublication) {
+            from components.java
+        }
+    }
+}

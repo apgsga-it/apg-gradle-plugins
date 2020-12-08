@@ -1,7 +1,5 @@
 package com.apgsga.ssh.zip.tasks
 
-import com.apgsga.packaging.extensions.ApgCommonPackageExtension
-
 class InstallZip extends AbstractZip {
 
     public static final String TASK_NAME = "installZip"
@@ -43,6 +41,6 @@ class InstallZip extends AbstractZip {
 
     private def getZipFileToBeExtracted() {
         def apgZipDeployConfigExt = getDeployConfig()
-        return "${apgZipDeployConfigExt.remoteDeployDestFolder}${File.separator}${getZipFileName()}"
+        return "${apgZipDeployConfigExt.remoteDeployDestFolder}${File.separator}${_getZipFileName()}"
     }
 }

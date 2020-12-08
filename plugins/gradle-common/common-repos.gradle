@@ -1,0 +1,46 @@
+buildscript {
+	repositories {
+		gradlePluginPortal()
+	}
+	dependencies {
+		classpath 'nu.studer:gradle-credentials-plugin:2.1'
+	}
+}
+apply plugin: 'maven-publish'
+apply plugin: nu.studer.gradle.credentials.CredentialsPlugin
+
+def devUser = project.credentials.devUser
+def	devPw = project.credentials.devPw
+def repoUrl = "https://artifactory4t4apgsga.jfrog.io/artifactory4t4apgsga/"
+def defaultRepoName = "repo"
+
+
+repositories {
+	mavenLocal()
+	mavenCentral()
+	jcenter()
+
+	maven {
+		url = "${repoUrl}/${defaultRepoName}"
+		credentials {
+			username = devUser
+			password = devPw
+		}
+	}
+
+}
+
+
+publishing {
+	def repoName = version.endsWith("SNAPSHOT") ? "apgGradlePlugins-snapshots" : "apgGradlePlugins-releases"
+	repositories {
+		maven {
+			name ='apgGradlePluginRepo'
+			url = "${repoUrl}/${repoName}"
+			credentials {
+				username = devUser
+				password = devPw
+			}
+		}
+	}
+}

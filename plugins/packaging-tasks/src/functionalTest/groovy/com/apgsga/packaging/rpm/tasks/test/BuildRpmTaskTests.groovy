@@ -56,6 +56,39 @@ class BuildRpmTaskTests extends AbstractSpecification {
 		// TODO (che, 25.9) : test expected files
 	
     }
+
+	def "buildRpm with Apg Maven derived Baseversion Number works"() {
+		given:
+		buildFile << """
+            plugins {
+                id '${ApgRpmPackagePlugin.PLUGIN_ID}'
+            }
+            
+        apgVersionResolver {
+		    configurationName = "testRuntime"
+				serviceName = "someotherApp"
+				installTarget = 'CHEI212'
+				bomBaseVersion = '1.0.0.DEV-ADMIN-UIMIG'
+		}
+
+		// The guava dependency is only for testing purposes, consider to be likely found in mavenCentral()
+        apgPackage {
+			name ="someotherApp"
+		    dependencies = ["com.google.guava:guava:+"]
+            installTarget = "CHEI212"
+			mainProgramName  = "com.apgsga.test.SomeOtherMain"
+		    releaseNr = "2"
+         }
+        """
+
+		when:
+		def result = gradleRunnerFactory(['buildRpm']).build()
+		then:
+		println "Result output: ${result.output}"
+		result.output.contains('')
+		new File(testProjectDir,"build/distributions/apg-someotherApp-CHEI212-1.0.0.DEV~ADMIN~UIMIG~SNAPSHOT-2.noarch.rpm").exists()
+
+	}
 	
 	
 }

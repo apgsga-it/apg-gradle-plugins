@@ -8,13 +8,13 @@ import org.springframework.util.Assert
 
 abstract class AbstractRpm extends AbstractSshTask {
 
-    def getSshConfig() {
+    private def getSshConfig() {
         return (ApgSshConfiguration) project.getExtensions().findByName(ApgSsh.APG_SSH_CONFIGURATION_EXTENSION_NAME)
     }
 
     def preConditions() {
         def apgSshConfig = getSshConfig()
-        def apgRpmDeployConfigExt = getDeployConfig()
+        def apgRpmDeployConfigExt = _deployConfig()
         Assert.notNull(apgSshConfig.username, "${ApgSsh.PLUGIN_ID} requires a user name to be configured")
         Assert.notNull(apgSshConfig.userpwd, "${ApgSsh.PLUGIN_ID} requires a user password to be configured")
         Assert.notNull(apgSshConfig.destinationHost, "${ApgSsh.PLUGIN_ID} requires a destination host to be configured")
@@ -22,7 +22,7 @@ abstract class AbstractRpm extends AbstractSshTask {
         Assert.notNull(apgRpmDeployConfigExt.remoteDestFolder, "${ApgSsh.APG_RPM_DEPLOY_CONFIG_EXTENSION_NAME} requires a remoteDestFolder to be configured")
     }
 
-    def getDeployConfig() {
+    def _deployConfig() {
         return (ApgRpmDeployConfig) project.extensions."${ApgSsh.APG_RPM_DEPLOY_CONFIG_EXTENSION_NAME}"
     }
 }
