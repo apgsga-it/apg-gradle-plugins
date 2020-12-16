@@ -15,4 +15,5 @@ class Revisions  {
     def lastRevision(String serviceName, String target, String revision) {
         services[serviceName][target] = revision
     }
+
 }

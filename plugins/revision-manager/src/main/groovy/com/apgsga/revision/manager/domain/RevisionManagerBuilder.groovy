@@ -2,8 +2,13 @@ package com.apgsga.revision.manager.domain
 
 import com.apgsga.revision.manager.persistence.RevisionBeanBackedPersistence
 import com.apgsga.revision.manager.persistence.RevisionPersistence
+import org.slf4j.Logger
+import org.slf4j.LoggerFactory
+
 
 class RevisionManagerBuilder {
+
+    private static Logger LOGGER = LoggerFactory.getLogger(RevisionManagerBuilder.class)
 
     // TODO JHE: Shouldn't we deal with the history file as well ?
     private static String REVISION_FILENAME = "Revisions.json"
@@ -32,13 +37,15 @@ class RevisionManagerBuilder {
     }
 
     private RevisionManager buildCloneRevisionManager() {
+        LOGGER.info("RevisionManagerBuilder: building a Clone Revision Manager with target: ${cloneTargetPath}")
         def revPersistence = getRevisionPersistence()
         revPersistence.cloneRevisionsJson(cloneTargetPath)
         revisionRootPath = cloneTargetPath
-        new RevisionManagerClonedImpl(revPersistence)
+        new RevisionManagerClonedImpl(new RevisionManagerPatchImpl(revPersistence))
     }
 
     private RevisionManager buildPatchRevisionManager() {
+        LOGGER.info("RevisionManagerBuilder: building a Patch Revision Manager with Revision Root path: ${revisionRootPath}")
         new RevisionManagerPatchImpl(getRevisionPersistence())
     }
 
@@ -47,12 +54,12 @@ class RevisionManagerBuilder {
         File revisionFileRoot = new File(revisionRootPath)
         validate(revisionFileRoot.exists(), "Parent Directory ${revisionRootPath} of ${REVISION_FILENAME} must exist")
         validate(revisionFileRoot.isDirectory(), "Parent Path ${revisionRootPath} of ${REVISION_FILENAME}  must be directory")
-        println("Building Revision Manager with : ${this.toString()}")
+        LOGGER.info("RevisionManagerBuilder: building Bean backed Persitistence Revision Manager with : ${this.toString()}")
         return new RevisionBeanBackedPersistence(revisionFileRoot)
     }
 
     private static RevisionManager buildSnapshotRevisionManager() {
-        println("Building Snapshot Revision Manager")
+        LOGGER.info("RevisionManagerBuilder: building Snapshot Revision Manager")
         new RevisionManagerSnapshotImpl()
     }
 
