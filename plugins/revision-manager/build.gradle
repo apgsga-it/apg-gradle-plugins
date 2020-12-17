@@ -16,6 +16,7 @@ sourceSets {
 dependencies {
     api platform(project(':platform'))
     implementation group: 'com.fasterxml.jackson.core', name: 'jackson-databind'
+    implementation("org.slf4j:slf4j-api")
     implementation group: 'org.codehaus.groovy', name: 'groovy-all'
     testImplementation ("org.spockframework:spock-core")
 }

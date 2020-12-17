@@ -1,8 +1,12 @@
 package com.apgsga.revision.manager.persistence
 
 import com.fasterxml.jackson.databind.ObjectMapper
+import org.slf4j.Logger
+import org.slf4j.LoggerFactory
 
 class RevisionBeanBackedPersistence implements RevisionPersistence {
+
+    private static Logger LOGGER = LoggerFactory.getLogger(RevisionBeanBackedPersistence.class)
 
     File revisionRootDir
 
@@ -15,18 +19,17 @@ class RevisionBeanBackedPersistence implements RevisionPersistence {
     @Override
     String currentRevision() {
         def cr = read(Revisions.class).currentRevision
-        println "Current Revision: ${cr}"
+        println "RevisionBeanBackedPersistence : current Revision: ${cr}"
         return cr
     }
 
     @Override
     String lastRevision(String serviceName, String targetName) {
-        println "Getting lastRevision for service: ${serviceName} and ${targetName}"
+        LOGGER.info "RevisionBeanBackedPersistence: getting lastRevision for service: ${serviceName} and ${targetName}"
         def revisions = read(Revisions.class)
-        println "Current Revisions:  ${revisions.toString()} "
         if(revisions.services.get(serviceName) != null) {
             def lr = revisions.services.get(serviceName).get(targetName)
-            println "Got lastRevision: ${lr} for service: ${serviceName} and ${targetName}"
+            LOGGER.info "RevisionBeanBackedPersistence: got lastRevision: ${lr} for service: ${serviceName} and ${targetName}"
             return lr
         }
         return null
@@ -79,7 +82,7 @@ class RevisionBeanBackedPersistence implements RevisionPersistence {
         file.exists()
     }
 
-    private write(Object value, File rootDir) {
+    private static write(Object value, File rootDir) {
         String fileName = "${value.class.simpleName}.json"
         File file = new File(rootDir as File, fileName)
         ObjectMapper mapper = new ObjectMapper()
@@ -95,4 +98,12 @@ class RevisionBeanBackedPersistence implements RevisionPersistence {
         def obj = clx.newInstance(constArgs)
         write(obj)
     }
+
+    @Override
+    String toString() {
+        return "RevisionBeanBackedPersistence{" +
+                ", revisionRootDir=" + revisionRootDir +
+                '}'
+    }
+
 }
