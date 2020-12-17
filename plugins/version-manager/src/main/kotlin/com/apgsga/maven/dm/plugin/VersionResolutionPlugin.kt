@@ -54,8 +54,8 @@ open class VersionResolutionPlugin : Plugin<Project> {
     }
 
 
-
-    private fun checkDuplicates(project: Project,
+    private fun checkDuplicates(
+        project: Project,
         artifactMaps: MutableMap<String, MutableList<Pair<String, String>>>,
         requested: ModuleVersionSelector,
         versionUsed: String
