@@ -9,7 +9,7 @@ abstract class AbstractVersionResolver : VersionResolver {
     private val recommender = MavenArtifactListResolver()
 
     override fun getVersion(groupId: String, artifactId: String): String {
-        logger.debug("Resolving Version for groupId <${groupId}> , artifactId <${artifactId}< with ${this}")
+        logger.debug("Resolving Version for groupId <${groupId}> , artifactId <${artifactId}. with ${this}")
         recommender.mavenArtifacts = getMavenArtifactList()
         logger.debug("Got Artifact List: ${recommender.mavenArtifacts.toString()} ")
         return recommender.getVersion(groupId, artifactId)
