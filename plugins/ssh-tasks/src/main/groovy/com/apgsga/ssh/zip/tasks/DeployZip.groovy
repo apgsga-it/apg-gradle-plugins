@@ -10,7 +10,7 @@ class DeployZip extends AbstractZip {
     @Override
     def doRun(Object remote, Object allowAnyHosts) {
         preConditions()
-        def apgZipDeployConfigExt = getDeployConfig()
+        def apgZipDeployConfigExt = _getDeployConfig()
         def zipFileName = "${apgZipDeployConfigExt.zipFileParentPath}" + File.separator + _getZipFileName()
         project.logger.info("${zipFileName} will be deploy on ${remote.getProperty('host')} using ${remote.getProperty('user')} User")
         SshPutTask put = project.tasks.findByName(SshPutTask.TASK_NAME)

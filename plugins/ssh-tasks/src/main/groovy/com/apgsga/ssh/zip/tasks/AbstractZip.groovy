@@ -15,7 +15,7 @@ abstract class AbstractZip extends AbstractSshTask {
 
     def preConditions() {
         def apgSshConfig = getSshConfig()
-        def apgZipDeployConfigExt = getDeployConfig()
+        def apgZipDeployConfigExt = _getDeployConfig()
         Assert.notNull(apgSshConfig.username, "${ApgSsh.PLUGIN_ID} requires a user name to be configured")
         Assert.notNull(apgSshConfig.userpwd, "${ApgSsh.PLUGIN_ID} requires a user password to be configured")
         Assert.notNull(apgSshConfig.destinationHost, "${ApgSsh.PLUGIN_ID} requires a destination host to be configured")
@@ -23,7 +23,8 @@ abstract class AbstractZip extends AbstractSshTask {
         Assert.notNull(apgZipDeployConfigExt.remoteDeployDestFolder, "${ApgSsh.APG_ZIP_DEPLOY_CONFIG_EXTENSION_NAME} requires a remoteDeployDestFolder to be configured")
     }
 
-   protected def getDeployConfig() {
+    // TODO JHE (01.02.2021) : Gradle uses public / protected getter / setter for defining Input & Outputs of the Task
+   protected def _getDeployConfig() {
         return (ApgZipDeployConfig) project.extensions."${ApgSsh.APG_ZIP_DEPLOY_CONFIG_EXTENSION_NAME}"
     }
     // TODO (jhe, che , 24.11) : Gradle uses public / protected getter / setter for defining Input & Outputs of the Task

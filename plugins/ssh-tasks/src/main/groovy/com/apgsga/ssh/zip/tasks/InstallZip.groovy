@@ -7,7 +7,7 @@ class InstallZip extends AbstractZip {
     @Override
     def doRun(Object remote, Object allowAnyHosts) {
         preConditions()
-        def apgZipDeployConfigExt = getDeployConfig()
+        def apgZipDeployConfigExt = _getDeployConfig()
         def zipFileToBeExtracted = getZipFileToBeExtracted()
         project.logger.info("${zipFileToBeExtracted} will be install on ${remote.getProperty('host')} using ${remote.getProperty('user')} User")
 
@@ -40,7 +40,7 @@ class InstallZip extends AbstractZip {
     }
 
     private def getZipFileToBeExtracted() {
-        def apgZipDeployConfigExt = getDeployConfig()
+        def apgZipDeployConfigExt = _getDeployConfig()
         return "${apgZipDeployConfigExt.remoteDeployDestFolder}${File.separator}${_getZipFileName()}"
     }
 }
