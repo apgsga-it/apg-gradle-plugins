@@ -23,7 +23,7 @@ abstract class AbstractZip extends AbstractSshTask {
         Assert.notNull(apgZipDeployConfigExt.remoteDeployDestFolder, "${ApgSsh.APG_ZIP_DEPLOY_CONFIG_EXTENSION_NAME} requires a remoteDeployDestFolder to be configured")
     }
 
-   private  def getDeployConfig() {
+   protected def getDeployConfig() {
         return (ApgZipDeployConfig) project.extensions."${ApgSsh.APG_ZIP_DEPLOY_CONFIG_EXTENSION_NAME}"
     }
     // TODO (jhe, che , 24.11) : Gradle uses public / protected getter / setter for defining Input & Outputs of the Task
