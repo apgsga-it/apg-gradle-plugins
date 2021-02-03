@@ -50,7 +50,7 @@ open class VersionResolutionExtension(val project: Project, private val revision
 
     // Revision Manager and Revision Initialization
     private var _revisionManger: RevisionManager? = null
-    private val revisionManger: RevisionManager
+    val revisionManger: RevisionManager
         get() {
             if (_revisionManger == null) {
                 _revisionManger = revisionManagerBuilder.revisionRootPath(revisionRootPath
