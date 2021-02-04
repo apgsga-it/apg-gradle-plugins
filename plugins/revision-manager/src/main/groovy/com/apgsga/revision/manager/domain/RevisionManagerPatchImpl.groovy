@@ -16,8 +16,9 @@ class RevisionManagerPatchImpl implements RevisionManager {
 
     @Override
     String nextRevision() {
-        def currentRev  =revisionPersistence.currentRevision() as Integer
+        def currentRev  = revisionPersistence.currentRevision() as Integer
         currentRev++
+        revisionPersistence.save(currentRev as String)
         LOGGER.info("RevisionManagerPatchImpl: returning nextRevision: ${currentRev}")
         return currentRev
     }
@@ -38,7 +39,6 @@ class RevisionManagerPatchImpl implements RevisionManager {
 
     @Override
     void saveRevision(String serviceName, String target, String revision, String fullRevisionPrefix) {
-        revisionPersistence.save(revision as String)
         revisionPersistence.save(serviceName,target.toUpperCase(), revision.toUpperCase(), fullRevisionPrefix.toUpperCase())
     }
 

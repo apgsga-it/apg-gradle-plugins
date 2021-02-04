@@ -59,35 +59,57 @@ open class VersionResolutionExtension(val project: Project, private val revision
             return _revisionManger as RevisionManager
         }
 
+    private var _patchRevisionManager: RevisionManager? = null
+    val patchRevisionManager: RevisionManager
+        get() {
+            if(_patchRevisionManager == null) {
+                _patchRevisionManager = revisionManagerBuilder.revisionRootPath(patchRevisionRootPath).algorithm(algorithm).build()
+            }
+            return _patchRevisionManager as RevisionManager
+        }
+
     var revisionRootPath: String? = null
     var cloneTargetPath: String? = null
+    var patchRevisionRootPath: String? = null
 
     private var _lastRevision: String? = null
     private val lastRevision: String
         get() {
-            if (_lastRevision == null) {
-                revision
-            }
+            project.logger.info("lastRevision is getting retrieved. Current _lastevision=$_lastRevision")
+            _lastRevision = revisionManger.lastRevision(serviceName, installTarget)
             project.logger.info("Got Lastrevision: $_revision")
             return _lastRevision as String
         }
     private var _revision: String? = null
     private val revision: String
         get() {
+
+            project.logger.info("Revision is getting retrieved, newRevision=$newRevision , _revision=$_revision")
+
             if (_revision == null) {
-                _lastRevision = revisionManger.lastRevision(serviceName, installTarget)
-                _revision = if (newRevision) {revisionManger.nextRevision().toString()} else {
-                    _lastRevision}
+                if(newRevision) {
+                    project.logger.info("Before setting _revision -> we first save")
+                    save()
+                    project.logger.info("Setting _revision from patchRevisionMananger")
+                    _revision = patchRevisionManager.lastRevision(serviceName, installTarget)
+                }
+                else {
+                    project.logger.info("Setting _revision from revisionManger")
+                    _revision = revisionManger.lastRevision(serviceName, installTarget)
+                }
                 project.logger.info("Calculation Revision: $_revision and Lastrevision:  $_lastRevision")
             }
             project.logger.info("Got Revision: $_revision")
             return _revision as String
+
         }
 
 
     fun save() {
         if (!newRevision) return
-        revisionManger.saveRevision(serviceName, installTarget, revision, bomBaseVersion)
+        val nextRev = revisionManger.nextRevision()
+        project.logger.info("Saving a new revision for $serviceName on $installTarget : $nextRev")
+        patchRevisionManager.saveRevision(serviceName,installTarget,nextRev,bomBaseVersion)
     }
 
     private fun configureConfiguration(name: String) {
@@ -104,7 +126,6 @@ open class VersionResolutionExtension(val project: Project, private val revision
             project.logger.info("Task : $it")
             if (it.startsWith("publish")) {
                 generateBomXml(mavenPublication)
-                save()
                 return@tasks
             }
         }
