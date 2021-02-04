@@ -22,10 +22,12 @@ open class VersionResolutionPlugin : Plugin<Project> {
             project,
             revisionManagerBuilder
         )
+
+        project.tasks.create("mergeRevision",MergeRevision::class.java)
+
         project.afterEvaluate {
             applyRecommendations(project, extension)
         }
-
     }
 
     private fun applyRecommendations(project: Project, resolutionExtension: VersionResolutionExtension) {
