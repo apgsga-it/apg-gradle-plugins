@@ -77,7 +77,7 @@ open class VersionResolutionExtension(val project: Project, private val revision
         get() {
             project.logger.info("lastRevision is getting retrieved. Current _lastevision=$_lastRevision")
             _lastRevision = revisionManger.lastRevision(serviceName, installTarget)
-            project.logger.info("Got Lastrevision: $_revision")
+            project.logger.info("Got new Lastrevision: $_lastRevision")
             return _lastRevision as String
         }
     private var _revision: String? = null
