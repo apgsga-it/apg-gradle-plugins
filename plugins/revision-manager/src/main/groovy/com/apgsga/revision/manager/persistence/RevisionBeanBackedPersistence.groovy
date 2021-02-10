@@ -54,6 +54,11 @@ class RevisionBeanBackedPersistence implements RevisionPersistence {
         write(revisions,new File(targetFolderPath))
     }
 
+    @Override
+    void resetLastRevision(String serviceName, String target, String revision) {
+        saveRevision(serviceName,target,revision)
+    }
+
     private void saveRevisionHistory(String serviceName, String target, String versionPrefix, String revision) {
         def targetsHistory = read(RevisionTargetHistory.class)
         targetsHistory.add(serviceName,target,versionPrefix,revision)

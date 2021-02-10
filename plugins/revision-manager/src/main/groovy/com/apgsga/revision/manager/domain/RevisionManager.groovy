@@ -23,4 +23,11 @@ interface RevisionManager {
      */
     String nextRevision()
 
+    /**
+     * In context of a clone, we need the possibility to reset the last revision of a service for a given target
+     * @param serviceName
+     * @param target
+     * @param revision
+     */
+    void resetLastRevision(String serviceName, String target, String revision)
 }

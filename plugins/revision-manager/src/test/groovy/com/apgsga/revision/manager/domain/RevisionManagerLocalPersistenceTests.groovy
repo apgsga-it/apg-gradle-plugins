@@ -131,4 +131,14 @@ class RevisionManagerLocalPersistenceTests extends Specification {
             Files.exists(Paths.get(historyFilePath))
             Files.exists(Paths.get(revisionClonedFilePath))
     }
+
+    def "Reset last revision for a target"() {
+        when:
+            revisionManagerPatch.saveRevision("testService_1","chei212","10","TEST-")
+            revisionManagerPatch.saveRevision("testService_1","chei211","15","TEST-")
+            revisionManagerPatch.resetLastRevision("testService_1","chei212","22")
+        then:
+            "22".equals(revisionManagerPatch.lastRevision("testService_1","chei212"))
+            "15".equals(revisionManagerPatch.lastRevision("testService_1","chei211"))
+    }
 }
