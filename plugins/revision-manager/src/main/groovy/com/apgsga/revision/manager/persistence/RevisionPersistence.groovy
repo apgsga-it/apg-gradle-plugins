@@ -31,4 +31,12 @@ interface RevisionPersistence {
      */
     void cloneRevisionsJson(String targetFolderPath)
 
+    /**
+     * Reset the last revision of a service for a given target
+     * @param serviceName
+     * @param target
+     * @param revision
+     */
+    void resetLastRevision(String serviceName, String target, String revision)
+
 }

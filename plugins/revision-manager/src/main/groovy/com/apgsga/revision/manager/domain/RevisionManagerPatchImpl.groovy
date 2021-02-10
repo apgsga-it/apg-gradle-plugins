@@ -24,6 +24,11 @@ class RevisionManagerPatchImpl implements RevisionManager {
     }
 
     @Override
+    void resetLastRevision(String serviceName, String target, String revision) {
+        revisionPersistence.resetLastRevision(serviceName,target.toUpperCase(),revision.toUpperCase())
+    }
+
+    @Override
     String lastRevision(String serviceName, String target) {
         assert target != null , "Target must be set, cannot be null"
         String lastRevision = revisionPersistence.lastRevision(serviceName,target.toUpperCase())

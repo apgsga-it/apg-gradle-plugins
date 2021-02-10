@@ -22,4 +22,9 @@ class RevisionManagerClonedImpl implements RevisionManager{
     String nextRevision() {
         throw new RuntimeException("nextRevision not supported by ${RevisionManagerClonedImpl.class.name}")
     }
+
+    @Override
+    void resetLastRevision(String serviceName, String target, String revision) {
+        throw new RuntimeException("resetLastRevision not supported by ${RevisionManagerClonedImpl.class.name}")
+    }
 }

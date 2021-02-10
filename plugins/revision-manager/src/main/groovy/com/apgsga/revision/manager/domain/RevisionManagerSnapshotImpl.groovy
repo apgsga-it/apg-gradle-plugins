@@ -14,6 +14,11 @@ class RevisionManagerSnapshotImpl implements RevisionManager {
     }
 
     @Override
+    void resetLastRevision(String serviceName, String target, String revision) {
+        LOGGER.info("RevisionManagerSnapshotImpl: Doing nothing on resetLastRevision.")
+    }
+
+    @Override
     String lastRevision(String serviceName, String target) {
         LOGGER.info("RevisionManagerSnapshotImpl: Last Revision for ${serviceName} and ${target}: SNAPSHOT")
         "SNAPSHOT"
