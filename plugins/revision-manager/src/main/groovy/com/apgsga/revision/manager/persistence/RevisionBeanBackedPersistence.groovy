@@ -13,7 +13,7 @@ class RevisionBeanBackedPersistence implements RevisionPersistence {
     RevisionBeanBackedPersistence(File revisionRootDir) {
         this.revisionRootDir = revisionRootDir
         init(Revisions.class, "0", new HashMap<String,HashMap<String, String>>())
-        init(RevisionTargetHistory.class, new HashMap<String,HashMap<String, List<String>>>())
+        init(RevisionsHistory.class, new HashMap<String,HashMap<String, List<String>>>())
     }
 
     @Override
@@ -60,7 +60,7 @@ class RevisionBeanBackedPersistence implements RevisionPersistence {
     }
 
     private void saveRevisionHistory(String serviceName, String target, String versionPrefix, String revision) {
-        def targetsHistory = read(RevisionTargetHistory.class)
+        def targetsHistory = read(RevisionsHistory.class)
         targetsHistory.add(serviceName,target,versionPrefix,revision)
         write(targetsHistory)
     }

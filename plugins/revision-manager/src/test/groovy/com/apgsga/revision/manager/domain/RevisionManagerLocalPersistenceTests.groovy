@@ -1,9 +1,8 @@
 package com.apgsga.revision.manager.domain
 
-import com.apgsga.revision.manager.persistence.RevisionTargetHistory
+import com.apgsga.revision.manager.persistence.RevisionsHistory
 import com.apgsga.revision.manager.persistence.Revisions
 import spock.lang.Specification
-import sun.security.x509.OtherName
 
 import java.nio.file.Files
 import java.nio.file.Paths
@@ -11,7 +10,7 @@ import java.nio.file.Paths
 class RevisionManagerLocalPersistenceTests extends Specification {
 
     def static revisionsFileName = "${Revisions.class.simpleName}.json"
-    def static revisionsHistoryFileName = "${RevisionTargetHistory.class.simpleName}.json"
+    def static revisionsHistoryFileName = "${RevisionsHistory.class.simpleName}.json"
     def static revisionRootPath = System.getProperty('java.io.tmpdir')
     def static revisionClonedPath = "${revisionRootPath}/revisionManagerClonedTest"
     def static revisionFilePath = "${revisionRootPath}/${revisionsFileName}"
