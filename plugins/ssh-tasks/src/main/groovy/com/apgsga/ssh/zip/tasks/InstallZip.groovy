@@ -23,11 +23,13 @@ class InstallZip extends AbstractZip {
                 def uiGettingExtractedFolder = "${apgZipDeployConfigExt.remoteExtractDestFolder}/gettingExtracted_${newFolderName}"
                 execute "sudo mkdir -p ${uiGettingExtractedFolder}"
                 execute "sudo unzip ${zipFileToBeExtracted} -d ${uiGettingExtractedFolder}"
+                execute "sudo mkdir ${uiGettingExtractedFolder}/log"
                 execute "sudo chmod -R 775 ${uiGettingExtractedFolder}"
                 execute "rm -f ${zipFileToBeExtracted}"
                 execute "sudo mv ${uiGettingExtractedFolder}/start_it21_gui_run.bat ${apgZipDeployConfigExt.remoteExtractDestFolder}"
                 execute "sudo mv ${uiGettingExtractedFolder} ${apgZipDeployConfigExt.remoteExtractDestFolder}/${newFolderName}"
-                // JHE (11.06.2020): Keeping only last 3 version. Could be done with a script on platform as well if we want different behavior for PROD/TEST.
+                execute "sudo chgrp apg_install ${apgZipDeployConfigExt.remoteExtractDestFolder}/${newFolderName}"
+                execute "sudo chown apg_install ${apgZipDeployConfigExt.remoteExtractDestFolder}/${newFolderName}"
                 execute "cd ${apgZipDeployConfigExt.remoteExtractDestFolder} && ls -rv | awk -F_ '++n[\$1]>3' | xargs rm -rf"
             }
         }
