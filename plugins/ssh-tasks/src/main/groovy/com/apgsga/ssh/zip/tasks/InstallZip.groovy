@@ -24,12 +24,12 @@ class InstallZip extends AbstractZip {
                 execute "sudo mkdir -p ${uiGettingExtractedFolder}"
                 execute "sudo unzip ${zipFileToBeExtracted} -d ${uiGettingExtractedFolder}"
                 execute "sudo mkdir ${uiGettingExtractedFolder}/log"
+                execute "sudo chmod 777 ${uiGettingExtractedFolder}/log"
                 execute "sudo chmod -R 775 ${uiGettingExtractedFolder}"
                 execute "rm -f ${zipFileToBeExtracted}"
                 execute "sudo mv ${uiGettingExtractedFolder}/start_it21_gui_run.bat ${apgZipDeployConfigExt.remoteExtractDestFolder}"
                 execute "sudo mv ${uiGettingExtractedFolder} ${apgZipDeployConfigExt.remoteExtractDestFolder}/${newFolderName}"
-                execute "sudo chgrp apg_install ${apgZipDeployConfigExt.remoteExtractDestFolder}/${newFolderName}"
-                execute "sudo chown apg_install ${apgZipDeployConfigExt.remoteExtractDestFolder}/${newFolderName}"
+                execute "sudo chgrp -R apg_install ${apgZipDeployConfigExt.remoteExtractDestFolder}/${newFolderName}"
                 execute "cd ${apgZipDeployConfigExt.remoteExtractDestFolder} && ls -rv | awk -F_ '++n[\$1]>3' | xargs rm -rf"
             }
         }
