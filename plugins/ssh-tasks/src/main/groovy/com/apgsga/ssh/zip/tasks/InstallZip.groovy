@@ -21,6 +21,8 @@ class InstallZip extends AbstractZip {
             }
             session(remote) {
                 def uiGettingExtractedFolder = "${apgZipDeployConfigExt.remoteExtractDestFolder}/gettingExtracted_${newFolderName}"
+                execute "cd ${apgZipDeployConfigExt.remoteExtractDestFolder} && pwd | sudo chgrp apg_install \$(xargs)"
+                execute "cd ${apgZipDeployConfigExt.remoteExtractDestFolder} && pwd | sudo chmod -R 775 \$(xargs)"
                 execute "sudo mkdir -p ${uiGettingExtractedFolder}"
                 execute "sudo unzip ${zipFileToBeExtracted} -d ${uiGettingExtractedFolder}"
                 execute "sudo mkdir ${uiGettingExtractedFolder}/log"
