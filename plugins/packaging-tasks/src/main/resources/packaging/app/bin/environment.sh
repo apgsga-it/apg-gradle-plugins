@@ -2,6 +2,7 @@
 #########################################################
 # Generall Runtime Variable to make the scripts 
 # easier to adopt to a specific target enviroment
+export LD_LIBRARY_PATH=${targetServiceExecDir}/instantclient_11_2
 export INSTALLATION_DIR=${targetServiceExecDir}
 export CONFIG_DIR=${targetServiceConfigDir}
 export DATA_DIR=${targetServiceDataDir}
