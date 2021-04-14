@@ -13,7 +13,7 @@ export JAVA_HOME=\$INSTALLATION_DIR/\$JAVA_DIR
 JAVA_OPTS=-Djava.awt.headless=true
 JAVA_OPTS="\$JAVA_OPTS -server"
 JAVA_OPTS="\$JAVA_OPTS -Xms2048m"
-JAVA_OPTS="\$JAVA_OPTS -Xmx2048m"
+JAVA_OPTS="\$JAVA_OPTS -Xmx10G"
 JAVA_OPTS="\$JAVA_OPTS -Djavamelody.storage-directory=\$DATA_DIR";
 export JAVA_OPTS;
 #########################################################
