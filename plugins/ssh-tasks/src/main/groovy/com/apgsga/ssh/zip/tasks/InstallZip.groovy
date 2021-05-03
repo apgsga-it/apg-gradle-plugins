@@ -6,6 +6,8 @@ class InstallZip extends AbstractZip {
 
     public static final String APG_MAX_GUI_FOLDER_FOR_PROD = 'apg.max.gui.folder.for.prod'
 
+    public static final String APG_MAX_GUI_FOLDER_FOR_NON_PROD = 'apg.max.gui.folder.for.non.prod'
+
     @Override
     def doRun(Object remote, Object allowAnyHosts) {
         preConditions()
@@ -17,8 +19,8 @@ class InstallZip extends AbstractZip {
         def newFolderName = guiExtractedFolderName()
 
         def maxGuiFolderToKept = installationHost.toLowerCase().contains('chpi211') ?
-                                  project.hasProperty(APG_MAX_GUI_FOLDER_FOR_PROD) ? project.property(APG_MAX_GUI_FOLDER_FOR_PROD) : "10"
-                                 : "3"
+                                  project.hasProperty(APG_MAX_GUI_FOLDER_FOR_PROD) ? project.property(APG_MAX_GUI_FOLDER_FOR_PROD) : "10" :
+                                  project.hasProperty(APG_MAX_GUI_FOLDER_FOR_NON_PROD) ? project.property(APG_MAX_GUI_FOLDER_FOR_NON_PROD) : "3"
 
         project.ssh.run {
             if (apgZipDeployConfigExt.allowAnyHosts) {
