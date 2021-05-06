@@ -32,7 +32,7 @@ repositories {
 
 
 publishing {
-	def repoName = publishVersion.endsWith("SNAPSHOT") ? "apgGradlePlugins-snapshots" : "apgGradlePlugins-releases"
+	def repoName = project.hasProperty("apgGradlePluginRepo") ? project.property("apgGradlePluginRepo") : "apgGradlePlugins-snapshots"
 	repositories {
 		maven {
 			name ='apgGradlePluginRepo'
