@@ -34,7 +34,10 @@ abstract class BomAnalyzerTask : DefaultTask() {
             val dependencies = mavenBomManagerDefault.retrieve(it, recursive.get())
             dependenciesMap[it] = dependencies
         }
-        println("Dumping all dependencies (TODO)")
+        println("Dumping all dependencies")
+        // TODO (che, 8.6) : Report Intersection of all Dependency Management Collections
+        // TODO (che, 8.6) : Report redundancy
+        // TODO (che, 8.6) : Report Version conflicts
         dependenciesMap.forEach{(key, dependencies) ->
             println ("***** All Bom: $key Dependencies in Dependency Management: ")
             dependencies.forEach {
