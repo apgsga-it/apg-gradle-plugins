@@ -19,7 +19,7 @@ abstract class BomAnalyzerTask : DefaultTask() {
     abstract val recursive: Property<Boolean>
 
     init {
-        bomCoordinates.convention(listOf("com.affichage.common.maven:dm-bom:9.1.0.SSO-SNAPSHOT"))
+        bomCoordinates.convention(listOf(""))
         recursive.convention(false)
     }
 
@@ -33,7 +33,6 @@ abstract class BomAnalyzerTask : DefaultTask() {
             val dependencies = mavenBomManagerDefault.retrieve(it, recursive.get())
             bomDependenciesMap[it] = dependencies
         }
-        // TODO (che, 8.6) : Report Version conflicts
         val depencenciesInBomsMap = mutableMapOf<String, MutableSet<String>>()
         val depencenciesVersionsMap = mutableMapOf<String, MutableSet<String>>()
         bomDependenciesMap.forEach{ (key, dependencies) ->
@@ -48,13 +47,25 @@ abstract class BomAnalyzerTask : DefaultTask() {
                 }
             }
         }
-        println("Artifact Redundancies:")
+        println("******* The following dependencies are redundant in the analyzed Boms: ")
         depencenciesInBomsMap.forEach { (dependency, bomCoordinates) ->
             if (bomCoordinates.size > 1) {
-                println("Dependency : <$dependency> in multiple boms : ${bomCoordinates.toString()}")
+                println("Dependency : <$dependency> in multiple in following boms : $bomCoordinates")
                 if (depencenciesVersionsMap[dependency]!!.size > 1 ) {
-                    println ("!!!! with different Versions${depencenciesVersionsMap[dependency].toString()}")
+                    print (" with version conflicts : ${depencenciesVersionsMap[dependency].toString()}\n")
                 }
+            }
+        }
+
+        bomCoordinates.get().forEach { itCompared ->
+            val others = bomCoordinates.get().toMutableSet()
+            others.remove(itCompared)
+            val dependenciesCompared = bomDependenciesMap[itCompared]
+            others.forEach {
+                val dependencies = bomDependenciesMap[it]
+                println("******* The following dependencies in the bom <$itCompared> are not comtained in bom  <$it> :  ")
+                val depNotContained = dependenciesCompared!!.minus(dependencies)
+                depNotContained?.forEach { dep -> println("$dep In  <$itCompared> not in <$it>" ) }
             }
         }
         println("Done.")
