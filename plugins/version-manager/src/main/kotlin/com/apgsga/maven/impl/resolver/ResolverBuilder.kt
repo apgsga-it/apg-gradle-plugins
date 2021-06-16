@@ -1,7 +1,7 @@
 package com.apgsga.maven.impl.resolver
 
 import com.apgsga.maven.VersionResolver
-import com.apgsga.maven.impl.bom.GradleDependencyBomLoader
+import com.apgsga.maven.impl.bom.GradleDependencyDependencyLoader
 import com.apgsga.maven.impl.bom.MavenBomManagerDefault
 import org.apache.commons.lang.NotImplementedException
 import org.gradle.api.Project
@@ -30,7 +30,7 @@ data class BomVersionGradleResolverBuilder(
     }
 
     override fun build(project: Project) : VersionResolver {
-       return BomVersionResolver(bomArtifact!!, recursive, MavenBomManagerDefault(GradleDependencyBomLoader(project)))
+       return BomVersionResolver(bomArtifact!!, recursive, MavenBomManagerDefault(GradleDependencyDependencyLoader(project)))
     }
 
 }

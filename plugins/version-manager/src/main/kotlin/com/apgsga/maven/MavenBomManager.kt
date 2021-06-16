@@ -33,7 +33,7 @@ interface MavenBomManager {
 }
 
 
-interface BomLoader {
+interface DependencyLoader {
     fun load(bomGroupId: String, bomArtifactid: String, bomVersion: String): InputStream
     fun load(mavenCoordinates: String): InputStream
 }

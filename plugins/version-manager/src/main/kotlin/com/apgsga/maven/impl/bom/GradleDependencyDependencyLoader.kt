@@ -1,13 +1,13 @@
 package com.apgsga.maven.impl.bom
 
-import com.apgsga.maven.BomLoader
+import com.apgsga.maven.DependencyLoader
 import org.gradle.api.Project
 import java.io.File
 import java.io.FileInputStream
 import java.io.InputStream
 
 
-class GradleDependencyBomLoader(val project: Project) : BomLoader {
+class GradleDependencyDependencyLoader(val project: Project) : DependencyLoader {
     override fun load(bomGroupId: String, bomArtifactid: String, bomVersion: String): InputStream {
         val mavenCoordinates = "${bomGroupId}:${bomArtifactid}:${bomVersion}"
         return load(mavenCoordinates)
