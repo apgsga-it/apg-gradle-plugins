@@ -1,6 +1,5 @@
 package com.apgsga.maven.impl.resolver
 
-import com.apgsga.maven.LoggerDelegate
 import com.apgsga.microservice.patch.api.Patch
 import com.fasterxml.jackson.databind.ObjectMapper
 import org.apache.maven.model.Dependency
@@ -21,7 +20,7 @@ class SortedPatchFileListVersionResolver(var patchFiles: Collection<File>, var p
         val sortedList = patchList.sortedWith(patchCompEnum.patchComparator)
         val dependencies = mutableListOf<Dependency>()
         sortedList.forEach { patch ->
-            patch.mavenArtifacts.forEach {
+            patch.retrieveAllArtifactsToPatch().forEach {
                 // Apg Patch Convention for Library Patches
                 if (!it.version.endsWith("SNAPSHOT")) {
                     val dependency = Dependency()
@@ -40,7 +39,7 @@ class SortedPatchFileListVersionResolver(var patchFiles: Collection<File>, var p
     }
 
     enum class PatchComparator(val patchComparator: Comparator<Patch>) {
-        PATCHNUMBER_ASC(compareBy<Patch> { it.patchNummer }),
+        PATCHNUMBER_ASC(compareBy<Patch> { it.patchNumber }),
     }
 
 }

@@ -1,6 +1,6 @@
 package com.apgsga.maven.dm.plugin
 
-import com.apgsga.maven.impl.bom.GradleDependencyDependencyLoader
+import com.apgsga.maven.impl.bom.GradleDependencyLoader
 import com.apgsga.maven.impl.bom.MavenBomManagerDefault
 import org.apache.maven.model.Dependency
 import org.gradle.api.DefaultTask
@@ -27,7 +27,7 @@ abstract class BomAnalyzerTask : DefaultTask() {
     fun analyzeBoms() {
         println("Analyzing the following Boms: ")
         val bomDependenciesMap = mutableMapOf<String, Collection<Dependency>>()
-        val mavenBomManagerDefault = MavenBomManagerDefault(GradleDependencyDependencyLoader(project))
+        val mavenBomManagerDefault = MavenBomManagerDefault(GradleDependencyLoader(project))
         bomCoordinates.get().forEach {
             println("Retrieving Dependencies for Bom Maven Coordinates: $it")
             val dependencies = mavenBomManagerDefault.retrieve(it, recursive.get())

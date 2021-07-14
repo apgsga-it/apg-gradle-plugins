@@ -7,7 +7,7 @@ import java.io.FileInputStream
 import java.io.InputStream
 
 
-class GradleDependencyDependencyLoader(val project: Project) : DependencyLoader {
+class GradleDependencyLoader(val project: Project) : DependencyLoader {
     override fun load(bomGroupId: String, bomArtifactid: String, bomVersion: String): InputStream {
         val mavenCoordinates = "${bomGroupId}:${bomArtifactid}:${bomVersion}"
         return load(mavenCoordinates)

@@ -1,20 +1,16 @@
 package com.apgsga.maven.impl.resolver
 
 import com.apgsga.maven.VersionResolver
-import com.apgsga.maven.impl.bom.GradleDependencyDependencyLoader
+import com.apgsga.maven.impl.bom.GradleDependencyLoader
 import com.apgsga.maven.impl.bom.MavenBomManagerDefault
-import org.apache.commons.lang.NotImplementedException
 import org.gradle.api.Project
 import java.io.File
-
-// TODO (che, 11.12) The Builders will be verified against concrete usage scenarios
 
 interface VersionResolverBuilder {
     fun build(): VersionResolver
     fun build(project: Project) : VersionResolver
 }
 
-// TODO (che,11.12) : Can this be done better?
 fun <T : VersionResolverBuilder> create(clx: Class<T>): T = clx.newInstance()
 
 
@@ -26,11 +22,11 @@ data class BomVersionGradleResolverBuilder(
     fun recursive(recursive: Boolean?) = apply { this.recursive = recursive }
 
     override fun build(): VersionResolver {
-        throw NotImplementedException()
+        throw NotImplementedError()
     }
 
     override fun build(project: Project) : VersionResolver {
-       return BomVersionResolver(bomArtifact!!, recursive, MavenBomManagerDefault(GradleDependencyDependencyLoader(project)))
+       return BomVersionResolver(bomArtifact!!, recursive, MavenBomManagerDefault(GradleDependencyLoader(project)))
     }
 
 }
@@ -39,7 +35,7 @@ data class SingleArtifactResolverBuilder(
         var updateArtifact: String) : VersionResolverBuilder {
 
     override fun build(): VersionResolver {
-        throw NotImplementedException()
+        throw NotImplementedError()
     }
 
     override fun build(project: Project) : VersionResolver {
