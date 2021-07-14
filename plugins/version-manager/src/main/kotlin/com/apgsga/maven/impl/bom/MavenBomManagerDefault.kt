@@ -48,13 +48,7 @@ class MavenBomManagerDefault(private val dependencyLoader: DependencyLoader) : M
         var artifactList = artList
         for (dependency in dependencies) {
             val resolvedVersion = resolveVersion(mavenModel, dependency.version)
-            if (resolvedVersion != null && dependency.type == "pom") {
-                if (recursive) {
-                    // recursively resolve bom
-                    val stream = dependencyLoader.load(dependency.groupId, dependency.artifactId, dependency.version)
-                    artifactList = loadModel(stream, artifactList, true)
-                }
-            } else if (resolvedVersion != null) {
+            if (resolvedVersion != null) {
                 val copy =  dependency.clone()
                 copy.version = resolvedVersion
                 artifactList += copy

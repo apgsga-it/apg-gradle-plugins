@@ -4,7 +4,7 @@ apply plugin: 'maven-publish'
 
 ext {
 	mavenVersion = '3.0.5'
-	piperVersion = '2.7.DEVD2'
+	piperVersion = '3.0.SNAPSHOT'
 }
 
 

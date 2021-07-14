@@ -27,7 +27,8 @@ class SortedPatchFileListVersionResolver(var patchFiles: Collection<File>, var p
                     dependency.artifactId = it.artifactId
                     dependency.groupId = it.groupId
                     dependency.version = it.version
-                    dependency.type = "jar"
+                    dependency.type = it.type
+                    dependency.scope = it.scope
                     logger.info("Adding patch dependency $dependency" )
                     dependencies.add(dependency)
                 }
