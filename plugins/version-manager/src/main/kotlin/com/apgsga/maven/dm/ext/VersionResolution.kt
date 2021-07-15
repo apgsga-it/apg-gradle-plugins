@@ -153,6 +153,12 @@ open class VersionResolutionExtension(val project: Project, private val revision
                 dependencyNode.appendNode("groupId", it.groupId)
                 dependencyNode.appendNode("artifactId", it.artifactId)
                 dependencyNode.appendNode("version", it.version)
+                if (!it.type.isNullOrEmpty()) {
+                    dependencyNode.appendNode("type", it.type)
+                }
+                if (!it.scope.isNullOrEmpty()) {
+                    dependencyNode.appendNode("scope", it.scope)
+                }
             }
         }
     }

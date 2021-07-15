@@ -1,6 +1,6 @@
 package com.apgsga.maven.impl.bom
 
-import com.apgsga.maven.BomLoader
+import com.apgsga.maven.DependencyLoader
 import com.apgsga.maven.LoggerDelegate
 import com.apgsga.maven.MavenBomManager
 import org.apache.maven.model.Dependency
@@ -13,7 +13,7 @@ import java.io.InputStream
  *  @author che
  *
  */
-class MavenBomManagerDefault(private val bomLoader: BomLoader) : MavenBomManager {
+class MavenBomManagerDefault(private val dependencyLoader: DependencyLoader) : MavenBomManager {
 
     private val logger by LoggerDelegate()
 
@@ -48,13 +48,7 @@ class MavenBomManagerDefault(private val bomLoader: BomLoader) : MavenBomManager
         var artifactList = artList
         for (dependency in dependencies) {
             val resolvedVersion = resolveVersion(mavenModel, dependency.version)
-            if (resolvedVersion != null && dependency.type == "pom") {
-                if (recursive) {
-                    // recursively resolve bom
-                    val stream = bomLoader.load(dependency.groupId, dependency.artifactId, dependency.version)
-                    artifactList = loadModel(stream, artifactList, true)
-                }
-            } else if (resolvedVersion != null) {
+            if (resolvedVersion != null) {
                 val copy =  dependency.clone()
                 copy.version = resolvedVersion
                 artifactList += copy
@@ -69,13 +63,13 @@ class MavenBomManagerDefault(private val bomLoader: BomLoader) : MavenBomManager
 
     override fun retrieve(bomArtifact: String, recursive: Boolean): Collection<Dependency> {
         val artifactList = emptyList<Dependency>()
-        val stream = bomLoader.load(bomArtifact)
+        val stream = dependencyLoader.load(bomArtifact)
         return loadModel(stream, artifactList, recursive)
     }
 
     override fun retrieve(bomGroupId: String, bomArtifactid: String, bomVersion: String, recursive: Boolean): Collection<Dependency> {
         val artifactList = emptyList<Dependency>()
-        val stream = bomLoader.load(bomGroupId,bomArtifactid, bomVersion)
+        val stream = dependencyLoader.load(bomGroupId,bomArtifactid, bomVersion)
         return loadModel(stream,artifactList,recursive)
     }
 

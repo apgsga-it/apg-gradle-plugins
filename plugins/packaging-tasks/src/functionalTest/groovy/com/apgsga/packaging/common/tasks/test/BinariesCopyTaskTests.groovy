@@ -20,15 +20,19 @@ class BinariesCopyTaskTests extends AbstractSpecification {
             plugins {
                 id 'com.apgsga.common.package'
             }
-            
-		// The guava dependency is only for testing purposes, consider to be likely found in mavenCentral()
-        apgPackage {
-			name ="testapp"
-			configurationName = 'serviceRuntime'
-		    dependencies = ["com.google.guava:guava:+"]
-            installTarget = "CHTX211"
-			mainProgramName  = "com.apgsga.test.SomeMain"
-         }
+            repositories {
+			   maven {
+					name = 'public-test'
+			   }
+			 }
+			// The guava dependency is only for testing purposes, consider to be likely found in mavenCentral()
+			apgPackage {
+				name ="testapp"
+				configurationName = 'serviceRuntime'
+				dependencies = ["com.google.guava:guava:+"]
+				installTarget = "CHTX211"
+				mainProgramName  = "com.apgsga.test.SomeMain"
+			 }
         """
 
         when:
@@ -53,17 +57,22 @@ class BinariesCopyTaskTests extends AbstractSpecification {
             plugins {
                 id 'com.apgsga.common.package'
             }
+            repositories {
+			   maven {
+					name = 'public-test'
+			   }
+			 }
             
             configurations { testRuntime.exclude group: 'log4j', module: 'log4j' }
 
 		// The guava dependency is only for testing purposes, consider to be likely found in mavenCentral()
-        apgPackage {
-			name ="testapp"
-			configurationName = 'testRuntime'
-		    dependencies = ["com.google.guava:guava:+"]
-            installTarget = "CHTX211"
-			mainProgramName  = "com.apgsga.test.SomeMain"
-         }
+			apgPackage {
+				name ="testapp"
+				configurationName = 'testRuntime'
+				dependencies = ["com.google.guava:guava:+"]
+				installTarget = "CHTX211"
+				mainProgramName  = "com.apgsga.test.SomeMain"
+			 }
         """
 
 		when:

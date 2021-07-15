@@ -17,7 +17,11 @@ class ZipPackageTaskTests extends AbstractSpecification  {
             }
             
             apply from : "${gradleHomeDirPath.replace("\\","/")}/common/portnr.gradle"
-
+            repositories {
+			   maven {
+					name = 'public-test'
+			   }
+			 }
 			apgVersionResolver {
 				configurationName = "testRuntime"
 				serviceName = "testuiapp"
