@@ -13,14 +13,18 @@ class TarGzipTaskTests extends AbstractSpecification {
             plugins {
                 id '${ApgZipPackagePlugin.PLUGIN_ID}'
             }
-
+            repositories {
+			   maven {
+					name = 'public-test'
+			   }
+			 }
 		// The guava dependency is only for testing purposes, consider to be likely found in mavenCentral()
-        apgPackage {
-			name ="testapp"
-		    dependencies = ["com.google.guava:guava:+"]
-            installTarget = "CHTX211"
-			mainProgramName  = "com.apgsga.test.SomeMain"
-         }
+			apgPackage {
+				name ="testapp"
+				dependencies = ["com.google.guava:guava:+"]
+				installTarget = "CHTX211"
+				mainProgramName  = "com.apgsga.test.SomeMain"
+			 }
         """
 
         when:

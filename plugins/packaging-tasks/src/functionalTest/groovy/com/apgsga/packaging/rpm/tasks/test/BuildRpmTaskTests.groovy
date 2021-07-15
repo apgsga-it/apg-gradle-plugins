@@ -21,22 +21,27 @@ class BuildRpmTaskTests extends AbstractSpecification {
             plugins {
                 id '${ApgRpmPackagePlugin.PLUGIN_ID}'
             }
+            repositories {
+			   maven {
+					name = 'public-test'
+			   }
+			}
             
-        apgVersionResolver {
-		    configurationName = "testRuntime"
-				serviceName = "testapp"
-				installTarget = 'CHTX211'
-				bomBaseVersion = '1.0'
-		}
+			apgVersionResolver {
+				configurationName = "testRuntime"
+					serviceName = "testapp"
+					installTarget = 'CHTX211'
+					bomBaseVersion = '1.0'
+			}
 
 		// The guava dependency is only for testing purposes, consider to be likely found in mavenCentral()
-        apgPackage {
-			name ="testapp"
-		    dependencies = ["com.google.guava:guava:+"]
-            installTarget = "CHTX211"
-			mainProgramName  = "com.apgsga.test.SomeMain"
-		    releaseNr = "1"
-         }
+			apgPackage {
+				name ="testapp"
+				dependencies = ["com.google.guava:guava:+"]
+				installTarget = "CHTX211"
+				mainProgramName  = "com.apgsga.test.SomeMain"
+				releaseNr = "1"
+			 }
         """
 
         when:
@@ -63,13 +68,17 @@ class BuildRpmTaskTests extends AbstractSpecification {
             plugins {
                 id '${ApgRpmPackagePlugin.PLUGIN_ID}'
             }
-            
-        apgVersionResolver {
-		    configurationName = "testRuntime"
-				serviceName = "someotherApp"
-				installTarget = 'CHEI212'
-				bomBaseVersion = '1.0.0.DEV-ADMIN-UIMIG'
-		}
+            repositories {
+			 maven {
+					name = 'public-test'
+			  }
+			}
+			apgVersionResolver {
+				configurationName = "testRuntime"
+					serviceName = "someotherApp"
+					installTarget = 'CHEI212'
+					bomBaseVersion = '1.0.0.DEV-ADMIN-UIMIG'
+			}
 
 		// The guava dependency is only for testing purposes, consider to be likely found in mavenCentral()
         apgPackage {

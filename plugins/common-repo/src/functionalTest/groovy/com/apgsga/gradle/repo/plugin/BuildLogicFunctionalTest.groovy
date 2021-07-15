@@ -19,6 +19,12 @@ class BuildLogicFunctionalTest extends AbstractSpecification {
                                     
                                     group = 'com.apgsga.jhe'
                                     version = '1.0'
+                                    
+                                    repositories {
+                                           maven {
+                                                name = 'public-test'
+                                           }
+                                    }
         
                                     dependencies {
                                         compile group: 'com.google.guava', name: 'guava', version: '11.0.2'

@@ -13,6 +13,8 @@ import org.apache.maven.settings.Settings
 import org.apache.maven.settings.SettingsUtils
 import org.apache.maven.settings.building.SettingsBuildingException
 import org.gradle.api.Project
+import org.gradle.api.artifacts.UnknownRepositoryException
+import org.gradle.api.artifacts.repositories.ArtifactRepository
 import org.gradle.api.artifacts.repositories.MavenArtifactRepository
 import org.gradle.api.logging.Logger
 import org.gradle.api.plugins.ExtraPropertiesExtension
@@ -145,22 +147,29 @@ class LoaderManager {
     }
 
     private void loadDependenciesRepositories(Profile profile) {
-        log.info("Dependencies Repositores confiuration will be applied.")
+        log.info("Dependencies Repositories configuration will be applied.")
         profile.repositories.each {mavenConfigRepo ->
-            log.info("Dealing with Repo called '${mavenConfigRepo.name}'")
-            project.repositories.maven {m ->
-                log.info("Applying a gradle maven Repo with following properties: url -> ${mavenConfigRepo.url}, artifactsUrl -> ${mavenConfigRepo.url}, name -> ${mavenConfigRepo.name}")
-                m.setUrl(mavenConfigRepo.url)
-                m.artifactUrls(mavenConfigRepo.url)
-                m.setName(mavenConfigRepo.name)
-                if(!mavenConfigRepo.name.equalsIgnoreCase("local")) {
-                    settings.servers.each { server ->
-                        if (mavenConfigRepo.id == server.id) {
-                            log.info("Credentials found for Repo '${mavenConfigRepo.name}'. Credentials Id is '${server.id}'")
-                            addCredentials(server, m as MavenArtifactRepository)
+            log.info("Trying to configure Repo called '${mavenConfigRepo.name}'")
+            try {
+                ArtifactRepository rep = project.repositories.getByName(mavenConfigRepo.name)
+                log.info("Foound and configuring Repo: '${mavenConfigRepo.name}'")
+                project.repositories.remove(rep)
+                project.repositories.maven {m ->
+                    log.info("Applying properties: url -> ${mavenConfigRepo.url}, artifactsUrl -> ${mavenConfigRepo.url}, name -> ${mavenConfigRepo.name}")
+                    m.setUrl(mavenConfigRepo.url)
+                    m.artifactUrls(mavenConfigRepo.url)
+                    m.setName(mavenConfigRepo.name)
+                    if(!mavenConfigRepo.name.equalsIgnoreCase("local")) {
+                        settings.servers.each { server ->
+                            if (mavenConfigRepo.id == server.id) {
+                                log.info("Credentials found for Repo '${mavenConfigRepo.name}'. Credentials Id is '${server.id}'")
+                                addCredentials(server, m as MavenArtifactRepository)
+                            }
                         }
                     }
                 }
+            } catch (UnknownRepositoryException e) {
+                log.info("Ignoring Repo called '${mavenConfigRepo.name}' ")
             }
         }
     }
